@@ -1,0 +1,175 @@
+package com.populstay.populife.home.entity;
+
+import android.text.TextUtils;
+
+import com.populstay.populife.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+
+public class HomeDeviceInfo {
+
+	public static @StringRes
+	int getTypeNameByName(String deviceName) {
+		@StringRes
+		int name = R.string.door_lock;
+
+		if (TextUtils.isEmpty(deviceName)) {
+			return name;
+		}
+
+		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
+			name = R.string.device_name_gateway;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+			name = R.string.lock_type_deadbolt;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			name = R.string.lock_type_keybox;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
+			name = R.string.lock_type_moonlock;
+		} else {
+			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
+			name = R.string.door_lock;
+		}
+		return name;
+	}
+
+	public static @DrawableRes
+	int getIconByName(String deviceName) {
+		@DrawableRes
+		int iconActive = R.drawable.device_card_single_icon_door_lock_selector;
+
+		if (TextUtils.isEmpty(deviceName)) {
+			return iconActive;
+		}
+
+		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
+			iconActive = R.drawable.device_card_single_icon_gateway_selector;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+			iconActive = R.drawable.device_card_single_icon_deadbolt_selector;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			iconActive = R.drawable.device_card_single_icon_key_box_selector;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
+			iconActive = R.drawable.device_card_single_icon_moon_lock_selector;
+		} else {
+			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
+			iconActive = R.drawable.device_card_single_icon_door_lock_selector;
+		}
+		return iconActive;
+	}
+
+	public static @DrawableRes
+	int getIconInactiveByName(String deviceName) {
+		@DrawableRes
+		int iconInactive = R.drawable.device_card_single_icon_door_lock_selector;
+
+		if (TextUtils.isEmpty(deviceName)) {
+			return iconInactive;
+		}
+
+		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
+			iconInactive = R.drawable.device_card_single_icon_gateway_selector;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+			iconInactive = R.drawable.device_card_single_icon_deadbolt_selector;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			iconInactive = R.drawable.device_card_single_icon_key_box_selector;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
+			iconInactive = R.drawable.device_card_single_icon_moon_lock_selector;
+		} else {
+			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
+			iconInactive = R.drawable.device_card_single_icon_door_lock_selector;
+		}
+		return iconInactive;
+	}
+
+	public static String getModelNumByNameWhenProduct(String deviceName) {
+		String modelNum = IModelNum.NAME_LOCK_KJX_DOOR_LOCK;
+		if (TextUtils.isEmpty(deviceName)) {
+			return modelNum;
+		}
+
+		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
+			modelNum = IModelNum.NAME_GATEWAY;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+			modelNum = IModelNum.NAME_LOCK_DEADBOLT;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			modelNum = IModelNum.NAME_LOCK_KEY_BOX;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
+			modelNum = IModelNum.NAME_LOCK_MANHATTAN_MOON_LOCK;
+		} else {
+			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
+			modelNum = IModelNum.NAME_LOCK_KJX_DOOR_LOCK;
+		}
+		return modelNum;
+	}
+
+	public static @DrawableRes
+	int getProductPictureByName(String deviceName) {
+		@DrawableRes
+		int productPicture = R.drawable.product_door_lock;
+
+		if (TextUtils.isEmpty(deviceName)) {
+			return productPicture;
+		}
+
+		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
+			productPicture = R.drawable.product_gateway;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+			productPicture = R.drawable.product_deadbolt;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			productPicture = R.drawable.product_keybox;
+		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
+				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
+			productPicture = R.drawable.product_moonlock;
+		} else {
+			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
+			productPicture = R.drawable.product_door_lock;
+		}
+		return productPicture;
+	}
+
+	// 这个不要随便动，需要跟IOS端统一的，用来区分设备类型
+	public interface IDeviceName {
+		// 网关(G2开头的，在添加设备时，转为Gateway)
+		String NAME_GATEWAY = "Gateway";
+
+		// PPL-DB开头为横闩锁
+		String NAME_LOCK_DEADBOLT = "PPL-DB";
+
+		// PPL_KB或KEYBOX开头为密码盒
+		String NAME_LOCK_KEY_BOX = "PPL_KB";
+		String NAME_LOCK_KEY_BOX_2 = "KEYBOX";
+		String NAME_LOCK_KEY_BOX_3 = "PPL_kb";
+
+		// 门锁（kjx 生态锁，统一处理）
+		String NAME_LOCK_KJX_DOOR_LOCK = "KJX_DOOR_LOCK";
+
+		//曼哈顿把手锁
+		String NAME_LOCK_MANHATTAN_MOON_LOCK = "PPL_ML";//PPL_ML
+
+		String NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER = "PPL_ml";//PPL_ML
+	}
+
+	public interface IModelNum {
+		// 网关
+		String NAME_GATEWAY = "1";//
+		// 横闩锁
+		String NAME_LOCK_DEADBOLT = "2";
+		// 密码盒
+		String NAME_LOCK_KEY_BOX = "3";
+		// 门锁（kjx 生态锁，统一处理）
+		String NAME_LOCK_KJX_DOOR_LOCK = "4";
+
+		//曼哈顿锁
+		String NAME_LOCK_MANHATTAN_MOON_LOCK = "5";
+	}
+
+}

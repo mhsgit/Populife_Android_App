@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="customer_service_email" translatable="false">support@populife.co</string>
+    <string name="page_action" translatable="false">action</string>
+    <string name="page_title" translatable="false">title</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_simplified_chinese" translatable="false">简体中文</string>
+    <string name="language_japanese" translatable="false">日本語</string>
+    <string name="language_french" translatable="false">Français</string>
+    <string name="language_german" translatable="false">Deutsch</string>
+    <string name="num_zero" translatable="false">0</string>
+    <string name="words_num_limit_200" translatable="false">/200</string>
+    <string name="unit_percent" translatable="false">%</string>
+    <string name="hundred_percent" translatable="false">100%</string>
+    <string name="mac_id" translatable="false">MAC/ID</string>
+    <string name="search_keyword_unlock_with_app" translatable="false">Unlock with app</string>
+    <string name="search_keyword_lock_with_app" translatable="false">Lock with app</string>
+    <string name="search_keyword_unlock_with_keyboard" translatable="false">Unlock with keyboard</string>
+    <string name="version_no" translatable="false">Version: %s</string>
+    <string name="ic_card_keyboard_command_add" translatable="false">*85#</string>
+    <string name="ic_card_keyboard_command_clear" translatable="false">*69#</string>
+</resources>

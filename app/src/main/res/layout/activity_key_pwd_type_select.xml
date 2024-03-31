@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar" />
+
+    <TextView
+        android:id="@+id/tv_current_device_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color_ffe6e7e8"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingLeft="@dimen/common_page_left_right_space"
+        android:paddingTop="@dimen/dimens_dp_10"
+        android:paddingRight="@dimen/common_page_left_right_space"
+        android:paddingBottom="@dimen/dimens_dp_10"
+        android:text="@string/key_pwd_select_a_type_hint"
+        android:textColor="@color/text_color_ff0f1110"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginTop="@dimen/dimens_dp_20"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:layout_marginBottom="@dimen/dimens_dp_10"
+        android:drawableLeft="@drawable/pwd_type_item_label"
+        android:drawablePadding="@dimen/dimens_dp_10"
+        android:text="@string/pwd_type_custom_item_label"
+        android:textColor="@color/common_text_color"
+        android:textSize="16sp" />
+
+    <include
+        android:id="@+id/ll_key_pwd_type_custom"
+        layout="@layout/key_pwd_type_select_item" />
+
+    <include layout="@layout/layout_view_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginTop="@dimen/dimens_dp_20"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:layout_marginBottom="@dimen/dimens_dp_10"
+        android:drawableLeft="@drawable/pwd_type_item_label"
+        android:drawablePadding="@dimen/dimens_dp_10"
+        android:text="@string/pwd_type_random_item_label"
+        android:textColor="@color/common_text_color"
+        android:textSize="16sp" />
+
+    <include
+        android:id="@+id/ll_key_pwd_type_permanent"
+        layout="@layout/key_pwd_type_select_item" />
+
+    <include layout="@layout/layout_view_line" />
+
+    <include
+        android:id="@+id/ll_key_pwd_type_period"
+        layout="@layout/key_pwd_type_select_item" />
+
+    <include layout="@layout/layout_view_line" />
+
+    <include
+        android:id="@+id/ll_key_pwd_type_one_time"
+        layout="@layout/key_pwd_type_select_item" />
+
+    <include layout="@layout/layout_view_line" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/ll_key_pwd_type_key_bt_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/key_pwd_select_a_type_create_key_hint"
+            android:textColor="@color/common_text_color"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_tap_create_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/tap_here"
+            android:textColor="@color/text_main"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

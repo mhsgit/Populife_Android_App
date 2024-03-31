@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar" />
+
+    <include layout="@layout/activate_device_status_bar" />
+
+    <include layout="@layout/layout_view_line" />
+
+    <TextView
+        android:id="@+id/keep_the_keypad_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color_ffe6e7e8"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingLeft="@dimen/common_page_left_right_space"
+        android:paddingTop="@dimen/dimens_dp_10"
+        android:paddingRight="@dimen/common_page_left_right_space"
+        android:paddingBottom="@dimen/dimens_dp_10"
+        android:text="@string/keep_the_keypad_light"
+        android:textColor="@color/text_color_ffb1b3b6"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_found_device"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/lv_found_device"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:divider="@color/gray_line"
+                android:dividerHeight="0.5dp"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/ll_key_pwd_type_key_bt_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_page_left_right_space"
+                android:layout_marginRight="@dimen/common_page_left_right_space"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="@string/lock_paired_help"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_tap_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/lock_paired_goto_help"
+                    android:textColor="@color/text_main"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_found_device_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_scan_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/nearby_locks_scanning"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp" />
+
+            <SeekBar
+                android:id="@+id/seekbar_scan_device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:progressDrawable="@drawable/my_seekbar_style"
+                android:thumb="@null" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+{
+  "stringTable": {
+    "0": "/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/.cxx/cmake/release/x86",
+    "1": "--target=i686-none-linux-android18 --gcc-toolchain=/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dygl_aes_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIC"
+  },
+  "buildFiles": [
+    "/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/CMakeLists.txt",
+    "/Users/apple/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake",
+    "/Users/apple/Library/Android/sdk/ndk-bundle/build/cmake/platforms.cmake",
+    "/Users/apple/Library/Android/sdk/ndk-bundle/build/cmake/compiler_id.cmake"
+  ],
+  "cleanCommands": [
+    "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/.cxx/cmake/release/x86\" clean"
+  ],
+  "buildTargetsCommand": "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja  -C \"/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/.cxx/cmake/release/x86\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "ygl_aes-Release-x86": {
+      "buildCommand": "/Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/.cxx/cmake/release/x86\" ygl_aes",
+      "buildType": "release",
+      "toolchain": "1140576793",
+      "abi": "x86",
+      "artifactName": "ygl_aes",
+      "files": [
+        {
+          "src": "/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/build/intermediates/cmake/release/obj/x86/libygl_aes.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "1140576793": {
+      "cppCompilerExecutable": "/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

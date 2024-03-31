@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginBottom="@dimen/dimens_dp_10"
+        android:layout_marginTop="@dimen/dimens_dp_10">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gateway_clear_bg_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_gateway_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/common_text_color"
+                android:textSize="16sp"
+                android:text="@string/name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_item_gateway_net_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_gateway_online"
+                    android:drawablePadding="4dp"
+                    android:text="@string/online"
+                    android:textColor="@color/text_color_ffb1b3b6"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_item_gateway_lock_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:drawableLeft="@drawable/ic_lock_symbol"
+                    android:drawablePadding="4dp"
+                    android:padding="2dp"
+                    android:text="@string/num_zero"
+                    android:textColor="@color/text_color_ffb1b3b6"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

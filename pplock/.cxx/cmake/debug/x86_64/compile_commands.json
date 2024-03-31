@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/.cxx/cmake/debug/x86_64",
+  "command": "/Users/jerry/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android21 --gcc-toolchain=/Users/jerry/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/jerry/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot  -Dygl_aes_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles/ygl_aes.dir/main.cpp.o -c /Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/src/main/cpp/main.cpp",
+  "file": "/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/src/main/cpp/main.cpp"
+}
+]

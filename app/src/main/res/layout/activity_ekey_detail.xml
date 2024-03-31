@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_ekey_detail_name"
+                android:orientation="vertical"
+                style="@style/list_item_overall">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/key_title"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_ekey_detail_name"
+                        style="@style/list_item_description2"
+                        android:text="@string/app_name"/>
+
+                    <ImageView
+                        android:id="@+id/iv_ekey_detail_name_more"
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line"/>
+
+            <LinearLayout
+                android:id="@+id/ll_ekey_detail_valid_period"
+                android:orientation="vertical"
+                style="@style/list_item_overall">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/validity_period"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_ekey_detail_valid_period"
+                            style="@style/list_item_description2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/period"/>
+
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_ekey_detail_start_time"
+                                style="@style/list_item_description2"
+                                android:layout_marginTop="0dp"
+                                android:layout_weight="0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/period"/>
+
+                            <TextView
+                                android:layout_marginLeft="@dimen/dimens_dp_10"
+                                android:layout_weight="0"
+                                android:layout_marginTop="0dp"
+                                android:id="@+id/tv_ekey_detail_end_time"
+                                style="@style/list_item_description2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/period"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_ekey_detail_valid_period_more"
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <include layout="@layout/layout_view_line"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/ll_permission_types"
+                style="@style/list_item_overall">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/permission_types"/>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_permission_types"
+                    style="@style/list_item_description2"
+                    android:text="@string/app_name"/>
+
+                <ImageView
+                    android:id="@+id/iv_permission_types_more"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_go_to_light_grey"/>
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/receiver"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_ekey_detail_receiver"
+                        style="@style/list_item_description2" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line"/>
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/sender"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        style="@style/list_item_description2"
+                        android:id="@+id/tv_ekey_detail_sender" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    style="@style/list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/key_status"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_ekey_status"
+                        style="@style/list_item_description2" />
+
+                </LinearLayout>
+                <include layout="@layout/layout_view_line"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    style="@style/list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/key_created_time"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_ekey_detail_sending_time"
+                        style="@style/list_item_description2" />
+
+                </LinearLayout>
+                <include layout="@layout/layout_view_line"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_ekey_detail_records"
+                style="@style/list_item_overall_minheight54dp">
+
+                <TextView
+                    android:textColor="@color/text_main"
+                    style="@style/list_item_title"
+                    android:text="@string/view_records"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_go_to_light_grey"/>
+
+            </LinearLayout>
+            <include layout="@layout/layout_view_line"/>
+
+            <TextView
+                android:id="@+id/tv_ekey_share"
+                style="@style/btn_style_main"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/share_this_key"/>
+
+            <TextView
+                android:id="@+id/tv_ekey_detail_delete"
+                style="@style/btn_style_main"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/delete"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/device_card_two_bg_selector"
+    android:padding="14dp"
+    android:orientation="vertical">
+
+    <com.populstay.populife.ui.widget.extextview.ExTextView
+        android:id="@+id/tv_device_type"
+        android:text="@string/lock_type_deadbolt"
+        android:drawablePadding="5dp"
+        android:layout_alignParentTop="true"
+        android:drawableRight="@drawable/wifi"
+        android:textColor="@color/text_gray_medium"
+        android:textSize="12sp"
+        android:layout_width="match_parent"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_height="wrap_content"/>
+
+
+    <ImageView
+        android:src="@drawable/deadbolt_inactive"
+        android:id="@+id/iv_device_icon"
+        android:layout_width="wrap_content"
+        android:maxHeight="40dp"
+        android:maxWidth="40dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/dimens_dp_10"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tv_device_name"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textColor="@drawable/device_card_text_color_selector"
+        android:maxLines="1"
+        android:text="@string/lock_type_deadbolt"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>

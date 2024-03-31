@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            style="@style/list_item_overall"
+            android:minHeight="54dp"
+            android:id="@+id/ll_invalid_code">
+
+            <TextView
+                android:id="@+id/tv_browse_invalid"
+                style="@style/list_item_title"
+                android:text="@string/about"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_go_to_light_grey"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/layout_view_line"/>
+
+
+    </LinearLayout>
+
+
+
+   <LinearLayout
+       android:id="@+id/ll_admin_code"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <LinearLayout style="@style/list_item_overall"
+           android:id="@+id/ll_touch_id_login"
+           android:minHeight="54dp">
+
+           <TextView
+               style="@style/list_item_title"
+               android:text="@string/show_administrator_code"/>
+
+           <View
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               android:layout_weight="1"/>
+
+           <Switch
+               android:id="@+id/switch_show_admin_code"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+
+       </LinearLayout>
+
+       <include
+           android:id="@+id/ll_touch_id_login_line"
+           layout="@layout/layout_view_line" />
+
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_clear_btn"
+        style="@style/btn_style_main"
+        android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginTop="@dimen/sign_action_btn_margin_top"
+        android:background="@drawable/selector_btn_stroke"
+        android:textColor="#EE2737" />
+
+
+</LinearLayout>

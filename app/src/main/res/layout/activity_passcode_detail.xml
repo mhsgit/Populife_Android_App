@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_pwd_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/code_type" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pwd_type"
+                            style="@style/list_item_description2"
+                            android:text="@string/app_name" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_passcode_detail_name"
+                style="@style/list_item_overall"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_passcode_detail_name_title"
+                    style="@style/list_item_title"
+                    android:text="@string/code_name" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_passcode_detail_name"
+                        style="@style/list_item_description2"
+                        android:text="@string/app_name" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <LinearLayout
+                android:id="@+id/ll_passcode_detail_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/remarks" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_passcode_detail_remark"
+                            style="@style/list_item_description2"
+                            android:text="@string/app_name" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/arrow_go_to_light_grey" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_passcode_detail_passcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/code_number" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_passcode_detail_passcode"
+                            style="@style/list_item_description2"
+                            android:text="@string/app_name" />
+
+                        <ImageView
+                            android:id="@+id/iv_passcode_detail_passcode_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/arrow_go_to_light_grey"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/list_item_overall"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/key_status" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    style="@style/list_item_description2"
+                    android:layout_width="wrap_content" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <LinearLayout
+                android:id="@+id/ll_passcode_detail_valid_period"
+                style="@style/list_item_overall"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/validity_period" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_passcode_detail_valid_period"
+                            style="@style/list_item_description2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/period"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_passcode_detail_start_time"
+                                style="@style/list_item_description2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:drawablePadding="@dimen/dimens_dp_10"
+                                android:text="@string/period" />
+
+                            <TextView
+                                android:id="@+id/tv_passcode_detail_end_time"
+                                style="@style/list_item_description2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimens_dp_10"
+                                android:layout_weight="0"
+                                android:text="@string/period" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_passcode_detail_valid_period_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <LinearLayout
+                android:id="@+id/ll_create_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/sender" />
+
+                    <TextView
+                        android:id="@+id/tv_passcode_detail_sender"
+                        style="@style/list_item_description2"
+                        android:layout_width="wrap_content" />
+
+                </LinearLayout>
+
+                <include
+                    layout="@layout/layout_view_line"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/key_created_time" />
+
+                    <TextView
+                        android:id="@+id/tv_passcode_detail_sending_time"
+                        style="@style/list_item_description2"
+                        android:layout_width="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <LinearLayout
+                android:id="@+id/ll_passcode_detail_records"
+                style="@style/list_item_overall_minheight54dp">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/records"
+                    android:textColor="@color/text_main" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_go_to_light_grey" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <TextView
+                android:id="@+id/tv_passcode_detail_delete"
+                style="@style/btn_style_main"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/delete" />
+
+            <TextView
+                android:id="@+id/tv_create_custom_pwd_tips_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimens_dp_10"
+                android:layout_marginBottom="20dp"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingLeft="@dimen/common_page_left_right_space"
+                android:paddingTop="@dimen/dimens_dp_10"
+                android:paddingRight="@dimen/common_page_left_right_space"
+                android:paddingBottom="@dimen/dimens_dp_10"
+                android:text="@string/edit_pwd_hint"
+                android:textColor="@color/text_gray_medium"
+                android:textSize="12sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

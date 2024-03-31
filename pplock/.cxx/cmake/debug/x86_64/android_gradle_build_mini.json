@@ -1,0 +1,19 @@
+{
+  "buildFiles": [
+    "/Users/jerry/Library/Android/sdk/ndk-bundle/build/cmake/platforms.cmake",
+    "/Users/jerry/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake",
+    "/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/jerry/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/.cxx/cmake/debug/x86_64\" clean"
+  ],
+  "buildTargetsCommand": "/Users/jerry/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/.cxx/cmake/debug/x86_64\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "ygl_aes-Debug-x86_64": {
+      "artifactName": "ygl_aes",
+      "buildCommand": "/Users/jerry/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/.cxx/cmake/debug/x86_64\" ygl_aes",
+      "abi": "x86_64",
+      "output": "/Users/jerry/Statistics/PopulStay/Projects/Lock/Manhattan/YGLock/iLockey_Android/pplock/build/intermediates/cmake/debug/obj/x86_64/libygl_aes.so"
+    }
+  }
+}

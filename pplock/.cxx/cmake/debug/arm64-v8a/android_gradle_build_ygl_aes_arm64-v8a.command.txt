@@ -1,0 +1,7 @@
+Executable : /Users/apple/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
+arguments : 
+-C
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/.cxx/cmake/debug/arm64-v8a
+ygl_aes
+jvmArgs : 
+

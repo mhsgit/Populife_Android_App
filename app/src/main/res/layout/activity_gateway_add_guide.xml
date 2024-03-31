@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_color_ffe6e7e8"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/common_page_left_right_space"
+                android:paddingTop="@dimen/dimens_dp_10"
+                android:paddingRight="@dimen/common_page_left_right_space"
+                android:paddingBottom="@dimen/dimens_dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="@string/before_pairing_the_gateway"
+                    android:textColor="@color/text_color_ffb1b3b6"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="@string/click_done_the_gateway"
+                    android:textColor="@color/text_color_ff0f1110"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/common_page_left_right_space"
+                android:layout_marginRight="@dimen/common_page_left_right_space"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/cb_confirm_activate_device"
+                    style="@style/add_device_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:drawablePadding="6dp"
+                    android:text="@string/confirm_gateway_power_hint" />
+
+                <CheckBox
+                    android:id="@+id/cb_confirm_gateway_reconnect"
+                    style="@style/add_device_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:drawablePadding="6dp"
+                    android:text="@string/confirm_gateway_reconnect_hint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_page_left_right_space"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="@dimen/common_page_left_right_space"
+                    android:gravity="left"
+                    android:text="@string/add_gateway_hint"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_next_gateway_add_guide"
+                style="@style/btn_style_main"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/common_page_left_right_space"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="@dimen/common_page_left_right_space"
+                android:enabled="false"
+                android:text="@string/next" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/gateway_check" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

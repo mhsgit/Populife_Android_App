@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:gravity="center_vertical|left"
+        android:paddingTop="@dimen/dimens_dp_10"
+        android:paddingBottom="@dimen/dimens_dp_10"
+        android:text="@string/pwd_count_tips_valid"
+        android:textColor="@color/text_color_ffb1b3b6"
+        android:textSize="14sp" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_empty_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="120dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_empty_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_empty_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="30dp"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_create_btn"
+                    style="@style/btn_style_main"
+                    android:layout_width="186dp"
+                    android:background="@drawable/selector_btn_main"
+                    android:text="@string/create_a_pwd" />
+
+            </LinearLayout>
+
+            <com.populstay.populife.ui.recycler.CommonRecyclerView
+                android:id="@+id/rv_key_pwd_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_add_more_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginRight="@dimen/common_page_left_right_space"
+                android:layout_marginBottom="34dp"
+                android:src="@drawable/ic_add_device"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

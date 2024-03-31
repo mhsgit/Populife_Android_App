@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_share_the_key_through"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:visibility="visible"
+            style="@style/list_item_overall">
+
+            <TextView
+                style="@style/list_item_title"
+                android:text="@string/share_key_through" />
+
+            <RadioGroup
+                android:id="@+id/rg_share_the_key_through"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb_share_key_through_account"
+                    style="@style/radio_btn_key_pwd"
+                    android:layout_weight="1"
+                    android:text="@string/share_key_through_account"
+                    android:minHeight="30dp"
+                    android:checked="true"
+                    android:layout_marginRight="@dimen/dimens_dp_20"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:id="@+id/rb_share_key_through_sms_link"
+                    android:layout_weight="1"
+                    style="@style/radio_btn_key_pwd"
+                    android:text="@string/share_key_through_sms_link"
+                    android:minHeight="30dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textSize="12sp"
+                android:textColor="@color/text_gray_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_share_the_key_through_hint"
+                android:text="@string/share_type_populife_account" />
+
+        </LinearLayout>
+
+        <include layout="@layout/layout_view_line" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_receiver"
+        android:orientation="vertical"
+        style="@style/list_item_overall"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            style="@style/list_item_title"
+            android:text="@string/receiver_populife" />
+
+        <LinearLayout
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                android:id="@+id/cpp_lock_send_ekey"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:ccp_showFlag="false"
+                app:ccp_showFullName="false"
+                android:gravity="center"
+                app:ccp_textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_lock_send_ekey_receiver"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:hint="@string/receiver_populife_edit_hint"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:singleLine="true"
+                android:textColor="@color/text_gray_medium"
+                android:textColorHint="@color/text_gray_light"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_lock_send_ekey_receiver"
+                android:layout_width="26dp"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:paddingLeft="8dp"
+                android:src="@drawable/ic_phone_contact_book" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_save_btn"
+        style="@style/btn_style_main"
+        android:layout_marginLeft="@dimen/common_page_left_right_space"
+        android:layout_marginRight="@dimen/common_page_left_right_space"
+        android:layout_marginTop="@dimen/sign_action_btn_margin_top"
+        android:background="@drawable/selector_btn_main"
+        android:text="@string/save" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

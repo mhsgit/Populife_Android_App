@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_out_of_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/hint_out_of_date"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="14sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_lock_detail_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_add_device" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/not_device_hint"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_lock_detail_add"
+                    style="@style/btn_style_main"
+                    android:layout_width="186dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/add_device" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_lock_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_lock_detail_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_page_left_right_space"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginRight="@dimen/common_page_left_right_space"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/lock_type_keybox"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="30sp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_lock_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:src="@drawable/product_keybox" />
+
+                    <com.populstay.populife.ui.widget.extextview.ExTextView
+                        android:id="@+id/iv_lock_battery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_battery_green_stroke"
+                        android:drawableLeft="@drawable/battery_green"
+                        android:gravity="center"
+                        android:minWidth="80dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:text="100%"
+                        android:textColor="@color/battery_green"
+                        android:textSize="14sp" />
+
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_lock_detail_unlocking"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="18dp"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:id="@+id/ll_lock_detail_unlocking"
+                                style="@style/lock_btn_style"
+                                android:layout_marginLeft="@dimen/common_page_left_right_space"
+                                android:layout_marginRight="@dimen/common_page_left_right_space">
+
+
+                                <ImageView
+                                    android:id="@+id/iv_lock_detail_unlocking"
+                                    style="@style/lock_btn_icon_style"
+                                    android:src="@drawable/unlock" />
+
+                                <TextView
+                                    android:id="@+id/tv_lock_detail_unlocking"
+                                    style="@style/lock_btn_text_style"
+                                    android:text="@string/tap_to_unlock_for_single_btn" />
+
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_lock_detail_unlock_lock"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/common_page_left_right_space"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginRight="@dimen/common_page_left_right_space"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:id="@+id/ll_lock_detail_lock"
+                                style="@style/lock_btn_style_2"
+                                android:layout_marginRight="@dimen/dimens_dp_10">
+
+                                <ImageView
+                                    android:id="@+id/iv_lock_detail_lock"
+                                    style="@style/lock_btn_icon_style"
+                                    android:src="@drawable/lock" />
+
+                                <TextView
+                                    android:id="@+id/tv_lock_detail_lock"
+                                    style="@style/lock_btn_text_style"
+                                    android:text="@string/tap_to_lock" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/ll_lock_detail_unlock"
+                                style="@style/lock_btn_style_2"
+                                android:layout_marginLeft="@dimen/dimens_dp_10">
+
+                                <ImageView
+                                    android:id="@+id/iv_lock_detail_unlock"
+                                    style="@style/lock_btn_icon_style"
+                                    android:src="@drawable/unlock" />
+
+                                <TextView
+                                    android:id="@+id/tv_lock_detail_unlock"
+                                    style="@style/lock_btn_text_style"
+                                    android:text="@string/tap_to_unlock" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lock_hint_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimens_dp_10"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_lock_last_msg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/common_page_left_right_space"
+                            android:paddingRight="@dimen/common_page_left_right_space"
+                            android:text="@string/latest_unlocked_by_you"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tv_lock_last_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:paddingLeft="@dimen/common_page_left_right_space"
+                            android:paddingRight="@dimen/common_page_left_right_space"
+                            android:textColor="@color/text_color_ffb1b3b6"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                    <include layout="@layout/layout_space_vertical" />
+
+                    <com.populstay.populife.ui.MyGridView
+                        android:id="@+id/gv_lock_detail_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/text_gray_e6e7e8"
+                        android:horizontalSpacing="1dp"
+                        android:numColumns="4"
+                        android:overScrollMode="never"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:scrollbars="none"
+                        android:verticalSpacing="1dp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <include
+                android:id="@+id/fl_device_list"
+                layout="@layout/home_device_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

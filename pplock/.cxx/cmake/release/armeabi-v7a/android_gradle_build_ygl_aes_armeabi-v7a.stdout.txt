@@ -1,0 +1,67 @@
+ninja: Entering directory `/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/.cxx/cmake/release/armeabi-v7a'
+[1/2] Building CXX object CMakeFiles/ygl_aes.dir/main.cpp.o
+FAILED: CMakeFiles/ygl_aes.dir/main.cpp.o 
+/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=armv7-none-linux-androideabi18 --gcc-toolchain=/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot  -Dygl_aes_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -Oz -DNDEBUG  -fPIC -MD -MT CMakeFiles/ygl_aes.dir/main.cpp.o -MF CMakeFiles/ygl_aes.dir/main.cpp.o.d -o CMakeFiles/ygl_aes.dir/main.cpp.o -c '/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp'
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:92:5: error: no matching function for call to 'AESDecrypt'
+    AESDecrypt(cipherArray,16,keyArray,16,0,cipherArray,plainArray);
+    ^~~~~~~~~~
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/ygl_aes.h:29:6: note: candidate function not viable: no known conversion from 'jbyteArray' (aka '_jbyteArray *') to 'unsigned char *' for 1st argument
+void AESDecrypt(unsigned char *cipher, unsigned short inLen, unsigned char *Key, unsigned short KeyLen, unsigned char mode, unsigned char *iv, unsigned char *plain);
+     ^
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:101:35: error: use of undeclared identifier 'TARGET_READ'
+                (void*) android_native_aes }, { TARGET_READ, TARGET_READ_SIG,
+                                                ^
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:101:48: error: use of undeclared identifier 'TARGET_READ_SIG'
+                (void*) android_native_aes }, { TARGET_READ, TARGET_READ_SIG,
+                                                             ^
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:102:11: error: use of undeclared identifier 'android_native_read'
+                (void*) android_native_read } };
+                        ^
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:106:11: error: member reference type 'JavaVM' (aka '_JavaVM') is not a pointer; did you mean to use '.'?
+        if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+            ~~~~~^~
+                 .
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:106:39: error: too many arguments to function call, expected 2, have 3
+        if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+            ~~~~~~~~~~~~~                    ^~~~~~~~~~~~~~~
+/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h:1128:25: note: expanded from macro 'JNI_VERSION_1_4'
+#define JNI_VERSION_1_4 0x00010004
+                        ^~~~~~~~~~
+/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h:1061:10: note: 'GetEnv' declared here
+    jint GetEnv(void** env, jint version)
+         ^
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:110:23: error: member reference type 'JNIEnv' (aka '_JNIEnv') is not a pointer; did you mean to use '.'?
+        jclass clazz = (*env)->FindClass(env, TARGET_CLASS);
+                       ~~~~~~^~
+                             .
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:110:40: error: too many arguments to function call, expected single argument 'name', have 2 arguments
+        jclass clazz = (*env)->FindClass(env, TARGET_CLASS);
+                       ~~~~~~~~~~~~~~~~~      ^~~~~~~~~~~~
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:6:22: note: expanded from macro 'TARGET_CLASS'
+#define TARGET_CLASS "com/populock/manhattan/sdk/util/YGLAESUtil"
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h:502:12: note: 'FindClass' declared here
+    jclass FindClass(const char* name)
+           ^
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:115:12: error: member reference type 'JNIEnv' (aka '_JNIEnv') is not a pointer; did you mean to use '.'?
+        if ((*env)->RegisterNatives(env, clazz, gMethods,
+            ~~~~~~^~
+                  .
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:116:10: error: invalid application of 'sizeof' to an incomplete type 'const JNINativeMethod []'
+                        sizeof(gMethods) / sizeof(gMethods[0])) != JNI_OK) {
+                              ^~~~~~~~~~
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:125:11: error: member reference type 'JavaVM' (aka '_JavaVM') is not a pointer; did you mean to use '.'?
+        if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+            ~~~~~^~
+                 .
+/Volumes/PLEXTOR-256M6S - 数据/Users/apple/Desktop/PopulifeDocuments/PopulifeAndroidIntertManhattan/Populife_iLockey_20211020/Populife_Android_New/pplock/src/main/cpp/main.cpp:125:39: error: too many arguments to function call, expected 2, have 3
+        if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+            ~~~~~~~~~~~~~                    ^~~~~~~~~~~~~~~
+/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h:1128:25: note: expanded from macro 'JNI_VERSION_1_4'
+#define JNI_VERSION_1_4 0x00010004
+                        ^~~~~~~~~~
+/Users/apple/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h:1061:10: note: 'GetEnv' declared here
+    jint GetEnv(void** env, jint version)
+         ^
+12 errors generated.
+ninja: build stopped: subcommand failed.

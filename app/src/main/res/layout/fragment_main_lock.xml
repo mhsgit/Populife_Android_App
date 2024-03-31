@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_page_title_bar_height"
+        android:background="@color/colorTitleBarBg"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/iv_browse_user_manual"
+            android:paddingLeft="@dimen/common_page_left_right_space">
+
+            <TextView
+                android:id="@+id/tv_switch_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/arrow_go_to"
+                android:drawablePadding="10dp"
+                android:ellipsize="middle"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:singleLine="true"
+                android:text="@string/my_space"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/common_page_title_text"
+                tools:ignore="EllipsizeMaxLines" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_browse_user_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/rl_main_lock_online_service"
+            android:padding="10dp"
+            android:src="@drawable/user_guide"
+            android:visibility="gone" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_main_lock_online_service"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/support_icon" />
+
+            <ImageView
+                android:id="@+id/iv_main_lock_msg_new"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_circle_red"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_container_main_lock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.populstay.populife.ui.NoScrollViewPager
+            android:id="@+id/nsv_main_lock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_main_lock_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="22dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_add_device" />
+
+    </FrameLayout>
+
+</LinearLayout>
