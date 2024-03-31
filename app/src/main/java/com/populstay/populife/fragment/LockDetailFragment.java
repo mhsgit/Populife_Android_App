@@ -1347,7 +1347,11 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 								if (mCurKEY.getLockId() < 0) {
 									parseMHTLockInfo(lockInfo);
 								} else {
-									parseKJXLockInfo(lockInfo);
+									try{
+										parseKJXLockInfo(lockInfo);
+									}catch (Exception e){
+										e.printStackTrace();
+									}
 								}
 								showLastUnLockTime(DateUtil.getDateToString(PeachPreference.getLastUnlockTime(mCurKEY.getLockId()),
 										DateUtil.DATE_TIME_PATTERN_1), PeachPreference.getLastUnlockType(mCurKEY.getLockId()));
@@ -1405,31 +1409,31 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		//mKeyType = lockInfo.getInteger("keyType");
 		//String userType = lockInfo.getString("userType");
 		//String keyStatus = lockInfo.getString("keyStatus");
-		int lockId = lockInfo.getInteger("lockId");//科技侠的锁id
+		int lockId = lockInfo.containsKey("lockId") ? lockInfo.getInteger("lockId") : 0;//科技侠的锁id
 		//int keyId = lockInfo.getInteger("keyId");
-		String lockVersion = String.valueOf(lockInfo.getJSONObject("lockVersion"));
-		String lockName = lockInfo.getString("name");//锁的蓝牙名称
-		String lockAlias = lockInfo.getString("alias");//锁别名
-		String lockMac = lockInfo.getString("mac");//锁mac地址
-		int electricQuantity = lockInfo.getInteger("electricQuantity");//锁电量
-		int lockFlagPos = lockInfo.getInteger("flagPos");//锁开门标志位
+		String lockVersion = lockInfo.containsKey("lockVersion") ? String.valueOf(lockInfo.getJSONObject("lockVersion")) : "";
+		String lockName = lockInfo.containsKey("name") ? lockInfo.getString("name") : "";//锁的蓝牙名称
+		String lockAlias = lockInfo.containsKey("alias") ? lockInfo.getString("alias") : "";//锁别名
+		String lockMac = lockInfo.containsKey("mac") ? lockInfo.getString("mac") : "";//锁mac地址
+		int electricQuantity = lockInfo.containsKey("electricQuantity") ? lockInfo.getInteger("electricQuantity") : 0;//锁电量
+		int lockFlagPos = lockInfo.containsKey("flagPos") ? lockInfo.getInteger("flagPos") : 0;//锁开门标志位
 		String adminPwd = "";
 		if (lockInfo.containsKey("adminPwd"))
 			adminPwd = lockInfo.getString("adminPwd");//管理员钥匙会有，锁的管理员密码，锁管理相关操作需要携带，校验管理员权限
-		String lockKey = lockInfo.getString("key");//锁开门的关键信息，开门用的
+		String lockKey = lockInfo.containsKey("key") ? lockInfo.getString("key") : "";//锁开门的关键信息，开门用的
 		String noKeyPwd = "";
 		if (lockInfo.containsKey("noKeyPwd"))
 			noKeyPwd = lockInfo.getString("noKeyPwd");//管理员键盘密码
 //		String deletePwd = "";
 //		if (lockInfo.containsKey("deletePwd"))
 //			deletePwd = lockInfo.getString("deletePwd");
-		String pwdInfo = lockInfo.getString("pwdInfo");//密码数据，用于生成密码，SDK提供
-		long timestamp = lockInfo.getLong("timestamp");//时间戳，用于初始化密码数据
-		String aesKeyStr = lockInfo.getString("aesKey");//Aes加解密key
-		long startDate = lockInfo.getLong("startDate") * 1000;
-		long endDate = lockInfo.getLong("endDate") * 1000;
-		int specialValue = lockInfo.getInteger("specialValue");//锁特征值，用于表示锁支持的功能
-		int timezoneRawOffset = lockInfo.getInteger("timezoneRawOffSet");//锁所在时区和UTC时区时间的差数，单位milliseconds
+		String pwdInfo = lockInfo.containsKey("pwdInfo") ? lockInfo.getString("pwdInfo") : "";//密码数据，用于生成密码，SDK提供
+		long timestamp = lockInfo.containsKey("timestamp") ? lockInfo.getLong("timestamp") : 0;//时间戳，用于初始化密码数据
+		String aesKeyStr = lockInfo.containsKey("aesKey") ? lockInfo.getString("aesKey") : "";//Aes加解密key
+		long startDate = lockInfo.containsKey("startDate") ? lockInfo.getLong("startDate") * 1000 : 1000;
+		long endDate = lockInfo.containsKey("endDate ") ? lockInfo.getLong("endDate") * 1000 : 1000;
+		int specialValue = lockInfo.containsKey("specialValue") ? lockInfo.getInteger("specialValue") : 0;//锁特征值，用于表示锁支持的功能
+		int timezoneRawOffset = lockInfo.containsKey("timezoneRawOffSet") ? lockInfo.getInteger("timezoneRawOffSet") : 0;//锁所在时区和UTC时区时间的差数，单位milliseconds
 		int keyRight = lockInfo.containsKey("keyRight") ? lockInfo.getInteger("keyRight") : 0;
 //		int remoteEnable = lockInfo.getInteger("remoteEnable");
 //		int keyboardPwdVersion=lockInfo.getInteger("keyboardPwdVersion");
@@ -1437,23 +1441,23 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 //		if (lockInfo.containsKey("allowRemoteUnlock"))
 //			isAllowRemoteUnlock = lockInfo.getBoolean("allowRemoteUnlock");
 //		String remarks=lockInfo.getString();
-		String modelNum = lockInfo.getString("modelNum");//产品型号（用于锁固件升级）
-		String hardwareRevision = lockInfo.getString("hardwareRevision");//硬件版本号（用于锁固件升级）
-		String firmwareRevision = lockInfo.getString("firmwareRevision");//固件版本号（用于锁固件升级）
+		String modelNum = lockInfo.containsKey("modelNum") ? lockInfo.getString("modelNum") : "";//产品型号（用于锁固件升级）
+		String hardwareRevision = lockInfo.containsKey("hardwareRevision") ? lockInfo.getString("hardwareRevision") : "";//硬件版本号（用于锁固件升级）
+		String firmwareRevision = lockInfo.containsKey("firmwareRevision") ? lockInfo.getString("firmwareRevision") : "";//固件版本号（用于锁固件升级）
 		//String group = lockInfo.getString("homeName");
 
 
-		long initDate = lockInfo.getLong("initDate");//初始化时间
-		int keyId = lockInfo.getInteger("keyId");//管理员钥匙id
-		int userKeyId = lockInfo.getInteger("userKeyId");//用户钥匙id，普通用户用于删除钥匙
-		int status = lockInfo.getInteger("status");//锁状态（0删除，1正常）
-		String keyStatus = lockInfo.getString("keyStatus");//钥匙的状态（110401：正常使用，110402：待接收，110405：已冻结，110408：已删除，110410：已重置,110500:已过期）
-		int protocolType = lockInfo.getInteger("protocolType");//协议类型
-		int protocolVersion = lockInfo.getInteger("protocolVersion");//锁版本信息
-		int scene = lockInfo.getInteger("scene");//场景
-		int orgId = lockInfo.getInteger("orgId");//应用商
-		int groupId = lockInfo.getInteger("groupId");//公司
-		boolean isAdmin = lockInfo.getBoolean("isAdmin");//true为管理员，false否
+		long initDate = lockInfo.containsKey("initDate") ? lockInfo.getLong("initDate") : 0;//初始化时间
+		int keyId = lockInfo.containsKey("keyId") ? lockInfo.getInteger("keyId") : 0;//管理员钥匙id
+		int userKeyId = lockInfo.containsKey("userKeyId") ? lockInfo.getInteger("userKeyId") : 0;//用户钥匙id，普通用户用于删除钥匙
+		int status = lockInfo.containsKey("status") ? lockInfo.getInteger("status") : 0;//锁状态（0删除，1正常）
+		String keyStatus = lockInfo.containsKey("keyStatus") ? lockInfo.getString("keyStatus") : "";//钥匙的状态（110401：正常使用，110402：待接收，110405：已冻结，110408：已删除，110410：已重置,110500:已过期）
+		int protocolType = lockInfo.containsKey("protocolType") ? lockInfo.getInteger("protocolType") : 0;//协议类型
+		int protocolVersion = lockInfo.containsKey("protocolVersion") ? lockInfo.getInteger("protocolVersion") : 0;//锁版本信息
+		int scene = lockInfo.containsKey("scene") ? lockInfo.getInteger("scene") : 0;//场景
+		int orgId = lockInfo.containsKey("orgId") ? lockInfo.getInteger("orgId") : 0;//应用商
+		int groupId = lockInfo.containsKey("groupId") ? lockInfo.getInteger("groupId") : 0;//公司
+		boolean isAdmin = lockInfo.containsKey("isAdmin") ? lockInfo.getBoolean("isAdmin") : false;//true为管理员，false否
 
 
 		mCurKEY.setUserId(PeachPreference.readUserId());
