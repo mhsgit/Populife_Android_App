@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 7
         versionName "1.7"
     }
@@ -26,4 +26,4 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.4.0'
     implementation 'com.danikula:videocache:2.7.0'
 }
-apply from: "bintrayUpload.gradle"
+//apply from: "bintrayUpload.gradle"

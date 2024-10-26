@@ -56,6 +56,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import androidx.core.app.ActivityCompat;
@@ -99,7 +100,7 @@ public class MainMeFragment_backup extends BaseVisibilityFragment implements Vie
 	private String mAvatarUrl = "";
 	private String mNickname = "";
 	private Uri mUri;
-	private String mPath = Environment.getExternalStorageDirectory() + File.separator + "photo.jpeg";
+	private String mPath = "";
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -145,6 +146,7 @@ public class MainMeFragment_backup extends BaseVisibilityFragment implements Vie
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_main_me_backup, null);
+		mPath = requireActivity().getExternalFilesDir("photo").getAbsolutePath() + File.separator + "photo.jpeg";
 
 		initView(view);
 		initListener();

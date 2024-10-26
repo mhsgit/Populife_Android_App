@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.populstay.populife.util.log.PeachLogger;
@@ -48,7 +49,11 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
 		intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
 		intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_OFF");
 		intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_ON");
-		registerReceiver(mBluetoothStateBroadcastReceiver, intentFilter);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+			registerReceiver(mBluetoothStateBroadcastReceiver, intentFilter,RECEIVER_EXPORTED);
+		}else {
+			registerReceiver(mBluetoothStateBroadcastReceiver, intentFilter);
+		}
 	}
 
 	private void unregisterBluetoothReceiver() {
@@ -64,7 +69,11 @@ public abstract class BluetoothBaseActivity extends BaseActivity {
 		}
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("android.location.PROVIDERS_CHANGED");
-		registerReceiver(mLocationProviderChangedReceiver, intentFilter);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+			registerReceiver(mLocationProviderChangedReceiver, intentFilter,RECEIVER_EXPORTED);
+		}else {
+			registerReceiver(mLocationProviderChangedReceiver, intentFilter);
+		}
 	}
 
 	private void unregisterLocationProviderChangedReceiver() {

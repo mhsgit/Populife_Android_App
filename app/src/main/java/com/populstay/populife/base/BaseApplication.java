@@ -13,7 +13,7 @@ import com.meiqia.core.MQManager;
 import com.meiqia.core.callback.OnInitCallback;
 import com.meiqia.core.callback.OnRegisterDeviceTokenCallback;
 import com.meiqia.meiqiasdk.util.MQConfig;
-import com.mob.MobSDK;
+//import com.mob.MobSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.CsvFormatStrategy;
@@ -85,7 +85,7 @@ public class BaseApplication extends Application {
 		Log.d(TAG,"onCreate");
 
 		// 初始化分享
-		MobSDK.init(this);
+		//MobSDK.init(this);
 
 		// 初始化美洽（在线客服）
 		initMeiqiaSDK();

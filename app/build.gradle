@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.mob.sdk'
+//apply plugin: 'com.mob.sdk'
 
 android {
 
@@ -8,9 +8,9 @@ android {
     defaultConfig {
         applicationId "com.populstay.populife"
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 228
-        versionName "3.2.8"
+        targetSdkVersion 34
+        versionCode 229
+        versionName "3.2.9"
         ndkVersion = "22.1.7171670"
         ndk {
             // 设置支持的 SO 库构架
@@ -68,90 +68,90 @@ android {
     }
 }
 
-MobSDK {
-    fp true // 严格模式
-}
-
-MobSDK {
-    appKey "28510a8c8b414"
-    appSecret "15d6b7fb30e926f83681ec796dc7d63f"
-
-    googlePlay true
-
-    permissions {
-        exclude "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION", "android.permission.READ_SMS", "android.permission.CHANGE_WIFI_STATE", "android.permission.READ_CONTACTS", "android.permission.RECEIVE_SMS"
-    }
-
-    ShareSDK {
-        devInfo {
-            ShortMessage {
-                id 1
-                sortId 1
-                enable true
-            }
-
-            Email {
-                id 2
-                sortId 2
-                enable true
-            }
-
-            Wechat {
-                id 3
-                sortId 3
-                enable true
-                appId "wx198224236766cbeb"
-                appSecret "6792d68b1e366a00e57f53f1155d64f3"
-            }
-
-            GooglePlus {
-                id 4
-                sortId 4
-                appId "236300675100-am5pm8km7md1memjevq8rl9pg5c4s4b8.apps.googleusercontent.com"
-                shareByAppClient true
-                enable true
-            }
-
-            WhatsApp {
-                id 5
-                sortId 5
-                enable true
-            }
-
-            Line {
-                id 6
-                sortId 6
-                enable true
-            }
-
-//            Facebook {
-//                id 6
-//                sortId 6
-//                appKey = "299024887611828"
-//                appSecret = "3c3c5e077c728aede4caa4d9d678d7b6"
-//                callbackUri "com.populstay.populife"
+//MobSDK {
+//    fp true // 严格模式
+//}
+//
+//MobSDK {
+//    appKey "28510a8c8b414"
+//    appSecret "15d6b7fb30e926f83681ec796dc7d63f"
+//
+//    googlePlay true
+//
+//    permissions {
+//        exclude "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION", "android.permission.READ_SMS", "android.permission.CHANGE_WIFI_STATE", "android.permission.READ_CONTACTS", "android.permission.RECEIVE_SMS"
+//    }
+//
+//    ShareSDK {
+//        devInfo {
+//            ShortMessage {
+//                id 1
+//                sortId 1
+//                enable true
+//            }
+//
+//            Email {
+//                id 2
+//                sortId 2
+//                enable true
+//            }
+//
+//            Wechat {
+//                id 3
+//                sortId 3
+//                enable true
+//                appId "wx198224236766cbeb"
+//                appSecret "6792d68b1e366a00e57f53f1155d64f3"
+//            }
+//
+//            GooglePlus {
+//                id 4
+//                sortId 4
+//                appId "236300675100-am5pm8km7md1memjevq8rl9pg5c4s4b8.apps.googleusercontent.com"
 //                shareByAppClient true
 //                enable true
 //            }
-//            Facebook {
+//
+//            WhatsApp {
+//                id 5
+//                sortId 5
+//                enable true
+//            }
+//
+//            Line {
 //                id 6
 //                sortId 6
-//                appKey = "319517471952176"
-//                appSecret = "4d4f72aae3bc922293850ac862365b12"
-//                callbackUri "com.populstay.populife"
-//                shareByAppClient true
 //                enable true
 //            }
-
-//            FacebookMessenger {
-//                id 7
-//                sortId 7
-//                appId "107704292745179"
-//                enable true
-//            }
-        }
-    }
-}
+//
+////            Facebook {
+////                id 6
+////                sortId 6
+////                appKey = "299024887611828"
+////                appSecret = "3c3c5e077c728aede4caa4d9d678d7b6"
+////                callbackUri "com.populstay.populife"
+////                shareByAppClient true
+////                enable true
+////            }
+////            Facebook {
+////                id 6
+////                sortId 6
+////                appKey = "319517471952176"
+////                appSecret = "4d4f72aae3bc922293850ac862365b12"
+////                callbackUri "com.populstay.populife"
+////                shareByAppClient true
+////                enable true
+////            }
+//
+////            FacebookMessenger {
+////                id 7
+////                sortId 7
+////                appId "107704292745179"
+////                enable true
+////            }
+//        }
+//    }
+//}
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -203,7 +203,11 @@ dependencies {
     // PDF 阅读器
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
     // 在线客服（美洽）
-    implementation 'com.meiqia:meiqiasdk:3.5.9'
+    //implementation 'com.meiqia:meiqiasdk:3.5.9'
+    //implementation 'com.meiqia:meiqiasdk:+'
+    //implementation 'com.meiqia:androidx:4.0.3'
+    //implementation 'com.meiqia:androidx:4.0.15'
+    implementation 'com.meiqia:androidx:+'
     // 事件分发
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
@@ -225,5 +229,9 @@ dependencies {
     implementation 'moe.feng.support.biometricprompt:library:1.0.0'
     implementation 'androidx.biometric:biometric:1.1.0'
     implementation 'com.tencent.bugly:crashreport:latest.release'
+
+    // 权限请求处理库
+    //implementation 'pub.devrel:easypermissions:3.0.0'
+    //implementation 'com.guolindev.permissionx:permissionx:1.8.1'
 
 }

@@ -1,5 +1,7 @@
 package com.populstay.populife.base;
 
+import static com.populstay.populife.app.MyApplication.mTTLockAPI;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -16,8 +18,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.meiqia.meiqiasdk.imageloader.MQImage;
+import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.activity.LoginVerifyActivity;
 import com.populstay.populife.activity.SignActivity;
@@ -33,6 +44,7 @@ import com.populstay.populife.permission.PermissionListener;
 import com.populstay.populife.push.EventPushService;
 import com.populstay.populife.sign.ISignListener;
 import com.populstay.populife.sign.SignHandler;
+import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.activity.ActivityCollector;
 import com.populstay.populife.util.bluetooth.BluetoothUtil;
@@ -51,25 +63,21 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
 
 /**
  * Created by Jerry
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity{
 
 	private static final int REQUEST_CODE_PERMISSION = 30;
 	@RequiresApi(api = 31)
 	public static String[] PERMISSION_BLE_SCAN_CONNECT = new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};
+
+	public static String[] PERMISSION_IMAGES = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) ?  new String[]{Manifest.permission.READ_MEDIA_IMAGES} : new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -95,7 +103,11 @@ public class BaseActivity extends AppCompatActivity {
 		if (!EventBus.getDefault().isRegistered(this)) {
 			EventBus.getDefault().register(this);
 		}
-		registerReceiver(mReceiver, getIntentFilter());
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+			registerReceiver(mReceiver, getIntentFilter(),RECEIVER_EXPORTED);
+		}else {
+			registerReceiver(mReceiver, getIntentFilter());
+		}
 //		// 注册美洽
 //		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, intentFilter);
 
@@ -469,6 +481,9 @@ public class BaseActivity extends AppCompatActivity {
 					mPermissionListener.onDenied(deniedPermissions);
 				}
 			}
+
+		}else{
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 
@@ -595,7 +610,11 @@ public class BaseActivity extends AppCompatActivity {
 		}
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-		registerReceiver(mNetStateChangeReceiver, intentFilter);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+			registerReceiver(mNetStateChangeReceiver, getIntentFilter(),RECEIVER_EXPORTED);
+		}else {
+			registerReceiver(mNetStateChangeReceiver, getIntentFilter());
+		}
 	}
 
 	private void unregisterNetStateChangeReceiver() {
@@ -667,5 +686,40 @@ public class BaseActivity extends AppCompatActivity {
 				softReference.get().onNetStateChange(isNetEnable);
 			}
 		}
+	}
+
+	public void startImServiceActivity(Context context){
+		HashMap<String, String> clientInfo = new HashMap<>();
+		clientInfo.put("userId", PeachPreference.readUserId());
+		clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
+		clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
+		MQImage.setImageLoader(new MQGlideImageLoader());
+		startActivity(new MQIntentBuilder(context).
+				setCustomizedId(PeachPreference.readUserId())
+				.setClientInfo(clientInfo)
+				.updateClientInfo(clientInfo)
+				.build());
+
+		/*requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+				new PermissionListener() {
+					@Override
+					public void onGranted() {
+						HashMap<String, String> clientInfo = new HashMap<>();
+						clientInfo.put("userId", PeachPreference.readUserId());
+						clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
+						clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
+						MQImage.setImageLoader(new MQGlideImageLoader());
+						startActivity(new MQIntentBuilder(GatewayAddGuideActivity.this).
+								setCustomizedId(PeachPreference.readUserId())
+								.setClientInfo(clientInfo)
+								.updateClientInfo(clientInfo)
+								.build());
+					}
+
+					@Override
+					public void onDenied(List<String> deniedPermissions) {
+						toast(R.string.note_permission_external_storage);
+					}
+				});*/
 	}
 }

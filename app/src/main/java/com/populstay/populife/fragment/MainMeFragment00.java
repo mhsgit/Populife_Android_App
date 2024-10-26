@@ -55,6 +55,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import androidx.core.app.ActivityCompat;
@@ -87,7 +88,7 @@ public class MainMeFragment00 extends BaseVisibilityFragment implements View.OnC
 	private static final int REQUEST_CODE_BIND = 2;
 	private PermissionListener mPermissionListener;
 	// 创建一个以当前系统时间为名称的文件，防止重复
-	private File tempFile = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());
+	private File tempFile = null;
 	private CircleImageView mCivAvatar;
 	private ImageView mIvMail;
 	private TextView mTvAccount, mTvNickname, mTvMailTitle, mTvMailContent, mTvExit, mTvDeleteAccount;
@@ -161,6 +162,7 @@ public class MainMeFragment00 extends BaseVisibilityFragment implements View.OnC
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_main_me, null);
+		tempFile = new File(requireActivity().getExternalFilesDir("photo").getAbsolutePath(), getPhotoFileName());
 
 		initView(view);
 		initListener();

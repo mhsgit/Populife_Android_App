@@ -1,13 +1,18 @@
 package com.populstay.populife.fragment;
 
+import static android.content.Context.RECEIVER_EXPORTED;
+import static android.content.Context.RECEIVER_NOT_EXPORTED;
+
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -82,6 +87,7 @@ import java.util.List;
 import java.util.WeakHashMap;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -306,7 +312,11 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 
 	private void registerReceiver() {
 		if (getActivity() != null) {
-			getActivity().registerReceiver(mReceiver, getIntentFilter());
+			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+				getActivity().registerReceiver(mReceiver, getIntentFilter(),RECEIVER_EXPORTED);
+			}else {
+				getActivity().registerReceiver(mReceiver, getIntentFilter());
+			}
 		}
 	}
 

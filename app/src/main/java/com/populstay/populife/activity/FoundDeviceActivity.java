@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -244,7 +245,11 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 
 		mAdapter = new FoundDeviceAdapter(FoundDeviceActivity.this, mMHTLockList, mKJXLockList);
 		mListView.setOnItemClickListener(this);
-		registerReceiver(mReceiver, getIntentFilter());
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+			registerReceiver(mReceiver, getIntentFilter(),RECEIVER_EXPORTED);
+		}else {
+			registerReceiver(mReceiver, getIntentFilter());
+		}
 		//It needs location permission to start bluetooth scan,or it can not scan device
 		requestRuntimePermissions(isAndroid12() ? PERMISSION_BLE_SCAN_CONNECT
 						: new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
@@ -325,29 +330,7 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 		tvSupport.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-						new PermissionListener() {
-							@Override
-							public void onGranted() {
-								HashMap<String, String> clientInfo = new HashMap<>();
-								clientInfo.put("userId", PeachPreference.readUserId());
-								clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-								clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-								MQImage.setImageLoader(new MQGlideImageLoader());
-								startActivity(new MQIntentBuilder(FoundDeviceActivity.this).
-										setCustomizedId(PeachPreference.readUserId())
-										.setClientInfo(clientInfo)
-										.updateClientInfo(clientInfo)
-										.build());
-							}
-
-							@Override
-							public void onDenied(List<String> deniedPermissions) {
-								toast(R.string.note_permission_external_storage);
-							}
-						});
-
+				startImServiceActivity(FoundDeviceActivity.this);
 			}
 		});
 	}

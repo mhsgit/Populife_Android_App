@@ -728,7 +728,7 @@ public class MaintenanceRequestActivity extends BaseActivity implements View.OnC
                         @Override
                         public void onGranted() {
                             // 调用拍照
-                            mPath = Environment.getExternalStorageDirectory() + File.separator + System.currentTimeMillis() + "photo.jpeg";
+                            mPath = getExternalFilesDir("photo").getAbsolutePath() + File.separator + System.currentTimeMillis() + "photo.jpeg";
                             mUri = FileProvider.getUriForFile(MaintenanceRequestActivity.this, BuildConfig.APPLICATION_ID + ".provider", new File(mPath));
                             Utils.takePhoto(MaintenanceRequestActivity.this, mPath, REQUEST_CODE_CARMERA, mUri);
                         }

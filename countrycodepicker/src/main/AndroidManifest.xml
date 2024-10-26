@@ -5,6 +5,7 @@
 
         <activity
             android:name="com.rilixtech.widget.countrycodepicker.ex.CountryCodeActivity"
+            android:exported="false"
             android:theme="@style/AppTheme" />
     </application>
 

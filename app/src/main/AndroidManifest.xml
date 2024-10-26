@@ -12,8 +12,13 @@
     <!-- 读取通讯录 -->
   <!--  <uses-permission android:name="android.permission.READ_CONTACTS" />-->
     <!-- 文件读写 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!--屏蔽选择部分图片的权限-->
+   <!-- <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />-->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 指纹识别 -->
@@ -53,19 +58,21 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:name">
         <activity
+            android:exported="false"
             android:name=".activity.LockSoundActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ResetPwdActivity"
             android:screenOrientation="portrait" />
         <!-- Register Bluetooth Service -->
         <!-- Register Bluetooth Service -->
-        <service android:name="com.populock.manhattan.sdk.service.BleService" />
-        <service android:name="com.ttlock.bl.sdk.service.BluetoothLeService" /> <!-- Register Device Firmware Upgrade Service -->
+        <service android:name="com.populock.manhattan.sdk.service.BleService" android:exported="true"/>
+        <service android:name="com.ttlock.bl.sdk.service.BluetoothLeService" android:exported="true"/> <!-- Register Device Firmware Upgrade Service -->
         <service
             android:name="com.ttlock.bl.sdk.service.DfuService"
             android:exported="true" /> <!-- 事件推送服务 -->
-        <service android:name=".push.EventPushService" />
+        <service android:name=".push.EventPushService"       android:exported="true"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -108,87 +115,114 @@
             </intent-filter>
         </activity>
         <activity
+            android:exported="false"
             android:name=".activity.SignActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockAddSelectTypeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ModifyNicknameActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.CustomerServiceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ModifyPwdActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.AccountBindActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.MessageListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.MessageDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.FeedbackListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.SubmitNewFeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.CommonQuestionActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.CommonQuestionDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockGroupListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockGroupEditActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockAddGuideKeyboxOpenActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockAddGuideActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.FoundDeviceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockOperateRecordActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockSendEkeyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockSendPasscodeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockManageBluetoothKeyActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockManagePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockSettingsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockNameAddActivity"
             android:screenOrientation="portrait">
 
@@ -200,190 +234,251 @@
 
         </activity>
         <activity
+            android:exported="false"
             android:name=".activity.LockDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockOperateRecordSearchActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.EkeyDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.PasscodeDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ModifyLockNameActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ModifyAdminPasscodeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockGroupSelectActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockTimeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockUpdateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockAutoLockingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockUserListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockUserDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ExpiringKeyListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.PasscodeRecordActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.EkeyRecordActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.GatewayListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.GatewayAddGuideActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.DeleteAccountActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.EkeyPeriodModifyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.EkeyPermissionModifyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.EkeyShareModifyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.GatewayAddActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.PasscodePeriodModifyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.GatewayBindedLockListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LockManageIcCardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.GatewayBindedLockDetailActivity"
             android:screenOrientation="portrait" /> <!-- 图片剪裁Activity -->
         <activity
+            android:exported="false"
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".activity.LockRemoteUnlockConfigActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.FingerprintIcCardAddConfigActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.IcCardKeyboardOperateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.IcCardUploadActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.IcCardBluetoothAddActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.LoginVerifyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.PrivacyPolicyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ChangeLanguageActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.PDFActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".home.HomeListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".home.HomeDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".home.HomeCreateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ActivateDeviceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.AddDeviceSuccessActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.AddDeviceFailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".keypwdmanage.KeyPwdManageActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".keypwdmanage.KeyPwdTypeSelectActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".me.PersonalCenterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".me.ServiceSupportActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintServiceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintenanceRequestActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintAfterSaleProcessActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintRequestListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintSearchActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintDeviceListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintServicePopuCarePayActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintWorkOrderActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintServiceDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".maintservice.MaintWarrantyStatusActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".keypwdmanage.KeyPwdMoreActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".keypwdmanage.ModifyPinCodeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".keypwdmanage.KeyCreateSuccessActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".activity.ModifyCommonPasscodeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HelpActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
     </application>

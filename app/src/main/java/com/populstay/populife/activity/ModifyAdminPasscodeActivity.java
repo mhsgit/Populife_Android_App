@@ -77,13 +77,14 @@ public class ModifyAdminPasscodeActivity extends BaseActivity {
 		mTvSave = findViewById(R.id.tv_save);
 		mEtInput = findViewById(R.id.et_modify_passcode);
 		TextView lenLimitTV = findViewById(R.id.tv_len_limit);
-		if (isMHLock) {//如果是曼哈顿
+		if (isMHLock || mKey.getLockId() < 0) {//如果是曼哈顿
 			lenLimitTV.setText(R.string.note_mh_passcode_format);
 			mEtInput.setHint(getResources().getString(R.string.passcode_format_6_8_digits));
-		}
-		if (mKey.getLockId() < 0) {
-			lenLimitTV.setText(R.string.note_mh_passcode_format);
-			mEtInput.setHint(getResources().getString(R.string.passcode_format_6_8_digits));
+			mEtInput.setMaxLength(8);
+		}else {
+			lenLimitTV.setText(R.string.note_passcode_format);
+			mEtInput.setHint(getResources().getString(R.string.passcode_format_6_9_digits));
+			mEtInput.setMaxLength(9);
 		}
 		mEtInput.setText(mContent);
 		mEtInput.setSelection(mContent.length());

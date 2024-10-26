@@ -13,7 +13,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -87,7 +86,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 
 	private PermissionListener mPermissionListener;
 	private Uri mUri;
-	private String mPath = Environment.getExternalStorageDirectory() + File.separator + "photo.jpeg";
+	private String mPath = "";
 	private AlertDialog mDialogChoosePhoto;
 	private Bitmap mHeadIconBitmap;
 
@@ -118,7 +117,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 				case REQUEST_CODE_CARMERA:
 					try {
 						Bitmap bit = BitmapFactory.decodeStream(getContentResolver().openInputStream(mUri));
-						mPath = Environment.getExternalStorageDirectory() + File.separator + "photo.jpeg";
+						mPath = getExternalFilesDir("photo").getAbsolutePath() + File.separator + "photo.jpeg";
 						//Utils.sizeCompress(bit,mPath);
 						upload(bit);
 					} catch (Exception e) {
@@ -269,6 +268,8 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 					mPermissionListener.onDenied(deniedPermissions);
 				}
 			}
+		}else{
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 
@@ -297,8 +298,8 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 					if (null != mDialogChoosePhoto) {
 						mDialogChoosePhoto.dismiss();
 					}
-					requestRuntimePermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-							Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionListener() {
+					requestRuntimePermissions(new String[]{Manifest.permission.CAMERA/*, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+							Manifest.permission.READ_EXTERNAL_STORAGE*/}, new PermissionListener() {
 						@Override
 						public void onGranted() {
 							// 调用拍照
@@ -321,8 +322,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 					if (null != mDialogChoosePhoto) {
 						mDialogChoosePhoto.dismiss();
 					}
-					requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-							Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionListener() {
+					requestRuntimePermissions(PERMISSION_IMAGES, new PermissionListener() {
 						@Override
 						public void onGranted() {
 							// 调用相册
@@ -352,6 +352,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personal_center);
+		mPath = getExternalFilesDir("photo").getAbsolutePath() + File.separator + "photo.jpeg";
 		initView();
 		setListener();
 		requestUserPersonalInfo();

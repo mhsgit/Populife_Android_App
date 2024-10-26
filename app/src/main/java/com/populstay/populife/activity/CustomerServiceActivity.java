@@ -137,27 +137,7 @@ public class CustomerServiceActivity extends BaseActivity implements View.OnClic
 				break;
 
 			case R.id.ll_service_online_communication:
-				requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-						new PermissionListener() {
-							@Override
-							public void onGranted() {
-								HashMap<String, String> clientInfo = new HashMap<>();
-								clientInfo.put("userId", PeachPreference.readUserId());
-								clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-								clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-								MQImage.setImageLoader(new MQGlideImageLoader());
-								startActivity(new MQIntentBuilder(CustomerServiceActivity.this).
-										setCustomizedId(PeachPreference.readUserId())
-										.setClientInfo(clientInfo)
-										.updateClientInfo(clientInfo)
-										.build());
-							}
-
-							@Override
-							public void onDenied(List<String> deniedPermissions) {
-								toast(R.string.note_permission_external_storage);
-							}
-						});
+				startImServiceActivity(CustomerServiceActivity.this);
 				break;
 
 			default:

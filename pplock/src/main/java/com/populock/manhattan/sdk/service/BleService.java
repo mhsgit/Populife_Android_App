@@ -16,6 +16,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 //import android.support.annotation.Nullable;
@@ -514,7 +515,11 @@ public class BleService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		sBleService = this;
-		registerReceiver(bluttoothState, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU){
+			registerReceiver(bluttoothState, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED),RECEIVER_EXPORTED);
+		}else {
+			registerReceiver(bluttoothState, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+		}
 		LogUtil.d("BleService is created");
 		mContext = getApplicationContext();
 		mHandler = new Handler();

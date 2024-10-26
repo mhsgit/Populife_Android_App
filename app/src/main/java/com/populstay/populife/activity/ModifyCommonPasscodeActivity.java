@@ -95,7 +95,12 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
 		AppCompatTextView mPlaceHoler = findViewById(R.id.tv_placeholder);
 		if (mKey.getLockId()<0){
 			mEtInput.setHint(getResources().getString(R.string.passcode_format_6_8_digits));
+			mEtInput.setMaxLength(8);
 			mPlaceHoler.setText(getResources().getString(R.string.passcode_format_6_8_digits));
+		}else {
+			mEtInput.setHint(getResources().getString(R.string.passcode_format_6_9_digits));
+			mEtInput.setMaxLength(9);
+			mPlaceHoler.setText(getResources().getString(R.string.passcode_format_6_9_digits));
 		}
 		//mEtInput.setSelection(mPasscode.getKeyboardPwd().length());
 		setEnableSave();

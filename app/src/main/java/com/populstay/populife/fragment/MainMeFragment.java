@@ -56,6 +56,7 @@ import com.populstay.populife.util.string.StringUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -87,13 +88,14 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 	private String mAvatarUrl = "";
 	private String mNickname = "";
 	private Uri mUri;
-	private String mPath = Environment.getExternalStorageDirectory() + File.separator + "photo.jpeg";
+	private String mPath = "";
 	private UserInfo mUserInfo;
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_main_me, null);
+		mPath = requireActivity().getExternalFilesDir("photo").getAbsolutePath() + File.separator + "photo.jpeg";
 
 		initView(view);
 		initListener();

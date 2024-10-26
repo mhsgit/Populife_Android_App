@@ -314,27 +314,7 @@ public class MainLockFragment extends BaseVisibilityFragment {
 		mRlOnlineService.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-						new PermissionListener() {
-							@Override
-							public void onGranted() {
-								HashMap<String, String> clientInfo = new HashMap<>();
-								clientInfo.put("userId", PeachPreference.readUserId());
-								clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-								clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-								MQImage.setImageLoader(new MQGlideImageLoader());
-								startActivity(new MQIntentBuilder(getActivity()).
-										setCustomizedId(PeachPreference.readUserId())
-										.setClientInfo(clientInfo)
-										.updateClientInfo(clientInfo)
-										.build());
-							}
-
-							@Override
-							public void onDenied(List<String> deniedPermissions) {
-								toast(R.string.note_permission_external_storage);
-							}
-						});
+				startImServiceActivity(getActivity());
 			}
 		});
 		mTvSwitchHome.setOnClickListener(new View.OnClickListener() {
