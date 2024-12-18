@@ -67,9 +67,11 @@ public class GatewayBindedLockListAdapter extends BaseAdapter {
 
 		String lockName = lock.getLockName();
 		if (!TextUtils.isEmpty(lockName)) {
-			if (lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+			if (HomeDeviceInfo.isDeadboltLack(lockName)) {
 				holder.ivDeviceIcon.setImageResource(R.drawable.deadbolt_clear_bg);
-			} else if (lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX) || lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)) {
+			}
+			// else if (lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX) || lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2))
+			else if (HomeDeviceInfo.isKeyBox(lockName)) {
 				holder.ivDeviceIcon.setImageResource(R.drawable.keybox_clear_bg);
 			} else {
 				holder.ivDeviceIcon.setImageResource(R.drawable.door_lock_clear_bg);

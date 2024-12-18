@@ -50,11 +50,9 @@ public class AddDeviceFailActivity extends BaseActivity implements View.OnClickL
 		if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_GATEWAY)) {
 			tvTheFollowing.setText(R.string.failed_to_add_gateway_hint);
 			tvTheFollowingDetail.setVisibility(View.GONE);
-		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+		} else if (HomeDeviceInfo.isDeadboltLack(mLockType)) {
 			tvTheFollowingDetail.setText(R.string.the_following_detail_deadbolt);
-		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 			tvTheFollowingDetail.setText(R.string.the_following_detail_keybox);
 		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {

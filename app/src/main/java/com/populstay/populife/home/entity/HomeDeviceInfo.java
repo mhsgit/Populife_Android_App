@@ -20,10 +20,9 @@ public class HomeDeviceInfo {
 
 		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
 			name = R.string.device_name_gateway;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
 			name = R.string.lock_type_deadbolt;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			name = R.string.lock_type_keybox;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -46,10 +45,9 @@ public class HomeDeviceInfo {
 
 		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
 			iconActive = R.drawable.device_card_single_icon_gateway_selector;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
 			iconActive = R.drawable.device_card_single_icon_deadbolt_selector;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			iconActive = R.drawable.device_card_single_icon_key_box_selector;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -72,10 +70,9 @@ public class HomeDeviceInfo {
 
 		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
 			iconInactive = R.drawable.device_card_single_icon_gateway_selector;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
 			iconInactive = R.drawable.device_card_single_icon_deadbolt_selector;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			iconInactive = R.drawable.device_card_single_icon_key_box_selector;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -95,10 +92,9 @@ public class HomeDeviceInfo {
 
 		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
 			modelNum = IModelNum.NAME_GATEWAY;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
 			modelNum = IModelNum.NAME_LOCK_DEADBOLT;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			modelNum = IModelNum.NAME_LOCK_KEY_BOX;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -121,10 +117,9 @@ public class HomeDeviceInfo {
 
 		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
 			productPicture = R.drawable.product_gateway;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
 			productPicture = R.drawable.product_deadbolt;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX) || deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			productPicture = R.drawable.product_keybox;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -134,6 +129,35 @@ public class HomeDeviceInfo {
 			productPicture = R.drawable.product_door_lock;
 		}
 		return productPicture;
+	}
+
+	public static  boolean isDeadboltLack(String lockType) {
+		if (TextUtils.isEmpty(lockType)){
+			return false;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_DEADBOLT)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static  boolean isKeyBox(String lockType) {
+		if (TextUtils.isEmpty(lockType)){
+			return false;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_KEY_BOX)) {
+			return true;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_2)) {
+			return true;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			return true;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_JP_PPL)) {
+			return true;
+		}
+		return false;
 	}
 
 	// 这个不要随便动，需要跟IOS端统一的，用来区分设备类型
@@ -148,6 +172,7 @@ public class HomeDeviceInfo {
 		String NAME_LOCK_KEY_BOX = "PPL_KB";
 		String NAME_LOCK_KEY_BOX_2 = "KEYBOX";
 		String NAME_LOCK_KEY_BOX_3 = "PPL_kb";
+		String NAME_LOCK_JP_PPL = "JP_PPL";
 
 		// 门锁（kjx 生态锁，统一处理）
 		String NAME_LOCK_KJX_DOOR_LOCK = "KJX_DOOR_LOCK";

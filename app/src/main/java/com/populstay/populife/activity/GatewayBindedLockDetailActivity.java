@@ -94,7 +94,8 @@ public class GatewayBindedLockDetailActivity extends BaseActivity implements Vie
 			mLlLockAndUnlock.setVisibility(View.VISIBLE);
 			findViewById(R.id.ll_lock_and_unlock_line).setVisibility(View.VISIBLE);
 
-			if (mLockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX) || mLockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)){
+			//if (mLockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX) || mLockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)){
+			if (HomeDeviceInfo.isKeyBox(mLockName)){
 				mFlLock.setVisibility(View.GONE);
 			}
 		} else {

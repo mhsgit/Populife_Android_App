@@ -98,10 +98,8 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 
 				if (device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_GATEWAY)) {
 					goToNewActivity(GatewayAddGuideActivity.class);
-				} else if (device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)
-						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)
+				} else if (HomeDeviceInfo.isDeadboltLack(device.getName())
+						|| HomeDeviceInfo.isKeyBox(device.getName())
 						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KJX_DOOR_LOCK)
 						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)) {
 					LockAddGuideActivity.actionStartAddLock(LockAddSelectTypeActivity.this, device.getName());

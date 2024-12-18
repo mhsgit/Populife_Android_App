@@ -219,14 +219,12 @@ public class LockAddGuideActivity extends BluetoothBaseActivity implements View.
 			}
 		} else { // 添加门锁
 			mTvPageTitle.setText(R.string.add_lock_pre_check);
-			if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+			if (HomeDeviceInfo.isDeadboltLack(mLockType)) {
 				mAddLockPreCheckHint.setText(R.string.add_deadbolt_lock_pre_check_hint);
 				mCkBatteryInstall.setText(R.string.deadbolt_battery_install_hint);
 				mCbConfirmTime.setText(R.string.deadbolt_distance_confirm);
 				mIvAddLockGuidePic.setImageResource(R.drawable.deadbolt_check);
-			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 				mAddLockPreCheckHint.setText(R.string.add_key_box_lock_pre_check_hint);
 				mCkBatteryInstall.setText(R.string.key_box_battery_install_hint);
 				mCbConfirmTime.setText(R.string.key_box_distance_confirm);

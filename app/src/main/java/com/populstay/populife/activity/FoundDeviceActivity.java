@@ -174,11 +174,9 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 			window.findViewById(R.id.et_dialog_input_content).setVisibility(View.GONE);
 			TextView tvDialogContent = window.findViewById(R.id.tv_dialog_content);
 			tvDialogContent.setVisibility(View.VISIBLE);
-			if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+			if (HomeDeviceInfo.isDeadboltLack(mLockType)) {
 				tvDialogContent.setText(R.string.deadbolt_not_found_try_again);
-			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 				tvDialogContent.setText(R.string.keybox_not_found_try_again);
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -221,11 +219,9 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 		mTv_tap_help = findViewById(R.id.tv_tap_help);
 		mTv_tap_help.setOnClickListener(this);
 		mKeepTheKeypadLight = findViewById(R.id.keep_the_keypad_light);
-		if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+		if (HomeDeviceInfo.isDeadboltLack(mLockType)) {
 			mTvScanDevice.setText(getResources().getString(R.string.scanning_nearby_deadbolt_please_wait));
-		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+		} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 			mTvScanDevice.setText(getResources().getString(R.string.scanning_nearby_keybox_please_wait));
 		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
@@ -289,11 +285,9 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 	private void setTitleText(boolean isInit) {
 		if (isInit) {
 			mKeepTheKeypadLight.setVisibility(View.GONE);
-			if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+			if (HomeDeviceInfo.isDeadboltLack(mLockType)) {
 				tvPageTitle.setText(getResources().getString(R.string.scanning_nearby_deadbolt));
-			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 				tvPageTitle.setText(getResources().getString(R.string.scanning_nearby_keybox));
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {

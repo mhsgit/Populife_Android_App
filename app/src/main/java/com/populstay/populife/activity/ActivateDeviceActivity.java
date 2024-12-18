@@ -246,14 +246,12 @@ public class ActivateDeviceActivity extends BaseActivity implements View.OnClick
 				add_device_activate_hint2.setText(R.string.moon_lock_add_device_activate_hint2);
 			}
 		} else {
-			if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT)) {
+			if (HomeDeviceInfo.isDeadboltLack(mLockType)) {
 				mTvPageTitle.setText(R.string.activate_the_deadbolt);
 				mIvAddDevicePic.setImageResource(R.drawable.deadbolt_activate);
 				add_device_activate_hint1.setText(R.string.deadbolt_add_device_activate_hint1);
 				add_device_activate_hint2.setText(R.string.deadbolt_add_device_activate_hint2);
-			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2)
-					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3)) {
+			} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 				mTvPageTitle.setText(R.string.activate_the_keybox);
 				mIvAddDevicePic.setImageResource(R.drawable.keybox_opened_with_hand);
 				add_device_activate_hint1.setText(R.string.key_box_add_device_activate_hint1);

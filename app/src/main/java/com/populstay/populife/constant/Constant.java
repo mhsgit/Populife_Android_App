@@ -24,5 +24,5 @@ public class Constant {
 
 	public static final String TEST_ACCOUNT_DEVICE_ID = "testAccDevId"; // 测试账号，固定 deviceId
 	// 测试账号，不检测异地登录，直接登录进入主页
-	public static String[] mIgnoreRemoteLoginAccountArr = {"test@populife.co","+8613201812820","cammyfu@163.com"};
+	public static String[] mIgnoreRemoteLoginAccountArr = {"test@populife.co","+8613201812820","cammyfu@163.com","mohuansheng888@gmail.com"};
 }
