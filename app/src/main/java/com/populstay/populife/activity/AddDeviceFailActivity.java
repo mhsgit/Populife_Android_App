@@ -54,7 +54,9 @@ public class AddDeviceFailActivity extends BaseActivity implements View.OnClickL
 			tvTheFollowingDetail.setText(R.string.the_following_detail_deadbolt);
 		} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 			tvTheFollowingDetail.setText(R.string.the_following_detail_keybox);
-		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
+		} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
+			tvTheFollowingDetail.setText(R.string.the_following_detail_keybox_k4);
+		}  else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 			tvTheFollowingDetail.setText(R.string.the_following_detail_deadbolt);
 		} else {

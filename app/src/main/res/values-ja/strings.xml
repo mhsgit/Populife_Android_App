@@ -379,6 +379,7 @@
     <string name="note_login_new_device">アカウントが別のデバイスでログインしています、再度ログインしてください</string>
     <string name="lock_type_deadbolt">スマートデッドボルト</string>
     <string name="lock_type_keybox">スマートキーボックス</string>
+    <string name="lock_type_keybox_k4">スマートキーボックス</string>
     <string name="lock_type_mortise">彫り込み錠</string>
     <string name="lock_type_moonlock">ハンドルロック</string>
     <string name="go_to_login">ログインしてください</string>
@@ -703,6 +704,7 @@
     <string name="share_custom_pwd_text">こんにちは(●◡●)ﾉこちらがカスタマイズパスワードです：%s  \n開始時間：%s  \n無効時間：%s    \n\n注意：まずはデバイスのキーパッドを点灯して、上記のパスワードを入力し、最後に右下の「#」またはアンロックボタンで解錠してください。</string>
     <string name="add_lock_pre_check">事前確認</string>
     <string name="add_key_box_lock_pre_check_hint">スマートキーボックスを追加する前に、以下の手順が完了していることを確認してください。</string>
+    <string name="add_key_box_lock_pre_check_hint_k4">スマートキーボックスを追加する前に、以下の手順が完了していることを確認してください。</string>
     <string name="add_deadbolt_lock_pre_check_hint">スマートデッドボルトを追加する前に、以下の手順が完了していることを確認してください。</string>
     <string name="add_moon_lock_pre_check_hint">ハンドルロックのペアリングを開始する前に、次の手順が完了していることを確認してください</string>
     <string name="add_lock_pre_check_hint2">完了したら〇をタッチしてください。</string>
@@ -710,9 +712,11 @@
     <string name="bt_lbs_open_hint">2. Androidスマホの場合、位置情報の許可がオンになっている</string>
     <string name="net_open_hint">3. Wifiに接続するか、またはスマホのモバイルデータ通信がオンになっている</string>
     <string name="key_box_battery_install_hint">4. 単四電池4本はスマートキーボックスに正しく装着している（キーパッドにタッチすると点灯されます）</string>
+    <string name="key_box_battery_install_hint_k4">4. 単四電池4本はスマートキーボックスに正しく装着している（キーパッドにタッチすると点灯されます）</string>
     <string name="deadbolt_battery_install_hint">4. 単三電池4本はスマートデッドボルトに正しく装着している（キーパッドにタッチすると点灯されます）</string>
     <string name="moonlock_battery_install_hint">4. 単四電池2本はスマートキーボックスに正しく装着している（キーパッドにタッチすると点灯されます）</string>
     <string name="key_box_distance_confirm">5.スマートキーボックスはスマホの3m以内にあることを確認してください</string>
+    <string name="key_box_distance_confirm_k4">5.スマートキーボックスはスマホの3m以内にあることを確認してください</string>
     <string name="deadbolt_distance_confirm">5.スマートデッドボルトはスマホの3m以内にあることを確認してください</string>
     <string name="moonlock_distance_confirm">5. スマートキーボックスはスマホの3m以内にあることを確認してください</string>
     <string name="keep_the_keypad_light">追加成功するまで、キーパッドのライトを点灯させたままにしてください。</string>
@@ -728,11 +732,14 @@
     <string name="select_a_device">デバイスを選択</string>
     <string name="paired">追加完了しました</string>
     <string name="scanning_nearby_keybox">近くのスマートキーボックスをスキャンしています</string>
+    <string name="scanning_nearby_keybox_k4">@string/scanning_nearby_keybox</string>
     <string name="scanning_nearby_keybox_please_wait">近くのスマートキーボックスをスキャンしています、少々お待ちください</string>
+    <string name="scanning_nearby_keybox_please_wait_k4">近くのスマートキーボックスをスキャンしています、少々お待ちください</string>
     <string name="scanning_nearby_moonlock_please_wait">しばらくお待ちください。近くのハンドルロックがスキャンされています</string>
     <string name="search_time_out">スキャンタイムアウト</string>
     <string name="scan_again">もう一度スキャンを行う</string>
     <string name="keybox_not_found_try_again">スマートキーボックスは検出されていません、もう一度お試しください</string>
+    <string name="keybox_not_found_try_again_k4">スマートキーボックスは検出されていません、もう一度お試しください</string>
     <string name="deadbolt_not_found_try_again">スマートデッドボルトは検出されていません、もう一度お試しください</string>
     <string name="moonlock_not_found_try_again">ハンドルロックが見つかりません。もう一度操作してください</string>
     <string name="gateway_was_not_founded_try_again">スマートゲートウェイは検出されていません、もう一度お試しください</string>
@@ -741,6 +748,7 @@
     <string name="the_following">以下のいずれかの方法でもう一度お試しください：</string>
     <string name="the_following_detail_deadbolt">1. 携帯電話のBluetoothとインターネット接続を再起動する\n2. 携帯電話のPopulifeアプリを再起動する\n3. デッドボルトのペアリングをやり直す</string>
     <string name="the_following_detail_keybox">1. 携帯電話のBluetoothとインターネット接続を再起動する\n2. 携帯電話のPopulifeアプリを再起動する\n3. スマートキーボックスのペアリングをやり直す</string>
+    <string name="the_following_detail_keybox_k4">1. 携帯電話のBluetoothとインターネット接続を再起動する\n2. 携帯電話のPopulifeアプリを再起動する\n3. スマートキーボックスのペアリングをやり直す</string>
     <string name="try_pairing_again">もう一度追加してみてください</string>
     <string name="back_to_smart">「デバイス」ページへ戻る</string>
     <string name="before_pairing_the_gateway">スマートゲートウェイを追加する前に、以下の手順が完了していることを確認してください。</string>
@@ -999,4 +1007,7 @@
     <string name="note_permission_ble_scan_connect">Bluetoothの許可を有効にしてください</string>
     <string name="note_permission_external_storage">ストレージの許可を有効にしてください</string>
     <string name="note_permission_camera">カメラの許可を有効にしてください</string>
+    <string name="key_box_add_device_activate_hint1_k4">1. 初期パスワード 1234 を入力して、🔒ボタンをクリックしてキーボックスを解除してください。初期パスワードがエラーになった場合は、リセットボタンを長押ししてデバイスをリセットしてください。</string>
+    <string name="key_box_add_device_activate_hint1_1_k4">2. ペアリング中は、キーボックスを常に開いた状態にしておいてください。ペアリングが失敗した場合に後でデバイスを開けなくなる問題を回避するためです。</string>
+    <string name="key_box_add_device_activate_hint2_k4">3. キーパッドをタッチしてキーボックスを起動し、ペアリング中はキーパッドが常に点灯していることを確認してください。</string>
 </resources>

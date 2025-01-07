@@ -24,6 +24,8 @@ public class HomeDeviceInfo {
 			name = R.string.lock_type_deadbolt;
 		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			name = R.string.lock_type_keybox;
+		}  else if (HomeDeviceInfo.isKeyBoxK4(deviceName)) {
+			name = R.string.lock_type_keybox_k4;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 			name = R.string.lock_type_moonlock;
@@ -49,6 +51,8 @@ public class HomeDeviceInfo {
 			iconActive = R.drawable.device_card_single_icon_deadbolt_selector;
 		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			iconActive = R.drawable.device_card_single_icon_key_box_selector;
+		} else if (HomeDeviceInfo.isKeyBoxK4(deviceName)) {
+			iconActive = R.drawable.device_card_single_icon_key_box_k4_selector;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 			iconActive = R.drawable.device_card_single_icon_moon_lock_selector;
@@ -59,52 +63,6 @@ public class HomeDeviceInfo {
 		return iconActive;
 	}
 
-	public static @DrawableRes
-	int getIconInactiveByName(String deviceName) {
-		@DrawableRes
-		int iconInactive = R.drawable.device_card_single_icon_door_lock_selector;
-
-		if (TextUtils.isEmpty(deviceName)) {
-			return iconInactive;
-		}
-
-		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
-			iconInactive = R.drawable.device_card_single_icon_gateway_selector;
-		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
-			iconInactive = R.drawable.device_card_single_icon_deadbolt_selector;
-		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
-			iconInactive = R.drawable.device_card_single_icon_key_box_selector;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
-			iconInactive = R.drawable.device_card_single_icon_moon_lock_selector;
-		} else {
-			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
-			iconInactive = R.drawable.device_card_single_icon_door_lock_selector;
-		}
-		return iconInactive;
-	}
-
-	public static String getModelNumByNameWhenProduct(String deviceName) {
-		String modelNum = IModelNum.NAME_LOCK_KJX_DOOR_LOCK;
-		if (TextUtils.isEmpty(deviceName)) {
-			return modelNum;
-		}
-
-		if (deviceName.startsWith(IDeviceName.NAME_GATEWAY)) {
-			modelNum = IModelNum.NAME_GATEWAY;
-		} else if (HomeDeviceInfo.isDeadboltLack(deviceName)) {
-			modelNum = IModelNum.NAME_LOCK_DEADBOLT;
-		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
-			modelNum = IModelNum.NAME_LOCK_KEY_BOX;
-		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
-				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
-			modelNum = IModelNum.NAME_LOCK_MANHATTAN_MOON_LOCK;
-		} else {
-			// 除了 Gateway、Keybox、Deadbolt，其他统一判断为 kjx 门锁 Door lock
-			modelNum = IModelNum.NAME_LOCK_KJX_DOOR_LOCK;
-		}
-		return modelNum;
-	}
 
 	public static @DrawableRes
 	int getProductPictureByName(String deviceName) {
@@ -121,6 +79,8 @@ public class HomeDeviceInfo {
 			productPicture = R.drawable.product_deadbolt;
 		} else if (HomeDeviceInfo.isKeyBox(deviceName)) {
 			productPicture = R.drawable.product_keybox;
+		} else if (HomeDeviceInfo.isKeyBoxK4(deviceName)) {
+			productPicture = R.drawable.product_k4;
 		} else if (deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| deviceName.startsWith(IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 			productPicture = R.drawable.product_moonlock;
@@ -160,6 +120,20 @@ public class HomeDeviceInfo {
 		return false;
 	}
 
+	// K4设备
+	public static  boolean isKeyBoxK4(String lockType) {
+		if (TextUtils.isEmpty(lockType)){
+			return false;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_PPL_KB4)) {
+			return true;
+		}
+		if(lockType.startsWith(IDeviceName.NAME_LOCK_PPL_KB4_S) || lockType.startsWith(IDeviceName.NAME_LOCK_PPL_KB4_s)) {
+			return true;
+		}
+		return false;
+	}
+
 	// 这个不要随便动，需要跟IOS端统一的，用来区分设备类型
 	public interface IDeviceName {
 		// 网关(G2开头的，在添加设备时，转为Gateway)
@@ -181,6 +155,11 @@ public class HomeDeviceInfo {
 		String NAME_LOCK_MANHATTAN_MOON_LOCK = "PPL_ML";//PPL_ML
 
 		String NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER = "PPL_ml";//PPL_ML
+
+		// K4
+		String NAME_LOCK_PPL_KB4 = "PPL_KB4";
+		String NAME_LOCK_PPL_KB4_S = "S";
+		String NAME_LOCK_PPL_KB4_s = "s";
 	}
 
 	public interface IModelNum {

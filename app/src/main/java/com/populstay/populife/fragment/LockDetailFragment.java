@@ -1,11 +1,9 @@
 package com.populstay.populife.fragment;
 
 import static android.content.Context.RECEIVER_EXPORTED;
-import static android.content.Context.RECEIVER_NOT_EXPORTED;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -87,7 +85,6 @@ import java.util.List;
 import java.util.WeakHashMap;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -1712,6 +1709,8 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 			mIvLockImg.setImageResource(R.drawable.product_deadbolt);
 		} else if (HomeDeviceInfo.isKeyBox(mCurKEY.getLockName())) {
 			mIvLockImg.setImageResource(R.drawable.product_keybox);
+		} else if (HomeDeviceInfo.isKeyBoxK4(mCurKEY.getLockName())) {
+			mIvLockImg.setImageResource(R.drawable.product_k4);
 		} else if (mCurKEY.getLockName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| mCurKEY.getLockName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 			mIvLockImg.setImageResource(R.drawable.product_moonlock);
@@ -1751,6 +1750,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		// Deadbolt、keybox 用一排 2 个图标；其他门锁用一排 4 个图标（支持指纹、IC卡）
 		if (HomeDeviceInfo.isDeadboltLack(mCurKEY.getLockName())
 				|| HomeDeviceInfo.isKeyBox(mLockType)
+				|| HomeDeviceInfo.isKeyBoxK4(mLockType)
 				|| mActions.size() == 2) {
 			mGridView.setNumColumns(2);
 		} else {

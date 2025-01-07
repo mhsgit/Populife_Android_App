@@ -26,8 +26,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.meiqia.core.MQManager;
 import com.meiqia.core.bean.MQMessage;
 import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populock.manhattan.sdk.BleDevice;
 import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populstay.populife.R;
@@ -47,7 +45,6 @@ import com.populstay.populife.net.callback.IError;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
@@ -56,7 +53,6 @@ import com.ttlock.bl.sdk.scanner.ExtendedBluetoothDevice;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -178,6 +174,8 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 				tvDialogContent.setText(R.string.deadbolt_not_found_try_again);
 			} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 				tvDialogContent.setText(R.string.keybox_not_found_try_again);
+			} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
+				tvDialogContent.setText(R.string.keybox_not_found_try_again_k4);
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 				tvDialogContent.setText(R.string.moonlock_not_found_try_again);
@@ -223,6 +221,8 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 			mTvScanDevice.setText(getResources().getString(R.string.scanning_nearby_deadbolt_please_wait));
 		} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 			mTvScanDevice.setText(getResources().getString(R.string.scanning_nearby_keybox_please_wait));
+		} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
+			mTvScanDevice.setText(getResources().getString(R.string.scanning_nearby_keybox_please_wait_k4));
 		} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 				|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 			mTvScanDevice.setText(getResources().getString(R.string.scanning_nearby_moonlock_please_wait));
@@ -289,6 +289,8 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 				tvPageTitle.setText(getResources().getString(R.string.scanning_nearby_deadbolt));
 			} else if (HomeDeviceInfo.isKeyBox(mLockType)) {
 				tvPageTitle.setText(getResources().getString(R.string.scanning_nearby_keybox));
+			} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
+				tvPageTitle.setText(getResources().getString(R.string.scanning_nearby_keybox_k4));
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 				tvPageTitle.setText(getResources().getString(R.string.scanning_nearby_moon_lock));

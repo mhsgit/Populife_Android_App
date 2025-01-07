@@ -379,6 +379,7 @@
     <string name="note_login_new_device">Your account is logged in on another device, please log in again.</string>
     <string name="lock_type_deadbolt">Deadbolt</string>
     <string name="lock_type_keybox">Keybox</string>
+    <string name="lock_type_keybox_k4">Keybox K4</string>
     <string name="lock_type_mortise">Mortise</string>
     <string name="lock_type_moonlock">Moon Lock</string>
     <string name="go_to_login">Go to login</string>
@@ -703,6 +704,7 @@
     <string name="share_custom_pwd_text">Hello, here is your custom code: %s  \nEffective time: %s  \nExpiry time: %s \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
     <string name="add_lock_pre_check">Pre- check</string>
     <string name="add_key_box_lock_pre_check_hint">Before you start pairing the Keybox, make sure the following steps are completed.</string>
+    <string name="add_key_box_lock_pre_check_hint_k4">Before you start pairing the Keybox K4, make sure the following steps are completed.</string>
     <string name="add_deadbolt_lock_pre_check_hint">Before you start pairing the Deadbolt, make sure the following steps are completed.</string>
     <string name="add_moon_lock_pre_check_hint">Before you start pairing the Moon lock, make sure the following steps are completed</string>
     <string name="add_lock_pre_check_hint2">Tap the circle when you\'re done:</string>
@@ -710,9 +712,11 @@
     <string name="bt_lbs_open_hint">2. If it is an Andriod phone, location service and admission has been turned on</string>
     <string name="net_open_hint">3. Connected to Wifi or turned on the cellular network of phone</string>
     <string name="key_box_battery_install_hint">4. 4 fully charged AAA batteries has been installed properly in Keybox (so that keypad can light up when you touch it)</string>
+    <string name="key_box_battery_install_hint_k4">4. 4 fully charged AAA batteries has been installed properly in Keybox K4 (so that keypad can light up when you touch it)</string>
     <string name="deadbolt_battery_install_hint">4. 4 fully charged AA batteries has been installed properly in Deadbolt (so that keypad can light up when you touch it)</string>
     <string name="moonlock_battery_install_hint">4. 2 fully charged AAA batteries have been installed properly in Moon lock ( so that the fingerprint can light up when you touch it)</string>
     <string name="key_box_distance_confirm">5. Make sure that the Keybox is within 3 meters of the phone Bluetooth</string>
+    <string name="key_box_distance_confirm_k4">5. Make sure that the Keybox K4 is within 3 meters of the phone Bluetooth</string>
     <string name="deadbolt_distance_confirm">5. Make sure that the Deadbolt is within 3 meters of the phone Bluetooth</string>
     <string name="moonlock_distance_confirm">5. Make sure that the Moon lock is within 3 meters of the phone Bluetooth</string>
     <string name="keep_the_keypad_light">Keep the keypad light up until the pairing is successful. Otherwise, the devices cannot be found and paired</string>
@@ -728,11 +732,14 @@
     <string name="select_a_device">Select a device</string>
     <string name="paired">Paired</string>
     <string name="scanning_nearby_keybox">Scanning nearby Keybox</string>
+    <string name="scanning_nearby_keybox_k4">Scanning nearby Keybox K4</string>
     <string name="scanning_nearby_keybox_please_wait">Scanning nearby Keybox, please wait</string>
+    <string name="scanning_nearby_keybox_please_wait_k4">Scanning nearby Keybox K4, please wait</string>
     <string name="scanning_nearby_moonlock_please_wait">Please wait, the nearby handle lock is being scanned</string>
     <string name="search_time_out">Search timeout</string>
     <string name="scan_again">Scan again</string>
     <string name="keybox_not_found_try_again">Keybox was not found, please try again</string>
+    <string name="keybox_not_found_try_again_k4">Keybox K4 was not found, please try again</string>
     <string name="deadbolt_not_found_try_again">Deadbolt was not found, please try again</string>
     <string name="moonlock_not_found_try_again">Cannot find the handle lock, please operate again</string>
     <string name="gateway_was_not_founded_try_again">Gateway was not found, please try again</string>
@@ -741,6 +748,7 @@
     <string name="the_following">You can do either of the following: </string>
     <string name="the_following_detail_deadbolt">1. Restart Bluetooth and Internet connection on your phone\n2. Restart Populife App on your phone\n3. Pair the deadbolt again</string>
     <string name="the_following_detail_keybox">1. Restart Bluetooth and Internet connection on your phone\n2. Restart Populife App on your phone\n3. Pair the keybox again</string>
+    <string name="the_following_detail_keybox_k4">1. Restart Bluetooth and Internet connection on your phone\n2. Restart Populife App on your phone\n3. Pair the keybox K4 again</string>
     <string name="try_pairing_again">Try pairing again</string>
     <string name="back_to_smart">Back to Device</string>
     <string name="before_pairing_the_gateway">Before you start pairing the Gateway, make sure the following steps are completed.</string>
@@ -1002,4 +1010,8 @@
     <string name="note_permission_external_storage">Please enable Storage permission</string>
     <string name="note_permission_camera">Please enable Camera permission</string>
 
+    <string name="activate_the_keybox_k4">Activate the Keybox K4</string>
+    <string name="key_box_add_device_activate_hint1_k4">1. Please confirm the default code: 1234 ending with 🔒 can unlock the Keybox K4 before pairing. If not, you can long-press the RESET button.</string>
+    <string name="key_box_add_device_activate_hint1_1_k4">2. During the pairing process, please keep the Keybox K4 open to prevent any issues with opening the device later in case the pairing fails.</string>
+    <string name="key_box_add_device_activate_hint2_k4">3. Touch the keypad to activate and prepare the Keybox K4 for pairing. Keep the keypad lit up during pairing.</string>
 </resources>

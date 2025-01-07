@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.meiqia.core.MQManager;
 import com.meiqia.core.bean.MQMessage;
 import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BluetoothBaseActivity;
@@ -24,12 +22,9 @@ import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.home.entity.HomeDeviceInfo;
 import com.populstay.populife.keypwdmanage.KeyPwdConstant;
 import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.ui.widget.HelpPopupWindow;
 import com.populstay.populife.util.log.PeachLogger;
-import com.populstay.populife.util.storage.PeachPreference;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static com.populstay.populife.app.MyApplication.CURRENT_KEY;
@@ -229,6 +224,11 @@ public class LockAddGuideActivity extends BluetoothBaseActivity implements View.
 				mCkBatteryInstall.setText(R.string.key_box_battery_install_hint);
 				mCbConfirmTime.setText(R.string.key_box_distance_confirm);
 				mIvAddLockGuidePic.setImageResource(R.drawable.keybox_check);
+			} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
+				mAddLockPreCheckHint.setText(R.string.add_key_box_lock_pre_check_hint_k4);
+				mCkBatteryInstall.setText(R.string.key_box_battery_install_hint_k4);
+				mCbConfirmTime.setText(R.string.key_box_distance_confirm_k4);
+				mIvAddLockGuidePic.setImageResource(R.drawable.keybox_k4_check);
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)
 					|| mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK_LOWER)) {
 				mAddLockPreCheckHint.setText(R.string.add_moon_lock_pre_check_hint);

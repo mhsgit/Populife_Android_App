@@ -1,6 +1,5 @@
 package com.populstay.populife.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.meiqia.core.MQManager;
 import com.meiqia.core.bean.MQMessage;
 import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
@@ -21,13 +18,9 @@ import com.populstay.populife.entity.Key;
 import com.populstay.populife.home.entity.HomeDeviceInfo;
 import com.populstay.populife.keypwdmanage.KeyPwdConstant;
 import com.populstay.populife.manhattanlock.MHILockEnterAddFingerprint;
-import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.locale.LanguageUtil;
 import com.populstay.populife.util.log.PeachLogger;
-import com.populstay.populife.util.storage.PeachPreference;
 
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -258,6 +251,13 @@ public class ActivateDeviceActivity extends BaseActivity implements View.OnClick
 				add_device_activate_hint1_1.setVisibility(View.VISIBLE);
 				add_device_activate_hint1_1.setText(R.string.key_box_add_device_activate_hint1_1);
 				add_device_activate_hint2.setText(R.string.key_box_add_device_activate_hint2);
+			} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
+				mTvPageTitle.setText(R.string.activate_the_keybox_k4);
+				mIvAddDevicePic.setImageResource(R.drawable.keybox_k4_inactive);
+				add_device_activate_hint1.setText(R.string.key_box_add_device_activate_hint1_k4);
+				add_device_activate_hint1_1.setVisibility(View.VISIBLE);
+				add_device_activate_hint1_1.setText(R.string.key_box_add_device_activate_hint1_1_k4);
+				add_device_activate_hint2.setText(R.string.key_box_add_device_activate_hint2_k4);
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KJX_DOOR_LOCK)) {
 				mTvPageTitle.setText(R.string.activate_door_lock);
 				mIvAddDevicePic.setImageResource(R.drawable.door_lock_activate);

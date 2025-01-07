@@ -73,6 +73,8 @@ public class GatewayBindedLockListAdapter extends BaseAdapter {
 			// else if (lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX) || lockName.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_2))
 			else if (HomeDeviceInfo.isKeyBox(lockName)) {
 				holder.ivDeviceIcon.setImageResource(R.drawable.keybox_clear_bg);
+			} else if (HomeDeviceInfo.isKeyBoxK4(lockName)) {
+				holder.ivDeviceIcon.setImageResource(R.drawable.keybox_k4_inactive);
 			} else {
 				holder.ivDeviceIcon.setImageResource(R.drawable.door_lock_clear_bg);
 			}

@@ -1,6 +1,5 @@
 package com.populstay.populife.activity;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,20 +9,14 @@ import android.widget.TextView;
 import com.meiqia.core.MQManager;
 import com.meiqia.core.bean.MQMessage;
 import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.adapter.DeviceListAdapter;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.home.entity.HomeDevice;
 import com.populstay.populife.home.entity.HomeDeviceInfo;
-import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.log.PeachLogger;
-import com.populstay.populife.util.storage.PeachPreference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,6 +46,11 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 		// 密码盒
 		HomeDevice device = new HomeDevice();
 		device.setName(HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX);
+		mDeviceList.add(device);
+
+		// K4
+		device = new HomeDevice();
+		device.setName(HomeDeviceInfo.IDeviceName.NAME_LOCK_PPL_KB4_S);
 		mDeviceList.add(device);
 
 		// 横闩锁
@@ -100,6 +98,7 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 					goToNewActivity(GatewayAddGuideActivity.class);
 				} else if (HomeDeviceInfo.isDeadboltLack(device.getName())
 						|| HomeDeviceInfo.isKeyBox(device.getName())
+						|| HomeDeviceInfo.isKeyBoxK4(device.getName())
 						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KJX_DOOR_LOCK)
 						|| device.getName().startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)) {
 					LockAddGuideActivity.actionStartAddLock(LockAddSelectTypeActivity.this, device.getName());
