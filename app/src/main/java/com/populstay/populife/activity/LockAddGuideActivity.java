@@ -207,7 +207,9 @@ public class LockAddGuideActivity extends BluetoothBaseActivity implements View.
 			}
 			mCkBatteryInstall.setText(R.string.door_lock_battery_enough_keypad_active_hint);
 			mCbConfirmTime.setText(R.string.door_lock_distance_confirm);
-			if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)) {
+			if (HomeDeviceInfo.isKeyBoxK4(mLockType)){
+				mIvAddLockGuidePic.setImageResource(R.drawable.keybox_k4_check);
+			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK)) {
 				mIvAddLockGuidePic.setImageResource(R.drawable.product_moonlock);
 			} else {
 				mIvAddLockGuidePic.setImageResource(R.drawable.door_lock_check);
