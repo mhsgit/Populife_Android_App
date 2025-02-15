@@ -228,7 +228,11 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 	private void refreshStatus(boolean isInit) {
 		if (isInit) {
 			mTvPageTitle.setText(R.string.activate_door_lock);
-			mIvAddDevicePic.setImageResource(R.drawable.door_lock_activate);
+			if (HomeDeviceInfo.isKeyBoxK4(mLockType)){
+				mIvAddDevicePic.setImageResource(R.drawable.keybox_k4_inactive_2);
+			}else {
+				mIvAddDevicePic.setImageResource(R.drawable.door_lock_activate);
+			}
 			if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 添加指纹
 				add_device_activate_hint1.setText(R.string.add_fingerprint_device_activate_hint1);
 				add_device_activate_hint2.setText(R.string.add_fingerprint_device_activate_hint2);
@@ -241,13 +245,21 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 		} else {
 			if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 添加指纹
 				mTvPageTitle.setText(R.string.adding_fingerprint_title);
-				mIvAddDevicePic.setImageResource(R.drawable.fingerprint_add_guide_img);
+				if (HomeDeviceInfo.isKeyBoxK4(mLockType)){
+					mIvAddDevicePic.setImageResource(R.drawable.keybox_k4_inactive_2);
+				}else {
+					mIvAddDevicePic.setImageResource(R.drawable.fingerprint_add_guide_img);
+				}
 				add_device_activate_hint1.setText(Html.fromHtml(String.format(getString(R.string.adding_fingerprint_hint_1), "-")));
 				add_device_activate_hint2.setText(R.string.adding_fingerprint_hint_2);
 				mTvHintSuccess.setText(R.string.complete_above_operation);
 			} else if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_IC_CARD) { // 添加门卡
 				mTvPageTitle.setText(R.string.adding_ic_card_title);
-				mIvAddDevicePic.setImageResource(R.drawable.ic_card_add_guide_img);
+				if (HomeDeviceInfo.isKeyBoxK4(mLockType)){
+					mIvAddDevicePic.setImageResource(R.drawable.keybox_k4_inactive_2);
+				}else {
+					mIvAddDevicePic.setImageResource(R.drawable.ic_card_add_guide_img);
+				}
 				add_device_activate_hint1.setText(R.string.adding_ic_card_hint_1);
 				add_device_activate_hint2.setText(R.string.adding_ic_card_hint_2);
 				mTvHintSuccess.setText(R.string.complete_above_operation);

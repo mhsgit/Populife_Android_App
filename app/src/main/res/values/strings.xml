@@ -1010,8 +1010,8 @@
     <string name="note_permission_external_storage">Please enable Storage permission</string>
     <string name="note_permission_camera">Please enable Camera permission</string>
 
-    <string name="activate_the_keybox_k4">Activate the Keybox K4</string>
-    <string name="key_box_add_device_activate_hint1_k4">1. Please confirm the default code: 1234 ending with 🔒 can unlock the Keybox K4 before pairing. If not, you can long-press the RESET button.</string>
-    <string name="key_box_add_device_activate_hint1_1_k4">2. During the pairing process, please keep the Keybox K4 open to prevent any issues with opening the device later in case the pairing fails.</string>
+    <string name="activate_the_keybox_k4">Activate the Keybox</string>
+    <string name="key_box_add_device_activate_hint1_k4">1. Please confirm the default code: 123456 ending with 🔒 can unlock the Keybox before pairing. If it doesn’t work, please contact customer support. </string>
+    <string name="key_box_add_device_activate_hint1_1_k4">2. Tap the keypad to activate the Keybox and prepare it for pairing. Ensure the keypad stays lit during the process.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Touch the keypad to activate and prepare the Keybox K4 for pairing. Keep the keypad lit up during pairing.</string>
 </resources>

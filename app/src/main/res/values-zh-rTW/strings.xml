@@ -1008,7 +1008,8 @@
     <string name="note_permission_ble_scan_connect">请开启蓝牙权限</string>
     <string name="note_permission_external_storage">请开启存储权限</string>
     <string name="note_permission_camera">请开启相机权限</string>
-    <string name="key_box_add_device_activate_hint1_k4">1. 请先输入初始密码：1234并点击🔒解锁密码盒。如果输入初始密码出现报错。请长按重置按钮重置设备。</string>
-    <string name="key_box_add_device_activate_hint1_1_k4">2. 在绑定过程中，请保持密码盒一直打开。避免绑定失败后无法打开设备。</string>
+    <string name="activate_the_keybox_k4">激活钥匙盒</string>
+    <string name="key_box_add_device_activate_hint1_k4">1. 请先输入初始密码：123456并点击🔒解锁钥匙盒。如无法解锁，请联系客服。</string>
+    <string name="key_box_add_device_activate_hint1_1_k4">2. 轻触按键以激活钥匙盒，在绑定过程中，按键一直保持亮起。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. 点击按键激活设备，在绑定过程中，请保持按键亮起。</string>
 </resources>

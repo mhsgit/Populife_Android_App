@@ -253,10 +253,11 @@ public class ActivateDeviceActivity extends BaseActivity implements View.OnClick
 				add_device_activate_hint2.setText(R.string.key_box_add_device_activate_hint2);
 			} else if (HomeDeviceInfo.isKeyBoxK4(mLockType)) {
 				mTvPageTitle.setText(R.string.activate_the_keybox_k4);
-				mIvAddDevicePic.setImageResource(R.drawable.keybox_k4_inactive);
+				mIvAddDevicePic.setImageResource(R.drawable.keybox_k4_inactive_2);
 				add_device_activate_hint1.setText(R.string.key_box_add_device_activate_hint1_k4);
 				add_device_activate_hint1_1.setVisibility(View.VISIBLE);
 				add_device_activate_hint1_1.setText(R.string.key_box_add_device_activate_hint1_1_k4);
+				add_device_activate_hint2.setVisibility(View.GONE);
 				add_device_activate_hint2.setText(R.string.key_box_add_device_activate_hint2_k4);
 			} else if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_LOCK_KJX_DOOR_LOCK)) {
 				mTvPageTitle.setText(R.string.activate_door_lock);

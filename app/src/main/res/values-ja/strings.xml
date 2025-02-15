@@ -1007,7 +1007,8 @@
     <string name="note_permission_ble_scan_connect">Bluetoothの許可を有効にしてください</string>
     <string name="note_permission_external_storage">ストレージの許可を有効にしてください</string>
     <string name="note_permission_camera">カメラの許可を有効にしてください</string>
-    <string name="key_box_add_device_activate_hint1_k4">1. 初期パスワード 1234 を入力して、🔒ボタンをクリックしてキーボックスを解除してください。初期パスワードがエラーになった場合は、リセットボタンを長押ししてデバイスをリセットしてください。</string>
-    <string name="key_box_add_device_activate_hint1_1_k4">2. ペアリング中は、キーボックスを常に開いた状態にしておいてください。ペアリングが失敗した場合に後でデバイスを開けなくなる問題を回避するためです。</string>
+    <string name="activate_the_keybox_k4">スマートキーボックスをアクティブ化</string>
+    <string name="key_box_add_device_activate_hint1_k4">1. 初期パスコード：123456 を入力し、スマートキーボックスを解錠してください。解錠で🔒きない場合は、カスタマーサポートにお問い合わせください。</string>
+    <string name="key_box_add_device_activate_hint1_1_k4">2. キーパッドをタップしてスマートキーボックスをアクティブ化してください。ペアリング中はキーパッドが点灯したままであることを確認してください。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. キーパッドをタッチしてキーボックスを起動し、ペアリング中はキーパッドが常に点灯していることを確認してください。</string>
 </resources>
