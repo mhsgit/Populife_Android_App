@@ -1013,4 +1013,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. Bitte bestätigen Sie, dass der Standardcode: 123456, gefolgt von 🔒, den Keybox Max vor der Paarung öffnen kann. Wenn dies nicht funktioniert, kontaktieren Sie bitte den Kundensupport. </string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. Tippen Sie auf das Tastenfeld, um den Keybox Max zu aktivieren und ihn für die Paarung vorzubereiten. Stellen Sie sicher, dass das Tastenfeld während des Vorgangs leuchtet.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Berühren Sie das Tastenfeld, um den Keybox Max zu aktivieren und ihn für die Paarung vorzubereiten. Halten Sie das Tastenfeld während der Paarung leuchtend.</string>
+    <string name="language">Sprache</string>
 </resources>

@@ -1013,4 +1013,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. Conferma che il codice predefinito: 123456 terminato con 🔒 possa sbloccare la Keybox Max prima della coppiazione. Se non funziona, contatta il supporto clienti. </string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. Tocca il tastierino per attivare la Keybox Max e prepararla per la coppiazione. Assicurati che il tastierino rimanga acceso durante il processo.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Tocca il tastierino per attivare e preparare la Keybox Max per la coppiazione. Mantieni il tastierino acceso durante la coppiazione.</string>
+    <string name="language">Lingua</string>
 </resources>

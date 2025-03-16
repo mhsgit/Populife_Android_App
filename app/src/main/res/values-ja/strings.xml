@@ -1011,4 +1011,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. 初期パスコード：123456 を入力し、スマートキーボックスを解錠してください。解錠で🔒きない場合は、カスタマーサポートにお問い合わせください。</string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. キーパッドをタップしてスマートキーボックスをアクティブ化してください。ペアリング中はキーパッドが点灯したままであることを確認してください。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. キーパッドをタッチしてキーボックスを起動し、ペアリング中はキーパッドが常に点灯していることを確認してください。</string>
+    <string name="language">言語</string>
 </resources>

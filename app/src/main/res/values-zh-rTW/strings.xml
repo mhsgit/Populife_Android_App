@@ -1012,4 +1012,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. 请先输入初始密码：123456并点击🔒解锁密码盒Max。如无法解锁，请联系客服。</string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. 轻触按键以激活密码盒Max，在绑定过程中，按键一直保持亮起。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. 点击按键激活设备，在绑定过程中，请保持按键亮起。</string>
+    <string name="language">语言</string>
 </resources>

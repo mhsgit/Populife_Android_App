@@ -1013,4 +1013,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. Please confirm the default code: 123456 ending with 🔒 can unlock the Keybox Max before pairing. If it doesn’t work, please contact customer support. </string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. Tap the keypad to activate the Keybox Max and prepare it for pairing. Ensure the keypad stays lit during the process.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Touch the keypad to activate and prepare the Keybox Max for pairing. Keep the keypad lit up during pairing.</string>
+    <string name="language">Language</string>
 </resources>

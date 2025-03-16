@@ -1013,4 +1013,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. Por favor, confirme que el código predeterminado: 123456 terminado con 🔒 puede desbloquear la caja de llaves Max antes de emparejar. Si no funciona, contacte al soporte al cliente. </string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. Toque el teclado para activar la caja de llaves Max y prepararla para el emparejamiento. Asegúrese de que el teclado permanezca encendido durante el proceso.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Toque el teclado para activar y preparar la caja de llaves Max para el emparejamiento. Mantenga el teclado encendido durante el emparejamiento.</string>
+    <string name="language">Idioma</string>
 </resources>

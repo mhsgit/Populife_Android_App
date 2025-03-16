@@ -1013,4 +1013,5 @@
     <string name="key_box_add_device_activate_hint1_k4">1. Veuillez confirmer que le code par défaut : 123456 suivi de 🔒 peut déverrouiller la boîte à clés Max avant l\'appairage. Si cela ne fonctionne pas, veuillez contacter le service client. </string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. Appuyez sur le clavier pour activer la boîte à clés Max et la préparer à l\'appairage. Assurez-vous que le clavier reste allumé pendant le processus.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Touchez le clavier pour activer et préparer la boîte à clés Max à l\'appairage. Maintenez le clavier allumé pendant l\'appairage.</string>
+    <string name="language">Langue</string>
 </resources>
