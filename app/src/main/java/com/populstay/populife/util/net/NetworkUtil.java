@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import com.populstay.populife.base.BaseApplication;
 
@@ -27,11 +28,17 @@ public class NetworkUtil {
 				if (ssid.length() > 2 && ssid.charAt(0) == '"' && ssid.charAt(ssid.length() - 1) == '"') {
 					ssid = ssid.substring(1, ssid.length() - 1);
 				}
+				Log.d("NetworkUtil", "WiFi SSID: " + ssid);
+			} else {
+				Log.d("NetworkUtil", "WifiInfo is null");
 			}
+		} else {
+			Log.d("NetworkUtil", "WifiManager is null");
 		}
 
 		return ssid;
 	}
+
 
 	/**
 	 * 获取当前网络连接状态

@@ -28,8 +28,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 	public static final String FROM_ENTRY_VAL_SIGN = "from_entry_val_sign";
 	private String mFromEntry;
 	private TextView mTvSave;
-	private LinearLayoutCompat mLlSystem, mLlEnglish, mLlChinese, mLlJapanese, mLlFrench, mLlGerman;
-	private ImageView mIvSystem, mIvEnglish, mIvChinese, mIvJapanese, mIvFrench, mIvGerman;
+	private LinearLayoutCompat mLlSystem, mLlEnglish, mLlChinese, mLlJapanese, mLlFrench, mLlGerman, mLlItalian, mLlSpanish;
+	private ImageView mIvSystem, mIvEnglish, mIvChinese, mIvJapanese, mIvFrench, mIvGerman, mIvItalian, mIvSpanish;
 
 	private int mLanguageType = 0;
 
@@ -57,12 +57,16 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 		mLlJapanese = findViewById(R.id.ll_change_language_japanese);
 		mLlFrench = findViewById(R.id.ll_change_language_french);
 		mLlGerman = findViewById(R.id.ll_change_language_german);
+		mLlItalian = findViewById(R.id.ll_change_language_italian);
+		mLlSpanish = findViewById(R.id.ll_change_language_spanish);
 		mIvSystem = findViewById(R.id.iv_change_language_system);
 		mIvEnglish = findViewById(R.id.iv_change_language_english);
 		mIvChinese = findViewById(R.id.iv_change_language_simplified_chinese);
 		mIvJapanese = findViewById(R.id.iv_change_language_japanese);
 		mIvFrench = findViewById(R.id.iv_change_language_french);
 		mIvGerman = findViewById(R.id.iv_change_language_german);
+		mIvItalian = findViewById(R.id.iv_change_language_italian);
+		mIvSpanish = findViewById(R.id.iv_change_language_spanish);
 
 //		int type = LanguageUtil.getLanguageType(this);
 		int type = SPUtils.getInstance(this).getLanguage();
@@ -82,6 +86,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvJapanese.setVisibility(View.INVISIBLE);
 				mIvFrench.setVisibility(View.INVISIBLE);
 				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
 
 			case 1: // 英文
@@ -92,6 +98,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvJapanese.setVisibility(View.INVISIBLE);
 				mIvFrench.setVisibility(View.INVISIBLE);
 				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
 
 			case 2: // 简体中文
@@ -102,6 +110,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvJapanese.setVisibility(View.INVISIBLE);
 				mIvFrench.setVisibility(View.INVISIBLE);
 				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
 
 			case 3: // 日语
@@ -112,6 +122,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvJapanese.setVisibility(View.VISIBLE);
 				mIvFrench.setVisibility(View.INVISIBLE);
 				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
 
 			case 4: // 法语
@@ -122,6 +134,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvJapanese.setVisibility(View.INVISIBLE);
 				mIvFrench.setVisibility(View.VISIBLE);
 				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
 
 			case 5: // 德语
@@ -132,7 +146,32 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvJapanese.setVisibility(View.INVISIBLE);
 				mIvFrench.setVisibility(View.INVISIBLE);
 				mIvGerman.setVisibility(View.VISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
+			case 6: // 意大利语
+				mLanguageType = 6;
+				mIvSystem.setVisibility(View.INVISIBLE);
+				mIvEnglish.setVisibility(View.INVISIBLE);
+				mIvChinese.setVisibility(View.INVISIBLE);
+				mIvJapanese.setVisibility(View.INVISIBLE);
+				mIvFrench.setVisibility(View.INVISIBLE);
+				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.VISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
+				break;
+			case 7: // 西班牙语
+				mLanguageType = 7;
+				mIvSystem.setVisibility(View.INVISIBLE);
+				mIvEnglish.setVisibility(View.INVISIBLE);
+				mIvChinese.setVisibility(View.INVISIBLE);
+				mIvJapanese.setVisibility(View.INVISIBLE);
+				mIvFrench.setVisibility(View.INVISIBLE);
+				mIvGerman.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.VISIBLE);
+				break;
+				// 德语  法语 意大利语 西班牙语
 
 			default: // 默认英语
 				mLanguageType = 1;
@@ -141,6 +180,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 				mIvChinese.setVisibility(View.INVISIBLE);
 				mIvJapanese.setVisibility(View.INVISIBLE);
 				mIvFrench.setVisibility(View.INVISIBLE);
+				mIvItalian.setVisibility(View.INVISIBLE);
+				mIvSpanish.setVisibility(View.INVISIBLE);
 				break;
 		}
 	}
@@ -153,6 +194,8 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 		mLlJapanese.setOnClickListener(this);
 		mLlFrench.setOnClickListener(this);
 		mLlGerman.setOnClickListener(this);
+		mLlItalian.setOnClickListener(this);
+		mLlSpanish.setOnClickListener(this);
 	}
 
 	@Override
@@ -184,6 +227,13 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 
 			case R.id.ll_change_language_german:
 				refreshLanguageUI(5);
+				break;
+			case R.id.ll_change_language_italian:
+				refreshLanguageUI(6);
+				break;
+
+			case R.id.ll_change_language_spanish:
+				refreshLanguageUI(7);
 				break;
 
 			default:

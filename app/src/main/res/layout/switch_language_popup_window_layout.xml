@@ -1,52 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/help_win_bg2"
-    android:layout_width="280dp"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:gravity="center"
-    android:layout_height="92dp">
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="5dp"
+    android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/tv_lan_english"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:drawableTop="@drawable/lan_english"
-        android:text="@string/language_english"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:drawablePadding="@dimen/dimens_dp_10"
-        android:textColor="@color/common_text_color"
+    <LinearLayout
+        android:background="@drawable/help_win_bg2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/tv_lan_chinese"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/lan_chinese"
-        android:text="@string/language_simplified_chinese"
-        android:textSize="14sp"
-        android:drawablePadding="@dimen/dimens_dp_10"
-        android:textColor="@color/common_text_color"
-        android:layout_width="wrap_content"
-        android:gravity="center"
-        android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
 
-    <TextView
-        android:id="@+id/tv_language_japanese"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:drawableTop="@drawable/lan_japanese"
-        android:text="@string/language_japanese"
-        android:textSize="14sp"
-        android:drawablePadding="@dimen/dimens_dp_10"
-        android:textColor="@color/common_text_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+                android:id="@+id/tv_lan_english"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:drawableTop="@drawable/lan_english_icon"
+                android:text="@string/language_english"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
 
-</LinearLayout>
+            <TextView
+
+                android:id="@+id/tv_lan_chinese"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/lan_chinese_icon"
+                android:text="@string/language_simplified_chinese"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="match_parent"/>
+
+            <TextView
+
+                android:id="@+id/tv_language_japanese"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/lan_japanese_icon"
+                android:text="@string/language_japanese"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <TextView
+
+                android:id="@+id/tv_language_french"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/lan_french_icon"
+                android:text="@string/language_french"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <TextView
+
+                android:id="@+id/tv_language_german"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/lan_german_icon"
+                android:text="@string/language_german"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <TextView
+
+                android:id="@+id/tv_language_italian"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/lan_italian_icon"
+                android:text="@string/language_italian"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <TextView
+
+                android:id="@+id/tv_language_spanish"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/lan_spanish_icon"
+                android:text="@string/language_spanish"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/common_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</HorizontalScrollView>

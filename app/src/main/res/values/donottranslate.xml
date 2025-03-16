@@ -8,6 +8,8 @@
     <string name="language_japanese" translatable="false">日本語</string>
     <string name="language_french" translatable="false">Français</string>
     <string name="language_german" translatable="false">Deutsch</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_spanish">Español</string>
     <string name="num_zero" translatable="false">0</string>
     <string name="words_num_limit_200" translatable="false">/200</string>
     <string name="unit_percent" translatable="false">%</string>

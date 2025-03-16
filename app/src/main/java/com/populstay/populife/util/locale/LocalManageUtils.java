@@ -45,6 +45,14 @@ public class LocalManageUtils {
 				return context.getString(R.string.language_simplified_chinese);
 			case 3:
 				return context.getString(R.string.language_japanese);
+			case 4:
+				return context.getString(R.string.language_french);
+			case 5:
+				return context.getString(R.string.language_german);
+			case 6:
+				return context.getString(R.string.language_italian);
+			case 7:
+				return context.getString(R.string.language_spanish);
 			default:
 				return context.getString(R.string.language_english);
 		}
@@ -83,6 +91,13 @@ public class LocalManageUtils {
 				locale = Locale.GERMAN;
 				break;
 
+			case 6: // 意大利语
+				locale = Locale.ITALY;
+				break;
+
+			case 7: // 西班牙语
+				locale = new Locale("es", "ES");
+				break;
 			default: // 默认英语
 				locale = Locale.US;
 				break;

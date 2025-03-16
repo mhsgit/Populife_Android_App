@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,6 +43,7 @@ import com.populstay.populife.permission.PermissionListener;
 import com.populstay.populife.ui.CustomProgress;
 import com.populstay.populife.ui.widget.exedittext.ExEditText;
 import com.populstay.populife.util.CollectionUtil;
+import com.populstay.populife.util.locale.SPUtils;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.net.NetworkUtil;
 import com.populstay.populife.util.storage.PeachPreference;
@@ -63,6 +65,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 
@@ -96,7 +100,7 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 	private TextView mTvSearchState;
 	private WifiListAdapter mWifiListAdapter;
 	private List<WiFi> mWifiList = new ArrayList<>();
-	private List<WiFi> mTempWifiList;
+	private List<WiFi> mTempWifiList = new ArrayList<>();
 	private MyHandler mMyHandler;
 	private long mSearchWifiTime;
 	private boolean isCloseWifiListDialog;
@@ -126,7 +130,7 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 		mTvNext = findViewById(R.id.tv_gateway_add_next);
 		mEtWifiPwd = findViewById(R.id.et_gateway_add_wifi_pwd);
 		mEtGatewayName = findViewById(R.id.et_gateway_add_gateway_name);
-		mEtWifiName.setText(NetworkUtil.getWifiSSid());
+		//mEtWifiName.setText(NetworkUtil.getWifiSSid());
 
 		mLlFoundDeviceView = findViewById(R.id.ll_found_device_view);
 		mSeekbarScanDevice = findViewById(R.id.seekbar_scan_device);
@@ -163,6 +167,16 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 												mListView.setVisibility(View.GONE);
 												mLlConfig.setVisibility(View.VISIBLE);
 												mEtGatewayName.setText(mSelectedDevice.getName());
+												String lastWifiSSID = SPUtils.getInstance(GatewayAddActivity.this).getWifiSSID();
+												String laseWifiPwd = SPUtils.getInstance(GatewayAddActivity.this).getWifiPwd();
+												if (TextUtils.isEmpty(lastWifiSSID) || TextUtils.isEmpty(laseWifiPwd)){
+													// 展示wifi列表对话框
+													showWifiListDialog(MyHandler.SEARCH_WIFI_STATE_START);
+													mGatewayAPI.scanWiFiByGateway(mSelectedDevice.getAddress());
+												}else {
+													mEtWifiName.setText(lastWifiSSID);
+													mEtWifiPwd.setText(laseWifiPwd);
+												}
 											}
 										});
 									}
@@ -191,6 +205,8 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 			public void onClick(View view) {
 				/*mCustomProgress = CustomProgress.show(GatewayAddActivity.this,
 						getString(R.string.configuring_gateway), false, null);*/
+				SPUtils.getInstance(GatewayAddActivity.this).saveLastWifi(mEtWifiName.getText().toString());
+				SPUtils.getInstance(GatewayAddActivity.this).saveLastWifiPwd(mEtWifiPwd.getText().toString());
 				showLoading();
 				mTvNext.setEnabled(false);
 				getUserKeyId();
@@ -212,7 +228,12 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 			@Override
 			public void onScanWiFiByGateway(final List<WiFi> list, int i, Error error) {
 				PeachLogger.d("onScanWiFiByGateway=" + list + ",i=" + i + ",error=" + error.name());
-				mTempWifiList = list;
+				mTempWifiList.clear();
+				for (WiFi wiFi : list){
+					if (!TextUtils.isEmpty(wiFi.getSsid())) {
+						mTempWifiList.add(wiFi);
+					}
+				}
 				mMyHandler.sendEmptyMessage(MyHandler.WHAT_SHOW_WIFI_LIST_DIALOG);
 			}
 

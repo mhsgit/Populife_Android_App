@@ -92,7 +92,6 @@
     <include layout="@layout/layout_view_line_24dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:visibility="gone"
         android:id="@+id/ll_change_language_french"
         style="@style/list_item_overall">
 
@@ -115,8 +114,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/ll_change_language_german"
-        style="@style/list_item_overall"
-        android:visibility="gone">
+        style="@style/list_item_overall">
 
         <TextView
             style="@style/list_item_title"
@@ -133,6 +131,46 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <!--    <include layout="@layout/layout_view_line_24dp" />-->
+        <include layout="@layout/layout_view_line_24dp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_change_language_italian"
+        style="@style/list_item_overall">
+
+        <TextView
+            style="@style/list_item_title"
+            android:text="@string/language_italian" />
+
+        <TextView style="@style/list_item_description" />
+
+        <ImageView
+            android:id="@+id/iv_change_language_italian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_blue_20dp"
+            android:visibility="invisible" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <include layout="@layout/layout_view_line_24dp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_change_language_spanish"
+        style="@style/list_item_overall">
+
+        <TextView
+            style="@style/list_item_title"
+            android:text="@string/language_spanish" />
+
+        <TextView style="@style/list_item_description" />
+
+        <ImageView
+            android:id="@+id/iv_change_language_spanish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_blue_20dp"
+            android:visibility="invisible" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

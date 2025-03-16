@@ -17,6 +17,8 @@ public class SPUtils {
 
 	private Locale systemCurrentLocal = Locale.CHINESE;//系统当前本地语言为中文 初始值
 
+	private final String LAST_SELECT_WIFI_SSID = "last_select_wifi_ssid";
+	private final String LAST_SELECT_WIFI_PWD = "last_select_wifi_pwd";
 
 	public SPUtils(Context context) {
 		//通过上下文获取本地缓存
@@ -81,4 +83,31 @@ public class SPUtils {
 	public void setSystemCurrentLocal(Locale local) {
 		systemCurrentLocal = local;
 	}
+
+	public void saveLastWifi(String wifiSSID) {
+		//缓存编辑者
+		SharedPreferences.Editor editor = mSharedPreferences.edit();
+		//放入保存的语言项
+		editor.putString(LAST_SELECT_WIFI_SSID, wifiSSID);
+		//提交 之后 缓存语言项保存完毕
+		editor.apply();
+	}
+
+	public String getWifiSSID() {
+		return mSharedPreferences.getString(LAST_SELECT_WIFI_SSID, "");
+	}
+
+	public void saveLastWifiPwd(String wifiPwd) {
+		//缓存编辑者
+		SharedPreferences.Editor editor = mSharedPreferences.edit();
+		//放入保存的语言项
+		editor.putString(LAST_SELECT_WIFI_PWD, wifiPwd);
+		//提交 之后 缓存语言项保存完毕
+		editor.apply();
+	}
+
+	public String getWifiPwd() {
+		return mSharedPreferences.getString(LAST_SELECT_WIFI_PWD, "");
+	}
+
 }

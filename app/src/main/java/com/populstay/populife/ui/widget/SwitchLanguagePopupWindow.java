@@ -19,8 +19,8 @@ public class SwitchLanguagePopupWindow implements View.OnClickListener {
     private View mContentView;
     private int mContentViewWidth, mContentViewHeight;
     private int mLeftSpace,mRightSpace;
-    private TextView tv_lan_english,tv_lan_chinese,tv_language_japanese;
-    // 1: 英文, 2: 简体中文, 3: 日语
+    private TextView tv_lan_english,tv_lan_chinese,tv_language_japanese,tv_language_german,tv_language_french,tv_language_italian,tv_language_spanish;
+    // 1: 英文, 2: 简体中文, 3: 日语, 4: 德语, 5: 法语, 6: 意大利语, 7: 西班牙语
     private int mLanguageType = 1;
     private SelectLanguageListener mSelectLanguageListener;
 
@@ -51,10 +51,18 @@ public class SwitchLanguagePopupWindow implements View.OnClickListener {
         tv_lan_english = mContentView.findViewById(R.id.tv_lan_english);
         tv_lan_chinese = mContentView.findViewById(R.id.tv_lan_chinese);
         tv_language_japanese = mContentView.findViewById(R.id.tv_language_japanese);
+         tv_language_german = mContentView.findViewById(R.id.tv_language_german);
+         tv_language_french = mContentView.findViewById(R.id.tv_language_french);
+         tv_language_italian = mContentView.findViewById(R.id.tv_language_italian);
+         tv_language_spanish = mContentView.findViewById(R.id.tv_language_spanish);
 
         tv_lan_english.setOnClickListener(this);
         tv_lan_chinese.setOnClickListener(this);
         tv_language_japanese.setOnClickListener(this);
+        tv_language_german.setOnClickListener(this);
+        tv_language_french.setOnClickListener(this);
+        tv_language_italian.setOnClickListener(this);
+        tv_language_spanish.setOnClickListener(this);
     }
 
     public void show(View anchor,int gravity){
@@ -107,6 +115,18 @@ public class SwitchLanguagePopupWindow implements View.OnClickListener {
                 break;
             case R.id.tv_language_japanese:
                 mLanguageType = 3;
+                break;
+            case R.id.tv_language_german:
+                mLanguageType = 5;
+                break;
+            case R.id.tv_language_french:
+                mLanguageType = 4;
+                break;
+            case R.id.tv_language_italian:
+                mLanguageType = 6;
+                break;
+            case R.id.tv_language_spanish:
+                mLanguageType = 7;
                 break;
         }
         if (null != mSelectLanguageListener){

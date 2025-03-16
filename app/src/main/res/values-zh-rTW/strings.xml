@@ -380,7 +380,7 @@
     <string name="lock_type_deadbolt">智能横闩锁</string>
     <string name="lock_type_moonlock">把手锁</string>
     <string name="lock_type_keybox">智能密码盒</string>
-    <string name="lock_type_keybox_k4">智能密码盒</string>
+    <string name="lock_type_keybox_k4">智能密码盒Max</string>
     <string name="lock_type_mortise">插芯锁</string>
     <string name="go_to_login">去登录</string>
     <string name="note_login_fingerprint_verification">将手指置于指纹传感器上，以完成指纹验证登录。</string>
@@ -704,7 +704,7 @@
     <string name="share_custom_pwd_text">您好，我给您分享的自定义密码：%s  \n生效时间：%s  \n失效时间：%s  \n\n提示：请先触摸设备，在按键上输入密码后，点击右下角的#或锁图标开锁。</string>
     <string name="add_lock_pre_check">配对前检查</string>
     <string name="add_key_box_lock_pre_check_hint">在您开始配对密码盒之前，确保以下步骤已完成。</string>
-    <string name="add_key_box_lock_pre_check_hint_k4">在您开始配对密码盒之前，确保以下步骤已完成。</string>
+    <string name="add_key_box_lock_pre_check_hint_k4">在您开始配对密码盒Max之前，确保以下步骤已完成。</string>
     <string name="add_deadbolt_lock_pre_check_hint">在您开始配对门锁之前，确保以下步骤已完成。</string>
     <string name="add_moon_lock_pre_check_hint">在您开始配对把手锁之前，确保以下步骤已完成。</string>
     <string name="add_lock_pre_check_hint2">完成步骤后点击以下的圆圈：</string>
@@ -712,11 +712,11 @@
     <string name="bt_lbs_open_hint">2. 如果是安卓手机, 定位服务以及权限已打开</string>
     <string name="net_open_hint">3. 已连接Wifi或已开启手机移动流量</string>
     <string name="key_box_battery_install_hint">4. 已将4个满电的7号电池安装到密码盒内（如果正确安装电池，密码盒的按键可以被点亮）</string>
-    <string name="key_box_battery_install_hint_k4">4. 已将4个满电的7号电池安装到密码盒内（如果正确安装电池，密码盒的按键可以被点亮）</string>
+    <string name="key_box_battery_install_hint_k4">4. 已将4个满电的7号电池安装到密码盒Max内（如果正确安装电池，密码盒的按键可以被点亮）</string>
     <string name="deadbolt_battery_install_hint">4. 已将4个满电的5号电池安装到门锁内（如果正确安装电池，门锁的按键可以被点亮）</string>
     <string name="moonlock_battery_install_hint">4. 已将2个满电的7号电池安装到门锁内（如果正确安装电池，门锁的指纹模块可以被点亮）</string>
     <string name="key_box_distance_confirm">5. 确保密码盒离你的手机蓝牙距离在3米以内</string>
-    <string name="key_box_distance_confirm_k4">5. 确保密码盒离你的手机蓝牙距离在3米以内</string>
+    <string name="key_box_distance_confirm_k4">5. 确保密码盒Max离你的手机蓝牙距离在3米以内</string>
     <string name="deadbolt_distance_confirm">5. 确保门锁离你的手机蓝牙距离在3米以内</string>
     <string name="moonlock_distance_confirm">5. 确保门锁离你的手机蓝牙距离在3米以内</string>
     <string name="keep_the_keypad_light">请保持按键常亮，直到配对成功。否则设备可能无法被寻找以及配对</string>
@@ -732,14 +732,14 @@
     <string name="select_a_device">选择设备</string>
     <string name="paired">已配对</string>
     <string name="scanning_nearby_keybox">扫描附近密码盒</string>
-    <string name="scanning_nearby_keybox_k4">@string/scanning_nearby_keybox</string>
+    <string name="scanning_nearby_keybox_k4">扫描附近密码盒Max</string>
     <string name="scanning_nearby_keybox_please_wait">请稍候，正在扫描附近的密码盒</string>
-    <string name="scanning_nearby_keybox_please_wait_k4">@string/scanning_nearby_keybox_please_wait</string>
+    <string name="scanning_nearby_keybox_please_wait_k4">请稍候，正在扫描附近的密码盒Max</string>
     <string name="scanning_nearby_moonlock_please_wait">请稍候，正在扫描附近的把手锁</string>
     <string name="search_time_out">搜索超时</string>
     <string name="scan_again">再次扫描</string>
     <string name="keybox_not_found_try_again">无法找到密码盒，请再次操作</string>
-    <string name="keybox_not_found_try_again_k4">无法找到密码盒，请再次操作</string>
+    <string name="keybox_not_found_try_again_k4">无法找到密码盒Max，请再次操作</string>
     <string name="deadbolt_not_found_try_again">无法找到门锁，请再次操作</string>
     <string name="moonlock_not_found_try_again">无法找到把手锁，请再次操作</string>
     <string name="gateway_was_not_founded_try_again">无法找到网关，请再次操作</string>
@@ -747,8 +747,8 @@
     <string name="something_went_wrong">哎呀∑(O_O;)出错啦</string>
     <string name="the_following">你可以选择以下操作：</string>
     <string name="the_following_detail_deadbolt">1. 重启您手机的蓝牙和网络\n2. 重启Populife APP\n3. 重新配对门锁</string>
-    <string name="the_following_detail_keybox">1. 重启您手机的蓝牙和网络\n2. 重启Populife APP\n3. 重新配对密码盒</string>
-    <string name="the_following_detail_keybox_k4">1. 重启您手机的蓝牙和网络\n2. 重启Populife APP\n3. 重新配对密码盒</string>
+    <string name="the_following_detail_keybox">1. 重启您手机的蓝牙和网络\n2. 重启Populife APP\n3. 重新配对密码盒Max</string>
+    <string name="the_following_detail_keybox_k4">1. 重启您手机的蓝牙和网络\n2. 重启Populife APP\n3. 重新配对密码盒Max</string>
     <string name="try_pairing_again">重新配对</string>
     <string name="back_to_smart">返回设备首页</string>
     <string name="before_pairing_the_gateway">在您开始配对网关之前，确保以下步骤已完成。</string>
@@ -1008,8 +1008,8 @@
     <string name="note_permission_ble_scan_connect">请开启蓝牙权限</string>
     <string name="note_permission_external_storage">请开启存储权限</string>
     <string name="note_permission_camera">请开启相机权限</string>
-    <string name="activate_the_keybox_k4">激活钥匙盒</string>
-    <string name="key_box_add_device_activate_hint1_k4">1. 请先输入初始密码：123456并点击🔒解锁钥匙盒。如无法解锁，请联系客服。</string>
-    <string name="key_box_add_device_activate_hint1_1_k4">2. 轻触按键以激活钥匙盒，在绑定过程中，按键一直保持亮起。</string>
+    <string name="activate_the_keybox_k4">激活密码盒Max</string>
+    <string name="key_box_add_device_activate_hint1_k4">1. 请先输入初始密码：123456并点击🔒解锁密码盒Max。如无法解锁，请联系客服。</string>
+    <string name="key_box_add_device_activate_hint1_1_k4">2. 轻触按键以激活密码盒Max，在绑定过程中，按键一直保持亮起。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. 点击按键激活设备，在绑定过程中，请保持按键亮起。</string>
 </resources>
