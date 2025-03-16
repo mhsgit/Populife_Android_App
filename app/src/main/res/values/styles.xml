@@ -362,4 +362,16 @@
         <item name="android:layout_marginLeft">10dp</item>
     </style>
 
+    <style name="AppBottomSheet" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppBottomSheetStyle</item>
+    </style>
+
+    <style name="AppBottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:statusBarColor">@color/white</item> <!-- 设置状态栏颜色 -->
+        <item name="android:navigationBarColor">@color/white</item> <!-- 设置导航栏颜色 -->
+    </style>
+
+
 </resources>

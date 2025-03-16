@@ -82,4 +82,7 @@
     <color name="device_card_text_color_inactive">#212322</color>
     <color name="device_card_text_color_freeze">#C0C1C0</color>
 
+    <color name="lan_color_unselected">#FFA6A6A6</color>
+    <color name="lan_color_selected">#FF000000</color>
+
 </resources>

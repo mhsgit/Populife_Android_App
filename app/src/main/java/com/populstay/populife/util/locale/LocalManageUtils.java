@@ -58,6 +58,32 @@ public class LocalManageUtils {
 		}
 	}
 
+	public static int getCurrentLanCodeByLocal(Context context) {
+		Locale locale = getSystemLocal(context);//系统语言
+		int code = SPUtils.getInstance(context).getLanguage();
+		if (code == 0){
+			switch (locale.getLanguage()) {
+				case "en":
+					return 1;
+				case "zh":
+					return 2;
+				case "ja": // 日语
+					return 3;
+				case "de": // 德语
+					return 4;
+				case "fr": // 法语
+					return 5;
+				case "it": // 意大利
+					return 6;
+				case "es": // 西班牙
+					return 7;
+			}
+		}else {
+			return code;
+		}
+		return 1;
+	}
+
 	/**
 	 * 获取选择的语言设置
 	 *
@@ -82,13 +108,11 @@ public class LocalManageUtils {
 			case 3: // 日语
 				locale = Locale.JAPAN;
 				break;
-
-			case 4: // 法语
-				locale = Locale.FRANCE;
-				break;
-
-			case 5: // 德语
+			case 4: // 德语
 				locale = Locale.GERMAN;
+				break;
+			case 5: // 法语
+				locale = Locale.FRANCE;
 				break;
 
 			case 6: // 意大利语

@@ -49,7 +49,10 @@ public class SPUtils {
 	 * @return 从缓存中根据缓存名或者缓存值，如果没有，则返回默认值0
 	 */
 	public int getLanguage() {
-		return mSharedPreferences.getInt(TAG_LANGUAGE, 0);
+		return getLanguage(0);
+	}
+	public int getLanguage(int defaultValue) {
+		return mSharedPreferences.getInt(TAG_LANGUAGE, defaultValue);
 	}
 
 	/**
@@ -63,7 +66,7 @@ public class SPUtils {
 		//放入保存的语言项
 		editor.putInt(TAG_LANGUAGE, select);
 		//提交 之后 缓存语言项保存完毕
-		editor.commit();
+		editor.apply();
 	}
 
 	/**

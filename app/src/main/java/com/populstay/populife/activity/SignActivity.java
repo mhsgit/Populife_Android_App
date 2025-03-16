@@ -39,6 +39,7 @@ import com.populstay.populife.sign.ISignListener;
 import com.populstay.populife.sign.SignHandler;
 import com.populstay.populife.ui.widget.SwitchLanguagePopupWindow;
 import com.populstay.populife.ui.widget.exedittext.ExEditText;
+import com.populstay.populife.ui.widget.language.SwitchLanguageBottomSheet;
 import com.populstay.populife.util.activity.ActivityCollector;
 import com.populstay.populife.util.device.DeviceUtil;
 import com.populstay.populife.util.locale.LanguageUtil;
@@ -52,7 +53,6 @@ import com.populstay.populife.util.timer.ITimerListener;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.WeakHashMap;
@@ -63,7 +63,7 @@ import androidx.annotation.Nullable;
  * 登录、注册、找回密码
  * Created by Jerry
  */
-public class SignActivity extends BaseActivity implements View.OnClickListener, ISignListener, ITimerListener {
+public class SignActivity extends BaseActivity implements View.OnClickListener, ISignListener, ITimerListener,SwitchLanguagePopupWindow.SelectLanguageListener {
 
 	public static final String TAG = SignActivity.class.getSimpleName();
 
@@ -97,6 +97,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 	private String username;
 	private SwitchLanguagePopupWindow mSwitchLanguagePopupWindow;
 	private Locale mLocale;
+	private SwitchLanguageBottomSheet dialog;
 
 	/**
 	 * 启动当前 activity
@@ -617,7 +618,8 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 				}
 				break;
 			case R.id.ll_switch_language:
-				showSwitchLanguagePopupWindow(view);
+				//showSwitchLanguagePopupWindow(view);
+				showSwitchLanguageDialog();
 				break;
 			default:
 				break;
@@ -637,6 +639,12 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 		} else {
 			mTvSwitchLanguage.setText(lan);
 		}
+	}
+
+	private void showSwitchLanguageDialog() {
+		dialog = new SwitchLanguageBottomSheet();
+		dialog.setSelectLanguageListener(this);
+		dialog.show(getSupportFragmentManager(), "language_dialog");
 	}
 
 	private void showSwitchLanguagePopupWindow(View anchor) {
@@ -1312,6 +1320,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 		if (null != mSwitchLanguagePopupWindow) {
 			mSwitchLanguagePopupWindow.dismiss();
 		}
+		if (null != dialog) {
+			dialog.dismiss();
+		}
 		stopTimer();
 	}
 
@@ -1344,5 +1355,10 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 		if (RESET_PWD_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
 			finish();
 		}
+	}
+
+	@Override
+	public void onSelectLanguage(int languageType) {
+		changeLanguage(languageType);
 	}
 }
