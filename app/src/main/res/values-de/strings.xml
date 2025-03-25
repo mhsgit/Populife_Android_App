@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Populife</string>
     <string name="note_network_error">Die Netzwerkverbindung ist fehlgeschlagen. Bitte überprüfen Sie, ob WiFi oder Mobilfunknetz aktiviert ist.</string>
     <string name="nav_tab_lock">Gerät</string>
@@ -16,9 +16,9 @@
     <string name="sign_up">Registrieren</string>
     <string name="reset_pwd">Passwort zurücksetzen</string>
     <string name="note_pwd_wrong_times">Sie haben das Passwort zu oft falsch eingegeben. Haben Sie Ihr Passwort vergessen?</string>
-    <string name="enter_verifiction_code">Geben Sie den Verifizierungscode ein</string>
-    <string name="note_verifiction_code_invalid">Der Verifizierungscode ist ungültig</string>
-    <string name="get_code">Code abrufen</string>
+    <string name="enter_verifiction_code">Verifizierungscode eingeben</string>
+    <string name="note_verifiction_code_invalid">Verifizierungscode ist ungültig</string>
+    <string name="get_code">Code erhalten</string>
     <string name="notification">Benachrichtigung</string>
     <string name="message_detail">Benachrichtigungsdetails</string>
     <string name="help_center">Hilfezentrum</string>
@@ -37,11 +37,11 @@
     <string name="delete_account">Konto löschen</string>
     <string name="save">Speichern</string>
     <string name="lock_users">Schlossbenutzer</string>
-    <string name="lock_group">Schlossgruppe</string>
+    <string name="lock_group">Gruppe sperren</string>
     <string name="other_uppercase">Andere</string>
     <string name="other_lowercase">andere</string>
     <string name="about">Über</string>
-    <string name="copyright_claim">Copyright© 2018-%d Populife Alle Rechte vorbehalten</string>
+    <string name="copyright_claim" formatted="true">Copyright© 2018-%d Populife Alle Rechte vorbehalten</string>
     <string name="common_questions">Häufige Fragen</string>
     <string name="customer_feedback">Kundenfeedback</string>
     <string name="online_communication">Online-Kommunikation</string>
@@ -78,7 +78,7 @@
     <string name="note_email_invalid">Die E-Mail-Adresse ist ungültig</string>
     <string name="note_sign_in_fail">Anmeldung fehlgeschlagen</string>
     <string name="note_register_fail">Registrierung fehlgeschlagen</string>
-    <string name="note_delete_account">Nach dem Löschen des Kontos werden alle Daten gelöscht und können nicht wiederhergestellt werden. Möchten Sie das Konto wirklich löschen?</string>
+    <string name="note_delete_account">Nach dem Löschen des Kontos werden alle Daten gelöscht und können nicht wiederhergestellt werden. Möchten Sie wirklich fortfahren?</string>
     <string name="note_reset_pwd_success">Passwort erfolgreich zurückgesetzt</string>
     <string name="note_reset_pwd_fail">Passwortzurücksetzung fehlgeschlagen</string>
     <string name="note_delete_account_success">Konto erfolgreich gelöscht</string>
@@ -107,7 +107,7 @@
     <string name="note_name_already_exists">Der Name existiert bereits</string>
     <string name="note_add_group_fail">Neue Gruppe hinzufügen fehlgeschlagen</string>
     <string name="note_modify_group_fail">Gruppenname ändern fehlgeschlagen</string>
-    <string name="note_delete_group">Möchten Sie diese Gruppe wirklich löschen?</string>
+    <string name="note_delete_group">Möchten Sie die Gruppe wirklich löschen?</string>
     <string name="note_delete_group_fail">Gruppe löschen fehlgeschlagen</string>
     <string name="note_nothing_changed">Nichts geändert</string>
     <string name="enter_nickname">Geben Sie den Nickname ein</string>
@@ -116,8 +116,8 @@
     <string name="note_modify_name_success">Name erfolgreich geändert</string>
     <string name="note_modify_name_fail">Name ändern fehlgeschlagen</string>
     <string name="lock_add">Schloss hinzufügen</string>
-    <string name="phone_near_lock">Das Telefon sollte in der Nähe des Schlosses sein</string>
-    <string name="touch_to_activate_the_lock">Beim Hinzufügen des Schlosses müssen Sie ständig auf die Schloss-Tastatur tippen, um das Schloss hinzufügbar zu machen.</string>
+    <string name="phone_near_lock">Das Telefon sollte sich in der Nähe des Schlosses befinden</string>
+    <string name="touch_to_activate_the_lock">Während des Hinzufügens des Schlosses, berühren Sie die Schlüsseltastatur ständig, um sie zu beleuchten, damit das Schloss hinzufügbar bleibt.</string>
     <string name="next">Weiter</string>
     <string name="locks_nearby">Schlösser in der Nähe</string>
     <string name="lock_name">Schlossname</string>
@@ -136,15 +136,15 @@
     <string name="name">Name</string>
     <string name="battery">Batterie</string>
     <string name="complete">Abgeschlossen</string>
-    <string name="complete_lock_configuration">Konfigurieren Sie zuerst das Schloss</string>
+    <string name="complete_lock_configuration">Bitte schließen Sie zunächst die Schloss-Konfiguration ab</string>
     <string name="added_successfully">Erfolgreich hinzugefügt</string>
     <string name="administrator">Administrator</string>
-    <string name="permanent">Permanent</string>
+    <string name="permanent">Dauerhaft</string>
     <string name="day">Tag</string>
     <string name="days">Tag(e)</string>
-    <string name="frozen">Gesperrt</string>
+    <string name="frozen">Eingefroren</string>
     <string name="expired">Abgelaufen</string>
-    <string name="expiring">Läuft ab</string>
+    <string name="expiring">Ablaufend</string>
     <string name="one_time">Einmalig</string>
     <string name="cyclic">Zyklisch</string>
     <string name="serial_number">Seriennummer</string>
@@ -154,7 +154,7 @@
     <string name="lock_update">Schlossupdate</string>
     <string name="send">Senden</string>
     <string name="share">Teilen</string>
-    <string name="note_key_frozen">(Ihr Schlüssel ist gesperrt)</string>
+    <string name="note_key_frozen">(Ihr Schlüssel wurde eingefroren)</string>
     <string name="note_key_not_become_valid">(Ihr Schlüssel ist noch nicht gültig)</string>
     <string name="note_key_expired">(Ihr Schlüssel ist abgelaufen)</string>
     <string name="note_clear_records">Möchten Sie alle Aufzeichnungen wirklich löschen?</string>
@@ -170,25 +170,25 @@
     <string name="receiver">Empfänger</string>
     <string name="receiver_account">Empfänger-Konto</string>
     <string name="name_the_key">Schlüssel benennen</string>
-    <string name="name_the_passcode">Kenncode benennen</string>
+    <string name="name_the_passcode">Code benennen</string>
     <string name="start_time">Gültigkeitsbeginn</string>
     <string name="end_time">Gültigkeitsende</string>
     <string name="authorize_admin">Autorisiertes Benutzerkonto</string>
     <string name="note_make_sure_lock_nearby">Verbindungszeitüberschreitung. Bitte stellen Sie sicher, dass das Schloss in der Nähe ist.</string>
     <string name="note_lock_reset_still_delete">Dieses Schloss wurde möglicherweise zurückgesetzt. Möchten Sie es dennoch löschen?</string>
     <string name="note_one_time">Der einmalige Schlüssel ist 6 Stunden gültig und kann nur einmal verwendet werden.</string>
-    <string name="note_permission">Bitte gewähren Sie die erforderlichen Berechtigungen, um die Funktionen ordnungsgemäß zu nutzen.</string>
-    <string name="note_permission_contact">Bitte gewähren Sie die Kontaktsberechtigung, um die Kontakte lesen zu können.</string>
-    <string name="note_permission_avatar">Bitte gewähren Sie die erforderliche Berechtigung, um Ihr Profilbild ändern zu können.</string>
-    <string name="note_receiver_format">Das Empfänger-Konto muss eine Telefonnummer oder eine E-Mail-Adresse sein.</string>
-    <string name="note_time_start_greater_than_end">Das Gültigkeitsende muss nach dem Gültigkeitsbeginn liegen.</string>
+    <string name="note_permission">Bitte aktivieren Sie die Berechtigung, um die Funktionen ordnungsgemäß nutzen zu können.</string>
+    <string name="note_permission_contact">Bitte aktivieren Sie die Kontaktberechtigung, um die Kontakte lesen zu können.</string>
+    <string name="note_permission_avatar">Bitte aktivieren Sie die Berechtigung, um Ihr Profilbild ändern zu können.</string>
+    <string name="note_receiver_format">Das Konto des Empfängers muss eine Telefonnummer oder eine E-Mail-Adresse sein.</string>
+    <string name="note_time_start_greater_than_end">Die Ablaufzeit muss später als die Gültigkeitsdauer sein.</string>
     <string name="send_ekey_success">Digitale Schlüssel erfolgreich gesendet</string>
     <string name="send_ekey_fail">Digitale Schlüssel senden fehlgeschlagen</string>
     <string name="note_receive_user_not_found">Der Empfänger wurde nicht gefunden</string>
-    <string name="note_send_ekey_to_registered_user">Sie können digitale Schlüssel nur an registrierte Benutzer senden.</string>
+    <string name="note_send_ekey_to_registered_user">Sie können den digitalen Schlüssel nur an einen registrierten Benutzer senden.</string>
     <string name="note_cannot_send_ekey_to_yourself">Sie können keine digitalen Schlüssel an sich selbst senden.</string>
     <string name="note_no_auth_send_ekey">Sie haben keine Berechtigung, digitale Schlüssel zu senden.</string>
-    <string name="note_cannot_exceed_expiration_send_ekey">Sie können keine Schlüssel teilen, deren Gültigkeit nach Ihrem eigenen Berechtigungsende liegt.</string>
+    <string name="note_cannot_exceed_expiration_send_ekey">Sie können keine Schlüssel teilen, die das Ablaufdatum Ihrer Berechtigung überschreiten.</string>
     <string name="cyclic_mode">Zyklischer Modus</string>
     <string name="weekend">Wochenende</string>
     <string name="daily">Täglich</string>
@@ -201,13 +201,13 @@
     <string name="saturday">Samstag</string>
     <string name="sunday">Sonntag</string>
     <string name="note_password_permanent">Der Kenncode muss mindestens einmal innerhalb von 24 Stunden verwendet werden, sonst wird er ungültig.</string>
-    <string name="note_password_period">Der Kenncode muss mindestens einmal innerhalb von 24 Stunden nach Gültigkeitsbeginn verwendet werden, sonst wird er ungültig.</string>
+    <string name="note_password_period">Der Code muss mindestens einmal innerhalb von 24 Stunden nach seinem Inkrafttreten verwendet werden, andernfalls wird er ungültig.</string>
     <string name="note_password_one_time">Der Kenncode ist 6 Stunden gültig und kann nur einmal verwendet werden.</string>
     <string name="note_password_clear">Der Kenncode ist 24 Stunden gültig. Nach Eingabe am Schloss werden alle zuvor verwendeten Kenncodes ungültig.</string>
-    <string name="note_password_customize">Geben Sie manuell 6 - 9 Ziffern ein. Kann über Bluetooth in der Nähe des Schlosses hinzugefügt werden.</string>
-    <string name="note_password_cyclic">Der Kenncode muss mindestens einmal innerhalb von 24 Stunden nach Gültigkeitsbeginn verwendet werden, sonst wird er ungültig.</string>
-    <string name="note_create_password_first">Bitte erstellen Sie zuerst einen Kenncode</string>
-    <string name="create_password_fail">Kenncode erstellen fehlgeschlagen</string>
+    <string name="note_password_customize">Geben Sie manuell 6-9 Ziffern ein. Kann per Bluetooth des Telefons in der Nähe des Schlosses hinzugefügt werden.</string>
+    <string name="note_password_cyclic">Der Code muss mindestens einmal innerhalb von 24 Stunden nach seinem Inkrafttreten verwendet werden, andernfalls wird er ungültig.</string>
+    <string name="note_create_password_first">Bitte erstellen Sie zuerst ein Passwort</string>
+    <string name="create_password_fail">Passwort erstellen fehlgeschlagen</string>
     <string name="pending">Ausstehend</string>
     <string name="clear_all_bluetooth_keys">Alle digitalen Schlüssel löschen</string>
     <string name="reset_all_ekeys">Alle digitalen Schlüssel zurücksetzen</string>
@@ -217,14 +217,14 @@
     <string name="active">Aktiv</string>
     <string name="password_detail">Kenncode-Details</string>
     <string name="sender">Absender</string>
-    <string name="sending_time">Sendezeit</string>
+    <string name="sending_time">Sendezeitpunkt</string>
     <string name="records">Aufzeichnungen</string>
-    <string name="freeze">Sperren</string>
+    <string name="freeze">Einfrieren</string>
     <string name="unfreeze">Entsperren</string>
     <string name="authorize">Autorisieren</string>
     <string name="deauthorize">Autorisierung aufheben</string>
-    <string name="ekey_freeze_success">Bluetooth-Schlüssel erfolgreich gesperrt</string>
-    <string name="ekey_freeze_fail">Bluetooth-Schlüssel sperren fehlgeschlagen</string>
+    <string name="ekey_freeze_success">Bluetooth-Schlüssel erfolgreich eingefroren</string>
+    <string name="ekey_freeze_fail">Bluetooth-Schlüssel konnte nicht eingefroren werden</string>
     <string name="ekey_un_freeze_success">Bluetooth-Schlüssel erfolgreich entsperrt</string>
     <string name="ekey_un_freeze_fail">Bluetooth-Schlüssel entsperren fehlgeschlagen</string>
     <string name="ekey_authorize_success">Bluetooth-Schlüssel erfolgreich autorisiert</string>
@@ -236,7 +236,7 @@
     <string name="ekey_delete_fail">Digitale Schlüssel löschen fehlgeschlagen</string>
     <string name="passcode_delete_success">Kenncode erfolgreich gelöscht</string>
     <string name="passcode_delete_fail">Kenncode löschen fehlgeschlagen</string>
-    <string name="note_pending_ekey_cannot_freeze">Nicht empfangene Schlüssel können nicht gesperrt werden.</string>
+    <string name="note_pending_ekey_cannot_freeze">Nicht erhaltene Schlüssel können nicht eingefroren werden.</string>
     <string name="clear_all_passwords">Alle Kenncodes löschen</string>
     <string name="create_password">Kenncode generieren</string>
     <string name="automatic_locking">Automatisches Verschließen</string>
@@ -265,17 +265,17 @@
     <string name="modify_auto_lock_fail">Automatisches Sperren setzen fehlgeschlagen</string>
     <string name="enter_account_passwprd">Bitte geben Sie Ihr Konto-Passwort ein</string>
     <string name="note_pwd_invalid">Das Passwort ist ungültig</string>
-    <string name="note_confirm_delete">Möchten Sie wirklich löschen?</string>
-    <string name="note_delete_autu_key">Soll der autorisierte Schlüssel gelöscht werden?</string>
+    <string name="note_confirm_delete">Sicher, dass Sie löschen möchten?</string>
+    <string name="note_delete_autu_key">Bestätigen Sie, den autorisierten Schlüssel zu löschen?</string>
     <string name="note_delete_sent_key">Alle digitalen Schlüssel, die von ihm geteilt wurden, werden auch gelöscht. Der digitale Schlüssel kann nicht wiederhergestellt werden, nachdem er gelöscht wurde.</string>
     <string name="ekeys_associated_with_user">Mit Benutzer assoziierte digitale Schlüssel</string>
-    <string name="expiring_keys">Laufige Schlüssel</string>
-    <string name="note_passcode_reset_confirm">Alle Kenncodes für dieses Gerät werden gelöscht. Möchten Sie wirklich löschen?</string>
+    <string name="expiring_keys">Ablaufende Schlüssel</string>
+    <string name="note_passcode_reset_confirm">Alle Codes für dieses Gerät werden gelöscht. Sicher, dass Sie löschen möchten?</string>
     <string name="note_passcode_reset_success">Passwörter erfolgreich zurückgesetzt</string>
     <string name="note_passcode_reset_fail">Passwörter zurücksetzen fehlgeschlagen</string>
     <string name="note_clear_lock_pwd_success">Passwörter erfolgreich gelöscht</string>
     <string name="note_clear_lock_pwd_fail">Passwörter zurücksetzen fehlgeschlagen</string>
-    <string name="note_ekey_reset_clear_confirm">Alle Bluetooth-Schlüssel für dieses Schloss werden gelöscht. Möchten Sie wirklich löschen?</string>
+    <string name="note_ekey_reset_clear_confirm">Alle Bluetooth-Schlüssel für dieses Schloss werden gelöscht. Sicher, dass Sie löschen möchten?</string>
     <string name="reset">Zurücksetzen</string>
     <string name="note_no_passcode_in_list">Es ist kein Kenncode in der Liste</string>
     <string name="note_no_ekey_in_list">Es ist kein digitaler Schlüssel in der Liste</string>
@@ -284,8 +284,8 @@
     <string name="note_bluetooth_keys_clear_success">Digitale Schlüssel erfolgreich gelöscht</string>
     <string name="note_bluetooth_keys_clear_fail">Digitale Schlüssel löschen fehlgeschlagen</string>
     <string name="unlocked_successfully">Erfolgreich aufgeschlossen</string>
-    <string name="locked_successfully">Erfolgreich zugeschlossen</string>
-    <string name="enter_customized_passcode">Geben Sie den benutzerdefinierten Kenncode ein</string>
+    <string name="locked_successfully">Erfolgreich gesperrt</string>
+    <string name="enter_customized_passcode">Benutzerdefinierten Code eingeben</string>
     <string name="passcode_format_6_9_digits">Bitte geben Sie eine 6- bis 9-stellige Nummer ein</string>
     <string name="passcode_format_6_8_digits">Bitte geben Sie eine 6- bis 8-stellige Nummer ein</string>
     <string name="note_passcode_customize_fail">Kenncode erstellen fehlgeschlagen</string>
@@ -294,7 +294,7 @@
     <string name="gateway_add">Gateway hinzufügen</string>
     <string name="gateway_choose">Gateway auswählen</string>
     <string name="gateway_config">Netzwerk konfigurieren</string>
-    <string name="note_reconnect_power">Stromverbindung wiederherstellen</string>
+    <string name="note_reconnect_power">Strom neu anschließen</string>
     <string name="note_light_flash_click_next">Klicken Sie auf Weiter, wenn das Licht abwechselnd blinkt</string>
     <string name="enter_wifi_name">Geben Sie den WiFi-Namen ein</string>
     <string name="enter_wifi_pwd">Geben Sie das WiFi-Passwort ein</string>
@@ -321,21 +321,21 @@
     <string name="take_a_photo">Foto machen</string>
     <string name="choose_from_album">Aus Album auswählen</string>
     <string name="rename">Umbenennen</string>
-    <string name="locks_connected_to_gateway">An dieses Gateway angeschlossene Schlösser</string>
-    <string name="signal_strong">Starker Signalverstärker</string>
-    <string name="signal_medium">Mittlerer Signalverstärker</string>
-    <string name="signal_weak">Schwacher Signalverstärker</string>
+    <string name="locks_connected_to_gateway">Schloss/Schlösser, die mit diesem Gateway verbunden sind</string>
+    <string name="signal_strong">Starkes Signal</string>
+    <string name="signal_medium">Mittleres Signal</string>
+    <string name="signal_weak">Schwaches Signal</string>
     <string name="note_no_such_gateway_exists">Es existiert kein solches Gateway</string>
     <string name="connect_timeout">Verbindungszeitüberschreitung</string>
     <string name="note_gateway_init_success">Gateway erfolgreich initialisiert</string>
     <string name="note_gateway_init_fail">Gateway initialisieren fehlgeschlagen</string>
     <string name="note_gateway_donot_exists">Es existiert kein solches Gateway. Bitte konfigurieren Sie das Gateway zuerst</string>
-    <string name="ic_card_add_bluetooth">Karte über Bluetooth hinzufügen</string>
+    <string name="ic_card_add_bluetooth">Karte per Bluetooth hinzufügen</string>
     <string name="ic_card_add_keyboard">Karte über Tastatur hinzufügen</string>
     <string name="ic_card_upload">IC-Karten hochladen</string>
     <string name="ic_card_add">IC-Karte hinzufügen</string>
     <string name="ic_card_clear">Alle Karten löschen</string>
-    <string name="keyboard_clear_cards">Karten über Tastatur löschen</string>
+    <string name="keyboard_clear_cards">IC-Karten über Tastatur leeren</string>
     <string name="gateway_delete_success">Gateway erfolgreich gelöscht</string>
     <string name="note_delete_gateway">Das Gateway wird GELÖSCHT, wenn die App des Benutzers mit dem Netzwerk verbunden ist</string>
     <string name="note_lock_not_found">Das Schloss wurde nicht gefunden</string>
@@ -346,14 +346,14 @@
     <string name="unlock_remotely">Remote aufschließen</string>
     <string name="reading_lock_time">Schlosszeit wird gelesen...</string>
     <string name="calibrating_lock_time">Schlosszeit wird kalibriert...</string>
-    <string name="freeze_lock">Schloss sperren</string>
+    <string name="freeze_lock">Schloss einfrieren</string>
     <string name="unfreeze_lock">Schloss entsperren</string>
-    <string name="note_unlock_remotely">Möchten Sie das Schloss remote aufschließen?</string>
+    <string name="note_unlock_remotely">Bestätigen Sie die Fernentsperrung</string>
     <string name="unlock">Aufschließen</string>
     <string name="start_camera_fail">Kamera starten fehlgeschlagen</string>
     <string name="configuring_gateway">Gateway wird konfiguriert...</string>
-    <string name="on">Eingeschaltet</string>
-    <string name="off">Ausgeschaltet</string>
+    <string name="on">An</string>
+    <string name="off">Aus</string>
     <string name="note_remote_unlock_instruction">Mit dieser Funktion können Sie das Smart-Schloss remote über ein Gateway aufschließen. Diese Funktion kann NUR eingeschaltet oder ausgeschaltet werden, wenn Sie Bluetooth in der Nähe des Schlosses verwenden.</string>
     <string name="turn_on">Einschalten</string>
     <string name="turn_off">Ausschalten</string>
@@ -364,8 +364,8 @@
     <string name="note_lock_within_bluetooth">Stellen Sie sicher, dass das Gerät im Bluetooth-Bereich ist</string>
     <string name="enter_characters_on_lock_keyboard">Geben Sie den folgenden Code auf der Schloss-Tastatur ein</string>
     <string name="synchronize_data">Daten synchronisieren</string>
-    <string name="note_ic_card_keyboard_add">Bitte legen Sie die IC-Karte in den Kartelesebereich und geben Sie die obigen Zeichen auf der Schloss-Tastatur ein. Klicken Sie auf \&quot;Daten synchronisieren\&quot; nachdem die IC-Karte hinzugefügt wurde. Stellen Sie sicher, dass Ihr Schloss im Bluetooth-Bereich ist.</string>
-    <string name="note_ic_card_keyboard_clear">Bitte beachten Sie, dass alle IC-Karten dieses Schlosses gelöscht werden, nachdem Sie die obigen Zeichen auf der Schloss-Tastatur eingegeben haben. Klicken Sie auf \&quot;Daten synchronisieren\&quot; nachdem die IC-Karte gelöscht wurde. Stellen Sie sicher, dass Ihr Schloss im Bluetooth-Bereich ist.</string>
+    <string name="note_ic_card_keyboard_add">Bitte legen Sie die IC-Karte in den Kartelesebereich und geben Sie die obigen Zeichen auf der Schloss-Tastatur ein. Klicken Sie auf \&amp;quot;Daten synchronisieren\&amp;quot; nachdem die IC-Karte hinzugefügt wurde. Stellen Sie sicher, dass Ihr Schloss im Bluetooth-Bereich ist.</string>
+    <string name="note_ic_card_keyboard_clear">Bitte beachten Sie, dass alle IC-Karten dieses Schlosses gelöscht werden, nachdem Sie die obigen Zeichen auf der Schloss-Tastatur eingegeben haben. Klicken Sie auf \&amp;quot;Daten synchronisieren\&amp;quot; nachdem die IC-Karte gelöscht wurde. Stellen Sie sicher, dass Ihr Schloss im Bluetooth-Bereich ist.</string>
     <string name="note_ic_card_upload">IC-Karten hochladen bedeutet, gültige IC-Karten vom Schloss zu lesen und sie auf den Server hochzuladen. Bitte aktivieren Sie das Bluetooth Ihres Telefons und stellen Sie sicher, dass es in der Nähe des Schlosses ist.</string>
     <string name="upload">Hochladen</string>
     <string name="name_the_ic_card">Die IC-Karte benennen</string>
@@ -374,8 +374,8 @@
     <string name="lock_connected_to_add_ic_card">Verbunden. Legen Sie die Karte gegen den Kartelesesensor auf dem Smart-Schloss.</string>
     <string name="note_ic_card_delete">Stellen Sie sicher, dass das Schloss in der Nähe ist und alle Zugangskarten gelöscht werden</string>
     <string name="note_phone_has_been_used">Die Telefonnummer wird bereits verwendet</string>
-    <string name="note_email_has_been_used">Die E-Mail-Adresse wird bereits verwendet</string>
-    <string name="note_account_bind_fail">Verknüpfen fehlgeschlagen</string>
+    <string name="note_email_has_been_used">Die E-Mail wurde bereits verwendet</string>
+    <string name="note_account_bind_fail">Bindung fehlgeschlagen</string>
     <string name="note_login_new_device">Ihr Konto wird auf einem anderen Gerät angemeldet. Bitte melden Sie sich erneut an.</string>
     <string name="lock_type_deadbolt">Boltzenschloss</string>
     <string name="lock_type_keybox">Schlüsselbox</string>
@@ -384,11 +384,11 @@
     <string name="lock_type_moonlock">Mondschloss</string>
     <string name="go_to_login">Zur Anmeldung gehen</string>
     <string name="note_login_fingerprint_verification">Legen Sie Ihren Finger auf den Fingerabdruckssensor, um die Überprüfung abzuschließen.</string>
-    <string name="touch_id_for_populife">Touch ID für \&quot;Populife\&quot;</string>
+    <string name="touch_id_for_populife">Touch ID für \&amp;quot;Populife\&amp;quot;</string>
     <string name="try_again">Noch einmal versuchen</string>
     <string name="customize">Benutzerdefinieren</string>
     <string name="click_again_to_exit">Klicken Sie erneut, um zu beenden</string>
-    <string name="note_low_battery">Die Batterie ist leer. Bitte ersetzen Sie die Batterie zeitnah</string>
+    <string name="note_low_battery">Der Batteriestand ist niedrig, bitte ersetzen Sie die Batterie rechtzeitig</string>
     <string name="lock_not_supported">Dieses Schloss wird nicht unterstützt</string>
     <string name="vibration_feedback">Vibrationsrückmeldung</string>
     <string name="sync_password_status">Kenncode-Status synchronisieren</string>
@@ -397,7 +397,7 @@
     <string name="note_sync_password_status">Synchronisieren, um den Kenncode-Status zu aktualisieren. Stellen Sie sicher, dass Ihr Telefon in der Nähe des Schlosses ist.</string>
     <string name="note_sync_fingerprint_status">Synchronisieren, um den Fingerabdruck-Status zu aktualisieren. Stellen Sie sicher, dass Ihr Telefon in der Nähe des Schlosses ist.</string>
     <string name="note_sync_access_card_status">Synchronisieren, um den Zugangskarten-Status zu aktualisieren. Stellen Sie sicher, dass Ihr Telefon in der Nähe des Schlosses ist.</string>
-    <string name="sync_operate_records">Betriebsaufzeichnungen synchronisieren</string>
+    <string name="sync_operate_records">Datensätze synchronisieren</string>
     <string name="note_sync_operate_records">Schloss-Betriebsaufzeichnungen synchronisieren. Stellen Sie sicher, dass Ihr Telefon in der Nähe des Schlosses ist.</string>
     <string name="sync_battery">Schlossbatterie synchronisieren</string>
     <string name="note_sync_battery">Synchronisieren, um die Schlossbatterie zu aktualisieren. Stellen Sie sicher, dass Ihr Telefon in der Nähe des Schlosses ist.</string>
@@ -407,10 +407,10 @@
     <string name="note_lock_add_guide_keybox_open">Während des Hinzufügens der Schlüsselbox, halten Sie die Schlüsselbox bitte immer geöffnet, wie auf dem Bild gezeigt.</string>
     <string name="note_confirm_keybox_open">Die Schlüsselbox ist geöffnet, wie in der obigen Anleitung</string>
     <string name="note_confirm_lock_keypad_lit_up">Die Schloss-Tastatur ist beleuchtet, wie in der obigen Anleitung</string>
-    <string name="note_keybox_default_password">Im Fabrikmodus ist das Standardpasswort der Schlüsselbox 1234. Um die Schlüsselbox aufzuschließen, geben Sie 1234 auf der Tastatur ein und beenden Sie mit # oder der ENT-SCHLÜSSEL-Taste in der unteren rechten Ecke.</string>
+    <string name="note_keybox_default_password">Im Werkmodus ist das Standardpasswort für den Schlüsselbox 1234. Um die Schlüsselbox zu entsperren, geben Sie 1234 auf der Tastatur ein und beenden Sie mit der #-Taste oder der ENTSPERREN-Taste unten rechts</string>
     <string name="note">Hinweis</string>
-    <string name="note_create_customize_password">Wenn Sie Ihr eigenes Passwort erstellen möchten, wählen Sie bitte \&quot;Benutzerdefinierter Kenncode\&quot;. Andernfalls können Sie einen Zufallskenncode über andere Typen erhalten.\n\nWenn Sie einen \&quot;Benutzerdefinierten Kenncode\&quot; erstellen, stellen Sie sicher, dass das Telefon-Bluetooth aktiviert ist und Ihr Telefon in der Nähe des Schlosses ist.</string>
-    <string name="user_terms_privacy_policy">&#160;Nutzungsbedingungen und Datenschutzrichtlinie</string>
+    <string name="note_create_customize_password">Wenn Sie Ihr eigenes Passwort erstellen möchten, wählen Sie bitte \&amp;quot;Benutzerdefinierter Kenncode\&amp;quot;. Andernfalls können Sie einen Zufallskenncode über andere Typen erhalten.\n\nWenn Sie einen \&amp;quot;Benutzerdefinierten Kenncode\&amp;quot; erstellen, stellen Sie sicher, dass das Telefon-Bluetooth aktiviert ist und Ihr Telefon in der Nähe des Schlosses ist.</string>
+    <string name="user_terms_privacy_policy">Nutzungsbedingungen und Datenschutzrichtlinie</string>
     <string name="note_user_terms_privacy_policy">Vielen Dank, dass Sie Populife verwenden. Bitte lesen Sie die Nutzungsbedingungen und Datenschutzrichtlinie sorgfältig bevor Sie es verwenden. Klicken Sie auf Zustimmen, um fortzufahren, wenn Sie allen Richtlinien zustimmen, oder klicken Sie auf Ablehnen, um abzubrechen.</string>
     <string name="agree">Zustimmen</string>
     <string name="disagree">Ablehnen</string>
@@ -429,14 +429,14 @@
     <string name="use_it_within_6_hours">. Verwenden Sie es innerhalb von 6 Stunden</string>
     <string name="use_it_within_24_hours">. Verwenden Sie es innerhalb von 24 Stunden</string>
     <string name="type">Typ</string>
-    <string name="to_unlock_press_no_passcode_no">Zum Öffnen - Drücken Sie # KENNCODE #</string>
-    <string name="note_no_key_bottom_right_dont_share_passcode">Hinweis: Die #-Taste ist die ÖFFNEN-Taste unten rechts. Teilen Sie das Passwort bitte mit niemandem.</string>
+    <string name="to_unlock_press_no_passcode_no">Zum Entsperren - Drücken Sie # PASSWORT #</string>
+    <string name="note_no_key_bottom_right_dont_share_passcode">Hinweis: Die #-Taste ist die ENTSCHLÜSSELUNGSTASTE unten rechts. Teilen Sie das Passwort bitte mit niemandem.</string>
     <string name="note_use_passcode_once_before">Hinweis: Das Passwort sollte mindestens EINMAL verwendet werden, bevor...</string>
     <string name="no_key_bottom_right_dont_share_passcode">. Die #-Taste ist die ÖFFNEN-Taste unten rechts. Teilen Sie das Passwort bitte mit niemandem.</string>
     <string name="common_question_group_lock">Schloss</string>
     <string name="common_question_group_keyboard">Tastatur</string>
     <string name="common_question_group_password">Passwort</string>
-    <string name="common_question_group_app_unlocking">App-Öffnen</string>
+    <string name="common_question_group_app_unlocking">APP-Entsperrung</string>
     <string name="common_question_group_others">Sonstiges</string>
     <string name="common_question_title_lock_0">Wie benutzt man Smart-Schlösser und die App?</string>
     <string name="common_question_title_lock_1">Wie fügt man ein Schloss hinzu?</string>
@@ -468,7 +468,7 @@
     <string name="verification_code">Verifizierungscode</string>
     <string name="note_sign_up_agree_user_terms">Ich habe die [Nutzungsbedingungen] und [Datenschutzrichtlinie] gelesen und stimme ihnen zu.</string>
     <string name="terms_of_use">Nutzungsbedingungen</string>
-    <string name="note_phone_or_email_invalid">Falsche Mobiltelefonnummer oder E-Mail-Adresse</string>
+    <string name="note_phone_or_email_invalid">Falsche Handynummer oder E-Mail-Konto</string>
     <string name="not_device_hint">Noch kein Gerät</string>
     <string name="hint_out_of_date">Der Schlüssel ist abgelaufen</string>
     <string name="add_device">Smart-Gerät hinzufügen</string>
@@ -483,8 +483,8 @@
     <string name="new_create_space">Neuer Raum</string>
     <string name="rename_space">Name ändern</string>
     <string name="confirm">Bestätigen</string>
-    <string name="device_num_match">%d Geräte</string>
-    <string name="space_num_match">%d Räume</string>
+    <string name="device_num_match" formatted="true">%d Geräte</string>
+    <string name="space_num_match" formatted="true">%d Räume</string>
     <string name="battery_install_hint">3. Die Batterie wurde installiert.</string>
     <string name="keep_open_door_hint">4. Bitte halten Sie die Tür geöffnet.</string>
     <string name="confirm_time_hint">5. Die folgenden Schritte werden ca. 30 Sekunden dauern. Bitte bestätigen Sie.</string>
@@ -497,14 +497,14 @@
     <string name="confirm_gateway_reconnect_hint">2. Stellen Sie die Stromversorgung wieder her. Stellen Sie sicher, dass das Licht des Gateways abwechselnd rot und blau blinkt, bis es erfolgreich hinzugefügt wurde.</string>
     <string name="add_gateway_title">Smart Gateway hinzufügen</string>
     <string name="nearby_gateway_scanning">Suche nach nahem Gateway. Bitte warten...</string>
-    <string name="search_timeout">Suchzeit abgelaufen</string>
+    <string name="search_timeout">Suchzeitüberschreitung</string>
     <string name="scan_gateway_fial_hint">Kein Gateway gefunden. Bitte versuchen Sie es erneut.</string>
     <string name="retry_scan">Suche fortsetzen</string>
     <string name="please_input_sevice_name">Bitte geben Sie den Gerätenamen ein</string>
     <string name="select_home_group">Raum wechseln</string>
     <string name="add_success">Erfolgreich hinzugefügt</string>
     <string name="add_lock_help_hint">Berühren Sie die Schloss-Tastatur. Sie sollte aufleuchten. Wenn nicht, überprüfen Sie, ob die Batterie richtig installiert ist und ob die Kabel richtig angeschlossen sind. Wenn alles in Ordnung ist und die Tastatur immer noch nicht aufleuchtet, kontaktieren Sie uns.</string>
-    <string name="delete_home_hint">Nach dem Löschen des Raums werden alle festgelegten Informationen gelöscht. Möchten Sie den Raum wirklich löschen?</string>
+    <string name="delete_home_hint">Nach dem Löschen des Raums werden alle festgelegten Informationen gelöscht. Sind Sie sicher, dass Sie den Raums löschen möchten?</string>
     <string name="keys_and_pwd">Schlüsselverwaltung</string>
     <string name="lock_operate_log">Betriebsprotokoll</string>
     <string name="adjus_lock_time">Zeit kalibrieren</string>
@@ -533,7 +533,7 @@
     <string name="get_bluetooth_key_hint">Der Teilen-Link wurde erstellt. Sie können ihn mit anderen teilen.</string>
     <string name="skip">Überspringen</string>
     <string name="create_pwd_permanent">Dauerhaftes Passwort erstellen</string>
-    <string name="create_pwd_period">Zeitlich begrenztes Passwort erstellen</string>
+    <string name="create_pwd_period">Zeitbegrenztes Passwort erstellen</string>
     <string name="create_pwd_one_time">Einmaliges Passwort erstellen</string>
     <string name="create_pwd_custom">Benutzerdefiniertes Passwort erstellen</string>
     <string name="name_of_authorizer">Name der autorisierten Person</string>
@@ -565,7 +565,7 @@
     <string name="news">Nachrichten</string>
     <string name="product_type_popu_care_desc">Kaufen Sie den PopuCare-Serviceplan und genießen Sie ihn zwei Jahre lang. Jedes Gerät genießt eine einjährige Hardwaregarantie und eine kostenlose Austauschservice innerhalb der Garantiezeit. Der PopuCare-Serviceplan bietet Ihnen einen zweijährigen Wartungsservice ab dem Kaufdatum des Serviceplans.</string>
     <string name="product_type_popu_care_name">PopuCare</string>
-    <string name="product_price">Kaufen \ \ |\ \ %.1f USD</string>
+    <string name="product_price" formatted="true">Kaufen \ \ |\ \ %.1f USD</string>
     <string name="load_more_txt">Laden, bitte warten</string>
     <string name="no_more_data">Keine weiteren Daten</string>
     <string name="receive_share_key">Möchten Sie den Schlüssel annehmen?</string>
@@ -633,7 +633,7 @@
     <string name="hint_label_postal_code">Bitte geben Sie die Postleitzahl ein</string>
     <string name="avatar_upload_failed">Fehler beim Hochladen des Profilbildes</string>
     <string name="select_file">Datei auswählen</string>
-    <string name="price">$%.1f</string>
+    <string name="price" formatted="true">$%.1f</string>
     <string name="bought">Erworben</string>
     <string name="not_to_buy">Noch nicht erworben</string>
     <string name="select_device">Gerät auswählen</string>
@@ -646,7 +646,7 @@
     <string name="successfully_purchased_popucare_service_plan">Erfolgreicher Kauf des PopuCare-Serviceplans</string>
     <string name="check_the_maintenance_order">Reparaturauftrag anzeigen</string>
     <string name="maintenance_status">Wartungsstatus</string>
-    <string name="repair_no">Reparaturauftrags-Nr.:%s</string>
+    <string name="repair_no" formatted="true">Reparaturauftrags-Nr.:%s</string>
     <string name="maintenance_status_1">Das Servicecenter hat das Produkt erhalten</string>
     <string name="maintenance_status_2">Der Service wird ausgeführt</string>
     <string name="maintenance_status_3">Warten auf die zurückzusendenden Produkte zur Reparatur</string>
@@ -684,7 +684,7 @@
     <string name="maintenance_detials_31">Lieferung ausstehend</string>
     <string name="maintenance_detials_32">Zahlungsmethode</string>
     <string name="guarantee_1">Garantieservice und Support-Periode</string>
-    <string name="so_space">%s\'s Raum</string>
+    <string name="so_space" formatted="true">%s\&amp;#x27;s Raum</string>
     <string name="video_title_1">Automatisches Sperren</string>
     <string name="video_title_2">Ihr Passwort anpassen und es teilen</string>
     <string name="video_title_3">Erstellen und teilen eines Bluetooth-Schlüssels</string>
@@ -697,11 +697,11 @@
     <string name="wifi_select">WiFi auswählen</string>
     <string name="wifi_searching">Suche nach verfügbarem WiFi</string>
     <string name="wifi_no_found">Kein WiFi verfügbar</string>
-    <string name="share_bt_key_text">Hallo, hier ist Ihr digitaler Schlüssel: %s \n\nHinweis：Laden Sie die &quot;Populife&quot; APP über den obigen Link herunter und öffnen Sie sie. Wählen Sie das Gerät in der APP aus, um den Schlüssel zu verwenden.</string>
-    <string name="share_one_pwd_text">Hallo, hier ist Ihr einmaliger Code: %s \nGültigkeitszeit: %s Bitte verwenden Sie es innerhalb von 6 Stunden \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen.</string>
-    <string name="share_time_limited_pwd_text">Hallo, hier ist Ihr zeitlich begrenzter Code: %s \nGültigkeitszeit: %s \nVerfallszeit: %s \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen. Der Code muss innerhalb von 24 Stunden nach Inkrafttreten mindestens einmal verwendet werden, andernfalls wird er ungültig.</string>
-    <string name="share_permanent_pwd_text">Hallo, hier ist Ihr dauerhafter Code: %s \nGültigkeitszeit: %s \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen. Der Code muss innerhalb von 24 Stunden mindestens einmal verwendet werden, andernfalls wird er ungültig.</string>
-    <string name="share_custom_pwd_text">Hallo, hier ist Ihr benutzerdefinierter Code: %s  \nGültigkeitszeit: %s  \nVerfallszeit: %s \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen.</string>
+    <string name="share_bt_key_text" formatted="true">Hallo, hier ist Ihr digitaler Schlüssel: %s \n\nHinweis：Laden Sie die &amp;quot;Populife&amp;quot; APP über den obigen Link herunter und öffnen Sie sie. Wählen Sie das Gerät in der APP aus, um den Schlüssel zu verwenden.</string>
+    <string name="share_one_pwd_text" formatted="true">Hallo, hier ist Ihr einmaliger Code: %s \nGültigkeitszeit: %s Bitte verwenden Sie es innerhalb von 6 Stunden \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen.</string>
+    <string name="share_time_limited_pwd_text" formatted="true">Hallo, hier ist Ihr zeitlich begrenzter Code: %s \nGültigkeitszeit: %s \nVerfallszeit: %s \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen. Der Code muss innerhalb von 24 Stunden nach Inkrafttreten mindestens einmal verwendet werden, andernfalls wird er ungültig.</string>
+    <string name="share_permanent_pwd_text" formatted="true">Hallo, hier ist Ihr dauerhafter Code: %s \nGültigkeitszeit: %s \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen. Der Code muss innerhalb von 24 Stunden mindestens einmal verwendet werden, andernfalls wird er ungültig.</string>
+    <string name="share_custom_pwd_text" formatted="true">Hallo, hier ist Ihr benutzerdefinierter Code: %s  \nGültigkeitszeit: %s  \nVerfallszeit: %s \n\nHinweise: Bitte berühren Sie das Gerät zuerst, geben Sie den obigen Code auf der Tastatur ein und drücken Sie die #-Taste oder das Öffnen-Ikon in der unteren rechten Ecke, um das Gerät zu öffnen.</string>
     <string name="add_lock_pre_check">Vorprüfen</string>
     <string name="add_key_box_lock_pre_check_hint">Bevor Sie beginnen, die Schlüsselbox zu paien, stellen Sie sicher, dass die folgenden Schritte abgeschlossen sind.</string>
     <string name="add_key_box_lock_pre_check_hint_k4">Bevor Sie beginnen, die Schlüsselbox Max zu paien, stellen Sie sicher, dass die folgenden Schritte abgeschlossen sind.</string>
@@ -727,8 +727,8 @@
     <string name="deadbolt_add_device_activate_hint2">Berühren Sie die Tastatur, um das Bolzenschloss zu aktivieren und für die Paarung vorzubereiten. Stellen Sie sicher, dass die Tastaturbeleuchtung bis zur erfolgreichen Paarung immer an ist</string>
     <string name="activate_the_keybox">Die Schlüsselbox aktivieren</string>
     <string name="activate_the_deadbolt">Das Bolzenschloss aktivieren</string>
-    <string name="scanning_nearby_deadbolt">Suche nach nahen Bolzenschlüsseln</string>
-    <string name="scanning_nearby_deadbolt_please_wait">Suche nach nahen Bolzenschlüsseln, bitte warten</string>
+    <string name="scanning_nearby_deadbolt">Scanne nahegelegenes Bolzenschloss</string>
+    <string name="scanning_nearby_deadbolt_please_wait">Scanne nahegelegenes Bolzenschloss, bitte warten</string>
     <string name="select_a_device">Ein Gerät auswählen</string>
     <string name="paired">Gepaart</string>
     <string name="scanning_nearby_keybox">Suche nach nahen Schlüsselboxen</string>
@@ -745,7 +745,7 @@
     <string name="gateway_was_not_founded_try_again">Gateway wurde nicht gefunden, bitte versuchen Sie es erneut</string>
     <string name="failed_to_add">Hinzufügen fehlgeschlagen</string>
     <string name="something_went_wrong">Etwas ist schief gelaufen</string>
-    <string name="the_following">Sie können eine der folgenden Aktionen ausführen: </string>
+    <string name="the_following">Sie können eine der folgenden Aktionen ausführen:</string>
     <string name="the_following_detail_deadbolt">1. Neustarten Sie das Bluetooth- und Internetverbindung auf Ihrem Telefon\n2. Neustarten Sie die Populife App auf Ihrem Telefon\n3. Paien Sie das Bolzenschloss erneut</string>
     <string name="the_following_detail_keybox">1. Neustarten Sie das Bluetooth- und Internetverbindung auf Ihrem Telefon\n2. Neustarten Sie die Populife App auf Ihrem Telefon\n3. Paien Sie die Schlüsselbox erneut</string>
     <string name="the_following_detail_keybox_k4">1. Neustarten Sie das Bluetooth- und Internetverbindung auf Ihrem Telefon\n2. Neustarten Sie die Populife App auf Ihrem Telefon\n3. Paien Sie die Schlüsselbox Max erneut</string>
@@ -768,12 +768,12 @@
     <string name="reading">Wird gelesen...</string>
     <string name="note_unlock_remotely_msg">Möchten Sie die Ferngesperreöffnung bestätigen? Stellen Sie sicher, dass die Umgebung sicher ist und Ihr Gast bereit ist.</string>
     <string name="change_space_fail">Wechseln des Raums fehlgeschlagen</string>
-    <string name="pwd_count_tips_valid">Alle verfügbaren Codes (%d)</string>
-    <string name="pwd_count_tips_pending">Alle Codes warten auf Gültigkeitsprüfung (%d)</string>
-    <string name="key_count_tips_valid">Alle verfügbaren Schlüssel (%d)</string>
-    <string name="key_count_tips_pending">Alle Schlüssel warten auf Gültigkeitsprüfung (%d)</string>
-    <string name="pwd_count_tips_invalid">Alle ungültigen Codes (%d)</string>
-    <string name="key_count_tips_invalid">Alle ungültigen Schlüssel (%d)</string>
+    <string name="pwd_count_tips_valid" formatted="true">Alle verfügbaren Codes (%d)</string>
+    <string name="pwd_count_tips_pending" formatted="true">Alle Codes warten auf Gültigkeitsprüfung (%d)</string>
+    <string name="key_count_tips_valid" formatted="true">Alle verfügbaren Schlüssel (%d)</string>
+    <string name="key_count_tips_pending" formatted="true">Alle Schlüssel warten auf Gültigkeitsprüfung (%d)</string>
+    <string name="pwd_count_tips_invalid" formatted="true">Alle ungültigen Codes (%d)</string>
+    <string name="key_count_tips_invalid" formatted="true">Alle ungültigen Schlüssel (%d)</string>
     <string name="management_title_pwd">PIN-Code-Verwaltung</string>
     <string name="management_title_key">Digitaler Schlüssel-Verwaltung</string>
     <string name="management_title_pwd_invalid">Ungültige Codes</string>
@@ -787,8 +787,8 @@
     <string name="show_administrator_code">Administratorkenncode anzeigen</string>
     <string name="clear_all_codes">Alle Codes löschen</string>
     <string name="clear_all_keys">Alle Schlüssel löschen</string>
-    <string name="confirm_clear_all_keys">Sind Sie sicher, dass Sie alle Schlüssel löschen möchten?</string>
-    <string name="confirm_clear_all_codes">Sind Sie sicher, dass Sie alle Codes löschen möchten?</string>
+    <string name="confirm_clear_all_keys">Bestätigen, um alle Schlüssel zu löschen?</string>
+    <string name="confirm_clear_all_codes">Bestätigen, um alle Codes zu löschen?</string>
     <string name="delete_space_hint">Bitte löschen Sie alle Geräte in diesem Raum, bevor Sie fortfahren.</string>
     <string name="administrator_code">Administratorkenncode</string>
     <string name="or">oder</string>
@@ -801,12 +801,12 @@
     <string name="pwd_type_name_time_limited">Zeitlich begrenzt</string>
     <string name="pwd_type_name_one_time">Einmalig</string>
     <string name="pwd_type_name_custom">Benutzerdefiniert</string>
-    <string name="received_by">Empfangen von: %s</string>
+    <string name="received_by" formatted="true">Empfangen von: %s</string>
     <string name="create_bluetooth_key_tips">Erstellen Sie einen digitalen Schlüssel und teilen Sie den Zugang mit Ihren Mitgliedern. So können sie das Gerät in der Populife-App öffnen.</string>
     <string name="key_title">Schlüsselname</string>
     <string name="key_title_edit_hint">Geben Sie den Namen des Schlüssels ein, z. B. Avas Schlüssel</string>
     <string name="valid_period">Gültigkeitsdauer</string>
-    <string name="device_current_date">Aktuelles Datum und Uhrzeit des Geräts: %s</string>
+    <string name="device_current_date" formatted="true">Aktuelles Datum und Uhrzeit des Geräts: %s</string>
     <string name="permission_types">Berechtigungstypen</string>
     <string name="general_user">Allgemeiner Benutzer</string>
     <string name="authorized_user">Authorisierter Benutzer</string>
@@ -922,7 +922,7 @@
     <string name="lock_help_case_title_3">Fall 3: Das Gerät wurde an mich übertragen</string>
     <string name="lock_help_case_content_1">Nachdem Sie die Batterie installiert haben, suchen Sie bitte in der Bedienungsanleitung nach der Reset-Taste des Geräts. Drücken Sie die Reset-Taste für 5 Sekunden, bis Sie 2 Pieptöne hören. Dies bedeutet, dass das Gerät erfolgreich zurückgesetzt wurde.\n\nBestätigen Sie, dass der Fabrik-Öffnungscode verwendet werden kann, um das Gerät zu öffnen (Keyox: 1234; Türschloss: 123456). Anschließend können Sie das Gerät erneut in der App hinzufügen.</string>
     <string name="lock_help_case_content_2">Bitte kontaktieren Sie den Kundensupport (rechts oben in der App) und geben Sie die folgenden Informationen an: \n1. Ihren Kaufbeleg (ein Screenshot mit der Bestellung und Ihren Kaufinformationen)\n2. Ein reales Foto des Geräts\n3. Nehmen Sie einen Screenshot der vorherigen Seite, wenn Sie sich in der Nähe des Geräts befinden</string>
-    <string name="lock_help_case_content_3">Methode 1: Fragen Sie den ursprünglichen Besitzer des Geräts nach dem Öffnungscode. Öffnen Sie das Gerät und setzen Sie es dann zurück (siehe \"Fall 1\").\n\nMethode 2: Bitten Sie den Besitzer des Geräts, sich zum Gerät zu begeben, sich in die App einzuloggen und auf die \"Löschen\"-Taste auf der Geräte-Öffnungsseite > \"Einstellungen\"-Seite zu klicken.\n\nMethode 3: Wenn Sie den ursprünglichen Besitzer des Geräts nicht erreichen können, siehe \"Fall 2\".</string>
+    <string name="lock_help_case_content_3">Methode 1: Fragen Sie den ursprünglichen Besitzer des Geräts nach dem Öffnungscode. Öffnen Sie das Gerät und setzen Sie es dann zurück (siehe \&amp;quot;Fall 1\&amp;quot;).\n\nMethode 2: Bitten Sie den Besitzer des Geräts, sich zum Gerät zu begeben, sich in die App einzuloggen und auf die \&amp;quot;Löschen\&amp;quot;-Taste auf der Geräte-Öffnungsseite &amp;gt; \&amp;quot;Einstellungen\&amp;quot;-Seite zu klicken.\n\nMethode 3: Wenn Sie den ursprünglichen Besitzer des Geräts nicht erreichen können, siehe \&amp;quot;Fall 2\&amp;quot;.</string>
     <string name="lock_action_fingerprint">Fingerabdruck</string>
     <string name="unlock_with_fingerprint">Mit Fingerabdruck geöffnet</string>
     <string name="unlock_with_ic_card">Mit Zugangskarte geöffnet</string>
@@ -930,16 +930,16 @@
     <string name="management_title_ic_card">Zugangskartenverwaltung</string>
     <string name="management_title_fingerprint_invalid">Ungültige Fingerabdrücke</string>
     <string name="management_title_ic_card_invalid">Ungültige Zugangskarten</string>
-    <string name="fingerprint_count_tips_pending">Alle Fingerabdrücke warten auf Gültigkeitsprüfung (%d)</string>
-    <string name="ic_card_count_tips_pending">Alle Zugangskarten warten auf Gültigkeitsprüfung (%d)</string>
-    <string name="fingerprint_count_tips_valid">Alle verfügbaren Fingerabdrücke (%d)</string>
-    <string name="ic_card_count_tips_valid">Alle verfügbaren Zugangskarten (%d)</string>
-    <string name="fingerprint_count_tips_invalid">Alle ungültigen Fingerabdrücke (%d)</string>
-    <string name="ic_card_count_tips_invalid">Alle ungültigen Zugangskarten (%d)</string>
-    <string name="none_fingerprint_tips">Tippen Sie auf \"Einen Fingerabdruck hinzufügen\", um einen Fingerabdruck für das Smart-Lock hinzuzufügen.</string>
+    <string name="fingerprint_count_tips_pending" formatted="true">Alle Fingerabdrücke warten auf Gültigkeitsprüfung (%d)</string>
+    <string name="ic_card_count_tips_pending" formatted="true">Alle Zugangskarten warten auf Gültigkeitsprüfung (%d)</string>
+    <string name="fingerprint_count_tips_valid" formatted="true">Alle verfügbaren Fingerabdrücke (%d)</string>
+    <string name="ic_card_count_tips_valid" formatted="true">Alle verfügbaren Zugangskarten (%d)</string>
+    <string name="fingerprint_count_tips_invalid" formatted="true">Alle ungültigen Fingerabdrücke (%d)</string>
+    <string name="ic_card_count_tips_invalid" formatted="true">Alle ungültigen Zugangskarten (%d)</string>
+    <string name="none_fingerprint_tips">Tippen Sie auf \&amp;quot;Einen Fingerabdruck hinzufügen\&amp;quot;, um einen Fingerabdruck für das Smart-Lock hinzuzufügen.</string>
     <string name="add_fingerprint_step_hint">Bitte geben Sie Ihren Fingerabdruck erneut ein.</string>
     <string name="add_fingerprint_success_hint">Eingabe erfolgreich</string>
-    <string name="none_ic_card_tips">Tippen Sie auf \"Eine Zugangskarte hinzufügen\", um eine Zugangskarte für das Smart-Lock hinzuzufügen.</string>
+    <string name="none_ic_card_tips">Tippen Sie auf \&amp;quot;Eine Zugangskarte hinzufügen\&amp;quot;, um eine Zugangskarte für das Smart-Lock hinzuzufügen.</string>
     <string name="add_a_fingerprint">Einen Fingerabdruck hinzufügen</string>
     <string name="add_an_ic_card">Eine Zugangskarte hinzufügen</string>
     <string name="management_setting_title_fingerprint">Fingerabdruckverwaltungs-Einstellungen</string>
@@ -962,13 +962,13 @@
     <string name="fingerprint_config">Fingerabdruckkonfiguration</string>
     <string name="ic_card_config">Zugangskartenkonfiguration</string>
     <string name="add_fingerprint_device_activate_hint1">Halten Sie die Tür geöffnet, bis der Fingerabdruck erfolgreich hinzugefügt wurde.</string>
-    <string name="add_fingerprint_device_activate_hint2">Bitte tippen Sie auf das Display oder den Fingerabdrucksensor, um das Türschloss zu aktivieren. Nach dem Tippen auf die \"Fingerabdruckregistrierung starten\"-Taste, legen Sie Ihren Fingerabdruck innerhalb von 20 Sekunden auf den Sensor.</string>
+    <string name="add_fingerprint_device_activate_hint2">Bitte tippen Sie auf das Display oder den Fingerabdrucksensor, um das Türschloss zu aktivieren. Nach dem Tippen auf die \&amp;quot;Fingerabdruckregistrierung starten\&amp;quot;-Taste, legen Sie Ihren Fingerabdruck innerhalb von 20 Sekunden auf den Sensor.</string>
     <string name="add_ic_card_device_activate_hint1">Halten Sie die Tür geöffnet, bis die Zugangskarte erfolgreich hinzugefügt wurde.</string>
-    <string name="add_ic_card_device_activate_hint2">Bitte tippen Sie auf das Display oder den Fingerabdrucksensor, um das Türschloss zu aktivieren. Nach dem Tippen auf die \"Zugangskarte hinzufügen starten\"-Taste, halten Sie die Zugangskarte innerhalb von 20 Sekunden an die Kartenleseeinheit.</string>
+    <string name="add_ic_card_device_activate_hint2">Bitte tippen Sie auf das Display oder den Fingerabdrucksensor, um das Türschloss zu aktivieren. Nach dem Tippen auf die \&amp;quot;Zugangskarte hinzufügen starten\&amp;quot;-Taste, halten Sie die Zugangskarte innerhalb von 20 Sekunden an die Kartenleseeinheit.</string>
     <string name="start_registering_fingerprint">Fingerabdruckregistrierung starten</string>
     <string name="start_adding_ic_card">Zugangskarte hinzufügen starten</string>
     <string name="adding_fingerprint_title">Fingerabdruck hinzufügen</string>
-    <string name="adding_fingerprint_hint_1">Bitte legen Sie Ihren Finger auf den Fingerabdrucksensor. Halten Sie ihn für einige Sekunden, bis das grüne Licht aufleuchtet, was bedeutet, dass die Registrierung erfolgreich war. Heben Sie den Finger ab und legen Sie ihn erneut auf den Sensor, wobei Sie die Position des Fingers jedes Mal geringfügig ändern, bis die Registrierung &lt;font color = &quot;#ee2737&quot;&gt;%s&lt;/font&gt; Mal erfolgreich war.</string>
+    <string name="adding_fingerprint_hint_1" formatted="true">Bitte legen Sie Ihren Finger auf den Fingerabdrucksensor. Halten Sie ihn für einige Sekunden, bis das grüne Licht aufleuchtet, was bedeutet, dass die Registrierung erfolgreich war. Heben Sie den Finger ab und legen Sie ihn erneut auf den Sensor, wobei Sie die Position des Fingers jedes Mal geringfügig ändern, bis die Registrierung &amp;lt;font color = &amp;quot;#ee2737&amp;quot;&amp;gt;%s&amp;lt;/font&amp;gt; Mal erfolgreich war.</string>
     <string name="adding_fingerprint_hint_2">Wenn ein Fehler auftritt, legen Sie den Finger erneut auf den Sensor.</string>
     <string name="adding_fingerprint_hint_successfully">Erfolgreich hinzugefügt</string>
     <string name="adding_ic_card_hint_successfully">Erfolgreich hinzugefügt</string>
@@ -980,7 +980,7 @@
     <string name="adding_ic_card_hint_2">Bewegen Sie die Zugangskarte während des Hinzufügens nicht.</string>
     <string name="adding_ic_card_operation_fail">Operation fehlgeschlagen, bitte versuchen Sie es erneut.</string>
     <string name="adding_fingerprint_record_fail_toast">Heben Sie den Finger ab und legen Sie ihn in die Mitte des Sensors.</string>
-    <string name="ic_card_number">Karten-ID: %s</string>
+    <string name="ic_card_number" formatted="true">Karten-ID: %s</string>
     <string name="ic_card_details">Zugangskartendetails</string>
     <string name="fingerprint_details">Fingerabdruckdetails</string>
     <string name="modify_ic_card_name">Kartenname ändern</string>
@@ -1004,13 +1004,13 @@
     <string name="and">und</string>
     <string name="privacy_policy">[Datenschutzrichtlinie]</string>
     <string name="read_and_agree_agreement_and_policy">Ich habe gelesen und stimme der [Servicevereinbarung] und der [Datenschutzrichtlinie] zu.</string>
-    <string name="text_no_content_default" translatable="false">--</string>
+    <string name="text_no_content_default">--</string>
     <string name="note_permission_lbs">Bitte aktivieren Sie die Standortberechtigung.</string>
     <string name="note_permission_ble_scan_connect">Bitte aktivieren Sie die Bluetooth-Berechtigung.</string>
     <string name="note_permission_external_storage">Bitte aktivieren Sie die Speicherberechtigung.</string>
     <string name="note_permission_camera">Bitte aktivieren Sie die Kamera-Berechtigung.</string>
     <string name="activate_the_keybox_k4">Den Keybox Max aktivieren</string>
-    <string name="key_box_add_device_activate_hint1_k4">1. Bitte bestätigen Sie, dass der Standardcode: 123456, gefolgt von 🔒, den Keybox Max vor der Paarung öffnen kann. Wenn dies nicht funktioniert, kontaktieren Sie bitte den Kundensupport. </string>
+    <string name="key_box_add_device_activate_hint1_k4">1. Bitte bestätigen Sie, dass der Standardcode: 123456, gefolgt von 🔒, den Keybox Max vor der Paarung öffnen kann. Wenn dies nicht funktioniert, kontaktieren Sie bitte den Kundensupport.</string>
     <string name="key_box_add_device_activate_hint1_1_k4">2. Tippen Sie auf das Tastenfeld, um den Keybox Max zu aktivieren und ihn für die Paarung vorzubereiten. Stellen Sie sicher, dass das Tastenfeld während des Vorgangs leuchtet.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Berühren Sie das Tastenfeld, um den Keybox Max zu aktivieren und ihn für die Paarung vorzubereiten. Halten Sie das Tastenfeld während der Paarung leuchtend.</string>
     <string name="language">Sprache</string>

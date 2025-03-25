@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content">
 
                 <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                    app:ccp_defaultNameCode="US"
                     android:id="@+id/cc_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

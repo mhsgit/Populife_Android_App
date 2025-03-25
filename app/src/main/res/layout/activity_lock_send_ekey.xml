@@ -349,6 +349,7 @@
                     android:orientation="horizontal">
 
                     <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                        app:ccp_defaultNameCode="US"
                         android:id="@+id/cpp_lock_send_ekey"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

@@ -107,7 +107,7 @@
     <style name="list_item_overall">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">76dp</item>
+        <item name="android:minHeight">86dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:gravity">center_vertical</item>
@@ -331,7 +331,7 @@
 
     <style name="radio_btn_key_pwd" parent="radio_button">
         <item name="android:textColor">@drawable/selector_radio_btn_text_color</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:background">@drawable/selector_radio_btn</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>

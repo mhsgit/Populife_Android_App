@@ -58,6 +58,11 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 		device.setName(HomeDeviceInfo.IDeviceName.NAME_LOCK_DEADBOLT);
 		mDeviceList.add(device);
 
+		// 网关
+		device = new HomeDevice();
+		device.setName(HomeDeviceInfo.IDeviceName.NAME_GATEWAY);
+		mDeviceList.add(device);
+
 		// 门锁（kjx 生态锁，统一处理）
 		device = new HomeDevice();
 		device.setName(HomeDeviceInfo.IDeviceName.NAME_LOCK_KJX_DOOR_LOCK);
@@ -67,12 +72,6 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 		device = new HomeDevice();
 		device.setName(HomeDeviceInfo.IDeviceName.NAME_LOCK_MANHATTAN_MOON_LOCK);
 		mDeviceList.add(device);
-
-		// 网关
-		device = new HomeDevice();
-		device.setName(HomeDeviceInfo.IDeviceName.NAME_GATEWAY);
-		mDeviceList.add(device);
-
 	}
 
 	private void initView() {
