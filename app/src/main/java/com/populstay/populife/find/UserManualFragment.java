@@ -57,6 +57,14 @@ public class UserManualFragment extends FindFragment {
 						pdfAssetName = "user_manual_keybox_cn.pdf";
 					} else if (LanguageUtil.isJp(getActivity())) {
 						pdfAssetName = "user_manual_keybox_jp.pdf";
+					} else if (LanguageUtil.isDe(getActivity())) {
+						pdfAssetName = "user_manual_keybox_de.pdf";
+					} else if (LanguageUtil.isEs(getActivity())) {
+						pdfAssetName = "user_manual_keybox_es.pdf";
+					} else if (LanguageUtil.isFr(getActivity())) {
+						pdfAssetName = "user_manual_keybox_fr.pdf";
+					} else if (LanguageUtil.isIt(getActivity())) {
+						pdfAssetName = "user_manual_keybox_it.pdf";
 					}
 
 					PDFActivity.actionStart(getActivity(), getString(R.string.user_manual_keybox), pdfAssetName, true);

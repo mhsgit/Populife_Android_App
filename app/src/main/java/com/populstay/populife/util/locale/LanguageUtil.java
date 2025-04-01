@@ -39,6 +39,34 @@ public class LanguageUtil {
 		return language.equals("ja") && country.equals("JP");
 	}
 
+	public static boolean isDe(Context context) {
+		Locale locale = context.getResources().getConfiguration().locale;
+		String language = locale.getLanguage();
+		String country = locale.getCountry();
+		return language.equals("de") && country.equals("DE");
+	}
+
+	public static boolean isEs(Context context) {
+		Locale locale = context.getResources().getConfiguration().locale;
+		String language = locale.getLanguage();
+		String country = locale.getCountry();
+		return language.equals("es") && country.equals("ES");
+	}
+
+	public static boolean isFr(Context context) {
+		Locale locale = context.getResources().getConfiguration().locale;
+		String language = locale.getLanguage();
+		String country = locale.getCountry();
+		return language.equals("fr") && country.equals("FR");
+	}
+
+	public static boolean isIt(Context context) {
+		Locale locale = context.getResources().getConfiguration().locale;
+		String language = locale.getLanguage();
+		String country = locale.getCountry();
+		return language.equals("it") && country.equals("IT");
+	}
+
 	/**
 	 * 设置本地化语言
 	 *
