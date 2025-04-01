@@ -49,16 +49,28 @@ public class Gateway implements Parcelable {
 	 */
 	private String alias;
 
+	/**
+	 * 信号
+	 */
+	private int rssi;
+
+	/**
+	 * 信号更新时间
+	 */
+	private long rssiUpdateDate;
+
 	public Gateway() {
 	}
 
-	public Gateway(int gatewayId, String gatewayMac, String gatewayName, String name, int lockNum, int isOnline) {
+	public Gateway(int gatewayId, String gatewayMac, String gatewayName, String name, int lockNum, int isOnline,int rssi,int rssiUpdateDate) {
 		this.gatewayId = gatewayId;
 		this.gatewayMac = gatewayMac;
 		this.gatewayName = gatewayName;
 		this.name = name;
 		this.lockNum = lockNum;
 		this.isOnline = isOnline;
+		this.rssi = rssi;
+		this.rssiUpdateDate = rssiUpdateDate;
 	}
 
 	protected Gateway(Parcel in) {
@@ -69,6 +81,23 @@ public class Gateway implements Parcelable {
 		lockNum = in.readInt();
 		isOnline = in.readInt();
 		alias = in.readString();
+		rssi = in.readInt();
+		rssiUpdateDate = in.readLong();
+	}
+
+	@Override
+	public String toString() {
+		return "Gateway{" +
+				"gatewayId=" + gatewayId +
+				", gatewayMac='" + gatewayMac + '\'' +
+				", gatewayName='" + gatewayName + '\'' +
+				", name='" + name + '\'' +
+				", lockNum=" + lockNum +
+				", isOnline=" + isOnline +
+				", alias='" + alias + '\'' +
+				", rssi=" + rssi +
+				", rssiUpdateDate=" + rssiUpdateDate +
+				'}';
 	}
 
 	public int getGatewayId() {
@@ -127,17 +156,20 @@ public class Gateway implements Parcelable {
 		this.alias = alias;
 	}
 
-	@Override
-	public String toString() {
-		return "Gateway{" +
-				"gatewayId=" + gatewayId +
-				", gatewayMac='" + gatewayMac + '\'' +
-				", gatewayName='" + gatewayName + '\'' +
-				", name='" + name + '\'' +
-				", lockNum=" + lockNum +
-				", isOnline=" + isOnline +
-				", alias=" + alias +
-				'}';
+	public int getRssi() {
+		return rssi;
+	}
+
+	public void setRssi(int rssi) {
+		this.rssi = rssi;
+	}
+
+	public long getRssiUpdateDate() {
+		return rssiUpdateDate;
+	}
+
+	public void setRssiUpdateDate(long rssiUpdateDate) {
+		this.rssiUpdateDate = rssiUpdateDate;
 	}
 
 	@Override
@@ -154,5 +186,7 @@ public class Gateway implements Parcelable {
 		parcel.writeInt(lockNum);
 		parcel.writeInt(isOnline);
 		parcel.writeString(alias);
+		parcel.writeInt(rssi);
+		parcel.writeLong(rssiUpdateDate);
 	}
 }

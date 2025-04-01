@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"> <!-- 圆形滑块 -->
+    <size android:width="23dp" android:height="20dp" /> <!-- 滑块尺寸 -->
+    <solid android:color="#FFFFFF" /> <!-- 白色滑块 -->
+    <stroke android:width="2dp" android:color="#FFF5383F" />
+</shape>

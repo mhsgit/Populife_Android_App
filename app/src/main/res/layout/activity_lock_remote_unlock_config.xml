@@ -7,69 +7,305 @@
 
     <include layout="@layout/layout_view_titlebar"/>
 
-    <ScrollView
+    <RelativeLayout
+        android:layout_marginHorizontal="@dimen/common_page_left_right_space"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:gravity="center"
+        <androidx.core.widget.NestedScrollView
+            android:overScrollMode="always"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_add_device_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/add_gateway_icon" />
-
-            <TextView
-                android:layout_marginTop="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_remote_unlock_hint"
-                android:textColor="@color/common_text_color"
-                android:gravity="center"
-                android:textSize="14sp" />
-
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:gravity="center"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_lock_remote_unlock_config_mode_label"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lock_remote_unlock_config_remote_feature"
+                        android:textColor="#FF282828"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_lock_remote_unlock_config_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/tv_lock_remote_unlock_config_mode_label"
+                        android:text="@string/on"
+                        android:textColor="@color/text_color_ffee2737"
+                        android:textSize="15sp"/>
+
+                    <com.populstay.populife.ui.widget.CustomSwitch
+                        android:id="@+id/tv_lock_remote_unlock_config_switch"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:thumb="@drawable/switch_thumb_states"
+                        android:track="@drawable/switch_track_states"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/iv_add_device_pic"
+                    android:layout_width="145dp"
+                    android:layout_gravity="center"
+                    android:layout_height="140dp"
+                    android:src="@drawable/add_gateway_icon" />
 
                 <TextView
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/current_mode"
-                    android:textColor="@color/text_color_ffee2737"
-                    android:textSize="14sp"/>
+                    android:text="@string/lock_remote_unlock_config_desc"
+                    android:textColor="#FF1F2021"
+                    android:gravity="start"
+                    android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tv_lock_remote_unlock_config_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="@string/on"
-                    android:textColor="@color/text_color_ffee2737"
-                    android:textSize="14sp"/>
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_lock"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:text="@string/lock_remote_unlock_config_feature1"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_cus_pwd"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:text="@string/lock_remote_unlock_config_feature2"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_edit_pwd"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:text="@string/lock_remote_unlock_config_feature3"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_read_time_history"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:text="@string/lock_remote_unlock_config_feature4"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_read_time_battery"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:text="@string/lock_remote_unlock_config_feature5"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/device_card_single_bg"
+                    android:layout_marginTop="24dp"
+                    android:id="@+id/no_gateway_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_point_new"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"/>
+
+                    <TextView
+                        android:layout_marginLeft="8dp"
+                        android:textColor="#FF282828"
+                        android:text="@string/lock_remote_unlock_config_no_gateway_paired"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:background="@drawable/device_card_single_bg"
+                    android:layout_marginTop="24dp"
+                    android:id="@+id/gateway_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp">
+
+                    <ImageView
+                        android:id="@+id/gateway_image"
+                        android:src="@drawable/gateway_clear_bg_icon"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"/>
+
+                    <TextView
+                        android:id="@+id/gateway_image_title"
+                        android:layout_alignTop="@+id/gateway_image"
+                        android:layout_toEndOf="@+id/gateway_image"
+                        android:layout_marginStart="12dp"
+                        android:textColor="#FF282828"
+                        android:text="@string/lock_remote_unlock_config_2_floor_gateway"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/gateway_image_signal"
+                        android:src="@drawable/wifi"
+                        android:layout_alignStart="@+id/gateway_image_title"
+                        android:layout_below="@+id/gateway_image_title"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+
+                    <TextView
+                        android:layout_alignTop="@+id/gateway_image_signal"
+                        android:layout_alignBottom="@+id/gateway_image_signal"
+                        android:layout_toEndOf="@+id/gateway_image_signal"
+                        android:layout_marginStart="12dp"
+                        android:textColor="#FF666666"
+                        android:text="@string/lock_remote_unlock_config_online_status"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="16dp"
+                        android:src="@drawable/arrow_right_icon"
+                        android:layout_marginEnd="15dp"
+                        android:layout_height="16dp"/>
+
+                </RelativeLayout>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/buy_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:paddingHorizontal="12dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_buy_shape"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:id="@+id/tv_buy_icon"
+                android:src="@mipmap/ic_gateway_bus_car"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
             <TextView
-                android:id="@+id/tv_lock_remote_unlock_config_switch"
-                style="@style/btn_style_main"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="@dimen/common_page_left_right_space"
-                android:layout_marginRight="@dimen/common_page_left_right_space"
-                android:layout_width="186dp"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/turn_on" />
+                android:id="@+id/tv_buy_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/tv_buy_btn"
+                android:layout_toEndOf="@+id/tv_buy_icon"
+                android:text="@string/lock_remote_unlock_config_no_gateway_hint"
+                android:textColor="#FF000000"
+                android:textSize="13sp"/>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            <TextView
+                android:id="@+id/tv_buy_btn"
+                style="@style/btn_style_main_small"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:minWidth="72dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:paddingHorizontal="3dp"
+                android:text="@string/lock_remote_unlock_config_buy_now" />
 
-    </ScrollView>
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

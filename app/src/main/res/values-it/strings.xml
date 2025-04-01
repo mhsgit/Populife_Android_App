@@ -1014,4 +1014,17 @@
     <string name="key_box_add_device_activate_hint1_1_k4">2. Tocca il tastierino per attivare la Keybox Max e prepararla per la coppiazione. Assicurati che il tastierino rimanga acceso durante il processo.</string>
     <string name="key_box_add_device_activate_hint2_k4">3. Tocca il tastierino per attivare e preparare la Keybox Max per la coppiazione. Mantieni il tastierino acceso durante la coppiazione.</string>
     <string name="language">Lingua</string>
+    <string name="lock_remote_unlock_config_desc">Aggiungi un gateway Populife per abilitare il controllo remoto di queste funzionalità:</string>
+    <string name="lock_remote_unlock_config_feature1">Sblocca tramite l\'app</string>
+    <string name="lock_remote_unlock_config_feature2">Genera codici di accesso personalizzati</string>
+    <string name="lock_remote_unlock_config_feature3">Modifica e elimina tutti i codici di accesso</string>
+    <string name="lock_remote_unlock_config_feature4">Visualizza la cronologia di sblocco in tempo reale</string>
+    <string name="lock_remote_unlock_config_feature5">Verifica lo stato della batteria in tempo reale e calibra l\'orario</string>
+    <string name="lock_remote_unlock_config_no_gateway_paired">Nessun gateway abbinato</string>
+    <string name="lock_remote_unlock_config_no_gateway_hint">Non hai ancora un gateway?</string>
+    <string name="lock_remote_unlock_config_2_floor_gateway">Gateway</string>
+    <string name="lock_remote_unlock_config_online_status">Online</string>
+    <string name="lock_remote_unlock_config_remote_feature">Funzione remota:</string>
+    <string name="lock_remote_unlock_config_buy_now">Compra ora</string>
+    <string name="gateway_remote_control">Controllo remoto del gateway</string>
 </resources>

@@ -121,6 +121,8 @@ public class Urls {
 	public static final String GATEWAY_MODIFY_NAME = "gateway/modify-name"; //（post）网关 - 修改网关名称
 	public static final String GATEWAY_SET_HOME = "gateway/set-home"; //（post）网关 - 设置家庭
 
+	// 网关 - 锁网关列表v5
+	public static final String GATEWAY_V5_LOCK_LIST = "gateway/v5/lock/list";
 
 	public static final String IC_CARD_LIST = "icc/get"; //（get）分页获取或按关键词搜索（卡号或备注）锁id下所有的IC卡
 	public static final String IC_CARD_ADD = "icc/add"; //（post）通过蓝牙在锁上添加IC卡后调用该接口

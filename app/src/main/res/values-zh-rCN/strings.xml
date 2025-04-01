@@ -1014,4 +1014,17 @@
     <string name="key_box_add_device_activate_hint1_1_k4">2. 轻触按键以激活密码盒Max，在绑定过程中，按键一直保持亮起。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. 点击按键激活设备，在绑定过程中，请保持按键亮起。</string>
     <string name="language">语言</string>
+    <string name="lock_remote_unlock_config_desc">添加Populife网关以启用以下远程控制功能：</string>
+    <string name="lock_remote_unlock_config_feature1">通过应用解锁</string>
+    <string name="lock_remote_unlock_config_feature2">生成自定义密码</string>
+    <string name="lock_remote_unlock_config_feature3">编辑和删除所有密码</string>
+    <string name="lock_remote_unlock_config_feature4">查看实时解锁记录</string>
+    <string name="lock_remote_unlock_config_feature5">检查实时电池状态并校准时间</string>
+    <string name="lock_remote_unlock_config_no_gateway_paired">未配对网关</string>
+    <string name="lock_remote_unlock_config_no_gateway_hint">还没有网关？</string>
+    <string name="lock_remote_unlock_config_2_floor_gateway">网关</string>
+    <string name="lock_remote_unlock_config_online_status">在线</string>
+    <string name="lock_remote_unlock_config_remote_feature">远程开锁：</string>
+    <string name="lock_remote_unlock_config_buy_now">立即购买</string>
+    <string name="gateway_remote_control">网关远程控制</string>
 </resources>

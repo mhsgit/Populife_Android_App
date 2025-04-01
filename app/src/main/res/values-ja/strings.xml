@@ -1012,4 +1012,17 @@
     <string name="key_box_add_device_activate_hint1_1_k4">2. キーパッドをタップしてスマートキーボックスをアクティブ化してください。ペアリング中はキーパッドが点灯したままであることを確認してください。</string>
     <string name="key_box_add_device_activate_hint2_k4">3. キーパッドをタッチしてキーボックスを起動し、ペアリング中はキーパッドが常に点灯していることを確認してください。</string>
     <string name="language">言語</string>
+    <string name="lock_remote_unlock_config_desc">次の機能をリモートで制御するためにPopulifeゲートウェイを追加してください：</string>
+    <string name="lock_remote_unlock_config_feature1">アプリを介して解除</string>
+    <string name="lock_remote_unlock_config_feature2">カスタムパスコードを生成</string>
+    <string name="lock_remote_unlock_config_feature3">すべてのパスコードを編集および削除</string>
+    <string name="lock_remote_unlock_config_feature4">リアルタイムの解除履歴を確認</string>
+    <string name="lock_remote_unlock_config_feature5">リアルタイムのバッテリーステータスを確認し、時間を校正</string>
+    <string name="lock_remote_unlock_config_no_gateway_paired">ゲートウェイ未接続</string>
+    <string name="lock_remote_unlock_config_no_gateway_hint">まだゲートウェイをお持ちでないですか？</string>
+    <string name="lock_remote_unlock_config_2_floor_gateway">ゲートウェイ</string>
+    <string name="lock_remote_unlock_config_online_status">オンライン</string>
+    <string name="lock_remote_unlock_config_remote_feature">遠隔解錠：</string>
+    <string name="lock_remote_unlock_config_buy_now">今すぐ購入</string>
+    <string name="gateway_remote_control">ゲートウェイリモートコントロール</string>
 </resources>

@@ -405,7 +405,7 @@
 
                     <TextView
                         style="@style/list_item_title"
-                        android:text="@string/unlock_remotely" />
+                        android:text="@string/gateway_remote_control" />
 
                     <TextView
                         android:id="@+id/tv_lock_settings_remote_unlock_state"
