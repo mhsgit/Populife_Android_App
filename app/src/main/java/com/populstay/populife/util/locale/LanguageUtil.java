@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.populock.manhattan.sdk.util.LogUtil;
 import com.populstay.populife.activity.MainActivity;
 import com.populstay.populife.activity.SignActivity;
 import com.populstay.populife.base.BaseApplication;
@@ -29,42 +30,48 @@ public class LanguageUtil {
 		Locale locale = context.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
-		return language.equals("zh") && country.equals("CN");
+		LogUtil.d("LanguageUtil--isChinese language = " + language + " / " + country);
+		return language.equals("zh") || country.equals("CN");
 	}
 
 	public static boolean isJp(Context context) {
 		Locale locale = context.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
-		return language.equals("ja") && country.equals("JP");
+		LogUtil.d("LanguageUtil--isJp language = " + language + " / " + country);
+		return language.equals("ja") || country.equals("JP");
 	}
 
 	public static boolean isDe(Context context) {
 		Locale locale = context.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
-		return language.equals("de") && country.equals("DE");
+		LogUtil.d("LanguageUtil--isDe language = " + language + " / " + country);
+		return language.equals("de") || country.equals("DE");
 	}
 
 	public static boolean isEs(Context context) {
 		Locale locale = context.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
-		return language.equals("es") && country.equals("ES");
+		LogUtil.d("LanguageUtil--isEs language = " + language + " / " + country);
+		return language.equals("es") || country.equals("ES");
 	}
 
 	public static boolean isFr(Context context) {
 		Locale locale = context.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
-		return language.equals("fr") && country.equals("FR");
+		LogUtil.d("LanguageUtil--isFr language = " + language + " / " + country);
+		return language.equals("fr") || country.equals("FR");
 	}
 
 	public static boolean isIt(Context context) {
 		Locale locale = context.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
 		String country = locale.getCountry();
-		return language.equals("it") && country.equals("IT");
+		LogUtil.d("LanguageUtil--isIt language = " + language + " / " + country);
+		return language.equals("it") || country.equals("IT");
 	}
 
 	/**
