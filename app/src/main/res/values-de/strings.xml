@@ -882,8 +882,8 @@
     <string name="key_pwd_cyclic">Zyklischen Code erstellen</string>
     <string name="sign_in_by_phone_no">Mit Telefonnummer anmelden</string>
     <string name="sign_in_by_phone_number">Mit Telefonnummer anmelden</string>
-    <string name="tap_to_unlock">Tippen Sie, um \nzu öffnen</string>
-    <string name="tap_to_lock">Tippen Sie, um \nzu schließen</string>
+    <string name="tap_to_unlock">Tippen Sie, um zu öffnen</string>
+    <string name="tap_to_lock">Tippen Sie, um zu schließen</string>
     <string name="tap_to_unlock_for_single_btn">Tippen Sie, um zu öffnen</string>
     <string name="create_dialog_time_limit_pwd_tips">Bitte verwenden Sie diesen Code innerhalb von 24 Stunden nach der Gültigkeitsbeginn mindestens einmal, um ihn zu aktivieren. Andernfalls wird er ungültig.</string>
     <string name="unlock_with_app">Mit der App geöffnet</string>

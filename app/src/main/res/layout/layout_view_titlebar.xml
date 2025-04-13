@@ -22,30 +22,30 @@
             android:onClick="finishCurrentActivity"
             android:src="@drawable/ic_back" />
 
-        <TextView
+        <com.populstay.populife.ui.MarqueeTextView
             android:id="@+id/page_left_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:layout_toRightOf="@+id/iv_back"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:textColor="@color/sign_page_title_text"
             android:textSize="@dimen/common_page_title_text" />
 
     </RelativeLayout>
 
-    <TextView
+    <com.populstay.populife.ui.MarqueeTextView
         android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/page_action"
         android:layout_toRightOf="@+id/page_back"
-        android:ellipsize="end"
+        android:ellipsize="marquee"
         android:gravity="center"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/sign_page_title_text"
         android:textSize="@dimen/common_page_title_text" />
 

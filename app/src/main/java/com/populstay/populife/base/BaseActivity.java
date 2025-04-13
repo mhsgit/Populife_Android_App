@@ -14,11 +14,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +43,7 @@ import com.populstay.populife.push.EventPushService;
 import com.populstay.populife.sign.ISignListener;
 import com.populstay.populife.sign.SignHandler;
 import com.populstay.populife.ui.MQGlideImageLoader;
+import com.populstay.populife.ui.SmartToast;
 import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.activity.ActivityCollector;
 import com.populstay.populife.util.bluetooth.BluetoothUtil;
@@ -55,7 +54,6 @@ import com.populstay.populife.util.locale.LocalManageUtils;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.net.NetworkUtil;
 import com.populstay.populife.util.storage.PeachPreference;
-import com.populstay.populife.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -205,7 +203,8 @@ public class BaseActivity extends AppCompatActivity{
 	 * @param content 需要显示的内容
 	 */
 	public void toast(String content) {
-		ToastUtil.showToast(content);
+		//ToastUtil.showToast(content);
+		SmartToast.show(this, content);
 	}
 
 	/**
@@ -214,7 +213,8 @@ public class BaseActivity extends AppCompatActivity{
 	 * @param resId 字符串内容的资源 id
 	 */
 	public void toast(int resId) {
-		ToastUtil.showToast(resId);
+		//ToastUtil.showToast(resId);
+		SmartToast.show(this, resId);
 	}
 
 	public void toastSuccess() {

@@ -331,10 +331,12 @@
 
     <style name="radio_btn_key_pwd" parent="radio_button">
         <item name="android:textColor">@drawable/selector_radio_btn_text_color</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:background">@drawable/selector_radio_btn</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
     </style>
 
     <style name="lock_btn_style" >
@@ -356,7 +358,7 @@
 
     <style name="lock_btn_text_style" >
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">10dp</item>

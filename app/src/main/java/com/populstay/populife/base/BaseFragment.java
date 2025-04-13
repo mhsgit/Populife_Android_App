@@ -15,6 +15,7 @@ import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.permission.PermissionListener;
+import com.populstay.populife.ui.SmartToast;
 import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.activity.ActivityCollector;
 import com.populstay.populife.util.bluetooth.BluetoothUtil;
@@ -101,7 +102,8 @@ public abstract class BaseFragment extends Fragment {
 	 * @param text 要提醒的硬编码字符串文字
 	 */
 	public void toast(String text) {
-		ToastUtil.showToast(text);
+		//ToastUtil.showToast(text);
+		SmartToast.show(mActivity, text);
 	}
 
 	/**
@@ -111,7 +113,8 @@ public abstract class BaseFragment extends Fragment {
 	 * @param id 在 strings.xml 中定义的字符串文字的 id 引用
 	 */
 	public void toast(int id) {
-		ToastUtil.showToast(id);
+		//ToastUtil.showToast(id);
+		SmartToast.show(mActivity, id);
 	}
 
 	public void toastSuccess() {

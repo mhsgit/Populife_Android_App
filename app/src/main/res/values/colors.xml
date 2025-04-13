@@ -84,5 +84,6 @@
 
     <color name="lan_color_unselected">#FFA6A6A6</color>
     <color name="lan_color_selected">#FF000000</color>
+    <color name="hint_color">#cc000000</color>
 
 </resources>

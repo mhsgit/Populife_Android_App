@@ -46,6 +46,7 @@ import com.populstay.populife.net.RestClient;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.permission.PermissionListener;
+import com.populstay.populife.ui.widget.exedittext.MultiLineHintEditText;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.device.KeyboardUtil;
 import com.populstay.populife.util.locale.LanguageUtil;
@@ -78,7 +79,7 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 	private TextView mTvStartTime, mTvEndTime, mTvOneTimeNote, mTvSend;
 	private CountryCodePicker mCountryCodePicker;
 	private ImageView mIvContact;
-	private EditText mEtReceiver, mEtKeyName;
+	private MultiLineHintEditText mEtReceiver,mEtKeyName;
 	private Switch mSwitchRemoteUnlock;
 	//时间选择器
 	private TimePickerView mTimePicker;

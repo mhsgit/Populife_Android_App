@@ -21,6 +21,7 @@
     <dimen name="dialog_content_size">14sp</dimen>
     <dimen name="help_win_width_2">300dp</dimen>
     <dimen name="help_win_height_2">120dp</dimen>
+    <dimen name="default_hint_size">12sp</dimen>
 
 
 </resources>

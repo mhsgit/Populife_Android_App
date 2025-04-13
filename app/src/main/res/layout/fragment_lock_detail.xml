@@ -176,9 +176,9 @@
                            android:id="@+id/ll_lock_detail_unlock_lock"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"
-                           android:layout_marginLeft="@dimen/common_page_left_right_space"
+                           android:layout_marginLeft="16dp"
                            android:layout_marginTop="18dp"
-                           android:layout_marginRight="@dimen/common_page_left_right_space"
+                           android:layout_marginRight="16dp"
                            android:gravity="center"
                            android:orientation="horizontal"
                            android:visibility="visible">
@@ -186,7 +186,7 @@
                            <LinearLayout
                                android:id="@+id/ll_lock_detail_lock"
                                style="@style/lock_btn_style_2"
-                               android:layout_marginRight="@dimen/dimens_dp_10">
+                               android:layout_marginRight="4dp">
 
                                <ImageView
                                    android:id="@+id/iv_lock_detail_lock"
@@ -196,7 +196,7 @@
                                <TextView
                                    android:id="@+id/tv_lock_detail_lock"
                                    style="@style/lock_btn_text_style"
-                                   android:textSize="16sp"
+                                   android:textSize="16dp"
                                    android:text="@string/tap_to_lock" />
 
                            </LinearLayout>
@@ -205,7 +205,7 @@
                            <LinearLayout
                                android:id="@+id/ll_lock_detail_unlock"
                                style="@style/lock_btn_style_2"
-                               android:layout_marginLeft="@dimen/dimens_dp_10">
+                               android:layout_marginLeft="4dp">
 
                                <ImageView
                                    android:id="@+id/iv_lock_detail_unlock"
@@ -215,7 +215,7 @@
                                <TextView
                                    android:id="@+id/tv_lock_detail_unlock"
                                    style="@style/lock_btn_text_style"
-                                   android:textSize="16sp"
+                                   android:textSize="16dp"
                                    android:text="@string/tap_to_unlock" />
 
                            </LinearLayout>
