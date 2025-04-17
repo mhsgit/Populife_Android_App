@@ -32,8 +32,7 @@
                 android:minHeight="30dp"
                 android:checked="true"
                 android:layout_marginRight="@dimen/dimens_dp_20"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                android:layout_width="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_authorized_user"
@@ -41,8 +40,7 @@
                 style="@style/radio_btn_key_pwd"
                 android:text="@string/authorized_user"
                 android:minHeight="30dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                android:layout_width="0dp" />
 
         </RadioGroup>
 

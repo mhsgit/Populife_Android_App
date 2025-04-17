@@ -39,8 +39,7 @@
                     android:minHeight="30dp"
                     android:checked="true"
                     android:layout_marginRight="@dimen/dimens_dp_20"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="0dp" />
 
                 <RadioButton
                     android:id="@+id/rb_share_key_through_sms_link"
@@ -48,8 +47,7 @@
                     style="@style/radio_btn_key_pwd"
                     android:text="@string/share_key_through_sms_link"
                     android:minHeight="30dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="0dp" />
 
             </RadioGroup>
 

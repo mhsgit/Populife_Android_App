@@ -48,7 +48,7 @@ public class MultiLineHintEditText extends RelativeLayout {
         // 读取自定义属性
         String hintText = a.getString(R.styleable.MultiLineHintEditText_hintText);
         int hintColor = a.getColor(R.styleable.MultiLineHintEditText_hintColor, Color.GRAY);
-        float hintSize = a.getDimension(R.styleable.MultiLineHintEditText_hintSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics()));
+        float hintSize = a.getDimension(R.styleable.MultiLineHintEditText_hintSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics()));
         // 应用属性到控件
         tvHint.setText(hintText);
         tvHint.setTextColor(hintColor);

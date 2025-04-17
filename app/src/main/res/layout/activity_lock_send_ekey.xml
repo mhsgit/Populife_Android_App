@@ -55,7 +55,7 @@
                     android:gravity="left|center_vertical"
                     app:hintText="@string/key_title_edit_hint"
                     app:hintColor="@color/text_gray_light"
-                    app:hintSize="16sp"
+                    app:hintSize="12dp"
                     android:imeOptions="actionDone"
                     android:maxLength="20"
                     android:maxLines="1"
@@ -93,7 +93,6 @@
                             android:id="@+id/rb_valid_period_permanent"
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/dimens_dp_20"
                             android:layout_weight="1"
                             android:checked="true"
@@ -104,7 +103,6 @@
                             android:id="@+id/rb_valid_period_time_limited"
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:minHeight="30dp"
                             android:text="@string/pwd_type_name_time_limited" />
@@ -212,7 +210,6 @@
                             android:id="@+id/rb_general_user"
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/dimens_dp_20"
                             android:layout_weight="1"
                             android:checked="true"
@@ -223,7 +220,6 @@
                             android:id="@+id/rb_authorized_user"
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:minHeight="30dp"
                             android:text="@string/authorized_user" />
@@ -300,7 +296,6 @@
                             android:id="@+id/rb_share_key_through_account"
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/dimens_dp_20"
                             android:layout_weight="1"
                             android:checked="true"
@@ -311,7 +306,6 @@
                             android:id="@+id/rb_share_key_through_sms_link"
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:minHeight="30dp"
                             android:text="@string/share_key_through_sms_link" />
@@ -373,7 +367,7 @@
                         android:textColor="@color/text_gray_dark"
                         app:hintText="@string/receiver_populife_edit_hint"
                         app:hintColor="@color/text_gray_light"
-                        app:hintSize="16sp"
+                        app:hintSize="12dp"
                         android:textSize="16sp" />
 
                     <ImageView

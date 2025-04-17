@@ -27,7 +27,6 @@
                 android:id="@+id/rb_valid_period_permanent"
                 style="@style/radio_btn_key_pwd"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dimens_dp_20"
                 android:layout_weight="1"
                 android:checked="true"
@@ -38,7 +37,6 @@
                 android:id="@+id/rb_valid_period_time_limited"
                 style="@style/radio_btn_key_pwd"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:minHeight="30dp"
                 android:text="@string/pwd_type_name_time_limited" />
