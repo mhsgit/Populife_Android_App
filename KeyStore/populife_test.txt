@@ -1,0 +1,4 @@
+KEY_PATH=../KeyStore/populife_test.jks
+KEY_PASS=123456
+ALIAS_NAME=populife
+ALIAS_PASS=123456
