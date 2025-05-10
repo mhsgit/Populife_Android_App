@@ -11,6 +11,7 @@ import com.meiqia.meiqiasdk.imageloader.MQImage;
 import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.ui.MQGlideImageLoader;
+import com.populstay.populife.util.email.EmailUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 
@@ -178,7 +179,8 @@ public class BaseVisibilityFragment extends BaseFragment implements OnAttachStat
 	}
 
 	public void startImServiceActivity(Context context){
-		HashMap<String, String> clientInfo = new HashMap<>();
+		EmailUtil.sendEmail(context);
+		/*HashMap<String, String> clientInfo = new HashMap<>();
 		clientInfo.put("userId", PeachPreference.readUserId());
 		clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
 		clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
@@ -187,6 +189,6 @@ public class BaseVisibilityFragment extends BaseFragment implements OnAttachStat
 				setCustomizedId(PeachPreference.readUserId())
 				.setClientInfo(clientInfo)
 				.updateClientInfo(clientInfo)
-				.build());
+				.build());*/
 	}
 }

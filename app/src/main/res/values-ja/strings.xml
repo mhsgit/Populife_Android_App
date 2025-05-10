@@ -1025,4 +1025,5 @@
     <string name="lock_remote_unlock_config_remote_feature">遠隔解錠：</string>
     <string name="lock_remote_unlock_config_buy_now">今すぐ購入</string>
     <string name="gateway_remote_control">ゲートウェイリモートコントロール</string>
+    <string name="email_install_hint">まずGmailクライアントをインストールしてください。その後、support@populife.coまでサービス担当者にご連絡ください。</string>
 </resources>

@@ -1027,4 +1027,5 @@
     <string name="lock_remote_unlock_config_remote_feature">Funzione remota:</string>
     <string name="lock_remote_unlock_config_buy_now">Compra ora</string>
     <string name="gateway_remote_control">Controllo remoto del gateway</string>
+    <string name="email_install_hint">Per favore, installa il client Gmail prima e poi contatta il servizio clienti all\'indirizzo support@populife.co.</string>
 </resources>

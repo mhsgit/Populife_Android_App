@@ -1027,4 +1027,5 @@
     <string name="lock_remote_unlock_config_remote_feature">Fonctionnalité à distance :</string>
     <string name="lock_remote_unlock_config_buy_now">Acheter maintenant</string>
     <string name="gateway_remote_control">Télécommande de la passerelle</string>
+    <string name="email_install_hint">Veuillez installer d\'abord le client Gmail, puis contacter le service client à l\'adresse support@populife.co.</string>
 </resources>

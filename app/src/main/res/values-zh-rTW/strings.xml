@@ -1026,4 +1026,5 @@
     <string name="lock_remote_unlock_config_remote_feature">远程开锁：</string>
     <string name="lock_remote_unlock_config_buy_now">立即购买</string>
     <string name="gateway_remote_control">网关远程控制</string>
+    <string name="email_install_hint">请先安装Gmail客户端，再联系客服support@populife.co</string>
 </resources>

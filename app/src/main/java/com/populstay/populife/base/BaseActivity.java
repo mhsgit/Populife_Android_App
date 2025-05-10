@@ -50,6 +50,7 @@ import com.populstay.populife.util.bluetooth.BluetoothUtil;
 import com.populstay.populife.util.device.DeviceUtil;
 import com.populstay.populife.util.device.HideIMEUtil;
 import com.populstay.populife.util.dialog.DialogUtil;
+import com.populstay.populife.util.email.EmailUtil;
 import com.populstay.populife.util.locale.LocalManageUtils;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.net.NetworkUtil;
@@ -689,7 +690,7 @@ public class BaseActivity extends AppCompatActivity{
 	}
 
 	public void startImServiceActivity(Context context){
-		HashMap<String, String> clientInfo = new HashMap<>();
+		/*HashMap<String, String> clientInfo = new HashMap<>();
 		clientInfo.put("userId", PeachPreference.readUserId());
 		clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
 		clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
@@ -698,7 +699,8 @@ public class BaseActivity extends AppCompatActivity{
 				setCustomizedId(PeachPreference.readUserId())
 				.setClientInfo(clientInfo)
 				.updateClientInfo(clientInfo)
-				.build());
+				.build());*/
+		EmailUtil.sendEmail(this);
 
 		/*requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
 				new PermissionListener() {
