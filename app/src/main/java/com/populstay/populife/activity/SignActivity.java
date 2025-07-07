@@ -236,7 +236,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 
 		if (isChineseLanguage()) {
 			if (VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType)) {
-				mTvSwitchSignType.setVisibility(View.VISIBLE);
+				mTvSwitchSignType.setVisibility(View.GONE);
 				mTvSwitchSignType.setText(getResources().getString(R.string.sign_in_by_verify_code));
 				mEtUserName.setType(ExEditText.TYPE_ACCOUNT);
 				mEtUserName.setLabel("");
@@ -338,7 +338,11 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 				mTvSwitchSignType.setVisibility(View.GONE);
 				mRlUserTerms.setVisibility(View.VISIBLE);
 				mEtConfirmPwd.setVisibility(View.VISIBLE);
-				mEtCode.setVisibility(View.VISIBLE);
+				if (isChineseLanguage()){
+					mEtCode.setVisibility(View.GONE);
+				}else {
+					mEtCode.setVisibility(View.VISIBLE);
+				}
 				ll_switch_language.setVisibility(View.VISIBLE);
 				break;
 
@@ -544,7 +548,11 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 				isEnable = isNotEmptyUserName && isNotEmptyCode;
 				break;
 			case VAL_ACCOUNT_SIGN_UP:
-				isEnable = isNotEmptyUserName && isNotEmptyPwd && isNotEmptyConfirmPwd && isNotEmptyCode && isSelectedUserTerms;
+				if (isChineseLanguage()){
+					isEnable = isNotEmptyUserName && isNotEmptyPwd && isNotEmptyConfirmPwd && isSelectedUserTerms;
+				}else {
+					isEnable = isNotEmptyUserName && isNotEmptyPwd && isNotEmptyConfirmPwd && isNotEmptyCode && isSelectedUserTerms;
+				}
 				break;
 			case VAL_ACCOUNT_RESET_PWD:
 				isEnable = isNotEmptyPwd && isNotEmptyConfirmPwd;
