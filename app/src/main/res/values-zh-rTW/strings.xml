@@ -1027,4 +1027,9 @@
     <string name="lock_remote_unlock_config_buy_now">立即购买</string>
     <string name="gateway_remote_control">网关远程控制</string>
     <string name="email_install_hint">请先安装Gmail客户端，再联系客服support@populife.co</string>
+    <string name="me_list_item_name_unsynced_devices">未同步的设备</string>
+    <string name="user_manual_keybox_k4">密码盒Max用户手册</string>
+    <string name="sync">同步</string>
+    <string name="sync_successfully">同步成功</string>
+    <string name="sync_fail">同步失败，请重试</string>
 </resources>

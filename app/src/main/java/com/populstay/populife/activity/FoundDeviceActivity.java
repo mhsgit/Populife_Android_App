@@ -35,6 +35,7 @@ import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.common.Urls;
 import com.populstay.populife.constant.BleConstant;
+import com.populstay.populife.db.PopulifeDBUtil;
 import com.populstay.populife.entity.Key;
 import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.eventbus.Event;
@@ -508,6 +509,7 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 						JSONObject result = JSON.parseObject(response);
 						int code = result.getInteger("code");
 						if (code == 200) {
+							PopulifeDBUtil.getInstance(BaseApplication.getApplication()).deleteByUserAndMac(mKey.getUserId(), mKey.getLockMac());
 							PeachLogger.d(TAG + " initializeLock 提交成功 ");
 							JSONObject data = result.getJSONObject("data");
 							mLockId = data.getInteger("lockId");
@@ -576,6 +578,7 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 						JSONObject result = JSON.parseObject(response);
 						int code = result.getInteger("code");
 						if (code == 200) {
+							PopulifeDBUtil.getInstance(BaseApplication.getApplication()).deleteByUserAndMac(mKey.getUserId(), mKey.getLockMac());
 							PeachLogger.d(TAG + " initializeLock 提交成功 ");
 							JSONObject data = result.getJSONObject("data");
 							mLockId = data.getInteger("lockId");

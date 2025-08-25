@@ -68,6 +68,14 @@ public class UserManualFragment extends FindFragment {
 					}
 
 					PDFActivity.actionStart(getActivity(), getString(R.string.user_manual_keybox), pdfAssetName, true);
+				} else if (UserManualInfo.IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX_K4.equals(homeDevice.getType())) {
+
+					String pdfAssetName = "user_manual_keybox_k4_en.pdf.pdf";
+					if (LanguageUtil.isChinese(getActivity())) {
+						pdfAssetName = "user_manual_keybox_k4_cn.pdf";
+					}
+
+					PDFActivity.actionStart(getActivity(), getString(R.string.user_manual_keybox), pdfAssetName, true);
 				} else if (UserManualInfo.IUserManualType.USER_MANUAL_TYPE_GATEWAY.equals(homeDevice.getType())) {
 					String pdfGatewayAssetName = "user_manual_gateway_en.pdf";
 					if (LanguageUtil.isChinese(getActivity())) {
@@ -92,6 +100,10 @@ public class UserManualFragment extends FindFragment {
 
 		// 密码盒
 		device = new UserManual(getString(R.string.user_manual_keybox), UserManualInfo.IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX);
+		mDeviceList.add(device);
+
+		// 密码盒Max
+		device = new UserManual(getString(R.string.user_manual_keybox_k4), UserManualInfo.IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX_K4);
 		mDeviceList.add(device);
 
 		// 网关

@@ -1028,6 +1028,10 @@
     <string name="lock_remote_unlock_config_buy_now">Buy now</string>
     <string name="gateway_remote_control">Gateway Remote Control</string>
     <string name="email_install_hint">Please install the Gmail client first, and then contact the customer service at support@populife.co.</string>
-
+    <string name="me_list_item_name_unsynced_devices">Unsynced Devices</string>
+    <string name="user_manual_keybox_k4">Keybox Max user manual</string>
+    <string name="sync">sync</string>
+    <string name="sync_successfully">Synced successfully</string>
+    <string name="sync_fail">Sync failed. Please try again</string>
 
 </resources>

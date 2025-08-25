@@ -31,11 +31,15 @@ import com.populstay.populife.activity.DeleteAccountActivity;
 import com.populstay.populife.activity.GatewayListActivity;
 import com.populstay.populife.activity.MessageListActivity;
 import com.populstay.populife.activity.ModifyNicknameActivity;
+import com.populstay.populife.activity.OfflineLockListActivity;
 import com.populstay.populife.activity.SettingsActivity;
 import com.populstay.populife.activity.SignActivity;
+import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.base.BaseVisibilityFragment;
 import com.populstay.populife.common.Urls;
 import com.populstay.populife.constant.Constant;
+import com.populstay.populife.db.PopulifeDBUtil;
+import com.populstay.populife.entity.OfflineLock;
 import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.home.HomeListActivity;
 import com.populstay.populife.me.PersonalCenterActivity;
@@ -81,7 +85,7 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 	private PermissionListener mPermissionListener;
 	private CircleImageView mCivAvatar;
 	private TextView mTvNickname, mTvExit, mTvDeleteAccount;
-	private LinearLayout mLlMePersonalCenter, mLlSpaceManagement, mLlMail, mLlChangePwd, mLlTouchIdLogin, mLlChangeLanguage;
+	private LinearLayout mLlMePersonalCenter, mLlSpaceManagement, mLlMail, mLlChangePwd, mLlTouchIdLogin, mLlChangeLanguage,mLlUnsyncedDevices,mLlUnsyncedDevicesContainer;
 	private int mAccountType = Constant.ACCOUNT_TYPE_PHONE; // 注册账号的类型（1 手机，2 邮箱）
 	private String mPhone = "";
 	private String mEmail = "";
@@ -234,6 +238,19 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 		mTvDeleteAccount = view.findViewById(R.id.tv_settings_delete_account);
 		mLlTouchIdLogin = view.findViewById(R.id.ll_me_service_and_support);
 		mLlChangeLanguage = view.findViewById(R.id.ll_me_settings);
+		mLlUnsyncedDevices = view.findViewById(R.id.ll_unsynced_devices);
+		mLlUnsyncedDevicesContainer = view.findViewById(R.id.unsynced_devices);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		List<OfflineLock> lockList = PopulifeDBUtil.getInstance(BaseApplication.getApplication()).queryByUserId(PeachPreference.readUserId());
+		if (null != lockList && !lockList.isEmpty()) {
+			mLlUnsyncedDevicesContainer.setVisibility(View.VISIBLE);
+		}else {
+			mLlUnsyncedDevicesContainer.setVisibility(View.GONE);
+		}
 	}
 
 	private void initListener() {
@@ -246,6 +263,7 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 		mTvDeleteAccount.setOnClickListener(this);
 		mLlChangeLanguage.setOnClickListener(this);
 		mLlTouchIdLogin.setOnClickListener(this);
+		mLlUnsyncedDevices.setOnClickListener(this);
 	}
 
 	@Override
@@ -281,6 +299,10 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 			// 设置
 			case R.id.ll_me_settings:
 				goToNewActivity(SettingsActivity.class);
+				break;
+			// 未同步的设备
+			case R.id.ll_unsynced_devices:
+				startActivity(new Intent(getActivity(), OfflineLockListActivity.class));
 				break;
 
 			case R.id.tv_settings_exit:

@@ -1028,4 +1028,9 @@
     <string name="lock_remote_unlock_config_buy_now">Comprar ahora</string>
     <string name="gateway_remote_control">Control remoto de la puerta de enlace</string>
     <string name="email_install_hint">Por favor, instale el cliente de Gmail primero y luego contacte al servicio de atención al cliente en support@populife.co.</string>
+    <string name="me_list_item_name_unsynced_devices">Dispositivos no sincronizados</string>
+    <string name="user_manual_keybox_k4">Manual de usuario de Keybox Max</string>
+    <string name="sync">Sincronizar</string>
+    <string name="sync_successfully">Sincronizado correctamente</string>
+    <string name="sync_fail">Fallo de sincronización. Inténtalo de nuevo.</string>
 </resources>

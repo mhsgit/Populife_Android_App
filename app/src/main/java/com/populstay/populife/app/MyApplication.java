@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.orhanobut.logger.Logger;
 import com.populock.manhattan.sdk.BleDevice;
 import com.populock.manhattan.sdk.api.PPLock;
@@ -15,8 +17,10 @@ import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populock.manhattan.sdk.entity.LockError;
 import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.constant.BleConstant;
+import com.populstay.populife.db.PopulifeDBUtil;
 import com.populstay.populife.entity.BleSession;
 import com.populstay.populife.entity.Key;
+import com.populstay.populife.entity.OfflineLock;
 import com.populstay.populife.entity.PPLBleSession;
 import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.eventbus.Event;
@@ -347,6 +351,7 @@ public class MyApplication extends BaseApplication {
 
 				case RESET_LOCK:
 					PeachLogger.d(TAG + " onDeviceDisconnected 重置锁 RESET_LOCK");
+					PopulifeDBUtil.getInstance(BaseApplication.getApplication()).deleteByUserAndMac(PeachPreference.readUserId(), extendedBluetoothDevice.getAddress());
 					bleSession.getILockResetLock().onFinish();
 					break;
 
@@ -422,6 +427,14 @@ public class MyApplication extends BaseApplication {
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);*/
 				//AddDeviceSuccessActivity.actionStart(getApplication(), HomeDeviceInfo.IDeviceModel.MODEL_LOCK_DEADBOLT);
+
+				// 保存锁信息
+				JSONObject lockInfo = JSON.parseObject(lockDataJson);
+				String userId = PeachPreference.readUserId();
+				String lockMac =lockInfo.getString("lockMac");
+				String lockName = lockInfo.getString("lockName");
+				PopulifeDBUtil.getInstance(getApplicationContext()).save(new OfflineLock(userId, lockMac, lockName, lockDataJson, 0));
+
 				EventBus.getDefault().post(new Event(Event.EventType.LOCK_LOCAL_INITIALIZE_SUCCEED, lockDataJson));
 
 
@@ -1105,6 +1118,13 @@ public class MyApplication extends BaseApplication {
 //				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //				startActivity(intent);
 
+				// 保存锁信息
+				JSONObject lockInfo = JSON.parseObject(lockDataJson);
+				String userId = PeachPreference.readUserId();
+				String lockMac =lockInfo.getString("lockMac");
+				String lockName = lockInfo.getString("lockName");
+				PopulifeDBUtil.getInstance(getApplicationContext()).save(new OfflineLock(userId, lockMac, lockName, lockDataJson, -1));
+
 				EventBus.getDefault().post(new Event(Event.EventType.LOCK_LOCAL_INITIALIZE_SUCCEED, lockDataJson));
 
 			} else {
@@ -1115,6 +1135,8 @@ public class MyApplication extends BaseApplication {
 		@Override
 		public void onDeleteLock(BleDevice device, LockError error) {
 			if (error == LockError.SUCCESS) {
+				// 锁重置成功，需要删除缓存
+				PopulifeDBUtil.getInstance(BaseApplication.getApplication()).deleteByUserAndMac(PeachPreference.readUserId(), device.getAddress());
 				pplBleSession.getmILockDeleteLock().onSuccess();
 			} else {
 				pplBleSession.getmILockDeleteLock().onFail();

@@ -1028,4 +1028,9 @@
     <string name="lock_remote_unlock_config_buy_now">Acheter maintenant</string>
     <string name="gateway_remote_control">Télécommande de la passerelle</string>
     <string name="email_install_hint">Veuillez installer d\'abord le client Gmail, puis contacter le service client à l\'adresse support@populife.co.</string>
+    <string name="me_list_item_name_unsynced_devices">Appareils non synchronisés</string>
+    <string name="user_manual_keybox_k4">Manuel d\'utilisation de Keybox Max</string>
+    <string name="sync">Synchroniser</string>
+    <string name="sync_successfully">Synchronisé avec succès</string>
+    <string name="sync_fail">Échec de la synchronisation. Veuillez réessayer.</string>
 </resources>

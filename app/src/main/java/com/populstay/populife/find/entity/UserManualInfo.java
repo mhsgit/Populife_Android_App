@@ -16,6 +16,8 @@ public class UserManualInfo {
         String USER_MANUAL_LOCK_TYPE_KEY_BOX = "1";
         // App手册
         String USER_MANUAL_TYPE_APP = "0";
+        // 密码锁K4
+        String USER_MANUAL_LOCK_TYPE_KEY_BOX_K4 = "2";
     }
 
 
@@ -31,6 +33,9 @@ public class UserManualInfo {
                 break;
             case IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX:
                 name = R.string.user_manual_keybox;
+                break;
+            case IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX_K4:
+                name = R.string.user_manual_keybox_k4;
                 break;
             case IUserManualType.USER_MANUAL_TYPE_APP:
                 name = R.string.user_manual_app;
@@ -52,6 +57,9 @@ public class UserManualInfo {
             case IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX:
                 iconActive = R.drawable.device_card_single_icon_key_box_selector;
                 break;
+            case IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX_K4:
+                iconActive = R.drawable.device_card_single_icon_key_box_k4_selector;
+                break;
             case IUserManualType.USER_MANUAL_TYPE_APP:
                 iconActive = R.drawable.device_card_single_icon_user_manual_selector;
                 break;
@@ -71,6 +79,9 @@ public class UserManualInfo {
                 break;
             case IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX:
                 iconInactive = R.drawable.keybox_inactive;
+                break;
+            case IUserManualType.USER_MANUAL_LOCK_TYPE_KEY_BOX_K4:
+                iconInactive = R.drawable.keybox_k4_inactive;
                 break;
             case IUserManualType.USER_MANUAL_TYPE_APP:
                 iconInactive = R.drawable.app_inactive;

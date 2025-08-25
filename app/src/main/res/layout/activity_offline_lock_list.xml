@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_view_line"/>
+
+            <ListView
+                android:id="@+id/lv_gateway_binded_lock_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/gray_line"
+                android:dividerHeight="0.5dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </FrameLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
