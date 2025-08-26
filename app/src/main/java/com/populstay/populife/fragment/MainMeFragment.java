@@ -94,6 +94,8 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 	private Uri mUri;
 	private String mPath = "";
 	private UserInfo mUserInfo;
+	private TextView text_test_device_init_fail;
+	private LinearLayout ll_test_device_init_fail;
 
 
 	@Override
@@ -240,6 +242,14 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 		mLlChangeLanguage = view.findViewById(R.id.ll_me_settings);
 		mLlUnsyncedDevices = view.findViewById(R.id.ll_unsynced_devices);
 		mLlUnsyncedDevicesContainer = view.findViewById(R.id.unsynced_devices);
+
+		ll_test_device_init_fail = view.findViewById(R.id.ll_test_device_init_fail);
+		text_test_device_init_fail = view.findViewById(R.id.text_test_device_init_fail);
+		if (PeachPreference.getTestDeviceInitFail()){
+			text_test_device_init_fail.setText(String.format(getResources().getString(R.string.test_device_init_fail), "已开启"));
+		}else{
+			text_test_device_init_fail.setText(String.format(getResources().getString(R.string.test_device_init_fail), "未开启"));
+		}
 	}
 
 	@Override
@@ -264,6 +274,15 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
 		mLlChangeLanguage.setOnClickListener(this);
 		mLlTouchIdLogin.setOnClickListener(this);
 		mLlUnsyncedDevices.setOnClickListener(this);
+		ll_test_device_init_fail.setOnClickListener(v -> {
+            if (PeachPreference.getTestDeviceInitFail()){
+                PeachPreference.saveTestDeviceInitFail(false);
+                text_test_device_init_fail.setText(String.format(getResources().getString(R.string.test_device_init_fail), "未开启"));
+            }else{
+                PeachPreference.saveTestDeviceInitFail(true);
+                text_test_device_init_fail.setText(String.format(getResources().getString(R.string.test_device_init_fail), "已开启"));
+            }
+        });
 	}
 
 	@Override

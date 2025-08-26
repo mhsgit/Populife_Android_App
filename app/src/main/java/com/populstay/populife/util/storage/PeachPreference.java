@@ -39,6 +39,8 @@ public class PeachPreference {
 	public static final String VAL_LOCK_ACTION_TYPE_INIT = "lock_action_type_init"; // 锁操作类型（初始化绑定）
 	public static final String VAL_LOCK_ACTION_TYPE_COMMON = "lock_action_type_common"; // 锁操作类型（常规操作）
     public static final String VAL_SUPPORT_BIOMETRC = "VAL_SUPPORT_BIOMETRC";
+	public static final String TEST_DEVICE_INIT_FAIL = "test_device_init_fail";// 模拟测试设备初始化失败
+
 	/**
 	 * 提示:
 	 * <p>
@@ -348,6 +350,15 @@ public class PeachPreference {
 	public static int getLastUnlockType(int lockId) {
 		return getAppPreference()
 				.getInt(LAST_UNLOCK_TYPE + readUserId() + lockId, 0);
+	}
+
+	public static boolean getTestDeviceInitFail() {
+		return getAppPreference()
+				.getBoolean(TEST_DEVICE_INIT_FAIL, false);
+	}
+
+	public static void saveTestDeviceInitFail(boolean isOpen) {
+		getAppPreference().edit().putBoolean(TEST_DEVICE_INIT_FAIL, isOpen).apply();
 	}
 
 }

@@ -148,6 +148,34 @@
             <include layout="@layout/layout_view_line"/>
 
             <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/test_device_init_fail"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_test_device_init_fail"
+                    style="@style/list_item_overall_me">
+
+                    <TextView
+                        android:id="@+id/text_test_device_init_fail"
+                        style="@style/list_item_title_me"
+                        android:text="@string/test_device_init_fail"/>
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_more_detail"
+                        android:tint="@color/text_gray_light"/>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/unsynced_devices"
                 android:orientation="vertical"

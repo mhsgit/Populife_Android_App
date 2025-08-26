@@ -1034,4 +1034,6 @@
     <string name="sync_successfully">Synced successfully</string>
     <string name="sync_fail">Sync failed. Please try again</string>
 
+    <string name="test_device_init_fail">模拟初始化设备失败(%s)</string>
+
 </resources>
