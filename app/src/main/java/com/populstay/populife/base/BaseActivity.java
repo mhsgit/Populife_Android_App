@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsetsController;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -107,6 +109,17 @@ public class BaseActivity extends AppCompatActivity{
 		}else {
 			registerReceiver(mReceiver, getIntentFilter());
 		}
+		
+		// 状态栏适配
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+			// Android 30及以上使用新的WindowInsets API
+			getWindow().setDecorFitsSystemWindows(false);
+		} else {
+			// Android 30以下使用传统方法
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		}
+		
 //		// 注册美洽
 //		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, intentFilter);
 
@@ -120,10 +133,38 @@ public class BaseActivity extends AppCompatActivity{
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.white));
 		}
+		
+		// 设置状态栏和导航栏样式
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+			// Android 30及以上使用新的API
+			if (getWindow().getInsetsController() != null) {
+				getWindow().getInsetsController().setSystemBarsAppearance(
+						WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+						WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+				getWindow().getInsetsController().setSystemBarsAppearance(
+						WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+						WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
+			}
+		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			// Android 23-29使用传统方法
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | 
+					View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+					View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+		}
+		
+		// 确保内容不被状态栏遮挡
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+			getWindow().setDecorFitsSystemWindows(false);
+		}
 	}
 
 	@Override
 	public void setContentView(View view) {
+		if (view instanceof ViewGroup) {
+			ViewGroup rootView = (ViewGroup) view;
+			rootView.setFitsSystemWindows(true);
+		}
 		super.setContentView(view);
 		HideIMEUtil.wrap(this);
 	}
@@ -131,11 +172,19 @@ public class BaseActivity extends AppCompatActivity{
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
+		View rootView = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+		if (rootView instanceof ViewGroup) {
+			((ViewGroup) rootView).setFitsSystemWindows(true);
+		}
 		HideIMEUtil.wrap(this);
 	}
 
 	@Override
 	public void setContentView(View view, ViewGroup.LayoutParams params) {
+		if (view instanceof ViewGroup) {
+			ViewGroup rootView = (ViewGroup) view;
+			rootView.setFitsSystemWindows(true);
+		}
 		super.setContentView(view, params);
 		HideIMEUtil.wrap(this);
 	}

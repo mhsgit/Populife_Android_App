@@ -11,6 +11,9 @@
         <item name="android:windowBackground">@color/colorWindowBackground</item>
         <!--ToolBar上的Title颜色-->
         <item name="android:textColorPrimary">#FF212322</item>
+        <!--边缘到边缘显示-->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
