@@ -18,8 +18,5 @@
         <item name="android:textColorPrimary">#FF212322</item>
         <!--各个控制控件的默认颜色-->
         <item name="android:colorControlNormal">#FF212322</item>
-        <!--确保内容不被状态栏遮挡-->
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>
