@@ -66,7 +66,7 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Locale;
 
 
 /**
@@ -772,5 +772,12 @@ public class BaseActivity extends AppCompatActivity{
 						toast(R.string.note_permission_external_storage);
 					}
 				});*/
+	}
+
+	public boolean isChineseLanguage() {
+//		Locale locale = LanguageUtil.getLocaleByType(LanguageUtil.getLanguageType(this));
+
+		Locale locale = LocalManageUtils.getSelectLanguageLocal(BaseActivity.this);
+		return "ZH".equals(locale.getLanguage().toUpperCase());
 	}
 }

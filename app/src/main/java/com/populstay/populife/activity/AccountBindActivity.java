@@ -69,6 +69,11 @@ public class AccountBindActivity extends BaseActivity
 	private void initView() {
 		mEtUserName = findViewById(R.id.et_account_bind_user_name);
 		mCountryCodePicker = mEtUserName.findViewById(R.id.cc_picker);
+		if (isChineseLanguage()) {
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("CN");
+		}else{
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("US");
+		}
 		mEtCode = findViewById(R.id.et_account_bind_code);
 		mTvGetCode = mEtCode.getVerifictionCodeView();
 		mTvActionBtn = findViewById(R.id.tv_account_bind_btn);

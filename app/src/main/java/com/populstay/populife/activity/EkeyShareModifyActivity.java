@@ -96,6 +96,11 @@ public class EkeyShareModifyActivity extends BaseActivity implements View.OnClic
 		ll_receiver = findViewById(R.id.ll_receiver);
 		mEtReceiver = findViewById(R.id.et_lock_send_ekey_receiver);
 		mCountryCodePicker = findViewById(R.id.cpp_lock_send_ekey);
+		if (isChineseLanguage()) {
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("CN");
+		}else{
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("US");
+		}
 		mIvContact = findViewById(R.id.iv_lock_send_ekey_receiver);
 //		setCountryInfo();
 

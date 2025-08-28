@@ -176,6 +176,11 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 		mCbUserTerms = findViewById(R.id.cb_sign_user_terms);
 		mEtUserName = findViewById(R.id.et_sign_user_name);
 		mCountryCodePicker = mEtUserName.findViewById(R.id.cc_picker);
+		if (isChineseLanguage()) {
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("CN");
+		}else{
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("US");
+		}
 		mEtPwd = findViewById(R.id.et_sign_pwd);
 		mEtConfirmPwd = findViewById(R.id.et_confirm_pwd);
 		mEtCode = findViewById(R.id.et_sign_verification_code);
@@ -259,13 +264,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 				mEtUserName.setHint(resources.getString(R.string.enter_your_email_address));
 			}
 		}
-	}
-
-	private boolean isChineseLanguage() {
-//		Locale locale = LanguageUtil.getLocaleByType(LanguageUtil.getLanguageType(this));
-
-		Locale locale = LocalManageUtils.getSelectLanguageLocal(SignActivity.this);
-		return "ZH".equals(locale.getLanguage().toUpperCase());
 	}
 
 	/**

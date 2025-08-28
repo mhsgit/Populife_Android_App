@@ -149,6 +149,11 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 		mTvEndTime = findViewById(R.id.tv_lock_send_ekey_end_time);
 		mTvOneTimeNote = findViewById(R.id.tv_lock_send_ekey_note);
 		mCountryCodePicker = findViewById(R.id.cpp_lock_send_ekey);
+		if (isChineseLanguage()) {
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("CN");
+		}else{
+			mCountryCodePicker.setDefaultCountryUsingNameCodeEx("US");
+		}
 		mIvContact = findViewById(R.id.iv_lock_send_ekey_receiver);
 		mEtReceiver = findViewById(R.id.et_lock_send_ekey_receiver);
 		mEtKeyName = findViewById(R.id.et_lock_send_ekey_name);

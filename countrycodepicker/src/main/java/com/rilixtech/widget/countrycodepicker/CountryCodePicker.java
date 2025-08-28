@@ -251,6 +251,12 @@ public class CountryCodePicker extends RelativeLayout {
     setSelectedCountry(mDefaultCountry);
   }
 
+  // 设置默认国家地区码
+  public void setDefaultCountryUsingNameCodeEx(@NonNull String countryIso) {
+    setDefaultCountryUsingNameCode(countryIso);
+    setSelectedCountry(mDefaultCountry);
+  }
+
   private void applyCustomPropertyOfColor(TypedArray arr) {
     //text color
     int textColor;
