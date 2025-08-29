@@ -148,7 +148,7 @@
             <include layout="@layout/layout_view_line"/>
 
             <LinearLayout
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/test_device_init_fail"
                 android:orientation="vertical"
                 android:layout_width="match_parent"

@@ -465,11 +465,12 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 					AddDeviceFailActivity.actionStart(this, mLockType);
 					return;
 				}
-				if (PeachPreference.getTestDeviceInitFail()){
+				// 模拟初始化设备失败
+				/*if (PeachPreference.getTestDeviceInitFail()){
 					// 模拟初始化设备失败
 					AddDeviceFailActivity.actionStart(this, mLockType);
 					return;
-				}
+				}*/
 				if (isMHTLock) {
 					initializeMHTLock((String) event.obj);
 				} else {
