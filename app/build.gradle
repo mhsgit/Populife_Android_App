@@ -204,7 +204,7 @@ dependencies {
     // 流式布局
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     // PDF 阅读器
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
+    implementation 'io.github.oothp:android-pdf-viewer:3.2.0-beta06'
     // 在线客服（美洽）
     //implementation 'com.meiqia:meiqiasdk:3.5.9'
     //implementation 'com.meiqia:meiqiasdk:+'
@@ -236,5 +236,11 @@ dependencies {
     // 权限请求处理库
     //implementation 'pub.devrel:easypermissions:3.0.0'
     //implementation 'com.guolindev.permissionx:permissionx:1.8.1'
+//    kotlin version
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.22")
 
+    configurations.configureEach {
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib-jdk7"
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib-jdk8"
+    }
 }

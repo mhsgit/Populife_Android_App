@@ -49,7 +49,6 @@ import com.populock.manhattan.sdk.util.ConfigUtil;
 import com.populock.manhattan.sdk.util.DateUtil;
 import com.populock.manhattan.sdk.util.HexUtil;
 import com.populock.manhattan.sdk.util.LogUtil;
-import com.populock.manhattan.sdk.util.YGLAESUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -859,23 +858,6 @@ public class BleService extends Service {
 		Clibrary.INSTANCE.AESDecrypt(byteArr, 16, k1Arr, 16, 0, byteArr, arr);
 		return HexUtil.encodeHexStr(arr);
 	}
-
-	private String k1AESDecryptRandom(String k1, String random) {
-		byte[] byteArr = HexUtil.decodeHex(random);
-		byte[] k1Arr = HexUtil.decodeHex(k1);
-		byte[] arr = new byte[16];
-		arr = YGLAESUtil.AESDecrypt(byteArr, 16, k1Arr, 16, 0, byteArr);
-		return HexUtil.encodeHexStr(arr);
-	}
-
-	private String k1AESEncryptRandom(String k1, String random) {
-		byte[] byteArr = HexUtil.decodeHex(random);
-		byte[] k1Arr = HexUtil.decodeHex(k1);
-		byte[] arr = new byte[16];
-		arr = YGLAESUtil.AESEncrypt(byteArr, 16, k1Arr, 16, 0, byteArr);
-		return HexUtil.encodeHexStr(arr);
-	}
-
 
 	/**
 	 * 初始化锁认证
