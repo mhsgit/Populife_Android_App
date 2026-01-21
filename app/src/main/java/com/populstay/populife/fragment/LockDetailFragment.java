@@ -446,32 +446,25 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		}
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_lock_detail_add:
-			case R.id.iv_add_more_device_btn:
-				goToNewActivity(LockAddSelectTypeActivity.class);
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.ll_lock_detail_unlocking:
-				// 开锁
-				unlock(1);
-				break;
+        if (id == R.id.tv_lock_detail_add || id == R.id.iv_add_more_device_btn) {
+            goToNewActivity(LockAddSelectTypeActivity.class);
+        } else if (id == R.id.ll_lock_detail_unlocking) {
+            // 开锁
+            unlock(1);
+        } else if (id == R.id.ll_lock_detail_unlock) {
+            // 开锁
+            unlock(2);
+        } else if (id == R.id.ll_lock_detail_lock) {
+            // 闭锁
+            lock();
+        }
+    }
 
-			case R.id.ll_lock_detail_unlock:
-				// 开锁
-				unlock(2);
-				break;
-
-			case R.id.ll_lock_detail_lock:
-				// 闭锁
-				lock();
-				break;
-		}
-	}
-
-	private boolean isSupportRemoteLock() {
+    private boolean isSupportRemoteLock() {
 
 		boolean isSupportRemoteUnlock = DigitUtil.isSupportRemoteUnlock(mCurKEY.getSpecialValue());
 		// 远程开锁关闭，闭锁也不允许操作了

@@ -278,19 +278,19 @@ public class ActivateDeviceActivity extends BaseActivity implements View.OnClick
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.tv_next:
-				if (mFrom == KeyPwdConstant.IFrom.FROM_FINGERPRINT_CARD) { // 添加指纹/门卡
-					if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 添加指纹
-						if (isBleNetEnableWithToast() && isLbsEnableWithToast()) {
-							IcCardBluetoothAddActivity.actionStart(ActivateDeviceActivity.this,
-									mFingerprintCardType, mFingerCardName, mFingerCardRemark, mFingerCardValidType,
-									mStartTime, mEndTime, mKey, mLockType);
-						}
-					} else if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_IC_CARD) {
+	public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.tv_next) {
+            if (mFrom == KeyPwdConstant.IFrom.FROM_FINGERPRINT_CARD) { // 添加指纹/门卡
+                if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 添加指纹
+                    if (isBleNetEnableWithToast() && isLbsEnableWithToast()) {
+                        IcCardBluetoothAddActivity.actionStart(ActivateDeviceActivity.this,
+                                mFingerprintCardType, mFingerCardName, mFingerCardRemark, mFingerCardValidType,
+                                mStartTime, mEndTime, mKey, mLockType);
+                    }
+                } else if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_IC_CARD) {
 //						if (isBleNetEnableWithToast() && isLbsEnableWithToast()) {
-						//							showLoading();
+                    //							showLoading();
 //						setAddFingerprintCallback();
 //							if (mKey.getLockId() < 0) {
 //								if (sPPLOCK.isConnected(mKey.getLockMac())) {
@@ -311,18 +311,17 @@ public class ActivateDeviceActivity extends BaseActivity implements View.OnClick
 //								}
 //							}
 //						}
-						IcCardBluetoothAddActivity.actionStart(ActivateDeviceActivity.this,
-								mFingerprintCardType, mFingerCardName, mFingerCardRemark, mFingerCardValidType,
-								mStartTime, mEndTime, mKey, mLockType);
+                    IcCardBluetoothAddActivity.actionStart(ActivateDeviceActivity.this,
+                            mFingerprintCardType, mFingerCardName, mFingerCardRemark, mFingerCardValidType,
+                            mStartTime, mEndTime, mKey, mLockType);
 
-					}
-				} else {
-					if (isBleNetEnableWithToast() && isLbsEnableWithToast()) {
-						FoundDeviceActivity.actionStart(this, mLockType);
-					}
-				}
-				break;
-		}
+                }
+            } else {
+                if (isBleNetEnableWithToast() && isLbsEnableWithToast()) {
+                    FoundDeviceActivity.actionStart(this, mLockType);
+                }
+            }
+        }
 	}
 
 	private void setAddFingerprintCallback() {

@@ -274,140 +274,90 @@ public class EkeyDetailActivity extends BaseActivity implements View.OnClickList
 		mTvDelete.setOnClickListener(this);
 		tv_ekey_share.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        Intent intent;
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				showActionDialog();
-				break;
-
-			case R.id.ll_ekey_detail_name:
-				showInputDialog();
-				break;
-
-			case R.id.ll_ekey_detail_valid_period://修改有效期
-				Intent intentNickname = new Intent(this, EkeyPeriodModifyActivity.class);
-				intentNickname.putExtra(EkeyPeriodModifyActivity.KEY_KEY, mKey);
-				intentNickname.putExtra(EkeyPeriodModifyActivity.KEY_KEY_ID, mKeyId);
-				intentNickname.putExtra(EkeyPeriodModifyActivity.KEY_KEY_TYPE, mKeyType);
-				if (mKeyType != KeyPwdConstant.IBTKeyType.PERMANENT){
-					intentNickname.putExtra(EkeyPeriodModifyActivity.KEY_START_TIME, mStartTime); // 秒
-					intentNickname.putExtra(EkeyPeriodModifyActivity.KEY_END_TIME, mEndTime); // 秒
-				}
-				startActivityForResult(intentNickname, REQUEST_CODE_MODIFY_EKEY_PERIOD);
-				break;
-
-			case R.id.ll_ekey_detail_records:
-				EkeyRecordActivity.actionStart(EkeyDetailActivity.this, mKeyId, mName);
-				break;
-			case R.id.ll_permission_types:
-				intentNickname = new Intent(this, EkeyPermissionModifyActivity.class);
-				intentNickname.putExtra(EkeyPermissionModifyActivity.KEY_KEY_ID, mKeyId);
-				intentNickname.putExtra(EkeyPermissionModifyActivity.KEY_AUTH_TYPE, mKeyRight);
-				startActivityForResult(intentNickname, REQUEST_CODE_MODIFY_EKEY_PERMISSION);
-				break;
-
-			case R.id.tv_ekey_detail_delete:
-				/*Resources res = getResources();
-				if (mIsAuth) {
-					showChooseDialog();
-				} else {
-					DialogUtil.showCommonDialog(EkeyDetailActivity.this, null,
-							res.getString(R.string.note_delete_ekey), res.getString(R.string.delete),
-							res.getString(R.string.cancel),
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialogInterface, int i) {
-									deleteEkey("N");
-								}
-							}, null);
-				}*/
-				if ("110405".equals(mKeyStatus)) {//已冻结
-					DialogUtil.showCommonDialog(EkeyDetailActivity.this, getString(R.string.confirm_to_restore),
-							getString(R.string.key_to_restore_dialog_content),
-							getString(R.string.confirm_restore), getString(R.string.cancel), new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialogInterface, int i) {
-									unfreezeEkey();
-								}
-							}, null);
-				} else {
-					DialogUtil.showCommonDialog(EkeyDetailActivity.this, getString(R.string.confirm_to_invalidate),
-							getString(R.string.key_to_invalidate_dialog_content),
-							getString(R.string.confirm_invalidate), getString(R.string.cancel), new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialogInterface, int i) {
-									freezeEkey();
-								}
-							}, null);
-				}
-				break;
-				// todo
-			case R.id.tv_ekey_share:
-
-				intentNickname = new Intent(this, EkeyShareModifyActivity.class);
-				intentNickname.putExtra(EkeyShareModifyActivity.KEY_KEY_ID, mKeyId);
-				intentNickname.putExtra(EkeyShareModifyActivity.KEY_SHARE_TYPE, shareKeyThrough);
-				intentNickname.putExtra(EkeyShareModifyActivity.KEY_ITEM, mKeyPwd);
-				startActivityForResult(intentNickname, REQUEST_CODE_MODIFY_EKEY_SHARE);
-
-				break;
-
-			case R.id.btn_dialog_send_ekey_period://冻结、解冻
-//				Resources res = getResources();
-//				DialogUtil.showCommonDialog(EkeyDetailActivity.this, null,
-//						res.getString(R.string.unit_percent), , , , );
-				if ("110405".equals(mKeyStatus)) {//已冻结
-					unfreezeEkey();
-				} else {
-					freezeEkey();
-				}
-
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_send_ekey_one_time://授权、反授权
-				if (isAuth()) {//已授权
-					unauthEkey();
-				} else {
-					authEkey();
-				}
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_send_ekey_cancel:
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_choose_cancel:
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_choose_ok:
-				String delType = mCbDeleteKeys.isChecked() ? "Y" : "N";
-				deleteEkey(delType);
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_input_cancel:
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_input_ok:
-				String ekeyAlias = mEtDialogInput.getText().toString();
-				if (!StringUtil.isBlank(ekeyAlias)) {
-					modifyEkeyAlias(ekeyAlias);
-					DIALOG.cancel();
-				} else {
-					toast(R.string.enter_account_passwprd);
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
+        if (id == R.id.page_action) {
+            showActionDialog();
+        } else if (id == R.id.ll_ekey_detail_name) {
+            showInputDialog();
+        } else if (id == R.id.ll_ekey_detail_valid_period) { // 修改有效期
+            intent = new Intent(this, EkeyPeriodModifyActivity.class);
+            intent.putExtra(EkeyPeriodModifyActivity.KEY_KEY, mKey);
+            intent.putExtra(EkeyPeriodModifyActivity.KEY_KEY_ID, mKeyId);
+            intent.putExtra(EkeyPeriodModifyActivity.KEY_KEY_TYPE, mKeyType);
+            if (mKeyType != KeyPwdConstant.IBTKeyType.PERMANENT) {
+                intent.putExtra(EkeyPeriodModifyActivity.KEY_START_TIME, mStartTime); // 秒
+                intent.putExtra(EkeyPeriodModifyActivity.KEY_END_TIME, mEndTime); // 秒
+            }
+            startActivityForResult(intent, REQUEST_CODE_MODIFY_EKEY_PERIOD);
+        } else if (id == R.id.ll_ekey_detail_records) {
+            EkeyRecordActivity.actionStart(EkeyDetailActivity.this, mKeyId, mName);
+        } else if (id == R.id.ll_permission_types) {
+            intent = new Intent(this, EkeyPermissionModifyActivity.class);
+            intent.putExtra(EkeyPermissionModifyActivity.KEY_KEY_ID, mKeyId);
+            intent.putExtra(EkeyPermissionModifyActivity.KEY_AUTH_TYPE, mKeyRight);
+            startActivityForResult(intent, REQUEST_CODE_MODIFY_EKEY_PERMISSION);
+        } else if (id == R.id.tv_ekey_detail_delete) {
+            if ("110405".equals(mKeyStatus)) { // 已冻结
+                DialogUtil.showCommonDialog(EkeyDetailActivity.this, getString(R.string.confirm_to_restore),
+                        getString(R.string.key_to_restore_dialog_content),
+                        getString(R.string.confirm_restore), getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                unfreezeEkey();
+                            }
+                        }, null);
+            } else {
+                DialogUtil.showCommonDialog(EkeyDetailActivity.this, getString(R.string.confirm_to_invalidate),
+                        getString(R.string.key_to_invalidate_dialog_content),
+                        getString(R.string.confirm_invalidate), getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                freezeEkey();
+                            }
+                        }, null);
+            }
+        } else if (id == R.id.tv_ekey_share) {
+            intent = new Intent(this, EkeyShareModifyActivity.class);
+            intent.putExtra(EkeyShareModifyActivity.KEY_KEY_ID, mKeyId);
+            intent.putExtra(EkeyShareModifyActivity.KEY_SHARE_TYPE, shareKeyThrough);
+            intent.putExtra(EkeyShareModifyActivity.KEY_ITEM, mKeyPwd);
+            startActivityForResult(intent, REQUEST_CODE_MODIFY_EKEY_SHARE);
+        } else if (id == R.id.btn_dialog_send_ekey_period) { // 冻结、解冻
+            if ("110405".equals(mKeyStatus)) { // 已冻结
+                unfreezeEkey();
+            } else {
+                freezeEkey();
+            }
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_send_ekey_one_time) { // 授权、反授权
+            if (isAuth()) { // 已授权
+                unauthEkey();
+            } else {
+                authEkey();
+            }
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_send_ekey_cancel
+                || id == R.id.btn_dialog_choose_cancel
+                || id == R.id.btn_dialog_input_cancel) {
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_choose_ok) {
+            String delType = mCbDeleteKeys.isChecked() ? "Y" : "N";
+            deleteEkey(delType);
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_input_ok) {
+            String ekeyAlias = mEtDialogInput.getText().toString();
+            if (!StringUtil.isBlank(ekeyAlias)) {
+                modifyEkeyAlias(ekeyAlias);
+                DIALOG.cancel();
+            } else {
+                toast(R.string.enter_account_passwprd);
+            }
+        }
+    }
 
 	/**
 	 * 修改钥匙别名

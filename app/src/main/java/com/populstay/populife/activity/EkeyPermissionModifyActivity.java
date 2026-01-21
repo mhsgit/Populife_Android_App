@@ -74,20 +74,21 @@ public class EkeyPermissionModifyActivity extends BaseActivity implements View.O
 		rg_permission_types.setOnCheckedChangeListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_save_btn:
-				if (isAuth()){
-					unauthEkey();
-				}else {
-					authEkey();
-				}
-				break;
-		}
-	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	private void returnData(){
+        if (id == R.id.tv_save_btn) {
+            if (isAuth()) {
+                unauthEkey();
+            } else {
+                authEkey();
+            }
+        }
+    }
+
+
+    private void returnData(){
 		Intent intent = new Intent();
 		intent.putExtra(KEY_AUTH_TYPE,mKeyRight);
 		setResult(RESULT_OK,intent);
@@ -166,26 +167,25 @@ public class EkeyPermissionModifyActivity extends BaseActivity implements View.O
 	}
 
 
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		switch (group.getId()){
-			case R.id.rg_permission_types:
-				setPermissionTypes(checkedId);
-				break;
-		}
-	}
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (group.getId() == R.id.rg_permission_types) {
+            setPermissionTypes(checkedId);
+        }
+    }
 
-	private void setPermissionTypes(int checkedId){
-		int hint = R.string.general_user_hint;
-		switch (checkedId){
-			case R.id.rb_general_user:
-				hint = R.string.general_user_hint;
-				break;
-			case R.id.rb_authorized_user:
-				hint = R.string.authorized_user_hint;
-				break;
-		}
+    private void setPermissionTypes(int checkedId) {
+        int hint;
 
-		tv_permission_types_hint.setText(hint);
-	}
+        if (checkedId == R.id.rb_general_user) {
+            hint = R.string.general_user_hint;
+        } else if (checkedId == R.id.rb_authorized_user) {
+            hint = R.string.authorized_user_hint;
+        } else {
+            hint = R.string.general_user_hint; // 默认值，可根据需求调整
+        }
+
+        tv_permission_types_hint.setText(hint);
+    }
+
 }

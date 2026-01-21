@@ -77,25 +77,23 @@ public class AddDeviceFailActivity extends BaseActivity implements View.OnClickL
 		mTvBackToSmart.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-		switch (view.getId()) {
-			case R.id.tv_try_pairing_again:
-				if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_GATEWAY)) {
-					GatewayAddGuideActivity.actionStartByTaskTop(this, mLockType);
-				} else {
-					LockAddGuideActivity.actionStartByTaskTop(this, mLockType);
-				}
-				break;
-			case R.id.tv_back_to_smart:
-				goToNewActivity(MainActivity.class);
-				break;
-		}
+        if (id == R.id.tv_try_pairing_again) {
+            if (mLockType.startsWith(HomeDeviceInfo.IDeviceName.NAME_GATEWAY)) {
+                GatewayAddGuideActivity.actionStartByTaskTop(this, mLockType);
+            } else {
+                LockAddGuideActivity.actionStartByTaskTop(this, mLockType);
+            }
+        } else if (id == R.id.tv_back_to_smart) {
+            goToNewActivity(MainActivity.class);
+        }
+    }
 
-	}
 
-	@Override
+    @Override
 	public void finishCurrentActivity(View view) {
 		goToNewActivity(MainActivity.class);
 	}

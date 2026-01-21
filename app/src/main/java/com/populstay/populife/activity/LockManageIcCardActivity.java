@@ -122,58 +122,54 @@ public class LockManageIcCardActivity extends BaseActivity implements View.OnCli
 		mListView.setOnItemLongClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				showActionDialog();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.btn_dialog_ic_card_manage_blutooth:
-				goToNewActivity(FingerprintIcCardAddConfigActivity.class);
-				DIALOG.cancel();
-				break;
+        if (id == R.id.page_action) {
+            showActionDialog();
+        } else if (id == R.id.btn_dialog_ic_card_manage_blutooth) {
+            goToNewActivity(FingerprintIcCardAddConfigActivity.class);
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_ic_card_manage_keyboard_add) {
+            IcCardKeyboardOperateActivity.actionStart(
+                    LockManageIcCardActivity.this,
+                    IcCardKeyboardOperateActivity.VAL_IC_CARD_ADD
+            );
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_ic_card_manage_upload) {
+            goToNewActivity(IcCardUploadActivity.class);
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_ic_card_manage_clear) {
+            Resources res = getResources();
+            DialogUtil.showCommonDialog(
+                    LockManageIcCardActivity.this,
+                    null,
+                    res.getString(R.string.note_ic_card_delete),
+                    res.getString(R.string.clear),
+                    res.getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            lockClearIcCards();
+                        }
+                    },
+                    null
+            );
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_ic_card_manage_keyboard_clear) {
+            IcCardKeyboardOperateActivity.actionStart(
+                    LockManageIcCardActivity.this,
+                    IcCardKeyboardOperateActivity.VAL_IC_CARD_CLEAR
+            );
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_ic_card_manage_cancel) {
+            DIALOG.cancel();
+        }
+    }
 
-			case R.id.btn_dialog_ic_card_manage_keyboard_add:
-				IcCardKeyboardOperateActivity.actionStart(LockManageIcCardActivity.this,
-						IcCardKeyboardOperateActivity.VAL_IC_CARD_ADD);
-				DIALOG.cancel();
-				break;
 
-			case R.id.btn_dialog_ic_card_manage_upload:
-				goToNewActivity(IcCardUploadActivity.class);
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_ic_card_manage_clear:
-				Resources res = getResources();
-				DialogUtil.showCommonDialog(LockManageIcCardActivity.this, null,
-						res.getString(R.string.note_ic_card_delete), res.getString(R.string.clear),
-						res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								lockClearIcCards();
-							}
-						}, null);
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_ic_card_manage_keyboard_clear:
-				IcCardKeyboardOperateActivity.actionStart(LockManageIcCardActivity.this,
-						IcCardKeyboardOperateActivity.VAL_IC_CARD_CLEAR);
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_ic_card_manage_cancel:
-				DIALOG.cancel();
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	@Override
+    @Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
 		Resources res = getResources();
 		DialogUtil.showCommonDialog(LockManageIcCardActivity.this, null,

@@ -82,15 +82,15 @@ public class HomeDetailsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_space_name:
-                changeSpaceName();
-                break;
-            case R.id.tv_delete_space_btn:
-                deleteSpace(null != mHome && mHome.getDeviceCount() > 0);
-                break;
+        int id = v.getId();
+
+        if (id == R.id.ll_space_name) {
+            changeSpaceName();
+        } else if (id == R.id.tv_delete_space_btn) {
+            deleteSpace(mHome != null && mHome.getDeviceCount() > 0);
         }
     }
+
 
     private void changeSpaceName(){
         HomeCreateActivity.actionStart(this, HomeCreateActivity.VAL_HOME_CREATE_ACTION_TYPE_RENAME_HOME, mHome);

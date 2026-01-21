@@ -273,25 +273,29 @@ public class PasscodeRecordActivity extends BaseActivity implements View.OnClick
 		return params;
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.page_action:
-				DialogUtil.showCommonDialog(PasscodeRecordActivity.this, getString(R.string.sync_operate_records),
-						getString(R.string.note_sync_operate_records), getString(R.string.ok), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// 读取锁操作记录
-								if (isBleNetEnableWithToast())
-									readLockOperateLog();
-							}
-						}, null);
-				break;
-		}
-	}
-
-	/**
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.page_action) {
+            DialogUtil.showCommonDialog(PasscodeRecordActivity.this,
+                    getString(R.string.sync_operate_records),
+                    getString(R.string.note_sync_operate_records),
+                    getString(R.string.ok),
+                    getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 读取锁操作记录
+                            if (isBleNetEnableWithToast()) {
+                                readLockOperateLog();
+                            }
+                        }
+                    },
+                    null
+            );
+        }
+    }
+    /**
 	 * 读取锁操作记录
 	 */
 	private void readLockOperateLog() {

@@ -130,34 +130,30 @@ public class GatewayListActivity extends BaseActivity implements AdapterView.OnI
 		mListView.setOnItemLongClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				if (NetworkUtil.isNetConnected()) {
-					goToNewActivity(GatewayAddGuideActivity.class);
-				} else {
-					toast(R.string.note_add_gateway_wifi_connected);
-				}
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.btn_dialog_input_cancel:
-				DIALOG.cancel();
-				break;
+        if (id == R.id.page_action) {
+            if (NetworkUtil.isNetConnected()) {
+                goToNewActivity(GatewayAddGuideActivity.class);
+            } else {
+                toast(R.string.note_add_gateway_wifi_connected);
+            }
+        } else if (id == R.id.btn_dialog_input_cancel) {
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_input_ok) {
+            String input = mEtDialogInput.getText().toString();
+            if (!StringUtil.isBlank(input)) {
+                renameGateway(mGatewayList.get(mSelectedItemIndex).getGatewayId(), input);
+                DIALOG.cancel();
+            } else {
+                toast(R.string.enter_gateway_name);
+            }
+        }
+    }
 
-			case R.id.btn_dialog_input_ok:
-				String input = mEtDialogInput.getText().toString();
-				if (!StringUtil.isBlank(input)) {
-					renameGateway(mGatewayList.get(mSelectedItemIndex).getGatewayId(), input);
-					DIALOG.cancel();
-				} else {
-					toast(R.string.enter_gateway_name);
-				}
-				break;
-		}
-	}
-
-	@Override
+    @Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		Gateway gateway = mGatewayList.get(i);
 		GatewayBindedLockListActivity.actionStart(GatewayListActivity.this, gateway);

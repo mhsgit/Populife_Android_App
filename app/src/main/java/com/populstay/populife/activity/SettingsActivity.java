@@ -54,27 +54,18 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
 		mSwitchTouchIdLogin.setOnClickListener(this);
 		mSwitchReminder.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.switch_touch_id_login:
-				PeachPreference.setTouchIdLogin(mSwitchTouchIdLogin.isChecked());
-				break;
-
-			case R.id.switch_lock_settings_reminder:
-				PeachPreference.setShowLockingReminder(PeachPreference.readUserId(), mSwitchReminder.isChecked());
-				break;
-
-			case R.id.ll_settings_switch_language:
-				goToNewActivity(ChangeLanguageActivity.class);
-				break;
-			case R.id.ll_settings_about:
-				goToNewActivity(AboutActivity.class);
-				break;
-
-			default:
-				break;
-		}
-	}
+        if (id == R.id.switch_touch_id_login) {
+            PeachPreference.setTouchIdLogin(mSwitchTouchIdLogin.isChecked());
+        } else if (id == R.id.switch_lock_settings_reminder) {
+            PeachPreference.setShowLockingReminder(PeachPreference.readUserId(), mSwitchReminder.isChecked());
+        } else if (id == R.id.ll_settings_switch_language) {
+            goToNewActivity(ChangeLanguageActivity.class);
+        } else if (id == R.id.ll_settings_about) {
+            goToNewActivity(AboutActivity.class);
+        }
+    }
 }

@@ -387,35 +387,32 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 		mLlMeEmail.setOnClickListener(this);
 		mLlMePwd.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-	@Override
-	public void onClick(View v) {
+        if (id == R.id.ll_me_user_avatar || id == R.id.civ_user_avatar) {
+            showTypeSelDialog();
 
-		switch (v.getId()) {
-			case R.id.ll_me_user_avatar:
-			case R.id.civ_user_avatar:
-				showTypeSelDialog();
-				break;
-			case R.id.ll_me_nick_name:
-				Intent intentNickname = new Intent(this, ModifyNicknameActivity.class);
-				intentNickname.putExtra(ModifyNicknameActivity.KEY_USER_NICKNAME, mTvNickName.getText().toString());
-				startActivityForResult(intentNickname, REQUEST_CODE_NICKNAME);
-				break;
-			case R.id.ll_me_phone:
-				Intent intentBind = new Intent(this, AccountBindActivity.class);
-				intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_PHONE);
-				startActivityForResult(intentBind, REQUEST_CODE_BIND);
-				break;
-			case R.id.ll_me_email:
-				intentBind = new Intent(this, AccountBindActivity.class);
-				intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_EMAIL);
-				startActivityForResult(intentBind, REQUEST_CODE_BIND);
-				break;
-			case R.id.ll_me_pwd:
-				goToNewActivity(ModifyPwdActivity.class);
-				break;
-		}
-	}
+        } else if (id == R.id.ll_me_nick_name) {
+            Intent intentNickname = new Intent(this, ModifyNicknameActivity.class);
+            intentNickname.putExtra(ModifyNicknameActivity.KEY_USER_NICKNAME, mTvNickName.getText().toString());
+            startActivityForResult(intentNickname, REQUEST_CODE_NICKNAME);
+
+        } else if (id == R.id.ll_me_phone) {
+            Intent intentBind = new Intent(this, AccountBindActivity.class);
+            intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_PHONE);
+            startActivityForResult(intentBind, REQUEST_CODE_BIND);
+
+        } else if (id == R.id.ll_me_email) {
+            Intent intentBind = new Intent(this, AccountBindActivity.class);
+            intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_EMAIL);
+            startActivityForResult(intentBind, REQUEST_CODE_BIND);
+
+        } else if (id == R.id.ll_me_pwd) {
+            goToNewActivity(ModifyPwdActivity.class);
+        }
+    }
 
 	@Override
 	protected void onDestroy() {

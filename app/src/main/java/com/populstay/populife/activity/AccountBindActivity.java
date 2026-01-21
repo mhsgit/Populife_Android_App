@@ -190,18 +190,13 @@ public class AccountBindActivity extends BaseActivity
 		mTvActionBtn.setEnabled(isEnable);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_account_bind_btn:
-				if (checkForm())
-					bindAccount();
-				break;
-
-			default:
-				break;
-		}
-	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.tv_account_bind_btn) {
+            if (checkForm()) bindAccount();
+        }
+    }
 
 	/**
 	 * 绑定手机号/邮箱时，获取验证码

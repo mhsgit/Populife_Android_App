@@ -75,24 +75,18 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher, View.
 		mTvReset.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.tv_reset_get_code:
-				// 获取验证码
-				getVerificationCode();
-				break;
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.tv_reset_get_code) {
+            // 获取验证码
+            getVerificationCode();
+        } else if (id == R.id.tv_reset_pwd) {
+            resetPwd();
+        }
+    }
 
-			case R.id.tv_reset_pwd:
-				resetPwd();
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	/**
+    /**
 	 * （忘记密码后）重置密码时，获取验证码
 	 */
 	private void getVerificationCode() {

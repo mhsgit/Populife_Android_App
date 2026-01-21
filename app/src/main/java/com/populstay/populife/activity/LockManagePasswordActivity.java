@@ -165,68 +165,68 @@ public class LockManagePasswordActivity extends BaseActivity implements View.OnC
 		mListView.setOnItemClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.iv_manage_passcode_menu:
-				showActionDialog();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.iv_manage_passcode_sync:
-				DialogUtil.showCommonDialog(LockManagePasswordActivity.this,
-						getString(R.string.sync_password_status), getString(R.string.note_sync_password_status),
-						getString(R.string.ok), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if (isBleNetEnableWithToast())
-									// 读取锁密码操作记录
-									readLockOperateLog();
-							}
-						}, null);
-				break;
+        if (id == R.id.iv_manage_passcode_menu) {
+            showActionDialog();
+        } else if (id == R.id.iv_manage_passcode_sync) {
+            DialogUtil.showCommonDialog(
+                    LockManagePasswordActivity.this,
+                    getString(R.string.sync_password_status),
+                    getString(R.string.note_sync_password_status),
+                    getString(R.string.ok),
+                    getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (isBleNetEnableWithToast())
+                                // 读取锁密码操作记录
+                                readLockOperateLog();
+                        }
+                    },
+                    null
+            );
+        } else if (id == R.id.btn_dialog_send_ekey_one_time) { // 清空密码
+            DIALOG.cancel();
+            if (mPasscodeList == null || mPasscodeList.isEmpty()) {
+                toast(R.string.note_no_passcode_in_list);
+            } else {
+                showInputDialog();
+            }
+        } else if (id == R.id.btn_dialog_send_ekey_period) { // 创建密码
+            ArrayList<String> passwordList = new ArrayList<>();
+            passwordList.add(mKey.getNoKeyPwd());
+            for (Passcode passcode : mPasscodeList) {
+                passwordList.add(passcode.getKeyboardPwd());
+            }
+            LockSendPasscodeActivity.actionStart(
+                    LockManagePasswordActivity.this,
+                    mKey,
+                    mLockId,
+                    mKeyId,
+                    mLockName,
+                    mLockMac,
+                    passwordList,
+                    ""
+            );
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_send_ekey_cancel || id == R.id.btn_dialog_input_cancel) {
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_input_ok) {
+            mInputPwd = mEtDialogInput.getText().toString();
+            if (!StringUtil.isBlank(mInputPwd)) {
+                verifyAccountPwd(mInputPwd);
+                DIALOG.cancel();
+            } else {
+                toast(R.string.enter_account_passwprd);
+            }
+        }
+    }
 
-			case R.id.btn_dialog_send_ekey_one_time:// 清空密码
-				DIALOG.cancel();
-				if (mPasscodeList == null || mPasscodeList.isEmpty()) {
-					toast(R.string.note_no_passcode_in_list);
-				} else {
-					showInputDialog();
-				}
-				break;
 
-			case R.id.btn_dialog_send_ekey_period:// 创建密码
-				ArrayList<String> passwordList = new ArrayList<>();
-				passwordList.add(mKey.getNoKeyPwd());
-				for (Passcode passcode : mPasscodeList) {
-					passwordList.add(passcode.getKeyboardPwd());
-				}
-				LockSendPasscodeActivity.actionStart(LockManagePasswordActivity.this, mKey, mLockId,
-						mKeyId, mLockName, mLockMac, passwordList, "");
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_send_ekey_cancel:
-			case R.id.btn_dialog_input_cancel:
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_input_ok:
-				mInputPwd = mEtDialogInput.getText().toString();
-				if (!StringUtil.isBlank(mInputPwd)) {
-					verifyAccountPwd(mInputPwd);
-					DIALOG.cancel();
-				} else {
-					toast(R.string.enter_account_passwprd);
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	/**
+    /**
 	 * 读取锁操作记录
 	 */
 	private void readLockOperateLog() {

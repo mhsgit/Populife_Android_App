@@ -551,78 +551,46 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 
 		mTvActionBtn.setEnabled(isEnable);
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_sign_up_action_btn:
-			case R.id.tv_goto_sign_in:
-				if (VAL_ACCOUNT_SIGN_IN_BY_VERIFY_CODE.equals(mAccountActionType) || VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType)) {
-					actionStartBySingleTop(SignActivity.this, VAL_ACCOUNT_SIGN_UP);
-				} else {
-					actionStartBySingleTop(SignActivity.this, VAL_ACCOUNT_SIGN_IN);
-				}
-				break;
-
-			//case R.id.tv_sign_phone:
-			//changeSignType(Constant.ACCOUNT_TYPE_PHONE);
-			//break;
-
-			//case R.id.tv_sign_email:
-			//changeSignType(Constant.ACCOUNT_TYPE_EMAIL);
-			//break;
-
-			case R.id.tv_sign_action_btn:
-				if (checkForm()) {
-					switch (mAccountActionType) {
-						case VAL_ACCOUNT_SIGN_IN_BY_VERIFY_CODE:
-							// 验证码登录
-							signInByCode();
-							break;
-						case VAL_ACCOUNT_SIGN_IN:
-						case VAL_ACCOUNT_SIGN_IN_BY_PHONE:
-							// 登录
-							signIn();
-							break;
-
-						case VAL_ACCOUNT_SIGN_UP:
-							// 注册
-							signUp();
-							break;
-						case VAL_ACCOUNT_RESET_PWD_GET_VERIFY_CODE:
-							// 重置密码，获取验证码流程
-							gotoResetPwd();
-							break;
-
-						case VAL_ACCOUNT_RESET_PWD:
-							// 重置密码
-							resetPwd();
-							break;
-
-						default:
-							break;
-					}
-				}
-				break;
-
-			case R.id.tv_forget_pwd:
-				actionStart(SignActivity.this, VAL_ACCOUNT_RESET_PWD_GET_VERIFY_CODE);
-				break;
-			case R.id.tv_switch_sign_type:
-				if ("ZH".equals(mLocale.getLanguage().toUpperCase())) {
-					actionStart(SignActivity.this, VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType) ? VAL_ACCOUNT_SIGN_IN_BY_VERIFY_CODE : VAL_ACCOUNT_SIGN_IN);
-				} else {
-					actionStart(SignActivity.this, VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType) ? VAL_ACCOUNT_SIGN_IN_BY_PHONE : VAL_ACCOUNT_SIGN_IN);
-				}
-				break;
-			case R.id.ll_switch_language:
-				//showSwitchLanguagePopupWindow(view);
-				showSwitchLanguageDialog();
-				break;
-			default:
-				break;
-		}
-	}
+        if (id == R.id.tv_sign_up_action_btn || id == R.id.tv_goto_sign_in) {
+            if (VAL_ACCOUNT_SIGN_IN_BY_VERIFY_CODE.equals(mAccountActionType)
+                    || VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType)) {
+                actionStartBySingleTop(SignActivity.this, VAL_ACCOUNT_SIGN_UP);
+            } else {
+                actionStartBySingleTop(SignActivity.this, VAL_ACCOUNT_SIGN_IN);
+            }
+        } else if (id == R.id.tv_sign_action_btn) {
+            if (checkForm()) {
+                if (VAL_ACCOUNT_SIGN_IN_BY_VERIFY_CODE.equals(mAccountActionType)) {
+                    signInByCode();
+                } else if (VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType)
+                        || VAL_ACCOUNT_SIGN_IN_BY_PHONE.equals(mAccountActionType)) {
+                    signIn();
+                } else if (VAL_ACCOUNT_SIGN_UP.equals(mAccountActionType)) {
+                    signUp();
+                } else if (VAL_ACCOUNT_RESET_PWD_GET_VERIFY_CODE.equals(mAccountActionType)) {
+                    gotoResetPwd();
+                } else if (VAL_ACCOUNT_RESET_PWD.equals(mAccountActionType)) {
+                    resetPwd();
+                }
+            }
+        } else if (id == R.id.tv_forget_pwd) {
+            actionStart(SignActivity.this, VAL_ACCOUNT_RESET_PWD_GET_VERIFY_CODE);
+        } else if (id == R.id.tv_switch_sign_type) {
+            if ("ZH".equals(mLocale.getLanguage().toUpperCase())) {
+                actionStart(SignActivity.this,
+                        VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType) ? VAL_ACCOUNT_SIGN_IN_BY_VERIFY_CODE : VAL_ACCOUNT_SIGN_IN);
+            } else {
+                actionStart(SignActivity.this,
+                        VAL_ACCOUNT_SIGN_IN.equals(mAccountActionType) ? VAL_ACCOUNT_SIGN_IN_BY_PHONE : VAL_ACCOUNT_SIGN_IN);
+            }
+        } else if (id == R.id.ll_switch_language) {
+            showSwitchLanguageDialog();
+        }
+    }
 
 	private void setCurrentLanLabel() {
 //		Locale locale = LanguageUtil.getLocaleByType(LanguageUtil.getLanguageType(this));

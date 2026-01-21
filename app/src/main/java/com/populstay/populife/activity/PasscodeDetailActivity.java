@@ -437,176 +437,147 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 		mLlRecord.setOnClickListener(this);
 		mTvDelete.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        Intent intent;
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				showShare();
-				break;
+        if (id == R.id.page_action) {
+            showShare();
+        } else if (id == R.id.ll_passcode_detail_passcode) {
+            mModifyPasscodeType = 0; // 修改密码
+            ModifyCommonPasscodeActivity.actionStart(this, mKeyPwd, mKey);
 
-			case R.id.ll_passcode_detail_passcode:
-				mModifyPasscodeType = 0;//修改密码
-				//showInputDialog();
-				ModifyCommonPasscodeActivity.actionStart(this, mKeyPwd,mKey);
-				break;
+        } else if (id == R.id.ll_passcode_detail_name) {
+            mModifyPasscodeType = 1; // 修改名称
+            showInputDialog();
 
-			case R.id.ll_passcode_detail_name:
-				mModifyPasscodeType = 1; // 修改名称（密码/门卡/指纹）
-				showInputDialog();
-				break;
+        } else if (id == R.id.ll_passcode_detail_remark) {
+            mModifyPasscodeType = 2; // 修改指纹备注
+            showInputDialog();
 
-			case R.id.ll_passcode_detail_remark:
-				mModifyPasscodeType = 2; // 修改指纹备注
-				showInputDialog();
-				break;
+        } else if (id == R.id.ll_passcode_detail_valid_period) {
+            intent = new Intent(this, PasscodePeriodModifyActivity.class);
+            intent.putExtra(KEY_PASSCODE, mKeyPwd);
+            intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_PWD, mKeyPwd.getKeyboardPwd());
+            intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_ID, mKeyPwd.getId());
+            intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_TYPE, mKeyPwd.getKeyboardPwdType());
+            intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_START_TIME, mKeyPwd.getStartDate());
+            intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_END_TIME, mKeyPwd.getEndDate());
+            intent.putExtra(TYPE_KEY_PWD_FP_CARD, mAccessType);
+            startActivityForResult(intent, REQUEST_CODE_MODIFY_PASSCODE_PERIOD);
 
-			case R.id.ll_passcode_detail_valid_period: // 修改有效期
-				if(mKey.getLockId()<0) {
-					//曼哈顿目前只支持密码修改有效期
+        } else if (id == R.id.ll_passcode_detail_records) {
+            PasscodeRecordActivity.actionStart(this, mAccessType,
+                    mKeyPwd.getCardNumber(),
+                    mKeyPwd.getFingerprintNumber(),
+                    mKeyPwd.getKeyboardPwd(),
+                    mKey.getLockId());
 
-						Intent intent = new Intent(this, PasscodePeriodModifyActivity.class);
-						intent.putExtra(KEY_PASSCODE, mKeyPwd);
-						intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_PWD, mKeyPwd.getKeyboardPwd());
-						intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_ID, mKeyPwd.getId());
-						intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_TYPE, mKeyPwd.getKeyboardPwdType());
-						intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_START_TIME, mKeyPwd.getStartDate());
-						intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_END_TIME, mKeyPwd.getEndDate());
-						intent.putExtra(TYPE_KEY_PWD_FP_CARD, mAccessType);
-						startActivityForResult(intent, REQUEST_CODE_MODIFY_PASSCODE_PERIOD);
+        } else if (id == R.id.tv_passcode_detail_delete) {
+            DialogUtil.showCommonDialog(this, null,
+                    getDialogDeleteHint(),
+                    getString(R.string.note_pwd_delete_confirm_ok_btn),
+                    getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            handleDelete();
+                        }
+                    }, null);
 
-				}else {
+        } else if (id == R.id.btn_dialog_input_cancel) {
+            DIALOG.cancel();
 
-					Intent intent = new Intent(this, PasscodePeriodModifyActivity.class);
-					intent.putExtra(KEY_PASSCODE, mKeyPwd);
-					intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_PWD, mKeyPwd.getKeyboardPwd());
-					intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_ID, mKeyPwd.getId());
-					intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_TYPE, mKeyPwd.getKeyboardPwdType());
-					intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_START_TIME, mKeyPwd.getStartDate());
-					intent.putExtra(PasscodePeriodModifyActivity.KEY_PASSCODE_END_TIME, mKeyPwd.getEndDate());
-					intent.putExtra(TYPE_KEY_PWD_FP_CARD, mAccessType);
-					startActivityForResult(intent, REQUEST_CODE_MODIFY_PASSCODE_PERIOD);
+        } else if (id == R.id.btn_dialog_input_ok) {
+            String input = mEtDialogInput.getText().toString();
+            if (mModifyPasscodeType == 0) {
+                handleModifyPassword(input);
+            } else if (mModifyPasscodeType == 1) {
+                handleModifyName(input);
+            } else if (mModifyPasscodeType == 2) {
+                handleModifyFingerprintRemark(input);
+            }
 
-				}
+        } else {
+            // 可以添加默认处理
+        }
+    }
 
-				break;
+// --- 辅助方法 ---
 
-			case R.id.ll_passcode_detail_records:
-				PasscodeRecordActivity.actionStart(PasscodeDetailActivity.this, mAccessType,
-						mKeyPwd.getCardNumber(), mKeyPwd.getFingerprintNumber(), mKeyPwd.getKeyboardPwd(), mKey.getLockId());
-				break;
+    private void handleDelete() {
+        if (!isNetEnableWithToast()) return;
 
-			case R.id.tv_passcode_detail_delete:
-				DialogUtil.showCommonDialog(PasscodeDetailActivity.this, null,
-						getDialogDeleteHint(), getString(R.string.note_pwd_delete_confirm_ok_btn),
-						getString(R.string.cancel), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								if (isNetEnableWithToast()) {
-									if (mAccessType == KeyPwdConstant.IType.TYPE_PWD) { // 密码
-										if (isBleEnableWithoutToast()) {
-											// 和锁通信，删除密码
-											deletePasscode();
-										} else {
-											if (mKey.getLockId()>0) {
-												if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-													requestDeletePwdFpCard(2);
-												} else {
-													toast(R.string.enable_bluetooth);
-												}
-											}
-										}
-									} else if (mAccessType == KeyPwdConstant.IType.TYPE_IC_CARD) { // 门卡
-										if (isBleEnableWithoutToast()) {
-											// 和锁通信
-											lockDeleteIcCard(mKeyPwd.getCardNumber());
-										} else {
-											if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-												requestDeletePwdFpCard(2);
-											} else {
-												toast(R.string.enable_bluetooth);
-											}
-										}
-									} else if (mAccessType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 指纹
-										if (isBleEnableWithoutToast()) {
-											// 和锁通信
-											lockDeleteFingerprint(Long.parseLong(mKeyPwd.getFingerprintNumber()),mKeyPwd.getFingerprintId());
-										} else {
-											if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-												requestDeletePwdFpCard(2);
-											} else {
-												toast(R.string.enable_bluetooth);
-											}
-										}
-									}
-								}
-							}
-						}, null);
-				break;
+        if (mAccessType == KeyPwdConstant.IType.TYPE_PWD) {
+            if (isBleEnableWithoutToast()) deletePasscode();
+            else requestDeleteViaGatewayIfAdmin();
+        } else if (mAccessType == KeyPwdConstant.IType.TYPE_IC_CARD) {
+            if (isBleEnableWithoutToast()) lockDeleteIcCard(mKeyPwd.getCardNumber());
+            else requestDeleteViaGatewayIfAdmin();
+        } else if (mAccessType == KeyPwdConstant.IType.TYPE_FINGERPRINT) {
+            if (isBleEnableWithoutToast())
+                lockDeleteFingerprint(Long.parseLong(mKeyPwd.getFingerprintNumber()), mKeyPwd.getFingerprintId());
+            else requestDeleteViaGatewayIfAdmin();
+        }
+    }
 
-			case R.id.btn_dialog_input_cancel:
-				DIALOG.cancel();
-				break;
+    private void requestDeleteViaGatewayIfAdmin() {
+        if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+            requestDeletePwdFpCard(2);
+        } else {
+            toast(R.string.enable_bluetooth);
+        }
+    }
 
-			case R.id.btn_dialog_input_ok:
-				String input = mEtDialogInput.getText().toString();
-				if (mModifyPasscodeType == 0) { // 修改密码
-					if (StringUtil.isBlank(input)) {
-						toast(R.string.enter_password);
-					} else if (input.length() < 6) {
-						toast(R.string.note_passcode_invalid);
-					} else {
-						if (isBleNetEnableWithToast()) {
-							//和锁通信，修改密码
-							modifyPasscode(input);
-							DIALOG.cancel();
-						}
-					}
-				} else if (mModifyPasscodeType == 1) { // 修改名称（密码/门卡/指纹）
-					if (!StringUtil.isBlank(input)) {
-						switch (mAccessType) {
-							case KeyPwdConstant.IType.TYPE_PWD: // 数字密码
-								if (isAdminCode()) {
-									PeachPreference.saveAdminCodeName(mKey.getLockId(), input);
-									mKeyPwd.setAlias(input);
-									mTvName.setText(mKeyPwd.getAlias());
-									EventBus.getDefault().post(new Event(Event.EventType.MODIFY_LOCK_ADMIN_PASSCODE_NAME, input));
-								} else {
-									modifyPasscodeAlias(input);
-								}
-								break;
+    private void handleModifyPassword(String input) {
+        if (StringUtil.isBlank(input)) {
+            toast(R.string.enter_password);
+        } else if (input.length() < 6) {
+            toast(R.string.note_passcode_invalid);
+        } else {
+            if (isBleNetEnableWithToast()) {
+                modifyPasscode(input);
+                DIALOG.cancel();
+            }
+        }
+    }
 
-							case KeyPwdConstant.IType.TYPE_IC_CARD:
-								updateIcCardInfo(1, input);
-								break;
+    private void handleModifyName(String input) {
+        if (StringUtil.isBlank(input)) {
+            toast(mEtDialogInput.getHint().toString());
+            return;
+        }
 
-							case KeyPwdConstant.IType.TYPE_FINGERPRINT:
-								updateFingerprintInfo(1, input, null);
-								break;
+        switch (mAccessType) {
+            case KeyPwdConstant.IType.TYPE_PWD:
+                if (isAdminCode()) {
+                    PeachPreference.saveAdminCodeName(mKey.getLockId(), input);
+                    mKeyPwd.setAlias(input);
+                    mTvName.setText(mKeyPwd.getAlias());
+                    EventBus.getDefault().post(new Event(Event.EventType.MODIFY_LOCK_ADMIN_PASSCODE_NAME, input));
+                } else {
+                    modifyPasscodeAlias(input);
+                }
+                break;
+            case KeyPwdConstant.IType.TYPE_IC_CARD:
+                updateIcCardInfo(1, input);
+                break;
+            case KeyPwdConstant.IType.TYPE_FINGERPRINT:
+                updateFingerprintInfo(1, input, null);
+                break;
+        }
+        DIALOG.cancel();
+    }
 
-							default:
-								break;
-						}
-						DIALOG.cancel();
-					} else {
-						toast(mEtDialogInput.getHint().toString());
-					}
-				} else if (mModifyPasscodeType == 2) { // 修改指纹备注
-					if (!StringUtil.isBlank(input)) {
-						updateFingerprintInfo(1, null, input);
-						DIALOG.cancel();
-					} else {
-						toast(mEtDialogInput.getHint().toString());
-					}
-				}
-
-				break;
-
-			default:
-				break;
-		}
-
-	}
+    private void handleModifyFingerprintRemark(String input) {
+        if (StringUtil.isBlank(input)) {
+            toast(mEtDialogInput.getHint().toString());
+            return;
+        }
+        updateFingerprintInfo(1, null, input);
+        DIALOG.cancel();
+    }
 
 	private String getDialogDeleteHint() {
 		int resId = 0;
@@ -1743,7 +1714,8 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODIFY_PASSCODE_PERIOD) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODIFY_PASSCODE_PERIOD) {
 			switch (mAccessType) {
 				case KeyPwdConstant.IType.TYPE_PWD:
 					mKeyPwd.setKeyboardPwdType(3);

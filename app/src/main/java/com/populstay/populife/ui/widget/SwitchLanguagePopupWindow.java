@@ -103,33 +103,27 @@ public class SwitchLanguagePopupWindow implements View.OnClickListener {
         mPopupWindow.dismiss();
     }
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_lan_english:
-                mLanguageType = 1;
-                break;
-            case R.id.tv_lan_chinese:
-                mLanguageType = 2;
-                break;
-            case R.id.tv_language_japanese:
-                mLanguageType = 3;
-                break;
-            case R.id.tv_language_german:
-                mLanguageType = 5;
-                break;
-            case R.id.tv_language_french:
-                mLanguageType = 4;
-                break;
-            case R.id.tv_language_italian:
-                mLanguageType = 6;
-                break;
-            case R.id.tv_language_spanish:
-                mLanguageType = 7;
-                break;
+        int id = v.getId();
+
+        if (id == R.id.tv_lan_english) {
+            mLanguageType = 1;
+        } else if (id == R.id.tv_lan_chinese) {
+            mLanguageType = 2;
+        } else if (id == R.id.tv_language_japanese) {
+            mLanguageType = 3;
+        } else if (id == R.id.tv_language_french) {
+            mLanguageType = 4;
+        } else if (id == R.id.tv_language_german) {
+            mLanguageType = 5;
+        } else if (id == R.id.tv_language_italian) {
+            mLanguageType = 6;
+        } else if (id == R.id.tv_language_spanish) {
+            mLanguageType = 7;
         }
-        if (null != mSelectLanguageListener){
+
+        if (mSelectLanguageListener != null) {
             mSelectLanguageListener.onSelectLanguage(mLanguageType);
         }
         dismiss();

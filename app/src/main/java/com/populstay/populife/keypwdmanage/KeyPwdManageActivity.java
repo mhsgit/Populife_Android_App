@@ -211,59 +211,47 @@ public class KeyPwdManageActivity extends BaseActivity implements View.OnClickLi
 		tvTitle.setText(title);
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.iv_more_menu:
-				KeyPwdMoreActivity.actionStart(this, mKey, mAccessType);
-				break;
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-			case R.id.page_action:
-				tvRefresh.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						DialogUtil.showCommonDialog(KeyPwdManageActivity.this,
-								getDialogTitle(), getDialogContent(),
-								getString(R.string.ok), getString(R.string.cancel),
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										if (isBleNetEnableWithToast())
-											switch (mAccessType) {
-												case KeyPwdConstant.IType.TYPE_PWD:
-													// 读取锁操作记录
-													readLockOperateLog();
-													break;
+        if (id == R.id.iv_more_menu) {
+            KeyPwdMoreActivity.actionStart(this, mKey, mAccessType);
 
-												case KeyPwdConstant.IType.TYPE_FINGERPRINT:
-													// 读取锁里所有的指纹信息
-													if (mKey.getLockId()<0){
-														readLockOperateLog();
-													}else {
-														searchLockFingerprints();
-													}
-													break;
+        } else if (id == R.id.page_action) {
+            tvRefresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogUtil.showCommonDialog(KeyPwdManageActivity.this,
+                            getDialogTitle(), getDialogContent(),
+                            getString(R.string.ok), getString(R.string.cancel),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (isBleNetEnableWithToast()) {
+                                        if (mAccessType == KeyPwdConstant.IType.TYPE_PWD) {
+                                            // 读取锁操作记录
+                                            readLockOperateLog();
+                                        } else if (mAccessType == KeyPwdConstant.IType.TYPE_FINGERPRINT) {
+                                            // 读取锁里所有的指纹信息
+                                            if (mKey.getLockId() < 0) {
+                                                readLockOperateLog();
+                                            } else {
+                                                searchLockFingerprints();
+                                            }
+                                        } else if (mAccessType == KeyPwdConstant.IType.TYPE_IC_CARD) {
+                                            // 读取锁里所有的 IC 卡信息
+                                            searchLockIcCards();
+                                        }
+                                    }
+                                }
+                            }, null);
+                }
+            });
+        }
+    }
 
-												case KeyPwdConstant.IType.TYPE_IC_CARD:
-													// 读取锁里所有的 IC 卡信息
-													searchLockIcCards();
-													break;
-
-												default:
-													break;
-											}
-									}
-								}, null);
-					}
-				});
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	private String getDialogTitle() {
+    private String getDialogTitle() {
 		int title = R.string.sync_password_status;
 		switch (mAccessType) {
 			case KeyPwdConstant.IType.TYPE_PWD:

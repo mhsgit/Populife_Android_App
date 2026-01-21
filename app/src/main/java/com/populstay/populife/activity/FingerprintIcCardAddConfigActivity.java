@@ -145,23 +145,18 @@ public class FingerprintIcCardAddConfigActivity extends BaseActivity implements 
 				selectedDate.get(Calendar.MINUTE));
 
 		mTimePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
-			@Override
-			public void onTimeSelect(Date date, View v) {
-				((TextView) v).setText(DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-				switch (v.getId()) {
-					case R.id.tv_ic_card_bluetooth_config_start_time:
-						mStartTime = date;
-						break;
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                ((TextView) v).setText(DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
+                int id = v.getId();
 
-					case R.id.tv_ic_card_bluetooth_config_end_time:
-						mEndTime = date;
-						break;
-
-					default:
-						break;
-				}
-			}
-		})
+                if (id == R.id.tv_ic_card_bluetooth_config_start_time) {
+                    mStartTime = date;
+                } else if (id == R.id.tv_ic_card_bluetooth_config_end_time) {
+                    mEndTime = date;
+                }
+            }
+        })
 				.setType(new boolean[]{true, true, true, true, true, false})
 				.setLabel(getString(R.string.unit_year), getString(R.string.unit_month), getString(R.string.unit_day),
 						getString(R.string.unit_hour), getString(R.string.unit_minute), getString(R.string.unit_second))
@@ -314,66 +309,70 @@ public class FingerprintIcCardAddConfigActivity extends BaseActivity implements 
 		});
 	}
 
-	private void selectValidPeriod(int checkedId) {
-		switch (checkedId) {
-			case R.id.rb_valid_period_permanent:
-				mLlTime.setVisibility(View.GONE);
-				mValidPeriodType = KeyPwdConstant.IFingerprintCardValidType.PERMANENT;
-				break;
+    private void selectValidPeriod(int checkedId) {
+        if (checkedId == R.id.rb_valid_period_permanent) {
+            mLlTime.setVisibility(View.GONE);
+            mValidPeriodType = KeyPwdConstant.IFingerprintCardValidType.PERMANENT;
+        } else if (checkedId == R.id.rb_valid_period_time_limited) {
+            mLlTime.setVisibility(View.VISIBLE);
+            mValidPeriodType = KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED;
+        }
+    }
 
-			case R.id.rb_valid_period_time_limited:
-				mLlTime.setVisibility(View.VISIBLE);
-				mValidPeriodType = KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED;
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			default:
-				break;
-		}
-	}
+        if (id == R.id.tv_ic_card_bluetooth_config_start_time) {
+            setPickerSelectedTime(true, view);
+        } else if (id == R.id.tv_ic_card_bluetooth_config_end_time) {
+            setPickerSelectedTime(false, view);
+        } else if (id == R.id.tv_ic_card_bluetooth_config_next) {
+            String name = mEtName.getText().toString().trim();
+            String remarks = mEtRemarks.getText().toString().trim();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_ic_card_bluetooth_config_start_time:
-				setPickerSelectedTime(true, view);
-				break;
+            if (mValidPeriodType == KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED
+                    && !mStartTime.before(mEndTime)) {
+                toast(R.string.note_time_start_greater_than_end);
+            } else if (mKey.getKeyRight() == 1 && mKey.getKeyType() == 1
+                    && mEndTime.after(new Date(mKey.getEndDate()))) { // 授权用户，限时钥匙，不能超期添加指纹/门卡
+                if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_IC_CARD) { // 添加门卡
+                    toast(getString(R.string.note_ic_card_cant_beyond_validity_period));
+                } else { // 添加指纹
+                    toast(getString(R.string.note_fingerprint_cant_beyond_validity_period));
+                }
+            } else {
+                if (mKey.getLockId() < 0) { // KeyPwdConstant.IFrom.FROM_FINGERPRINT_CARD, KeyPwdConstant.IType.TYPE_IC_CARD
+                    ActivateDeviceActivity.actionStart(
+                            FingerprintIcCardAddConfigActivity.this,
+                            mFrom,
+                            mFingerprintCardType,
+                            mKey,
+                            mLockType,
+                            name,
+                            remarks,
+                            mValidPeriodType,
+                            mTvStartTime.getText().toString(),
+                            mTvEndTime.getText().toString()
+                    );
+                } else {
+                    IcCardBluetoothAddActivity.actionStart(
+                            FingerprintIcCardAddConfigActivity.this,
+                            mFingerprintCardType,
+                            name,
+                            remarks,
+                            mValidPeriodType,
+                            mTvStartTime.getText().toString(),
+                            mTvEndTime.getText().toString(),
+                            mKey,
+                            mLockType
+                    );
+                }
+            }
+        }
+    }
 
-			case R.id.tv_ic_card_bluetooth_config_end_time:
-				setPickerSelectedTime(false, view);
-				break;
-
-			case R.id.tv_ic_card_bluetooth_config_next:
-				String name = mEtName.getText().toString().trim();
-				String remarks = mEtRemarks.getText().toString().trim();
-				if (mValidPeriodType == KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED && !mStartTime.before(mEndTime)) {
-					toast(R.string.note_time_start_greater_than_end);
-				} else if (mKey.getKeyRight() == 1 && mKey.getKeyType() == 1 && mEndTime.after(new Date(mKey.getEndDate()))) { // 授权用户，限时钥匙，不能超期添加指纹/门卡
-					if (mFingerprintCardType == KeyPwdConstant.IType.TYPE_IC_CARD) { // 添加门卡
-						toast(getString(R.string.note_ic_card_cant_beyond_validity_period));
-					} else { // 添加指纹
-						toast(getString(R.string.note_fingerprint_cant_beyond_validity_period));
-					}
-				} else {
-					if (mKey.getLockId()<0){//KeyPwdConstant.IFrom.FROM_FINGERPRINT_CARD,KeyPwdConstant.IType.TYPE_IC_CARD
-						ActivateDeviceActivity.actionStart(FingerprintIcCardAddConfigActivity.this,
-								mFrom, mFingerprintCardType,mKey,mLockType,name,remarks,mValidPeriodType,
-								mTvStartTime.getText().toString(), mTvEndTime.getText().toString());
-
-					}else {
-						IcCardBluetoothAddActivity.actionStart(FingerprintIcCardAddConfigActivity.this,
-								mFingerprintCardType, name, remarks, mValidPeriodType,
-								mTvStartTime.getText().toString(), mTvEndTime.getText().toString(),mKey,mLockType);
-					}
-
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	private void setPickerSelectedTime(boolean isStart, View view) {
+    private void setPickerSelectedTime(boolean isStart, View view) {
 		KeyboardUtil.hideSoftInput(view);
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(isStart ? mStartTime.getTime() : mEndTime.getTime());

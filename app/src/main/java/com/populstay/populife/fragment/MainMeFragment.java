@@ -284,78 +284,49 @@ public class MainMeFragment extends BaseVisibilityFragment implements View.OnCli
             }
         });
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-
-			// 个人中心
-			case R.id.ll_me_personal_center:
-				goToNewActivity(PersonalCenterActivity.class);
-				break;
-
-			// 空间管理
-			case R.id.ll_me_space_management:
-				HomeListActivity.actionStart(getActivity(), HomeListActivity.VAL_ACTION_TYPE_MANAGE_HOME);
-				break;
-
-			// 智能网关
-			case R.id.ll_me_gateway:
-				goToNewActivity(GatewayListActivity.class);
-				break;
-
-			// 审计追踪
-			case R.id.ll_me_auditor:
-				PeachPreference.setBoolean(PeachPreference.HAVE_NEW_MESSAGE, false);
-				goToNewActivity(MessageListActivity.class);
-				break;
-
-			// 服务与支持
-			case R.id.ll_me_service_and_support:
-				goToNewActivity(ServiceSupportActivity.class);
-				break;
-
-			// 设置
-			case R.id.ll_me_settings:
-				goToNewActivity(SettingsActivity.class);
-				break;
-			// 未同步的设备
-			case R.id.ll_unsynced_devices:
-				startActivity(new Intent(getActivity(), OfflineLockListActivity.class));
-				break;
-
-			case R.id.tv_settings_exit:
-				DialogUtil.showCommonDialog(getActivity(), null,
-						getString(R.string.note_exit), getString(R.string.ok), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								exit();
-							}
-						}, null);
-				break;
-
-			case R.id.tv_settings_delete_account:
-				DialogUtil.showCommonDialog(getActivity(), null, getString(R.string.note_delete_account),
-						getString(R.string.delete), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								//删除账号前，要判断是否有已绑定的锁
-								//先解绑多有的锁，才能删除账号
-								//只有锁在手机附近，才能解绑锁
-								if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) {
-									DeleteAccountActivity.actionStart(getActivity(), mPhone);
-								} else if (mAccountType == Constant.ACCOUNT_TYPE_EMAIL) {
-									DeleteAccountActivity.actionStart(getActivity(), mEmail);
-								}
-							}
-						}, null);
-				break;
-			default:
-				break;
-		}
-	}
+        if (id == R.id.ll_me_personal_center) {
+            goToNewActivity(PersonalCenterActivity.class);
+        } else if (id == R.id.ll_me_space_management) {
+            HomeListActivity.actionStart(getActivity(), HomeListActivity.VAL_ACTION_TYPE_MANAGE_HOME);
+        } else if (id == R.id.ll_me_gateway) {
+            goToNewActivity(GatewayListActivity.class);
+        } else if (id == R.id.ll_me_auditor) {
+            PeachPreference.setBoolean(PeachPreference.HAVE_NEW_MESSAGE, false);
+            goToNewActivity(MessageListActivity.class);
+        } else if (id == R.id.ll_me_service_and_support) {
+            goToNewActivity(ServiceSupportActivity.class);
+        } else if (id == R.id.ll_me_settings) {
+            goToNewActivity(SettingsActivity.class);
+        } else if (id == R.id.ll_unsynced_devices) {
+            startActivity(new Intent(getActivity(), OfflineLockListActivity.class));
+        } else if (id == R.id.tv_settings_exit) {
+            DialogUtil.showCommonDialog(getActivity(), null,
+                    getString(R.string.note_exit), getString(R.string.ok), getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            exit();
+                        }
+                    }, null);
+        } else if (id == R.id.tv_settings_delete_account) {
+            DialogUtil.showCommonDialog(getActivity(), null, getString(R.string.note_delete_account),
+                    getString(R.string.delete), getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) {
+                                DeleteAccountActivity.actionStart(getActivity(), mPhone);
+                            } else if (mAccountType == Constant.ACCOUNT_TYPE_EMAIL) {
+                                DeleteAccountActivity.actionStart(getActivity(), mEmail);
+                            }
+                        }
+                    }, null);
+        }
+    }
 
 
 

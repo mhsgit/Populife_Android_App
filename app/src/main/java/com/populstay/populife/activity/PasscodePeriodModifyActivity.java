@@ -121,24 +121,19 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 				selectedDate.get(Calendar.MINUTE));
 
 		mTimePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
-			@Override
-			public void onTimeSelect(Date date, View v) {
-				String time = DateUtil.getDateToString(date, mDatePattern);
-				((TextView) v).setText(time);
-				switch (v.getId()) {
-					case R.id.tv_passcode_period_modify_start_time:
-						mStartTime = DateUtil.getStringToDate(time, mDatePattern);
-						break;
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                String time = DateUtil.getDateToString(date, mDatePattern);
+                ((TextView) v).setText(time);
 
-					case R.id.tv_passcode_period_modify_end_time:
-						mEndTime = DateUtil.getStringToDate(time, mDatePattern);
-						break;
-
-					default:
-						break;
-				}
-			}
-		})
+                int id = v.getId();
+                if (id == R.id.tv_passcode_period_modify_start_time) {
+                    mStartTime = DateUtil.getStringToDate(time, mDatePattern);
+                } else if (id == R.id.tv_passcode_period_modify_end_time) {
+                    mEndTime = DateUtil.getStringToDate(time, mDatePattern);
+                }
+            }
+        })
 				// 密码精确到小时，指纹/门卡精确到分钟
 				.setType(new boolean[]{true, true, true, true, mAccessType != KeyPwdConstant.IType.TYPE_PWD, false})
 				.setLabel(getString(R.string.unit_year), getString(R.string.unit_month), getString(R.string.unit_day),
@@ -155,69 +150,62 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 		mTvStartTime.setOnClickListener(this);
 		mTvEndTime.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_save_btn:
-				//曼哈顿SDK暂不支持修改键盘密码
-//				if (mKey.getLockId()<0){
-//					return;
-//				}
-				if (mStartTime < mEndTime) {
-					if (mAccessType == KeyPwdConstant.IType.TYPE_PWD) { // 密码
-						if (isBleNetEnableWithToast()) {
-							// 和锁通信，修改密码期限
-							modifyPasscodePeriod();
-						}
-					} else if (mAccessType == KeyPwdConstant.IType.TYPE_IC_CARD) { // 门卡
-						if (isNetEnableWithToast()) {
-							if (isBleEnableWithoutToast()) {
-								// 和锁通信，修改门卡期限
-								modifyIcCardPeriod(Long.parseLong(mKeyPwd.getCardNumber()));
-							} else {
-								if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-									updateIcCardInfo(2);
-								} else {
-									toast(R.string.enable_bluetooth);
-								}
-							}
-						}
-					} else if (mAccessType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 指纹
-						if (isNetEnableWithToast()) {
-							if (isBleEnableWithoutToast()) {
-								// 和锁通信，修改指纹期限
-								if (mKey.getLockId()<0) {
-									MHModifyFingerprintPeriod();
-								}else {
-									modifyFingerprintPeriod(Long.parseLong(mKeyPwd.getFingerprintNumber()));
-								}
-							} else {
-								if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-									updateFingerprintInfo(2);
-								} else {
-									toast(R.string.enable_bluetooth);
-								}
-							}
-						}
-					}
-				} else {
-					toast(R.string.note_time_start_greater_than_end);
-				}
-				break;
+        if (id == R.id.tv_save_btn) {
+            // 曼哈顿SDK暂不支持修改键盘密码
+            // if (mKey.getLockId() < 0) return;
 
-			case R.id.tv_passcode_period_modify_start_time:
-				setPickerSelectedTime(true, view);
-				break;
+            if (mStartTime < mEndTime) {
+                if (mAccessType == KeyPwdConstant.IType.TYPE_PWD) { // 密码
+                    if (isBleNetEnableWithToast()) {
+                        // 和锁通信，修改密码期限
+                        modifyPasscodePeriod();
+                    }
+                } else if (mAccessType == KeyPwdConstant.IType.TYPE_IC_CARD) { // 门卡
+                    if (isNetEnableWithToast()) {
+                        if (isBleEnableWithoutToast()) {
+                            // 和锁通信，修改门卡期限
+                            modifyIcCardPeriod(Long.parseLong(mKeyPwd.getCardNumber()));
+                        } else {
+                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                updateIcCardInfo(2);
+                            } else {
+                                toast(R.string.enable_bluetooth);
+                            }
+                        }
+                    }
+                } else if (mAccessType == KeyPwdConstant.IType.TYPE_FINGERPRINT) { // 指纹
+                    if (isNetEnableWithToast()) {
+                        if (isBleEnableWithoutToast()) {
+                            // 和锁通信，修改指纹期限
+                            if (mKey.getLockId() < 0) {
+                                MHModifyFingerprintPeriod();
+                            } else {
+                                modifyFingerprintPeriod(Long.parseLong(mKeyPwd.getFingerprintNumber()));
+                            }
+                        } else {
+                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                updateFingerprintInfo(2);
+                            } else {
+                                toast(R.string.enable_bluetooth);
+                            }
+                        }
+                    }
+                }
+            } else {
+                toast(R.string.note_time_start_greater_than_end);
+            }
 
-			case R.id.tv_passcode_period_modify_end_time:
-				setPickerSelectedTime(false, view);
-				break;
+        } else if (id == R.id.tv_passcode_period_modify_start_time) {
+            setPickerSelectedTime(true, view);
 
-			default:
-				break;
-		}
-	}
+        } else if (id == R.id.tv_passcode_period_modify_end_time) {
+            setPickerSelectedTime(false, view);
+        }
+    }
 
 	private void setPickerSelectedTime(boolean isStart, View view) {
 		Calendar cal = Calendar.getInstance();

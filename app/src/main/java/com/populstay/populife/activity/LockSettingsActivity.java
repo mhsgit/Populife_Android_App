@@ -436,141 +436,109 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		mIvSetLockTimeHelp.setOnClickListener(this);
 		tv_lock_settings_space.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent();
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		Intent intent = new Intent();
-		switch (view.getId()) {
-			case R.id.ll_lock_settings_mac_id:
-				showInputDialog();
-				mPwdType = 1;
-				break;
-			case R.id.ll_lock_settings_lock_name:
-				intent.setClass(LockSettingsActivity.this, ModifyLockNameActivity.class);
-				intent.putExtra(ModifyLockNameActivity.KEY_LOCK_NAME, mTvLockName.getText().toString());
-				intent.putExtra(ModifyLockNameActivity.KEY_LOCK_ID, mKey.getLockId());
-				startActivityForResult(intent, REQUEST_CODE_NAME);
-				break;
+        if (id == R.id.ll_lock_settings_mac_id) {
+            showInputDialog();
+            mPwdType = 1;
 
-			case R.id.ll_lock_settings_admin_passcode:
-				intent.setClass(LockSettingsActivity.this, ModifyAdminPasscodeActivity.class);
-				intent.putExtra(ModifyAdminPasscodeActivity.KEY_PASSCODE, mTvAdminPasscode.getText().toString());
-				intent.putExtra(ModifyAdminPasscodeActivity.KEY, mKey);
-				startActivityForResult(intent, REQUEST_CODE_PASSCODE);
-				break;
+        } else if (id == R.id.ll_lock_settings_lock_name) {
+            intent.setClass(LockSettingsActivity.this, ModifyLockNameActivity.class);
+            intent.putExtra(ModifyLockNameActivity.KEY_LOCK_NAME, mTvLockName.getText().toString());
+            intent.putExtra(ModifyLockNameActivity.KEY_LOCK_ID, mKey.getLockId());
+            startActivityForResult(intent, REQUEST_CODE_NAME);
 
-			case R.id.ll_lock_settings_lock_time:
-				if (isBleEnableWithoutToast()) { // 蓝牙开启
-					// 和锁通信，读取锁时间
-					isClickReadTime = true;
-					mIsLockOperationSuccess = false;
-					showLoading();
-					readLockTime(false);
-				} else if (isNetEnableWithoutToast()) { // 网络开启
-					// 通过网关读取锁时间
-					isClickReadTime = true;
-					if (mKey.getLockId() > 0) {
-						readLockTimeViaGateway();
-					}
-				} else {
-					toastFail();
-				}
-				break;
+        } else if (id == R.id.ll_lock_settings_admin_passcode) {
+            intent.setClass(LockSettingsActivity.this, ModifyAdminPasscodeActivity.class);
+            intent.putExtra(ModifyAdminPasscodeActivity.KEY_PASSCODE, mTvAdminPasscode.getText().toString());
+            intent.putExtra(ModifyAdminPasscodeActivity.KEY, mKey);
+            startActivityForResult(intent, REQUEST_CODE_PASSCODE);
 
-			case R.id.ll_lock_settings_auto_locking:
-				if (isBleEnableWithToast()) {
-					isClickAutoLocking = true;
-					searchAutoLockTime();
-				}
-				break;
+        } else if (id == R.id.ll_lock_settings_lock_time) {
+            if (isBleEnableWithoutToast()) {
+                isClickReadTime = true;
+                mIsLockOperationSuccess = false;
+                showLoading();
+                readLockTime(false);
+            } else if (isNetEnableWithoutToast()) {
+                isClickReadTime = true;
+                if (mKey.getLockId() > 0) readLockTimeViaGateway();
+            } else {
+                toastFail();
+            }
 
-			case R.id.ll_lock_settings_lock_update:
-				goToNewActivity(LockUpdateActivity.class);
-				break;
+        } else if (id == R.id.ll_lock_settings_auto_locking) {
+            if (isBleEnableWithToast()) {
+                isClickAutoLocking = true;
+                searchAutoLockTime();
+            }
 
-			case R.id.tv_lock_settings_delete:
-				if (mKey.isAdmin()) {//管理员
-					showInputDialog();
-					mPwdType = 0;
-				} else {
-					if (mKey.getKeyRight() == 1) {//授权用户
-						showChooseDialog();
-					} else {//普通用户
-						Resources res = getResources();
-						DialogUtil.showCommonDialog(LockSettingsActivity.this, null,
-								res.getString(R.string.note_confirm_delete), res.getString(R.string.ok),
-								res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialogInterface, int i) {
-										deleteEkey("N");
-									}
-								}, null);
-					}
-				}
-				break;
+        } else if (id == R.id.ll_lock_settings_lock_update) {
+            goToNewActivity(LockUpdateActivity.class);
 
-			case R.id.btn_dialog_input_cancel:
-			case R.id.btn_dialog_choose_cancel:
-				DIALOG.cancel();
-				break;
+        } else if (id == R.id.tv_lock_settings_delete) {
+            if (mKey.isAdmin()) {
+                showInputDialog();
+                mPwdType = 0;
+            } else if (mKey.getKeyRight() == 1) {
+                showChooseDialog();
+            } else {
+                Resources res = getResources();
+                DialogUtil.showCommonDialog(LockSettingsActivity.this, null,
+                        res.getString(R.string.note_confirm_delete), res.getString(R.string.ok),
+                        res.getString(R.string.cancel), (dialogInterface, i) -> deleteEkey("N"), null);
+            }
 
-			case R.id.btn_dialog_input_ok:
-				mInputPwd = mEtDialogInput.getText().toString();
-				if (!StringUtil.isBlank(mInputPwd)) {
-					verifyAccountPwd(mInputPwd);
-					DIALOG.cancel();
-				} else {
-					toast(R.string.enter_account_passwprd);
-				}
-				break;
+        } else if (id == R.id.btn_dialog_input_cancel || id == R.id.btn_dialog_choose_cancel) {
+            DIALOG.cancel();
 
-			case R.id.btn_dialog_choose_ok:
-				String delType = mCbDeleteKeys.isChecked() ? "Y" : "N";
-				deleteEkey(delType);
-				DIALOG.cancel();
-				break;
+        } else if (id == R.id.btn_dialog_input_ok) {
+            mInputPwd = mEtDialogInput.getText().toString();
+            if (!StringUtil.isBlank(mInputPwd)) {
+                verifyAccountPwd(mInputPwd);
+                DIALOG.cancel();
+            } else {
+                toast(R.string.enter_account_passwprd);
+            }
 
-			case R.id.ll_lock_settings_remote_unlock:
-				intent.setClass(LockSettingsActivity.this, LockRemoteUnlockConfigActivity.class);
-				intent.putExtra(LockRemoteUnlockConfigActivity.KEY_LOCK_SPECIAL_VALUE, mKey.getSpecialValue());
-				startActivityForResult(intent, REQUEST_CODE_SPECIAL_VALUE);
-				break;
+        } else if (id == R.id.btn_dialog_choose_ok) {
+            String delType = mCbDeleteKeys.isChecked() ? "Y" : "N";
+            deleteEkey(delType);
+            DIALOG.cancel();
 
-			case R.id.iv_lock_settings_battery_sync:
-				DialogUtil.showCommonDialog(LockSettingsActivity.this, getString(R.string.sync_battery),
-						getString(R.string.note_sync_battery), getString(R.string.ok), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// 读取锁电量
-								if (isBleNetEnableWithToast())
-									getLockBattery();
-							}
-						}, null);
-				break;
+        } else if (id == R.id.ll_lock_settings_remote_unlock) {
+            intent.setClass(LockSettingsActivity.this, LockRemoteUnlockConfigActivity.class);
+            intent.putExtra(LockRemoteUnlockConfigActivity.KEY_LOCK_SPECIAL_VALUE, mKey.getSpecialValue());
+            startActivityForResult(intent, REQUEST_CODE_SPECIAL_VALUE);
 
-			case R.id.ll_lock_settings_keypad_volume:
-				if (isBleNetEnableWithToast()) {
-					isClickKeypadVolume = true;
-					if (mKey.getLockId() > 0) {
-						queryKeypadVolume();
-					}
-				}
-				break;
-			// 校准锁时间帮助按钮
-			case R.id.iv_lock_settings_lock_time_help:
-				showHelpPopupWindow(view);
-				break;
-			// 切换空间
-			case R.id.tv_lock_settings_space:
-				if (CollectionUtil.isEmpty(mHomeList)) {
-					requestLockGroup();
-				} else {
-					mPickerHome.show();
-				}
-				break;
-		}
-	}
+        } else if (id == R.id.iv_lock_settings_battery_sync) {
+            DialogUtil.showCommonDialog(LockSettingsActivity.this, getString(R.string.sync_battery),
+                    getString(R.string.note_sync_battery), getString(R.string.ok), getString(R.string.cancel),
+                    (dialog, which) -> {
+                        if (isBleNetEnableWithToast()) getLockBattery();
+                    }, null);
+
+        } else if (id == R.id.ll_lock_settings_keypad_volume) {
+            if (isBleNetEnableWithToast()) {
+                isClickKeypadVolume = true;
+                if (mKey.getLockId() > 0) queryKeypadVolume();
+            }
+
+        } else if (id == R.id.iv_lock_settings_lock_time_help) {
+            showHelpPopupWindow(view);
+
+        } else if (id == R.id.tv_lock_settings_space) {
+            if (CollectionUtil.isEmpty(mHomeList)) {
+                requestLockGroup();
+            } else {
+                mPickerHome.show();
+            }
+        }
+    }
+
 
 	/**
 	 * 绑定锁家庭

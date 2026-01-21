@@ -75,34 +75,27 @@ public class LockNameAddActivity extends BaseActivity implements View.OnClickLis
 		mIvUpload.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_lock_name_add_ok:
-				String name = mEtName.getText().toString();
-				if (mLockId == 0) {
-					toast(R.string.note_upload_lock_data);
-				} else if (StringUtil.isBlank(name)) {
-					toast(R.string.enter_lock_name);
-				} else {
-					modifyLockName(name);
-				}
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_lock_name_add_complete:
-				bindHome(PeachPreference.getLastSelectHomeId());
-				break;
+        if (id == R.id.tv_lock_name_add_ok) {
+            String name = mEtName.getText().toString();
+            if (mLockId == 0) {
+                toast(R.string.note_upload_lock_data);
+            } else if (StringUtil.isBlank(name)) {
+                toast(R.string.enter_lock_name);
+            } else {
+                modifyLockName(name);
+            }
+        } else if (id == R.id.tv_lock_name_add_complete) {
+            bindHome(PeachPreference.getLastSelectHomeId());
+        } else if (id == R.id.iv_lock_name_add_upload) {
+            initializeLock(mLockInitData);
+        }
+    }
 
-			case R.id.iv_lock_name_add_upload:
-				initializeLock(mLockInitData);
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	/**
+    /**
 	 * 请求服务器，初始化锁
 	 */
 	private void initializeLock(final String lockDataJson) {

@@ -289,23 +289,18 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 
 
 		mTimePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
-			@Override
-			public void onTimeSelect(Date date, View v) {
-				((TextView) v).setText(DateUtil.getDateToString(date, "yyyy-MM-dd HH:mm"));
-				switch (v.getId()) {
-					case R.id.tv_lock_send_ekey_start_time:
-						mStartTime = date;
-						break;
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                ((TextView) v).setText(DateUtil.getDateToString(date, "yyyy-MM-dd HH:mm"));
 
-					case R.id.tv_lock_send_ekey_end_time:
-						mEndTime = date;
-						break;
-
-					default:
-						break;
-				}
-			}
-		})
+                int id = v.getId();
+                if (id == R.id.tv_lock_send_ekey_start_time) {
+                    mStartTime = date;
+                } else if (id == R.id.tv_lock_send_ekey_end_time) {
+                    mEndTime = date;
+                }
+            }
+        })
 				.setType(new boolean[]{true, true, true, true, true, false})
 				.setLabel(getString(R.string.unit_year), getString(R.string.unit_month), getString(R.string.unit_day),
 						getString(R.string.unit_hour), getString(R.string.unit_minute), getString(R.string.unit_second))
@@ -380,49 +375,41 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 		return true;
 	}
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.iv_lock_send_ekey_receiver:
-				/*requestRuntimePermissions(new String[]{Manifest.permission.READ_CONTACTS}, new PermissionListener() {
-					@Override
-					public void onGranted() {
-						Intent intent = new Intent();
-						intent.setAction(Intent.ACTION_PICK);
-						intent.setData(ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-						startActivityForResult(intent, REQUEST_CONTACT);
-					}
+        if (id == R.id.iv_lock_send_ekey_receiver) {
+        /*requestRuntimePermissions(new String[]{Manifest.permission.READ_CONTACTS}, new PermissionListener() {
+            @Override
+            public void onGranted() {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_PICK);
+                intent.setData(ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CONTACT);
+            }
 
-					@Override
-					public void onDenied(List<String> deniedPermissions) {
-						toast(getString(R.string.note_permission_contact));
-					}
-				});*/
-				break;
+            @Override
+            public void onDenied(List<String> deniedPermissions) {
+                toast(getString(R.string.note_permission_contact));
+            }
+        });*/
 
-			case R.id.tv_lock_send_ekey_start_time:
-				setPickerSelectedTime(true, view);
-				break;
+        } else if (id == R.id.tv_lock_send_ekey_start_time) {
+            setPickerSelectedTime(true, view);
 
-			case R.id.tv_lock_send_ekey_end_time:
-				setPickerSelectedTime(false, view);
-				break;
+        } else if (id == R.id.tv_lock_send_ekey_end_time) {
+            setPickerSelectedTime(false, view);
 
-			case R.id.tv_lock_send_ekey_send:
-				if (checkForm()) {
-					sendEkey();
-				}
-				break;
+        } else if (id == R.id.tv_lock_send_ekey_send) {
+            if (checkForm()) {
+                sendEkey();
+            }
 
-			case R.id.btn_dialog_send_ekey_cancel:
-				DIALOG.cancel();
-				break;
-
-			default:
-				break;
-		}
-	}
+        } else if (id == R.id.btn_dialog_send_ekey_cancel) {
+            DIALOG.cancel();
+        }
+    }
 
 	private void setPickerSelectedTime(boolean isStart, View view) {
 		KeyboardUtil.hideSoftInput(view);
@@ -655,71 +642,59 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 			mEtKeyName.setSelection(contact[0].length());
 		}
 	}
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        int id = group.getId();
 
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		switch (group.getId()) {
-			case R.id.rg_valid_period:
-				selectValidPeriod(checkedId);
-				break;
-			case R.id.rg_permission_types:
-				setPermissionTypes(checkedId);
-				break;
-			case R.id.rg_share_the_key_through:
-				setShareTheKeyThrough(checkedId);
-				break;
-		}
-	}
+        if (id == R.id.rg_valid_period) {
+            selectValidPeriod(checkedId);
+        } else if (id == R.id.rg_permission_types) {
+            setPermissionTypes(checkedId);
+        } else if (id == R.id.rg_share_the_key_through) {
+            setShareTheKeyThrough(checkedId);
+        }
+    }
 
-	private void selectValidPeriod(int checkedId) {
-		mTvOneTimeNote.setVisibility(View.GONE);
-		switch (checkedId) {
-			case R.id.rb_valid_period_permanent:
-				mLlTime.setVisibility(View.GONE);
-				mKeyType = KeyPwdConstant.IBTKeyType.PERMANENT;
-				break;
+    private void selectValidPeriod(int checkedId) {
+        mTvOneTimeNote.setVisibility(View.GONE);
 
-			case R.id.rb_valid_period_time_limited:
-				mLlTime.setVisibility(View.VISIBLE);
-				mKeyType = KeyPwdConstant.IBTKeyType.TIME_LIMITED;
-				break;
+        if (checkedId == R.id.rb_valid_period_permanent) {
+            mLlTime.setVisibility(View.GONE);
+            mKeyType = KeyPwdConstant.IBTKeyType.PERMANENT;
+        } else if (checkedId == R.id.rb_valid_period_time_limited) {
+            mLlTime.setVisibility(View.VISIBLE);
+            mKeyType = KeyPwdConstant.IBTKeyType.TIME_LIMITED;
+        }
+    }
 
-			default:
-				break;
-		}
-	}
+    private void setPermissionTypes(int checkedId) {
+        int hint = R.string.general_user_hint;
 
-	private void setPermissionTypes(int checkedId) {
-		int hint = R.string.general_user_hint;
-		switch (checkedId) {
-			case R.id.rb_general_user:
-				hint = R.string.general_user_hint;
-				isAuAdmin = false;
-				break;
-			case R.id.rb_authorized_user:
-				hint = R.string.authorized_user_hint;
-				isAuAdmin = true;
-				break;
-		}
+        if (checkedId == R.id.rb_general_user) {
+            hint = R.string.general_user_hint;
+            isAuAdmin = false;
+        } else if (checkedId == R.id.rb_authorized_user) {
+            hint = R.string.authorized_user_hint;
+            isAuAdmin = true;
+        }
 
-		tv_permission_types_hint.setText(hint);
-	}
+        tv_permission_types_hint.setText(hint);
+    }
 
-	private void setShareTheKeyThrough(int checkedId) {
-		switch (checkedId) {
-			case R.id.rb_share_key_through_account:
-				tv_share_the_key_through_hint.setText(R.string.share_type_populife_account);
-				shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.ACCOUNT;
-				ll_receiver.setVisibility(View.VISIBLE);
-				break;
-			case R.id.rb_share_key_through_sms_link:
-				tv_share_the_key_through_hint.setText(R.string.share_type_sms_link);
-				shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.SMS_LINK;
-				ll_receiver.setVisibility(View.GONE);
-				break;
-		}
-		setSendBtnEnable();
-	}
+    private void setShareTheKeyThrough(int checkedId) {
+        if (checkedId == R.id.rb_share_key_through_account) {
+            tv_share_the_key_through_hint.setText(R.string.share_type_populife_account);
+            shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.ACCOUNT;
+            ll_receiver.setVisibility(View.VISIBLE);
+        } else if (checkedId == R.id.rb_share_key_through_sms_link) {
+            tv_share_the_key_through_hint.setText(R.string.share_type_sms_link);
+            shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.SMS_LINK;
+            ll_receiver.setVisibility(View.GONE);
+        }
+
+        setSendBtnEnable();
+    }
+
 
 	@Override
 	public void onEventSub(Event event) {

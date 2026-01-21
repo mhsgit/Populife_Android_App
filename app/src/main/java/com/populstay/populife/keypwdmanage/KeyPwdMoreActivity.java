@@ -158,19 +158,19 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 		mAccessType = getIntent().getIntExtra("type", KeyPwdConstant.IType.TYPE_KEY);
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.ll_invalid_code:
-				KeyPwdManageActivity.actionStart(this, mKey, mAccessType, KeyPwdConstant.IFrom.FROM_MORE,mLockType);
-				break;
-			case R.id.tv_clear_btn:
-				showInputDialog();
-				break;
-		}
-	}
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-	private void showInputDialog() {
+        if (id == R.id.ll_invalid_code) {
+            KeyPwdManageActivity.actionStart(this, mKey, mAccessType, KeyPwdConstant.IFrom.FROM_MORE, mLockType);
+
+        } else if (id == R.id.tv_clear_btn) {
+            showInputDialog();
+        }
+    }
+
+    private void showInputDialog() {
 		DIALOG = new AlertDialog.Builder(this).create();
 		DIALOG.setCanceledOnTouchOutside(false);
 		DIALOG.show();

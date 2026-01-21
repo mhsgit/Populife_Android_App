@@ -98,33 +98,34 @@ public class KeyPwdTypeSelectActivity extends BaseActivity implements View.OnCli
 		}
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.ll_key_pwd_type_permanent:
-				currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_PERMANENT;
-				setResult();
-				break;
-			case R.id.ll_key_pwd_type_period:
-				currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_PERIOD;
-				setResult();
-				break;
-			case R.id.ll_key_pwd_type_one_time:
-				currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_ONE_TIME;
-				setResult();
-				break;
-			case R.id.ll_key_pwd_type_custom:
-				currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_CUSTOM;
-				setResult();
-				break;
-			case R.id.tv_tap_create_key:
-				currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_KEY_BT_KEY;
-				setResult();
-				break;
-		}
-	}
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-	private void setResult() {
+        if (id == R.id.ll_key_pwd_type_permanent) {
+            currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_PERMANENT;
+            setResult();
+
+        } else if (id == R.id.ll_key_pwd_type_period) {
+            currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_PERIOD;
+            setResult();
+
+        } else if (id == R.id.ll_key_pwd_type_one_time) {
+            currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_ONE_TIME;
+            setResult();
+
+        } else if (id == R.id.ll_key_pwd_type_custom) {
+            currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_CUSTOM;
+            setResult();
+
+        } else if (id == R.id.tv_tap_create_key) {
+            currentKeyPwdType = KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_KEY_BT_KEY;
+            setResult();
+        }
+    }
+
+
+    private void setResult() {
 		Intent data = new Intent();
 		data.putExtra(KEY_PWD_TYPE_SELECTED, currentKeyPwdType);
 		setResult(RESULT_OK, data);

@@ -114,53 +114,41 @@ public class GatewayBindedLockDetailActivity extends BaseActivity implements Vie
 		mTvLockStatus.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.rl_gateway_binded_lock_time_read:
-				//readLockTime();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_gateway_binded_lock_time_calibrate:
-				calibrateLockTime();
-				break;
-			case R.id.fl_gateway_binded_lock_remote_unlock:
-				remoteUnlock();
-				/*Resources res = getResources();
-				DialogUtil.showCommonDialog(GatewayBindedLockDetailActivity.this, null,
-						res.getString(R.string.note_unlock_remotely),
-						res.getString(R.string.unlock), res.getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								remoteUnlock();
-							}
-						}, null);*/
-				break;
-
-			case R.id.fl_gateway_binded_lock_remote_lock:
-				remoteLock();
-				break;
-
-			case R.id.tv_lock_status:
-				queryLockOpenState(true);
-				break;
-
-			case R.id.tv_gateway_binded_lock_freeze:
-				freezeLock();
-				break;
-
-			case R.id.tv_gateway_binded_lock_unfreeze:
-				unfreezeLock();
-				break;
+        if (id == R.id.rl_gateway_binded_lock_time_read) {
+            // readLockTime();
+        } else if (id == R.id.tv_gateway_binded_lock_time_calibrate) {
+            calibrateLockTime();
+        } else if (id == R.id.fl_gateway_binded_lock_remote_unlock) {
+            remoteUnlock();
+        /*
+        Resources res = getResources();
+        DialogUtil.showCommonDialog(GatewayBindedLockDetailActivity.this, null,
+                res.getString(R.string.note_unlock_remotely),
+                res.getString(R.string.unlock), res.getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        remoteUnlock();
+                    }
+                }, null);
+        */
+        } else if (id == R.id.fl_gateway_binded_lock_remote_lock) {
+            remoteLock();
+        } else if (id == R.id.tv_lock_status) {
+            queryLockOpenState(true);
+        } else if (id == R.id.tv_gateway_binded_lock_freeze) {
+            freezeLock();
+        } else if (id == R.id.tv_gateway_binded_lock_unfreeze) {
+            unfreezeLock();
+        }
+    }
 
 
-			default:
-				break;
-		}
-	}
-
-	/**
+    /**
 	 * 读取锁时间
 	 */
 	private void readLockTime() {

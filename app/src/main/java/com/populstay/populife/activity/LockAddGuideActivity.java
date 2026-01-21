@@ -250,34 +250,29 @@ public class LockAddGuideActivity extends BluetoothBaseActivity implements View.
 		mCbNetOpen.setChecked(isNetEnableWithoutToast());
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_lock_add_guide_next:
-//				requestRuntimePermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-//						new PermissionListener() {
-//							@Override
-//							public void onGranted() {
-				if (mFrom == KeyPwdConstant.IFrom.FROM_FINGERPRINT_CARD) { // 添加指纹/门卡
-					FingerprintIcCardAddConfigActivity.actionStart(LockAddGuideActivity.this, mFrom, mFingerprintCardType, mKey, mLockType);
-				} else { // 添加门锁
-					ActivateDeviceActivity.actionStart(LockAddGuideActivity.this, mLockType);
-				}
-//							}
-//
-//							@Override
-//							public void onDenied(List<String> deniedPermissions) {
-//								toast(R.string.note_permission_scan_locks);
-//							}
-//						});
-				break;
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.tv_lock_add_guide_next) {
+            // 添加指纹/门卡或门锁
+            if (mFrom == KeyPwdConstant.IFrom.FROM_FINGERPRINT_CARD) {
+                FingerprintIcCardAddConfigActivity.actionStart(
+                        LockAddGuideActivity.this,
+                        mFrom,
+                        mFingerprintCardType,
+                        mKey,
+                        mLockType
+                );
+            } else {
+                ActivateDeviceActivity.actionStart(
+                        LockAddGuideActivity.this,
+                        mLockType
+                );
+            }
+        }
+    }
 
-			default:
-				break;
-		}
-	}
 
-	@Override
+    @Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		setNextBtnEnable();
 	}

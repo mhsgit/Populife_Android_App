@@ -152,30 +152,22 @@ public class LockAutoLockingActivity extends BaseActivity implements View.OnClic
 		mTvSetTime.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.switch_lock_auto_lock:
-				mLlTime.setVisibility(mSwitch.isChecked() ? View.VISIBLE : View.GONE);
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_lock_auto_lock_set_time:
-				mOptionsPicker.show();
-				break;
+        if (id == R.id.switch_lock_auto_lock) {
+            mLlTime.setVisibility(mSwitch.isChecked() ? View.VISIBLE : View.GONE);
+        } else if (id == R.id.tv_lock_auto_lock_set_time) {
+            mOptionsPicker.show();
+        } else if (id == R.id.page_action) {
+            if (isBleEnableWithToast()) {
+                modifyAutoLockTime();
+            }
+        }
+    }
 
-			case R.id.page_action:
-				if (isBleEnableWithToast()) {
-					modifyAutoLockTime();
-				}
-
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	private void modifyAutoLockTime() {
+    private void modifyAutoLockTime() {
 		showLoading();
         if (mKey.getLockId()<0){
 			if (sPPLOCK.isConnected(mKey.getLockMac())) {

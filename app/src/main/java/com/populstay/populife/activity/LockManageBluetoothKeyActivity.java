@@ -142,59 +142,45 @@ public class LockManageBluetoothKeyActivity extends BaseActivity implements View
 		mListView.setOnItemClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				showActionDialog();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.btn_dialog_send_ekey_one_time://清空所有钥匙
-				DIALOG.cancel();
-				if (mBluetoothKeyList == null || mBluetoothKeyList.isEmpty()) {
-					toast(R.string.note_no_ekey_in_list);
-				} else {
-					showInputDialog();
-					mActionType = 0;
-				}
-				break;
+        if (id == R.id.page_action) {
+            showActionDialog();
+        } else if (id == R.id.btn_dialog_send_ekey_one_time) { // 清空所有钥匙
+            DIALOG.cancel();
+            if (mBluetoothKeyList == null || mBluetoothKeyList.isEmpty()) {
+                toast(R.string.note_no_ekey_in_list);
+            } else {
+                showInputDialog();
+                mActionType = 0;
+            }
+        } else if (id == R.id.btn_dialog_send_ekey_permanent) { // 重置所有钥匙
+            DIALOG.cancel();
+            if (mBluetoothKeyList == null || mBluetoothKeyList.isEmpty()) {
+                toast(R.string.note_no_ekey_in_list);
+            } else {
+                showInputDialog();
+                mActionType = 1;
+            }
+        } else if (id == R.id.btn_dialog_send_ekey_period) { // 发送钥匙
+            LockSendEkeyActivity.actionStart(LockManageBluetoothKeyActivity.this, mLockId, mIsAdmin);
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_send_ekey_cancel || id == R.id.btn_dialog_input_cancel) {
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_input_ok) {
+            mInputPwd = mEtDialogInput.getText().toString();
+            if (!StringUtil.isBlank(mInputPwd)) {
+                verifyAccountPwd(mInputPwd);
+                DIALOG.cancel();
+            } else {
+                toast(R.string.enter_account_passwprd);
+            }
+        }
+    }
 
-			case R.id.btn_dialog_send_ekey_permanent://重置所有钥匙
-				DIALOG.cancel();
-				if (mBluetoothKeyList == null || mBluetoothKeyList.isEmpty()) {
-					toast(R.string.note_no_ekey_in_list);
-				} else {
-					showInputDialog();
-					mActionType = 1;
-				}
-				break;
-
-			case R.id.btn_dialog_send_ekey_period://发送钥匙
-				LockSendEkeyActivity.actionStart(LockManageBluetoothKeyActivity.this, mLockId, mIsAdmin);
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_send_ekey_cancel:
-			case R.id.btn_dialog_input_cancel:
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_input_ok:
-				mInputPwd = mEtDialogInput.getText().toString();
-				if (!StringUtil.isBlank(mInputPwd)) {
-					verifyAccountPwd(mInputPwd);
-					DIALOG.cancel();
-				} else {
-					toast(R.string.enter_account_passwprd);
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	private void verifyAccountPwd(String pwd) {
+    private void verifyAccountPwd(String pwd) {
 		RestClient.builder()
 				.url(Urls.ACCOUNT_PWD_VERIFY)
 				.loader(this)

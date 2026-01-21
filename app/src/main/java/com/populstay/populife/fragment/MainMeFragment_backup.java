@@ -319,74 +319,54 @@ public class MainMeFragment_backup extends BaseVisibilityFragment implements Vie
 		mLlChangeLanguage.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.civ_user_avatar:
-				mCivAvatar.showContextMenu();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.ll_me_nick_name:
-				Intent intentNickname = new Intent(getActivity(), ModifyNicknameActivity.class);
-				intentNickname.putExtra(ModifyNicknameActivity.KEY_USER_NICKNAME, mNickname);
-				startActivityForResult(intentNickname, REQUEST_CODE_NICKNAME);
-				break;
-
-			case R.id.ll_me_mail:
-				Intent intentBind = new Intent(getActivity(), AccountBindActivity.class);
-				if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) {
-					intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_EMAIL);
-				} else if (mAccountType == Constant.ACCOUNT_TYPE_EMAIL) {
-					intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_PHONE);
-				}
-				startActivityForResult(intentBind, REQUEST_CODE_BIND);
-				break;
-
-			case R.id.ll_me_change_pwd:
-				goToNewActivity(ModifyPwdActivity.class);
-				break;
-
-			case R.id.tv_settings_exit:
-				DialogUtil.showCommonDialog(getActivity(), null,
-						getString(R.string.note_exit), getString(R.string.ok), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								exit();
-							}
-						}, null);
-				break;
-
-			case R.id.tv_settings_delete_account:
-				DialogUtil.showCommonDialog(getActivity(), null, getString(R.string.note_delete_account),
-						getString(R.string.delete), getString(R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								//删除账号前，要判断是否有已绑定的锁
-								//先解绑多有的锁，才能删除账号
-								//只有锁在手机附近，才能解绑锁
-								if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) {
-									DeleteAccountActivity.actionStart(getActivity(), mPhone);
-								} else if (mAccountType == Constant.ACCOUNT_TYPE_EMAIL) {
-									DeleteAccountActivity.actionStart(getActivity(), mEmail);
-								}
-							}
-						}, null);
-				break;
-
-			case R.id.switch_touch_id_login:
-				PeachPreference.setTouchIdLogin(mSwitchTouchIdLogin.isChecked());
-				break;
-
-			case R.id.ll_me_change_language:
-				goToNewActivity(ChangeLanguageActivity.class);
-				break;
-
-			default:
-				break;
-		}
-	}
+        if (id == R.id.civ_user_avatar) {
+            mCivAvatar.showContextMenu();
+        } else if (id == R.id.ll_me_nick_name) {
+            Intent intentNickname = new Intent(getActivity(), ModifyNicknameActivity.class);
+            intentNickname.putExtra(ModifyNicknameActivity.KEY_USER_NICKNAME, mNickname);
+            startActivityForResult(intentNickname, REQUEST_CODE_NICKNAME);
+        } else if (id == R.id.ll_me_mail) {
+            Intent intentBind = new Intent(getActivity(), AccountBindActivity.class);
+            if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) {
+                intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_EMAIL);
+            } else if (mAccountType == Constant.ACCOUNT_TYPE_EMAIL) {
+                intentBind.putExtra(AccountBindActivity.KEY_BIND_TYPE, Constant.ACCOUNT_TYPE_PHONE);
+            }
+            startActivityForResult(intentBind, REQUEST_CODE_BIND);
+        } else if (id == R.id.ll_me_change_pwd) {
+            goToNewActivity(ModifyPwdActivity.class);
+        } else if (id == R.id.tv_settings_exit) {
+            DialogUtil.showCommonDialog(getActivity(), null,
+                    getString(R.string.note_exit), getString(R.string.ok), getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            exit();
+                        }
+                    }, null);
+        } else if (id == R.id.tv_settings_delete_account) {
+            DialogUtil.showCommonDialog(getActivity(), null, getString(R.string.note_delete_account),
+                    getString(R.string.delete), getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) {
+                                DeleteAccountActivity.actionStart(getActivity(), mPhone);
+                            } else if (mAccountType == Constant.ACCOUNT_TYPE_EMAIL) {
+                                DeleteAccountActivity.actionStart(getActivity(), mEmail);
+                            }
+                        }
+                    }, null);
+        } else if (id == R.id.switch_touch_id_login) {
+            PeachPreference.setTouchIdLogin(mSwitchTouchIdLogin.isChecked());
+        } else if (id == R.id.ll_me_change_language) {
+            goToNewActivity(ChangeLanguageActivity.class);
+        }
+    }
 
 	/**
 	 * 上传头像

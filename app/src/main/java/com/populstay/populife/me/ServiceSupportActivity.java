@@ -57,21 +57,22 @@ public class ServiceSupportActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_service_support_help:
-                goToNewActivity(CommonQuestionActivity.class);
-                break;
-            case R.id.ll_service_support_maintain:
-                goToNewActivity(MaintServiceActivity.class);
-                break;
-            case R.id.ll_service_support_send_email:
-                sendEmail();
-                break;
-            case R.id.ll_service_support_customer:
-                onlineCustomer();
-                break;
+        int id = v.getId();
+
+        if (id == R.id.ll_service_support_help) {
+            goToNewActivity(CommonQuestionActivity.class);
+
+        } else if (id == R.id.ll_service_support_maintain) {
+            goToNewActivity(MaintServiceActivity.class);
+
+        } else if (id == R.id.ll_service_support_send_email) {
+            sendEmail();
+
+        } else if (id == R.id.ll_service_support_customer) {
+            onlineCustomer();
         }
     }
+
     private void onlineCustomer(){
         startImServiceActivity(ServiceSupportActivity.this);
     }

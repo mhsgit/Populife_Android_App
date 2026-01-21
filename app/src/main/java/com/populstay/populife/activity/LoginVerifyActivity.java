@@ -131,19 +131,15 @@ public class LoginVerifyActivity extends BaseActivity implements View.OnClickLis
 		mTvVerify.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_login_verify:
-				validateVerificationCode();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.tv_login_verify) {
+            validateVerificationCode();
+        }
+    }
 
-			default:
-				break;
-		}
-	}
-
-	private void getVerificationCode() {
+    private void getVerificationCode() {
 		WeakHashMap<String, Object> params = new WeakHashMap<>();
 		params.put("username", mLoginAccount);
 		if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) { // 使用手机找回密码时，需传入国家编码（如：+86）

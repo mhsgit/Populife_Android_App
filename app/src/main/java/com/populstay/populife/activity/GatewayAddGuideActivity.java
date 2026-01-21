@@ -127,31 +127,32 @@ public class GatewayAddGuideActivity extends BluetoothBaseActivity implements Vi
 		//startRefreshCountDownTimerUI();
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.tv_next_gateway_add_guide:
-				if (isBleNetEnableWithToast()) {
-					requestRuntimePermissions(isAndroid12() ? PERMISSION_BLE_SCAN_CONNECT
-									: new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-							new PermissionListener() {
-								@Override
-								public void onGranted() {
-									//开启蓝牙扫描
-									goToNewActivity(GatewayAddActivity.class);
-								}
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.tv_next_gateway_add_guide) {
+            if (isBleNetEnableWithToast()) {
+                requestRuntimePermissions(
+                        isAndroid12() ? PERMISSION_BLE_SCAN_CONNECT
+                                : new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                        new PermissionListener() {
+                            @Override
+                            public void onGranted() {
+                                // 开启蓝牙扫描
+                                goToNewActivity(GatewayAddActivity.class);
+                            }
 
-								@Override
-								public void onDenied(List<String> deniedPermissions) {
-									toast(isAndroid12() ? R.string.note_permission_ble_scan_connect : R.string.note_permission_lbs);
-								}
-							});
-				}
-				break;
-		}
-	}
+                            @Override
+                            public void onDenied(List<String> deniedPermissions) {
+                                toast(isAndroid12() ? R.string.note_permission_ble_scan_connect
+                                        : R.string.note_permission_lbs);
+                            }
+                        });
+            }
+        }
+    }
 
-	@Override
+
+    @Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (mCbConfirmActivateDevice.isChecked() && mCbConfirmGatewayReconnect.isChecked()) {
 			startRefreshCountDownTimerUI();

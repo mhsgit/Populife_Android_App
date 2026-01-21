@@ -196,50 +196,33 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
 		mLlSpanish.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				changeLanguage();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.ll_change_language_system:
-				refreshLanguageUI(0);
-				break;
-
-			case R.id.ll_change_language_english:
-				refreshLanguageUI(1);
-				break;
-
-			case R.id.ll_change_language_simplified_chinese:
-				refreshLanguageUI(2);
-				break;
-
-			case R.id.ll_change_language_japanese:
-				refreshLanguageUI(3);
-				break;
-			case R.id.ll_change_language_german:
-				refreshLanguageUI(4);
-				break;
-			case R.id.ll_change_language_french:
-				refreshLanguageUI(5);
-				break;
+        if (id == R.id.page_action) {
+            changeLanguage();
+        } else if (id == R.id.ll_change_language_system) {
+            refreshLanguageUI(0);
+        } else if (id == R.id.ll_change_language_english) {
+            refreshLanguageUI(1);
+        } else if (id == R.id.ll_change_language_simplified_chinese) {
+            refreshLanguageUI(2);
+        } else if (id == R.id.ll_change_language_japanese) {
+            refreshLanguageUI(3);
+        } else if (id == R.id.ll_change_language_german) {
+            refreshLanguageUI(4);
+        } else if (id == R.id.ll_change_language_french) {
+            refreshLanguageUI(5);
+        } else if (id == R.id.ll_change_language_italian) {
+            refreshLanguageUI(6);
+        } else if (id == R.id.ll_change_language_spanish) {
+            refreshLanguageUI(7);
+        }
+    }
 
 
-			case R.id.ll_change_language_italian:
-				refreshLanguageUI(6);
-				break;
-
-			case R.id.ll_change_language_spanish:
-				refreshLanguageUI(7);
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	/**
+    /**
 	 * 选择语言后，重新进入setting页面
 	 *
 	 * @param context

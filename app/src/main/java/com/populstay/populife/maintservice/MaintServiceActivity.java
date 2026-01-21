@@ -61,28 +61,26 @@ public class MaintServiceActivity extends BaseActivity implements View.OnClickLi
         mLlCheckWarrantyStatus.setOnClickListener(this);
         mLlBuyPopucareService.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View v) {
+        int id = v.getId();
 
-        switch (v.getId()) {
-            case R.id.tv_maintenance_request_btn:
-                goToNewActivity(MaintenanceRequestActivity.class);
-                break;
-            case R.id.ll_maintenance_progress_enquiry:
-                Intent intent = new Intent(this,MaintSearchActivity.class);
-                intent.putExtra(MaintSearchActivity.FROM_TYPE_TAG,MaintSearchActivity.FROM_TYPE_MAINTENANCE_PROGRESS);
-                startActivity(intent);
-                break;
-            case R.id.ll_check_warranty_status:
-                intent = new Intent(this,MaintSearchActivity.class);
-                intent.putExtra(MaintSearchActivity.FROM_TYPE_TAG,MaintSearchActivity.FROM_TYPE_CHECK_WARRANTY_STATUS);
-                startActivity(intent);
-                break;
-            case R.id.ll_buy_popucare_service:
-                goToNewActivity(MaintDeviceListActivity.class);
-                break;
+        if (id == R.id.tv_maintenance_request_btn) {
+            goToNewActivity(MaintenanceRequestActivity.class);
+
+        } else if (id == R.id.ll_maintenance_progress_enquiry) {
+            Intent intent = new Intent(this, MaintSearchActivity.class);
+            intent.putExtra(MaintSearchActivity.FROM_TYPE_TAG, MaintSearchActivity.FROM_TYPE_MAINTENANCE_PROGRESS);
+            startActivity(intent);
+
+        } else if (id == R.id.ll_check_warranty_status) {
+            Intent intent = new Intent(this, MaintSearchActivity.class);
+            intent.putExtra(MaintSearchActivity.FROM_TYPE_TAG, MaintSearchActivity.FROM_TYPE_CHECK_WARRANTY_STATUS);
+            startActivity(intent);
+
+        } else if (id == R.id.ll_buy_popucare_service) {
+            goToNewActivity(MaintDeviceListActivity.class);
         }
-
     }
+
 }

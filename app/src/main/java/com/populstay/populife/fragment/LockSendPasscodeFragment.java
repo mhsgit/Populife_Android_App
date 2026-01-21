@@ -229,23 +229,18 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
 				mTvStartTime.setText(DateUtil.getDateToString(mStartTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_00));
 				mTvEndTime.setText(DateUtil.getDateToString(mEndTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_00));
 				mTimePicker = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
-					@Override
-					public void onTimeSelect(Date date, View v) {
-						((TextView) v).setText(DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_00));
-						switch (v.getId()) {
-							case R.id.tv_lock_send_passcode_start_time:
-								mStartTime = date;
-								break;
+                    @Override
+                    public void onTimeSelect(Date date, View v) {
+                        ((TextView) v).setText(DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_00));
+                        int id = v.getId();
 
-							case R.id.tv_lock_send_passcode_end_time:
-								mEndTime = date;
-								break;
-
-							default:
-								break;
-						}
-					}
-				})
+                        if (id == R.id.tv_lock_send_passcode_start_time) {
+                            mStartTime = date;
+                        } else if (id == R.id.tv_lock_send_passcode_end_time) {
+                            mEndTime = date;
+                        }
+                    }
+                })
 						.setType(new boolean[]{true, true, true, true, false, false})
 						.setLabel(getString(R.string.unit_year), getString(R.string.unit_month), getString(R.string.unit_day),
 								getString(R.string.unit_hour), getString(R.string.unit_minute), getString(R.string.unit_second))
@@ -263,23 +258,19 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
 				mTvEndTime.setText(DateUtil.getDateToString(mEndTime, DateUtil.DATE_FORMAT_HH_00));
 
 				mTimePicker = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
-					@Override
-					public void onTimeSelect(Date date, View v) {
-						((TextView) v).setText(DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_HH_00));
-						switch (v.getId()) {
-							case R.id.tv_lock_send_passcode_start_time:
-								mStartTime = date;
-								break;
+                    @Override
+                    public void onTimeSelect(Date date, View v) {
+                        ((TextView) v).setText(DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_HH_00));
+                        int id = v.getId();
 
-							case R.id.tv_lock_send_passcode_end_time:
-								mEndTime = date;
-								break;
+                        if (id == R.id.tv_lock_send_passcode_start_time) {
+                            mStartTime = date;
+                        } else if (id == R.id.tv_lock_send_passcode_end_time) {
+                            mEndTime = date;
+                        }
+                    }
 
-							default:
-								break;
-						}
-					}
-				})
+                })
 						.setType(new boolean[]{false, false, false, true, false, false})
 						.setLabel(getString(R.string.unit_year), getString(R.string.unit_month), getString(R.string.unit_day),
 								getString(R.string.unit_hour), getString(R.string.unit_minute), getString(R.string.unit_second))
@@ -431,72 +422,57 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
 		return true;
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_lock_send_passcode_cyclic_mode:
-				mPickerCyclic.show();
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_lock_send_passcode_start_time:
-				setPickerSelectedTime(true, view);
-				break;
+        if (id == R.id.tv_lock_send_passcode_cyclic_mode) {
+            mPickerCyclic.show();
+        } else if (id == R.id.tv_lock_send_passcode_start_time) {
+            setPickerSelectedTime(true, view);
+        } else if (id == R.id.tv_lock_send_passcode_end_time) {
+            setPickerSelectedTime(false, view);
+        } else if (id == R.id.tv_lock_send_passcode_generate) {
+            if (checkForm()) {
+                if (VAL_TAB_TYPE_CUSTOMIZE.equals(mCurTabType)) { // 自定义密码
+                    mInputPwd = mEtCustomPwd.getText().toString();
+                    if (!StringUtil.isBlank(mInputPwd) && StringUtil.isNum(mInputPwd)
+                            && mInputPwd.length() >= 6 && mInputPwd.length() <= 9) {
 
-			case R.id.tv_lock_send_passcode_end_time:
-				setPickerSelectedTime(false, view);
-				break;
+                        if (isNetEnableWithToast()) {
+                            if (isBleEnableWithoutToast()) {
+                                checkPasswordExist(mInputPwd);
+                            } else {
+                                if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                    requestAddPasscode(mInputPwd, "2");
+                                } else {
+                                    toast(R.string.enable_bluetooth);
+                                }
+                            }
+                        }
+                    } else {
+                        toast(R.string.note_passcode_invalid);
+                    }
+                } else { // 直接和后台获取密码
+                    generatePasscode();
+                }
+            }
+        } else if (id == R.id.btn_dialog_input_cancel) {
+            DIALOG.cancel();
+        } else if (id == R.id.btn_dialog_input_ok) {
+            mInputPwd = mEtDialogInput.getText().toString();
+            if (!StringUtil.isBlank(mInputPwd) && StringUtil.isNum(mInputPwd)
+                    && mInputPwd.length() >= 6 && mInputPwd.length() <= 9) {
+                if (isBleNetEnable()) {
+                    checkPasswordExist(mInputPwd);
+                }
+            } else {
+                toast(R.string.note_passcode_invalid);
+            }
+        }
+    }
 
-			case R.id.tv_lock_send_passcode_generate:
-				if (checkForm()) {
-					if (VAL_TAB_TYPE_CUSTOMIZE.equals(mCurTabType)) {//自定义密码，先和锁通信
-						//showInputDialog();
-						mInputPwd = mEtCustomPwd.getText().toString();
-						if (!StringUtil.isBlank(mInputPwd) && StringUtil.isNum(mInputPwd)
-								&& mInputPwd.length() >= 6 && mInputPwd.length() <= 9) {
-
-							if (isNetEnableWithToast()) {
-								if (isBleEnableWithoutToast()) {
-									checkPasswordExist(mInputPwd);
-								} else {
-									if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-										requestAddPasscode(mInputPwd, "2");
-									} else {
-										toast(R.string.enable_bluetooth);
-									}
-								}
-							}
-						} else {
-							toast(R.string.note_passcode_invalid);
-						}
-
-					} else {//直接和后台获取密码
-						generatePasscode();
-					}
-				}
-				break;
-
-			case R.id.btn_dialog_input_cancel:
-				DIALOG.cancel();
-				break;
-
-			case R.id.btn_dialog_input_ok:
-				mInputPwd = mEtDialogInput.getText().toString();
-				if (!StringUtil.isBlank(mInputPwd) && StringUtil.isNum(mInputPwd)
-						&& mInputPwd.length() >= 6 && mInputPwd.length() <= 9) {
-					if (isBleNetEnable()) {
-						checkPasswordExist(mInputPwd);
-					}
-				} else {
-					toast(R.string.note_passcode_invalid);
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	private void setPickerSelectedTime(boolean isStart, View view) {
+    private void setPickerSelectedTime(boolean isStart, View view) {
 		KeyboardUtil.hideSoftInput(view);
 
 		Calendar cal = Calendar.getInstance();

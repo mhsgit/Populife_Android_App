@@ -109,26 +109,17 @@ public class MainActivity extends BaseActivity {
 
 	private void initListener() {
 		navigation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-				switch (checkedId) {
-					case R.id.nav_main_lock:
-						setCurrentTab(TAB_LOCK);
-						break;
-
-					case R.id.nav_main_general:
-						setCurrentTab(TAB_GENERAL);
-						break;
-
-					case R.id.nav_main_me:
-						setCurrentTab(TAB_ME);
-						break;
-
-					default:
-						break;
-				}
-			}
-		});
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.nav_main_lock) {
+                    setCurrentTab(TAB_LOCK);
+                } else if (checkedId == R.id.nav_main_general) {
+                    setCurrentTab(TAB_GENERAL);
+                } else if (checkedId == R.id.nav_main_me) {
+                    setCurrentTab(TAB_ME);
+                }
+            }
+        });
 	}
 
 	/**

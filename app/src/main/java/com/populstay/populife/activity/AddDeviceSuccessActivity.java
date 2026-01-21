@@ -186,32 +186,29 @@ public class AddDeviceSuccessActivity extends BaseActivity implements View.OnCli
 				.build();
 	}
 
-	@Override
-	public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-		switch (v.getId()) {
-			case R.id.tv_home_name:
-				mPickerHome.show();
-				KeyboardUtil.hideSoftInput(this);
-				break;
-			case R.id.tv_finish:
-				// 锁头
-				if (!mDeviceType.startsWith(HomeDeviceInfo.IDeviceName.NAME_GATEWAY)) {
-					modifyLockName();
-					bindLockHome();
-				} else {
-					modifyGatewayName();
-					bindGatewayHome();
-				}
-				break;
-			case R.id.tv_admin_pwd:
-				modifyLockAdminPwd();
-				break;
-		}
+        if (id == R.id.tv_home_name) {
+            mPickerHome.show();
+            KeyboardUtil.hideSoftInput(this);
+        } else if (id == R.id.tv_finish) {
+            // 锁头
+            if (!mDeviceType.startsWith(HomeDeviceInfo.IDeviceName.NAME_GATEWAY)) {
+                modifyLockName();
+                bindLockHome();
+            } else {
+                modifyGatewayName();
+                bindGatewayHome();
+            }
+        } else if (id == R.id.tv_admin_pwd) {
+            modifyLockAdminPwd();
+        }
+    }
 
-	}
 
-	private void requestLockGroup() {
+    private void requestLockGroup() {
 		RestClient.builder()
 				.url(Urls.GET_HOME_MY_OWN)
 				.loader(this)

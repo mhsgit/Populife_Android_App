@@ -213,29 +213,25 @@ public class DeleteAccountActivity extends BaseActivity implements View.OnClickL
 				.post();
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_delete_account_get_code:
-				// 判断用户名下是否有 锁/钥匙，如果有则提示先删除 锁/钥匙，没有则可以获取验证码，删除账号
-				int accountLockNum = PeachPreference.getAccountLockNum(PeachPreference.readUserId());
-				if (accountLockNum > 0) {
-					toast(R.string.note_delete_account_remove_lock);
-				} else {
-					getVerificationCode();
-				}
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_delete_account_verify:
-				validateVerificationCode();
-				break;
+        if (id == R.id.tv_delete_account_get_code) {
+            // 判断用户名下是否有锁/钥匙，如果有则提示先删除锁/钥匙，没有则可以获取验证码，删除账号
+            int accountLockNum = PeachPreference.getAccountLockNum(PeachPreference.readUserId());
+            if (accountLockNum > 0) {
+                toast(R.string.note_delete_account_remove_lock);
+            } else {
+                getVerificationCode();
+            }
+        } else if (id == R.id.tv_delete_account_verify) {
+            validateVerificationCode();
+        }
+    }
 
-			default:
-				break;
-		}
-	}
 
-	@Override
+    @Override
 	public void onDestroy() {
 		super.onDestroy();
 		if (mTimer != null) {

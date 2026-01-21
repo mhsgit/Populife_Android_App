@@ -6,6 +6,7 @@ version = "2.4.2"
 def verCode = 242
 
 android {
+    namespace "com.rilixtech.widget.countrycodepicker"
   compileSdkVersion 33
 
   defaultConfig {

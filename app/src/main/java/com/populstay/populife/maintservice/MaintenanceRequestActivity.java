@@ -355,31 +355,31 @@ public class MaintenanceRequestActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_after_sales_service_process_guide_hint:
-                goToNewActivity(MaintAfterSaleProcessActivity.class);
-                break;
-            case R.id.tv_select_country_btn:
-                curSelectCountryType = SELECT_COUNTRY_TYPE_YOUR_COUNTRY;
-                selectCountry();
-                break;
-            case R.id.tv_select_date_btn:
-                selectDate();
-                break;
-            case R.id.tv_select_certificate_btn:
-                selectCertificate();
-                break;
-            case R.id.selectCountryInfo:
-                curSelectCountryType = SELECT_COUNTRY_TYPE_LOGISTICS_COUNTRY;
-                selectCountryInfo();
-                break;
-            case R.id.selectPhoneAreaCode:
-                curSelectCountryType = SELECT_COUNTRY_TYPE_PHONE_COUNTRY;
-                selectPhoneAreaCode();
-                break;
-            case R.id.tv_maintenance_request_btn:
-                submitData();
-                break;
+        int id = v.getId();
+
+        if (id == R.id.tv_after_sales_service_process_guide_hint) {
+            goToNewActivity(MaintAfterSaleProcessActivity.class);
+
+        } else if (id == R.id.tv_select_country_btn) {
+            curSelectCountryType = SELECT_COUNTRY_TYPE_YOUR_COUNTRY;
+            selectCountry();
+
+        } else if (id == R.id.tv_select_date_btn) {
+            selectDate();
+
+        } else if (id == R.id.tv_select_certificate_btn) {
+            selectCertificate();
+
+        } else if (id == R.id.selectCountryInfo) {
+            curSelectCountryType = SELECT_COUNTRY_TYPE_LOGISTICS_COUNTRY;
+            selectCountryInfo();
+
+        } else if (id == R.id.selectPhoneAreaCode) {
+            curSelectCountryType = SELECT_COUNTRY_TYPE_PHONE_COUNTRY;
+            selectPhoneAreaCode();
+
+        } else if (id == R.id.tv_maintenance_request_btn) {
+            submitData();
         }
     }
 
@@ -677,6 +677,7 @@ public class MaintenanceRequestActivity extends BaseActivity implements View.OnC
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSION) {
             if (grantResults.length > 0) {
                 List<String> deniedPermissions = new ArrayList<>();

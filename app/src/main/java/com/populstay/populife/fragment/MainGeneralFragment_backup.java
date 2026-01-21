@@ -103,36 +103,28 @@ public class MainGeneralFragment_backup extends BaseVisibilityFragment implement
 		mLlAbout.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.ll_general_notification:
-				PeachPreference.setBoolean(PeachPreference.HAVE_NEW_MESSAGE, false);
-				goToNewActivity(MessageListActivity.class);
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.ll_general_service:
-				goToNewActivity(CustomerServiceActivity.class);
-				break;
+        if (id == R.id.ll_general_notification) {
+            PeachPreference.setBoolean(PeachPreference.HAVE_NEW_MESSAGE, false);
+            goToNewActivity(MessageListActivity.class);
 
-			case R.id.ll_general_gateway:
-				goToNewActivity(GatewayListActivity.class);
-				break;
+        } else if (id == R.id.ll_general_service) {
+            goToNewActivity(CustomerServiceActivity.class);
 
-			case R.id.ll_general_settings:
-				goToNewActivity(SettingsActivity.class);
-				break;
+        } else if (id == R.id.ll_general_gateway) {
+            goToNewActivity(GatewayListActivity.class);
 
-			case R.id.ll_settings_lock_group:
-				goToNewActivity(LockGroupListActivity.class);
-				break;
+        } else if (id == R.id.ll_general_settings) {
+            goToNewActivity(SettingsActivity.class);
 
-			case R.id.ll_settings_about:
-				goToNewActivity(AboutActivity.class);
-				break;
+        } else if (id == R.id.ll_settings_lock_group) {
+            goToNewActivity(LockGroupListActivity.class);
 
-			default:
-				break;
-		}
-	}
+        } else if (id == R.id.ll_settings_about) {
+            goToNewActivity(AboutActivity.class);
+        }
+    }
 }

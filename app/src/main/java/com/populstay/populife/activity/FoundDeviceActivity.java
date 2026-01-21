@@ -803,17 +803,16 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 		}
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.tv_tap_help:
-				Intent intent = new Intent(this, HelpActivity.class);
-				startActivity(intent);
-				break;
-		}
-	}
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.tv_tap_help) {
+            Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
+        }
+    }
 
-	/**
+
+    /**
 	 * 开始扫描
 	 */
 	private void pplStartScan() {

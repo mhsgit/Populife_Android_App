@@ -155,33 +155,26 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 		mLlMoonLock.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.ll_lock_type_deadbolt:
-				if (isBleNetEnableWithToast()) {
-					LockAddGuideActivity.actionStartAddLock(LockAddSelectTypeActivity.this, "");
-				}
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.ll_lock_type_keybox:
-				if (isBleNetEnableWithToast()) {
-					goToNewActivity(LockAddGuideKeyboxOpenActivity.class);
-				}
-				break;
-
-			case R.id.ll_lock_type_mortise:
-				if (isBleNetEnableWithToast()) {
-					goToNewActivity(FoundDeviceActivity.class);
-				}
-				break;
-			case R.id.ll_lock_type_moonlock:
-				if (isBleNetEnableWithToast()) {
-					LockAddGuideActivity.actionStartAddLock(LockAddSelectTypeActivity.this, "");
-				}
-				break;
-			default:
-				break;
-		}
-	}
+        if (id == R.id.ll_lock_type_deadbolt) {
+            if (isBleNetEnableWithToast()) {
+                LockAddGuideActivity.actionStartAddLock(LockAddSelectTypeActivity.this, "");
+            }
+        } else if (id == R.id.ll_lock_type_keybox) {
+            if (isBleNetEnableWithToast()) {
+                goToNewActivity(LockAddGuideKeyboxOpenActivity.class);
+            }
+        } else if (id == R.id.ll_lock_type_mortise) {
+            if (isBleNetEnableWithToast()) {
+                goToNewActivity(FoundDeviceActivity.class);
+            }
+        } else if (id == R.id.ll_lock_type_moonlock) {
+            if (isBleNetEnableWithToast()) {
+                LockAddGuideActivity.actionStartAddLock(LockAddSelectTypeActivity.this, "");
+            }
+        }
+    }
 }

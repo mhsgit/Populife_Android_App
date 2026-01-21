@@ -165,45 +165,49 @@ public class EkeyPeriodModifyActivity extends BaseActivity implements View.OnCli
 		});
 	}
 
-	private void initTimePicker() {
-		Calendar selectedDate = Calendar.getInstance();
-		selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH),
-				selectedDate.get(Calendar.DAY_OF_MONTH), selectedDate.get(Calendar.HOUR_OF_DAY),
-				selectedDate.get(Calendar.MINUTE));
+    private void initTimePicker() {
+        Calendar selectedDate = Calendar.getInstance();
+        selectedDate.set(
+                selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH),
+                selectedDate.get(Calendar.DAY_OF_MONTH),
+                selectedDate.get(Calendar.HOUR_OF_DAY),
+                selectedDate.get(Calendar.MINUTE)
+        );
 
-		mTimePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
-			@Override
-			public void onTimeSelect(Date date, View v) {
-				String time = DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM);
-				switch (v.getId()) {
-					case R.id.tv_ekey_period_modify_start_time:
-					case R.id.ll_start_time:
-						((TextView) findViewById(R.id.tv_ekey_period_modify_start_time)).setText(time);
-						mStartTime = DateUtil.getStringToDate(time, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM); // 所得参数单位：毫秒
-						break;
+        mTimePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                String time = DateUtil.getDateToString(date, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM);
+                int id = v.getId();
 
-					case R.id.tv_ekey_period_modify_end_time:
-					case R.id.ll_end_time:
-						((TextView) findViewById(R.id.tv_ekey_period_modify_end_time)).setText(time);
-						mEndTime = DateUtil.getStringToDate(time, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM); // 所得参数单位：毫秒
-						break;
+                if (id == R.id.tv_ekey_period_modify_start_time || id == R.id.ll_start_time) {
+                    ((TextView) findViewById(R.id.tv_ekey_period_modify_start_time)).setText(time);
+                    mStartTime = DateUtil.getStringToDate(time, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM); // 毫秒
+                } else if (id == R.id.tv_ekey_period_modify_end_time || id == R.id.ll_end_time) {
+                    ((TextView) findViewById(R.id.tv_ekey_period_modify_end_time)).setText(time);
+                    mEndTime = DateUtil.getStringToDate(time, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM); // 毫秒
+                }
+            }
+        })
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel(
+                        getString(R.string.unit_year),
+                        getString(R.string.unit_month),
+                        getString(R.string.unit_day),
+                        getString(R.string.unit_hour),
+                        getString(R.string.unit_minute),
+                        getString(R.string.unit_second)
+                )
+                .setSubmitText(getResources().getString(R.string.ok))
+                .setCancelText(getResources().getString(R.string.cancel))
+                .setDate(selectedDate)
+                .setRangDate(selectedDate, null)
+                .build();
+    }
 
-					default:
-						break;
-				}
-			}
-		})
-				.setType(new boolean[]{true, true, true, true, true, false})
-				.setLabel(getString(R.string.unit_year), getString(R.string.unit_month), getString(R.string.unit_day),
-						getString(R.string.unit_hour), getString(R.string.unit_minute), getString(R.string.unit_second))
-				.setSubmitText(getResources().getString(R.string.ok))
-				.setCancelText(getResources().getString(R.string.cancel))
-				.setDate(selectedDate)
-				.setRangDate(selectedDate, null)
-				.build();
-	}
 
-	private void initListener() {
+    private void initListener() {
 		mTvSave.setOnClickListener(this);
 		mTvStartTime.setOnClickListener(this);
 		mTvEndTime.setOnClickListener(this);
@@ -212,33 +216,25 @@ public class EkeyPeriodModifyActivity extends BaseActivity implements View.OnCli
 		rg_valid_period.setOnCheckedChangeListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_save_btn:
-				if (mStartTime < mEndTime) {
-					modifyEkeyPeriod();
-				} else {
-					toast(R.string.note_time_start_greater_than_end);
-				}
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_ekey_period_modify_start_time:
-			case R.id.ll_start_time:
-				setPickerSelectedTime(true, view);
-				break;
+        if (id == R.id.tv_save_btn) {
+            if (mStartTime < mEndTime) {
+                modifyEkeyPeriod();
+            } else {
+                toast(R.string.note_time_start_greater_than_end);
+            }
+        } else if (id == R.id.tv_ekey_period_modify_start_time || id == R.id.ll_start_time) {
+            setPickerSelectedTime(true, view);
+        } else if (id == R.id.tv_ekey_period_modify_end_time || id == R.id.ll_end_time) {
+            setPickerSelectedTime(false, view);
+        }
+    }
 
-			case R.id.tv_ekey_period_modify_end_time:
-			case R.id.ll_end_time:
-				setPickerSelectedTime(false, view);
-				break;
 
-			default:
-				break;
-		}
-	}
-
-	private void setPickerSelectedTime(boolean isStart, View view) {
+    private void setPickerSelectedTime(boolean isStart, View view) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(isStart ? mStartTime : mEndTime);
 		mTimePicker.setDate(cal);
@@ -293,36 +289,32 @@ public class EkeyPeriodModifyActivity extends BaseActivity implements View.OnCli
 				.post();
 	}
 
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		switch (group.getId()) {
-			case R.id.rg_valid_period:
-				selectValidPeriod(checkedId);
-				break;
-		}
-	}
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (group.getId() == R.id.rg_valid_period) {
+            selectValidPeriod(checkedId);
+        }
+    }
 
-	private void selectValidPeriod(int checkedId) {
-		switch (checkedId) {
-			case R.id.rb_valid_period_permanent:
-				ll_time_info.setVisibility(View.GONE);
-				mKeyType = KeyPwdConstant.IBTKeyType.PERMANENT;
-				break;
-			case R.id.rb_valid_period_time_limited:
-				ll_time_info.setVisibility(View.VISIBLE);
-				mKeyType = KeyPwdConstant.IBTKeyType.TIME_LIMITED;
-				tv_show_current_date.setText(DateUtil.getCurDate(DateUtil.DATE_TIME_PATTERN_3));
+    private void selectValidPeriod(int checkedId) {
+        if (checkedId == R.id.rb_valid_period_permanent) {
+            ll_time_info.setVisibility(View.GONE);
+            mKeyType = KeyPwdConstant.IBTKeyType.PERMANENT;
+        } else if (checkedId == R.id.rb_valid_period_time_limited) {
+            ll_time_info.setVisibility(View.VISIBLE);
+            mKeyType = KeyPwdConstant.IBTKeyType.TIME_LIMITED;
+            tv_show_current_date.setText(DateUtil.getCurDate(DateUtil.DATE_TIME_PATTERN_3));
 
-				if (0 == mStartTime) {
-					mStartTime = new Date().getTime();
-				}
-				if (0 == mEndTime) {
-					mEndTime = new Date().getTime();
-				}
+            if (mStartTime == 0) {
+                mStartTime = new Date().getTime();
+            }
+            if (mEndTime == 0) {
+                mEndTime = new Date().getTime();
+            }
 
-				mTvStartTime.setText(DateUtil.getDateToString(mStartTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-				mTvEndTime.setText(DateUtil.getDateToString(mEndTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-				break;
-		}
-	}
+            mTvStartTime.setText(DateUtil.getDateToString(mStartTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
+            mTvEndTime.setText(DateUtil.getDateToString(mEndTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
+        }
+    }
+
 }

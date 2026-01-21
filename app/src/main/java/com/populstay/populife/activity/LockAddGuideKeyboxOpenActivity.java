@@ -46,27 +46,31 @@ public class LockAddGuideKeyboxOpenActivity extends BaseActivity implements View
 		//mCheckBox.setOnClickListener(this);
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.page_action:
-				DialogUtil.showCommonDialog(this, null,
-						getString(R.string.note_keybox_default_password), getString(R.string.ok),
-						null, null, null);
-				break;
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-			case R.id.tv_lock_add_guide_next:
-				if (isBleNetEnableWithToast()) {
-					LockAddGuideActivity.actionStartAddLock(LockAddGuideKeyboxOpenActivity.this, "");
-				}
-				break;
+        if (id == R.id.page_action) {
+            DialogUtil.showCommonDialog(
+                    this,
+                    null,
+                    getString(R.string.note_keybox_default_password),
+                    getString(R.string.ok),
+                    null,
+                    null,
+                    null
+            );
+        } else if (id == R.id.tv_lock_add_guide_next) {
+            if (isBleNetEnableWithToast()) {
+                LockAddGuideActivity.actionStartAddLock(LockAddGuideKeyboxOpenActivity.this, "");
+            }
+        }
 
-			/*case R.id.cb_lock_add_guide:
-				mTvNext.setEnabled(mCheckBox.isChecked());
-				break;*/
+    /* 如果以后需要处理复选框，可以再加 else if
+    else if (id == R.id.cb_lock_add_guide) {
+        mTvNext.setEnabled(mCheckBox.isChecked());
+    }
+    */
+    }
 
-			default:
-				break;
-		}
-	}
 }

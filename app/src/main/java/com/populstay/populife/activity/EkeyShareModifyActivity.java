@@ -162,36 +162,37 @@ public class EkeyShareModifyActivity extends BaseActivity implements View.OnClic
 		});
 	}
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.tv_save_btn:
-				if (shareKeyThrough == KeyPwdConstant.IBTKeyShareThrough.ACCOUNT) {
-					sendKeyByAccount(mEtReceiver.getText().toString());
-				} else {
-					showShareBTKey(mKeyPwd.getShareKeyUrl());
-				}
-				break;
-			case R.id.iv_lock_send_ekey_receiver:
-				/*requestRuntimePermissions(new String[]{Manifest.permission.READ_CONTACTS}, new PermissionListener() {
-					@Override
-					public void onGranted() {
-						Intent intent = new Intent();
-						intent.setAction(Intent.ACTION_PICK);
-						intent.setData(ContactsContract.Contacts.CONTENT_URI);
-						startActivityForResult(intent, REQUEST_CONTACT);
-					}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-					@Override
-					public void onDenied(List<String> deniedPermissions) {
-						toast(getString(R.string.note_permission_contact));
-					}
-				});*/
-				break;
-		}
-	}
+        if (id == R.id.tv_save_btn) {
+            if (shareKeyThrough == KeyPwdConstant.IBTKeyShareThrough.ACCOUNT) {
+                sendKeyByAccount(mEtReceiver.getText().toString());
+            } else {
+                showShareBTKey(mKeyPwd.getShareKeyUrl());
+            }
+        } else if (id == R.id.iv_lock_send_ekey_receiver) {
+        /*
+        requestRuntimePermissions(new String[]{Manifest.permission.READ_CONTACTS}, new PermissionListener() {
+            @Override
+            public void onGranted() {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_PICK);
+                intent.setData(ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CONTACT);
+            }
 
-	public void showShareBTKey(String data) {
+            @Override
+            public void onDenied(List<String> deniedPermissions) {
+                toast(getString(R.string.note_permission_contact));
+            }
+        });
+        */
+        }
+    }
+
+    public void showShareBTKey(String data) {
 		 //oks = new OnekeyShare();
 		final String msg = String.format(getResources().getString(R.string.share_bt_key_text), data);
 		try {
@@ -324,32 +325,29 @@ public class EkeyShareModifyActivity extends BaseActivity implements View.OnClic
 				.post();
 	}
 
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		switch (group.getId()) {
-			case R.id.rg_share_the_key_through:
-				setShareTheKeyThrough(checkedId);
-				break;
-		}
-	}
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (group.getId() == R.id.rg_share_the_key_through) {
+            setShareTheKeyThrough(checkedId);
+        }
+    }
 
-	private void setShareTheKeyThrough(int checkedId) {
-		switch (checkedId) {
-			case R.id.rb_share_key_through_account:
-				tv_share_the_key_through_hint.setText(R.string.share_type_populife_account);
-				shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.ACCOUNT;
-				ll_receiver.setVisibility(View.VISIBLE);
-				break;
-			case R.id.rb_share_key_through_sms_link:
-				tv_share_the_key_through_hint.setText(R.string.share_type_sms_link);
-				shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.SMS_LINK;
-				ll_receiver.setVisibility(View.GONE);
-				break;
-		}
-		setSendBtnEnable();
-	}
+    private void setShareTheKeyThrough(int checkedId) {
+        if (checkedId == R.id.rb_share_key_through_account) {
+            tv_share_the_key_through_hint.setText(R.string.share_type_populife_account);
+            shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.ACCOUNT;
+            ll_receiver.setVisibility(View.VISIBLE);
+        } else if (checkedId == R.id.rb_share_key_through_sms_link) {
+            tv_share_the_key_through_hint.setText(R.string.share_type_sms_link);
+            shareKeyThrough = KeyPwdConstant.IBTKeyShareThrough.SMS_LINK;
+            ll_receiver.setVisibility(View.GONE);
+        }
 
-	private void setSendBtnEnable() {
+        setSendBtnEnable();
+    }
+
+
+    private void setSendBtnEnable() {
 		mTvSave.setEnabled(isSendBtnEnable());
 	}
 
@@ -379,34 +377,45 @@ public class EkeyShareModifyActivity extends BaseActivity implements View.OnClic
 		}
 	}
 
-	private String[] getPhoneContacts(Uri uri) {
-		String[] contact = new String[2];
-		//得到ContentResolver对象
-		ContentResolver cr = getContentResolver();
-		//取得电话本中开始一项的光标
-		Cursor cursor = cr.query(uri, null, null, null, null);
+    private String[] getPhoneContacts(Uri uri) {
+        String[] contact = new String[2];
+        if (uri == null) return contact;
 
-		if (cursor != null) {
-			cursor.moveToFirst();
-			//取得联系人名字
-			int nameFieldColumnIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
-			contact[0] = cursor.getString(nameFieldColumnIndex);
+        ContentResolver cr = getContentResolver();
+        Cursor cursor = null;
+        Cursor phoneCursor = null;
 
-			//取得电话号码
-			String ContactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-			Cursor phone = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-					ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + ContactId, null, null);
+        try {
+            cursor = cr.query(uri, null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                // 取得联系人名字
+                int nameIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
+                contact[0] = nameIndex != -1 ? cursor.getString(nameIndex) : "";
 
-			if (phone != null) {
-				phone.moveToFirst();
-				contact[1] = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                // 取得联系人ID
+                int idIndex = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+                if (idIndex != -1) {
+                    String contactId = cursor.getString(idIndex);
+                    phoneCursor = cr.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
+                            new String[]{contactId},
+                            null
+                    );
 
-				phone.close();
-			}
+                    if (phoneCursor != null && phoneCursor.moveToFirst()) {
+                        int numberIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                        contact[1] = numberIndex != -1 ? phoneCursor.getString(numberIndex) : "";
+                    }
+                }
+            }
+        } finally {
+            if (cursor != null) cursor.close();
+            if (phoneCursor != null) phoneCursor.close();
+        }
 
-			cursor.close();
-		}
+        return contact;
+    }
 
-		return contact;
-	}
 }

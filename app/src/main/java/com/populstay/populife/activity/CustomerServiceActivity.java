@@ -90,60 +90,42 @@ public class CustomerServiceActivity extends BaseActivity implements View.OnClic
 		mLlSendEmail.setOnClickListener(this);
 		mLlOnlineCommunication.setOnClickListener(this);
 	}
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
 
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.ll_service_manual_app:
-				PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_app),
-						"user_manual_app.pdf", true);
-				break;
-
-			case R.id.ll_service_manual_deadbolt:
-				PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_deadbolt),
-						"user_manual_deadbolt.pdf", true);
-				break;
-
-			case R.id.ll_service_manual_keybox:
-				String pdfAssetName = "user_manual_keybox_en.pdf";
-				if (LanguageUtil.isChinese(CustomerServiceActivity.this)){
-					pdfAssetName = "user_manual_keybox_cn.pdf";
-				}else if (LanguageUtil.isJp(CustomerServiceActivity.this)){
-					pdfAssetName = "user_manual_keybox_jp.pdf";
-				}
-
-				PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_keybox), pdfAssetName, true);
-				break;
-
-			case R.id.ll_service_manual_gateway:
-				String pdfGatewayAssetName = "user_manual_gateway_en.pdf";
-				if (LanguageUtil.isChinese(CustomerServiceActivity.this)){
-					pdfGatewayAssetName = "user_manual_gateway_cn.pdf";
-				}
-				PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_gateway),
-						pdfGatewayAssetName, true);
-				break;
-
-			case R.id.ll_service_questions:
-				goToNewActivity(CommonQuestionActivity.class);
-				break;
-
-			case R.id.ll_service_feedback:
-				goToNewActivity(FeedbackListActivity.class);
-				break;
-
-			case R.id.ll_service_send_email:
-				sendEmail();
-				break;
-
-			case R.id.ll_service_online_communication:
-				startImServiceActivity(CustomerServiceActivity.this);
-				break;
-
-			default:
-				break;
-		}
-	}
+        if (id == R.id.ll_service_manual_app) {
+            PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_app),
+                    "user_manual_app.pdf", true);
+        } else if (id == R.id.ll_service_manual_deadbolt) {
+            PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_deadbolt),
+                    "user_manual_deadbolt.pdf", true);
+        } else if (id == R.id.ll_service_manual_keybox) {
+            String pdfAssetName = "user_manual_keybox_en.pdf";
+            if (LanguageUtil.isChinese(CustomerServiceActivity.this)) {
+                pdfAssetName = "user_manual_keybox_cn.pdf";
+            } else if (LanguageUtil.isJp(CustomerServiceActivity.this)) {
+                pdfAssetName = "user_manual_keybox_jp.pdf";
+            }
+            PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_keybox),
+                    pdfAssetName, true);
+        } else if (id == R.id.ll_service_manual_gateway) {
+            String pdfGatewayAssetName = "user_manual_gateway_en.pdf";
+            if (LanguageUtil.isChinese(CustomerServiceActivity.this)) {
+                pdfGatewayAssetName = "user_manual_gateway_cn.pdf";
+            }
+            PDFActivity.actionStart(CustomerServiceActivity.this, getString(R.string.user_manual_gateway),
+                    pdfGatewayAssetName, true);
+        } else if (id == R.id.ll_service_questions) {
+            goToNewActivity(CommonQuestionActivity.class);
+        } else if (id == R.id.ll_service_feedback) {
+            goToNewActivity(FeedbackListActivity.class);
+        } else if (id == R.id.ll_service_send_email) {
+            sendEmail();
+        } else if (id == R.id.ll_service_online_communication) {
+            startImServiceActivity(CustomerServiceActivity.this);
+        }
+    }
 
 	private void sendEmail() {
 		// 创建Intent

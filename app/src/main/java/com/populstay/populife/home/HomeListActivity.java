@@ -115,15 +115,15 @@ public class HomeListActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_create_space_btn:
-                HomeCreateActivity.actionStart(this, HomeCreateActivity.VAL_HOME_CREATE_ACTION_TYPE_NEW_HOME, null);
-                break;
-            case R.id.tv_manage_space_btn:
-                actionStart(this,VAL_ACTION_TYPE_MANAGE_HOME);
-                break;
+        int id = v.getId();
+
+        if (id == R.id.tv_create_space_btn) {
+            HomeCreateActivity.actionStart(this, HomeCreateActivity.VAL_HOME_CREATE_ACTION_TYPE_NEW_HOME, null);
+        } else if (id == R.id.tv_manage_space_btn) {
+            actionStart(this, VAL_ACTION_TYPE_MANAGE_HOME);
         }
     }
+
 
     private void requestLockGroup() {
         RestClient.builder()

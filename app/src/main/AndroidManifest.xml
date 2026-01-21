@@ -49,19 +49,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <queries>
-
-        <package android:name="com.google.android.gm" /> <!-- Gmail -->
-        <package android:name="com.microsoft.office.outlook" /> <!-- Outlook -->
-        <package android:name="com.netease.mail" /> <!-- Outlook -->
-
         <package android:name="com.google.android.gm" /> <!-- Gmail -->
         <package android:name="com.microsoft.office.outlook" /> <!-- Outlook -->
         <package android:name="com.netease.mail" /> <!-- Outlook -->
         <package android:name="com.tencent.qqmail" />
         <package android:name="com.netease.mailmaster" />
         <package android:name="com.tencent.wefax" />
-        <package android:name="com.google.android.gm" />
-        <package android:name="com.microsoft.office.outlook" />
         <package android:name="com.tencent.wework" />
         <package android:name="com.aliyun.alimail" />
         <package android:name="com.huawei.email" />
@@ -72,8 +65,6 @@
         <package android:name="ch.protonmail.protonmail" />
         <package android:name="im.spark.spark" />
         <package android:name="com.yahoo.mobile.client.android.mail" />
-        <package android:name="com.android.email" />
-        <package android:name="com.google.android.gm" />
         <package android:name="com.android.email" />
 
         <intent>
