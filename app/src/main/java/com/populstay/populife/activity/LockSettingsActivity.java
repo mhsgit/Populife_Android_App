@@ -94,7 +94,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 			mTvLockName, mTvAdminPasscode, mTvDelete, mTvRemoteUnlockState, tv_lock_settings_space;
 	private ImageView mIvSyncBattery, mIvBattery, mIvMacDisplay, mIvSetLockTimeHelp, tv_lock_settings_space_more, tv_lock_settings_lock_name_more;
 	private LinearLayout mLlMacId, mLlValidity, mLlStartEndTime, mLlLockName, ll_serial_number, mLlKeyStatus,
-			mLlAdminPasscode, mLlLockTime, mLlAutoLocking, mLlLockUpgrade, mLlRemoteUnlock, mLlKeypadVolume;
+			mLlAdminPasscode, mLlLockTime, mLlAutoLocking, mLlLockUpgrade, mLlRemoteUnlock, mLlKeypadVolume, mLlNotification;
 	private Space mSpace;
 	private AlertDialog DIALOG;
 	private EditText mEtDialogInput;
@@ -212,6 +212,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		mLlRemoteUnlock = findViewById(R.id.ll_lock_settings_remote_unlock);
 		mTvRemoteUnlockState = findViewById(R.id.tv_lock_settings_remote_unlock_state);
 		mLlKeypadVolume = findViewById(R.id.ll_lock_settings_keypad_volume);
+		mLlNotification = findViewById(R.id.ll_lock_settings_notification);
 		mTvDelete = findViewById(R.id.tv_lock_settings_delete);
 		mSpace = findViewById(R.id.space_lock_settings_lock_time);
 		mIvSetLockTimeHelp = findViewById(R.id.iv_lock_settings_lock_time_help);
@@ -431,6 +432,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		mLlRemoteUnlock.setOnClickListener(this);
 		mIvSyncBattery.setOnClickListener(this);
 		mLlKeypadVolume.setOnClickListener(this);
+		mLlNotification.setOnClickListener(this);
 		mIvSetLockTimeHelp.setOnClickListener(this);
 		tv_lock_settings_space.setOnClickListener(this);
 	}

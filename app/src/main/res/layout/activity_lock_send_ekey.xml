@@ -40,6 +40,118 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_share_the_key_through"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/share_key_through" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_share_the_key_through"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_share_key_through_account"
+                            style="@style/radio_btn_key_pwd"
+                            android:layout_width="0dp"
+                            android:layout_marginRight="@dimen/dimens_dp_20"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:minHeight="30dp"
+                            android:text="@string/share_key_through_account" />
+
+                        <RadioButton
+                            android:id="@+id/rb_share_key_through_sms_link"
+                            style="@style/radio_btn_key_pwd"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:minHeight="30dp"
+                            android:text="@string/share_key_through_sms_link" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_share_the_key_through_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/share_type_populife_account"
+                        android:textColor="@color/text_gray_light"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_receiver"
+                style="@style/list_item_overall"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/receiver_populife" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                        app:ccp_defaultNameCode="US"
+                        android:id="@+id/cpp_lock_send_ekey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        app:ccp_showFlag="false"
+                        app:ccp_showFullName="false"
+                        app:ccp_textSize="12sp" />
+
+                    <com.populstay.populife.ui.widget.exedittext.MultiLineHintEditText
+                        android:id="@+id/et_lock_send_ekey_receiver"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:singleLine="true"
+                        android:textColor="@color/text_gray_dark"
+                        app:hintText="@string/receiver_populife_edit_hint"
+                        app:hintColor="@color/text_gray_light"
+                        app:hintSize="12dp"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_lock_send_ekey_receiver"
+                        android:layout_width="26dp"
+                        android:visibility="gone"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="8dp"
+                        android:src="@drawable/ic_phone_contact_book" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 style="@style/list_item_overall"
                 android:orientation="vertical">
 
@@ -207,22 +319,22 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rb_general_user"
-                            style="@style/radio_btn_key_pwd"
-                            android:layout_width="0dp"
-                            android:layout_marginRight="@dimen/dimens_dp_20"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:minHeight="30dp"
-                            android:text="@string/general_user" />
-
-                        <RadioButton
                             android:id="@+id/rb_authorized_user"
                             style="@style/radio_btn_key_pwd"
+                            android:layout_marginRight="@dimen/dimens_dp_20"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:minHeight="30dp"
                             android:text="@string/authorized_user" />
+
+                        <RadioButton
+                            android:id="@+id/rb_general_user"
+                            style="@style/radio_btn_key_pwd"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:minHeight="30dp"
+                            android:text="@string/general_user" />
 
                     </RadioGroup>
 
@@ -266,117 +378,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_share_the_key_through"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    style="@style/list_item_overall"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/share_key_through" />
-
-                    <RadioGroup
-                        android:id="@+id/rg_share_the_key_through"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rb_share_key_through_account"
-                            style="@style/radio_btn_key_pwd"
-                            android:layout_width="0dp"
-                            android:layout_marginRight="@dimen/dimens_dp_20"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:minHeight="30dp"
-                            android:text="@string/share_key_through_account" />
-
-                        <RadioButton
-                            android:id="@+id/rb_share_key_through_sms_link"
-                            style="@style/radio_btn_key_pwd"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:minHeight="30dp"
-                            android:text="@string/share_key_through_sms_link" />
-
-                    </RadioGroup>
-
-                    <TextView
-                        android:id="@+id/tv_share_the_key_through_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/share_type_populife_account"
-                        android:textColor="@color/text_gray_light"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_receiver"
-                style="@style/list_item_overall"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/list_item_title"
-                    android:text="@string/receiver_populife" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="horizontal">
-
-                    <com.rilixtech.widget.countrycodepicker.CountryCodePicker
-                        app:ccp_defaultNameCode="US"
-                        android:id="@+id/cpp_lock_send_ekey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        app:ccp_showFlag="false"
-                        app:ccp_showFullName="false"
-                        app:ccp_textSize="12sp" />
-
-                    <com.populstay.populife.ui.widget.exedittext.MultiLineHintEditText
-                        android:id="@+id/et_lock_send_ekey_receiver"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:maxLines="1"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:singleLine="true"
-                        android:textColor="@color/text_gray_dark"
-                        app:hintText="@string/receiver_populife_edit_hint"
-                        app:hintColor="@color/text_gray_light"
-                        app:hintSize="12dp"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:id="@+id/iv_lock_send_ekey_receiver"
-                        android:layout_width="26dp"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="8dp"
-                        android:src="@drawable/ic_phone_contact_book" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar"/>
+
+    <RelativeLayout
+        android:layout_marginHorizontal="@dimen/common_page_left_right_space"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:overScrollMode="always"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_lock_setting_notification_mode_label"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unlock notification:"
+                        android:textColor="#FF282828"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_lock_setting_notification_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/tv_lock_setting_notification_mode_label"
+                        android:text="@string/on"
+                        android:textColor="@color/text_color_ffee2737"
+                        android:textSize="15sp"/>
+
+                    <com.populstay.populife.ui.widget.CustomSwitch
+                        android:id="@+id/tv_lock_setting_notification_switch"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:thumb="@drawable/switch_thumb_states"
+                        android:track="@drawable/switch_track_states"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="When notifications are enabled, you will receive unlock updates for this lock"
+                    android:textColor="#FF1F2021"
+                    android:gravity="start"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@mipmap/ic_notification_disabled"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"/>
+
+                    <TextView
+                        android:text="No gateway required"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_border_box">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="15dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@mipmap/ic_notification_app_unlocks"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="App Unlocks"
+                                android:textSize="15sp"
+                                android:textColor="#000000"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Receive a notification when others unlock the lock via the app, no gateway required."
+                                android:textSize="13sp"
+                                android:textColor="#A6A6A6"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/baseline_wifi_24"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"/>
+
+                    <TextView
+                        android:text="No gateway required"
+                        style="@style/remote_unlock_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_border_box">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="15dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@mipmap/ic_gateway_lock"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Passcode Unlocks"
+                                android:textSize="15sp"
+                                android:textColor="#000000"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Password unlock notifications will be sent when the gateway is online and connected"
+                                android:textSize="13sp"
+                                android:textColor="#A6A6A6"
+                                android:layout_marginTop="4dp"/>
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Without a gateway, unlock history can be viewed via Bluetooth when near the lock"
+                                android:textSize="13sp"
+                                android:textColor="#A6A6A6"
+                                android:layout_marginTop="10dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24dp"
+                    android:id="@+id/no_gateway_layout"
+                    android:layout_width="match_parent"
+                    android:alpha="0.3"
+                    android:layout_height="72dp">
+
+                    <ImageView
+                        android:src="@mipmap/ic_gateway_point_new"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+
+                    <TextView
+                        android:layout_marginLeft="8dp"
+                        android:textColor="#FF282828"
+                        android:text="Without a gateway, only app unlock notifications are pushed in real-time. Password unlock records require Bluetooth proximity viewing"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:id="@+id/rl_goto"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:paddingHorizontal="12dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_setting_notification_hint"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:id="@+id/iv_goto_1"
+                android:src="@drawable/baseline_volume_up_24_f34949"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:id="@+id/tv_goto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/iv_goto_2"
+                android:layout_toEndOf="@+id/iv_goto_1"
+                android:text="You haven’t enabled notifications for the Populife App, go to system settings"
+                android:textColor="#FF000000"
+                android:textSize="13sp"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_buy_btn"-->
+<!--                style="@style/btn_style_main_small"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:minWidth="72dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:paddingHorizontal="3dp"-->
+<!--                android:text="123123123" />-->
+
+            <ImageView
+                android:id="@+id/iv_goto_2"
+
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/arrow_go_to" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
