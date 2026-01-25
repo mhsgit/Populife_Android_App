@@ -31,7 +31,9 @@ public class KeyPwdConstant {
 		// 限时密码
 		String KEY_PWD_TYPE_PERIOD = "KEY_PWD_TYPE_PERIOD";
 		// 一次性密码
-		String KEY_PWD_TYPE_ONE_TIME = "KEY_PWD_TYPE_ONE_TIME";
+        String KEY_PWD_TYPE_ONE_TIME = "KEY_PWD_TYPE_ONE_TIME";
+//        循环密码
+        String KEY_PWD_TYPE_RECURRING = "KEY_PWD_TYPE_RECURRING";
 		// 自定义密码
 		String KEY_PWD_TYPE_CUSTOM = "KEY_PWD_TYPE_CUSTOM";
 		// 蓝牙钥匙

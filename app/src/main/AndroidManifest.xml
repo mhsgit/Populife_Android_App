@@ -509,6 +509,9 @@
             android:name=".activity.OfflineLockListActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.LockSendPasscodeNewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

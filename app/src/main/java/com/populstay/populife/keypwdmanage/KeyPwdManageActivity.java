@@ -15,6 +15,7 @@ import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populstay.populife.R;
 import com.populstay.populife.activity.LockSendEkeyActivity;
 import com.populstay.populife.activity.LockSendPasscodeActivity;
+import com.populstay.populife.activity.LockSendPasscodeNewActivity;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.base.BasePagerAdapter;
@@ -58,7 +59,7 @@ public class KeyPwdManageActivity extends BaseActivity implements View.OnClickLi
 	private static final String KEY_TYPE = "KEY_TYPE";
 	private static final String KEY_FROM = "KEY_FROM";
 	private static final String KEY_LOCK_TYPE = "KEY_LOCK_TYPE";
-	public List<Passcode> mPasscodeList = new ArrayList<>();
+//	public List<Passcode> mPasscodeList = new ArrayList<>();
 	private int mFrom = KeyPwdConstant.IFrom.FROM_LOCK_DETAILS;
 	private int mAccessType = KeyPwdConstant.IType.TYPE_KEY; // 1：钥匙，2：密码，3：指纹，4：门卡
 	private TabLayout mTabLayout;
@@ -293,17 +294,17 @@ public class KeyPwdManageActivity extends BaseActivity implements View.OnClickLi
 		return getString(title);
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (RESULT_OK == resultCode) {
-			if (KeyPwdTypeSelectActivity.KEY_PWD_TYPE_REQUEST_CODE == requestCode) {
-				// 创建【数字密码】前，拿到用户选择的密码类型
-				String keyPwdTypeSelected = data.getStringExtra(KeyPwdTypeSelectActivity.KEY_PWD_TYPE_SELECTED);
-				createKeyPwd(keyPwdTypeSelected);
-			}
-		}
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//		super.onActivityResult(requestCode, resultCode, data);
+//		if (RESULT_OK == resultCode) {
+//			if (KeyPwdTypeSelectActivity.KEY_PWD_TYPE_REQUEST_CODE == requestCode) {
+//				// 创建【数字密码】前，拿到用户选择的密码类型
+//				String keyPwdTypeSelected = data.getStringExtra(KeyPwdTypeSelectActivity.KEY_PWD_TYPE_SELECTED);
+//				createKeyPwd(keyPwdTypeSelected);
+//			}
+//		}
+//	}
 
 	public void setCurrentTab(int position) {
 		if (null != mViewPager) {
@@ -322,11 +323,11 @@ public class KeyPwdManageActivity extends BaseActivity implements View.OnClickLi
 		} else { // 创建数字密码
 			ArrayList<String> passwordList = new ArrayList<>();
 			passwordList.add(mKey.getNoKeyPwd());
-			// TODO: 7/8/21  mPasscodeList 没有初始赋值
-			for (Passcode passcode : mPasscodeList) {
-				passwordList.add(passcode.getKeyboardPwd());
-			}
-			LockSendPasscodeActivity.actionStart(KeyPwdManageActivity.this, mKey, mKey.getLockId(),
+//			// _TODO: 7/8/21  mPasscodeList 没有初始赋值
+//			for (Passcode passcode : mPasscodeList) {
+//				passwordList.add(passcode.getKeyboardPwd());
+//			}
+			LockSendPasscodeNewActivity.actionStart(KeyPwdManageActivity.this, mKey, mKey.getLockId(),
 					mKey.getKeyId(), mKey.getLockName(), mKey.getLockMac(), passwordList, keyPwdTypeSelected);
 		}
 	}

@@ -5,4 +5,9 @@
         <attr name="hintColor" format="color" />
         <attr name="hintSize" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="FlowRadioGroup">
+        <attr name="columnCount" format="integer"/>
+        <attr name="columnGap" format="dimension"/>
+        <attr name="rowGap" format="dimension"/>
+    </declare-styleable>
 </resources>

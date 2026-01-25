@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_lock_send_passcode_cyclic_mode"
+                style="@style/list_item_overall"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/cyclic_mode" />
+
+                <TextView
+                    android:id="@+id/tv_lock_send_passcode_cyclic_mode"
+                    style="@style/list_item_description"
+                    android:text="@string/weekend" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/list_item_overall"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/code_name" />
+
+                <EditText
+                    android:id="@+id/et_lock_send_passcode_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@null"
+                    android:gravity="left|center_vertical"
+                    android:hint="@string/enter_the_code_name"
+                    android:imeOptions="actionDone"
+                    android:maxLength="16"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/text_gray_dark"
+                    android:textColorHint="@color/text_gray_light"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <LinearLayout
+                android:id="@+id/ll_lock_send_passcode_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/start_time" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_send_passcode_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="left|center_vertical"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+                <LinearLayout
+                    style="@style/list_item_overall"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/end_time" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_send_passcode_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="left|center_vertical"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+                <TextView
+                    android:id="@+id/tv_current_device_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_color_ffe6e7e8"
+                    android:lineSpacingMultiplier="1.2"
+                    android:paddingLeft="@dimen/common_page_left_right_space"
+                    android:paddingTop="@dimen/dimens_dp_10"
+                    android:paddingRight="@dimen/common_page_left_right_space"
+                    android:paddingBottom="@dimen/dimens_dp_10"
+                    android:text="@string/device_current_date"
+                    android:textColor="@color/text_color_ff0f1110"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_custom_pwd"
+                style="@style/list_item_overall"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/list_item_title"
+                    android:text="@string/code_number" />
+
+                <EditText
+                    android:id="@+id/et_lock_send_passcode_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:hint="@string/create_custom_pwd_tips_3"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="9"
+                    android:singleLine="true"
+                    android:textColor="@color/text_gray_dark"
+                    android:textColorHint="@color/text_gray_light"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_line" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/tv_lock_send_passcode_generate"
+                style="@style/btn_style_main"
+                android:layout_margin="16dp"
+                android:enabled="false"
+                android:text="@string/create_password" />
+
+            <TextView
+                android:id="@+id/tv_create_custom_pwd_tips_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingLeft="@dimen/common_page_left_right_space"
+                android:paddingRight="@dimen/common_page_left_right_space"
+                android:paddingBottom="@dimen/dimens_dp_10"
+                android:text="@string/create_custom_pwd_tips_2"
+                android:textColor="@color/text_color_ff0f1110"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

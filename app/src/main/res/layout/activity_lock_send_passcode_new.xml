@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_view_titlebar" />
+
+    <TextView
+        android:id="@+id/tv_create_pwd_top_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color_ffe6e7e8"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingLeft="@dimen/common_page_left_right_space"
+        android:paddingTop="@dimen/dimens_dp_10"
+        android:paddingRight="@dimen/common_page_left_right_space"
+        android:paddingBottom="@dimen/dimens_dp_10"
+        android:text="@string/create_permanent_pwd_tips"
+        android:textColor="@color/text_color_ff0f1110"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_lock_passcode_type"
+            style="@style/TabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_page_left_right_space"
+            android:layout_marginRight="@dimen/common_page_left_right_space"
+            android:layout_weight="1"
+            android:background="@drawable/tab_bg_shape_normal"
+            app:tabBackground="@drawable/tab_bg_selector"
+            app:tabIndicator="@null"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/common_text_color" />
+        <TextView
+            android:id="@+id/tv_pwd_type_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingHorizontal="@dimen/common_page_left_right_space"
+            android:text="@string/create_custom_pwd_hint"
+            android:textColor="@color/text_gray_light"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <com.populstay.populife.ui.NoScrollViewPager
+        android:id="@+id/vp_lock_send_passcode_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</LinearLayout>

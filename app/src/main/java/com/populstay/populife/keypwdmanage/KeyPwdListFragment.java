@@ -418,7 +418,11 @@ public class KeyPwdListFragment extends BaseFragment {
 
 			case KeyPwdConstant.IType.TYPE_PWD: // 创建数字密码
 				// 去选择密码类型
-				KeyPwdTypeSelectActivity.actionStartForResult(mActivity,mKey);
+                if (mActivity instanceof KeyPwdManageActivity) {
+                    KeyPwdManageActivity keyPwdManageActivity = (KeyPwdManageActivity) mActivity;
+                    keyPwdManageActivity.createKeyPwd(KeyPwdConstant.IKeyPwdType.KEY_PWD_TYPE_PERIOD);
+                }
+//				KeyPwdTypeSelectActivity.actionStartForResult(mActivity,mKey);
 				break;
 
 			case KeyPwdConstant.IType.TYPE_FINGERPRINT: // 添加指纹

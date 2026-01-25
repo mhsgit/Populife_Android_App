@@ -1036,4 +1036,17 @@
 
     <string name="test_device_init_fail">模拟初始化设备失败(%s)</string>
 
+    <!--  新需求  -->
+    <string name="create_time_limited_pwd_hint">与别人共享一段时间内有效的密码</string>
+    <string name="create_permanent_pwd_hint">永久有效的密码，直到密码被删除</string>
+    <string name="create_recurring_pwd_hint">每周在固定时间会重复生效的密码</string>
+    <string name="create_one_time_pwd_hint">与别人分享一次性有效密码</string>
+    <string name="key_pwd_type_period">限时</string>
+    <string name="key_pwd_type_permanent">永久</string>
+    <string name="key_pwd_type_recurring">循环</string>
+    <string name="key_pwd_type_one_time">单次</string>
+    <string name="key_pwd_type_random">随机</string>
+    <string name="key_pwd_type_custom">自定义</string>
+    <string name="create_custom_pwd_hint">远程生成随机密码并与您的客人分享。无需WiFi或靠近智能设备。</string>
+    <string name="create_random_pwd_hint">当靠近设备或连接到网关时，使用蓝牙添加自定义密码。</string>
 </resources>
