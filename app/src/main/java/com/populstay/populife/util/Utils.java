@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.populstay.populife.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -358,4 +360,15 @@ public final class Utils {
 			}
 		}
 	}
+
+    public static String get955CodeLimit(Context context, String msg) {
+        if (msg.contains("分钟级")) {
+            return context.getString(R.string.note_get_verification_code_limit1);
+        } else if (msg.contains("小时级")) {
+            return context.getString(R.string.note_get_verification_code_limit2);
+        } else if (msg.contains("天级")) {
+            return context.getString(R.string.note_get_verification_code_limit3);
+        }
+        return context.getString(R.string.note_get_verification_code_fail);
+    }
 }

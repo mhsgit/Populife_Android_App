@@ -1035,5 +1035,7 @@
     <string name="sync_fail">Sync failed. Please try again</string>
 
     <string name="test_device_init_fail">模拟初始化设备失败(%s)</string>
-
+    <string name="note_get_verification_code_limit1">Too many requests. Please try again later.</string>
+    <string name="note_get_verification_code_limit2">You’ve made too many requests in the past hour. Please try again later.</string>
+    <string name="note_get_verification_code_limit3">You’ve reached today’s SMS request limit. Please try again tomorrow.</string>
 </resources>
