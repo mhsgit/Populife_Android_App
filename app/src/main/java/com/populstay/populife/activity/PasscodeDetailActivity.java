@@ -61,6 +61,7 @@ import java.util.WeakHashMap;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 import static com.populstay.populife.app.MyApplication.sPPLOCK;
@@ -74,7 +75,8 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 	private static final int REQUEST_CODE_MODIFY_PASSCODE_PERIOD = 1;
 
 	private TextView mTvPageTitle, mTvSend, mTvPasscode, mTvNameTitle, mTvName, mTvRemark, mTvValidPeriod,
-			mTvStartTime, mTvEndTime, mTvSender, mTvSendingTime, mTvDelete, tv_pwd_type, tv_status;
+			mTvStartTime, mTvEndTime, mTvSender, mTvSendingTime, mTvDelete, tv_pwd_type, tv_status, tv_create_custom_pwd_tips_2, infoText;
+    private CardView cv_create_custom_pwd_tips;
 	private LinearLayout mLlPasscode, mLlName, mLlRemark, mLlValidPeriod, mLlRecord, ll_create_info, mLlPwdType;
 	private ImageView mIvPasscodeMore, mIvValidPeriodMore;
 	private AlertDialog DIALOG;
@@ -155,6 +157,9 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 		mIvValidPeriodMore = findViewById(R.id.iv_passcode_detail_valid_period_more);
 		tv_pwd_type = findViewById(R.id.tv_pwd_type);
 		tv_status = findViewById(R.id.tv_status);
+        tv_create_custom_pwd_tips_2 = findViewById(R.id.tv_create_custom_pwd_tips_2);
+        cv_create_custom_pwd_tips = findViewById(R.id.cv_create_custom_pwd_tips);
+        infoText = findViewById(R.id.infoText);
 
 		refreshUI();
 	}
@@ -212,10 +217,10 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 					// 单次
 					case 1:
 						tv_pwd_type.setText(getResources().getString(R.string.key_pwd_one_time));
-						mLlPasscode.setEnabled(false);
+						mLlPasscode.setEnabled(true);
 						mLlName.setEnabled(true);
 						mLlValidPeriod.setEnabled(false);
-						mIvPasscodeMore.setVisibility(View.GONE);
+						mIvPasscodeMore.setVisibility(View.VISIBLE);
 						mIvValidPeriodMore.setVisibility(View.GONE);
 						mTvValidPeriod.setVisibility(View.GONE);
 						mTvStartTime.setVisibility(View.VISIBLE);
@@ -225,26 +230,28 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 						break;
 
 					// 永久
+                    case 16:
 					case 2:
 						tv_pwd_type.setText(getResources().getString(R.string.key_pwd_permanent));
-						mLlPasscode.setEnabled(false);
+                        mLlPasscode.setEnabled(true);
 						mLlName.setEnabled(true);
 						mLlValidPeriod.setEnabled(false);
-						mIvPasscodeMore.setVisibility(View.GONE);
+						mIvPasscodeMore.setVisibility(View.VISIBLE);
 						mIvValidPeriodMore.setVisibility(View.GONE);
 						mTvValidPeriod.setVisibility(View.VISIBLE);
 						mTvValidPeriod.setText(R.string.permanent);
 						mTvStartTime.setVisibility(View.GONE);
 						mTvEndTime.setVisibility(View.GONE);
+                        showTipVisible();
 						break;
 
 					// 限时
 					case 3:
 						tv_pwd_type.setText(getResources().getString(R.string.key_pwd_period));
-						mLlPasscode.setEnabled(false);
+                        mLlPasscode.setEnabled(true);
 						mLlName.setEnabled(true);
 						mLlValidPeriod.setEnabled(true);
-						mIvPasscodeMore.setVisibility(View.GONE);
+						mIvPasscodeMore.setVisibility(View.VISIBLE);
 						mIvValidPeriodMore.setVisibility(View.VISIBLE);
 						mTvValidPeriod.setVisibility(View.GONE);
 						mTvStartTime.setVisibility(View.VISIBLE);
@@ -279,10 +286,10 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 					case 13:
 					case 14:
 						tv_pwd_type.setText(getResources().getString(R.string.key_pwd_cyclic));
-						mLlPasscode.setEnabled(false);
+                        mLlPasscode.setEnabled(true);
 						mLlName.setEnabled(true);
 						mLlValidPeriod.setEnabled(false);
-						mIvPasscodeMore.setVisibility(View.GONE);
+						mIvPasscodeMore.setVisibility(View.VISIBLE);
 						mIvValidPeriodMore.setVisibility(View.GONE);
 						mTvValidPeriod.setVisibility(View.VISIBLE);
 						mTvStartTime.setVisibility(View.GONE);
@@ -360,7 +367,6 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 						mIvPasscodeMore.setVisibility(View.VISIBLE);
 
 						mTvDelete.setVisibility(View.GONE);
-						findViewById(R.id.tv_create_custom_pwd_tips_2).setVisibility(View.GONE);
 						ll_create_info.setVisibility(View.GONE);
 						mLlValidPeriod.setVisibility(View.GONE);
 						mLlValidPeriod.setEnabled(false);
@@ -373,6 +379,7 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 						break;
 
 				}
+                showTipVisible();
 				break;
 
 			case KeyPwdConstant.IType.TYPE_FINGERPRINT: // 指纹
@@ -427,6 +434,31 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 				break;
 		}
 	}
+
+    private void showTipVisible() {
+        int temp = mKeyPwd.getKeyboardPwdType();
+        if ( temp == -1){
+            tv_create_custom_pwd_tips_2.setVisibility(View.GONE);
+            cv_create_custom_pwd_tips.setVisibility(View.GONE);
+        } else if (temp == 1) {
+            tv_create_custom_pwd_tips_2.setVisibility(View.GONE);
+            cv_create_custom_pwd_tips.setVisibility(View.VISIBLE);
+            infoText.setText(R.string.edit_pwd_hint_one_time);
+        } else {
+            infoText.setText(R.string.edit_pwd_hint_permanent);
+            // status：密码状态(0删除，1未激活，2失效， 3正常，4未知)
+            if ("4".equals(mKeyPwd.getStatus())) {
+                tv_create_custom_pwd_tips_2.setVisibility(View.GONE);
+                cv_create_custom_pwd_tips.setVisibility(View.VISIBLE);
+            } else if ("3".equals(mKeyPwd.getStatus())) {
+                // useStaus：激活期内的使用状态，1：未同步过，2：使用过，3：未使用
+                if (mKeyPwd.getUseStaus() == 1 || mKeyPwd.getUseStaus() == 3) {
+                    tv_create_custom_pwd_tips_2.setVisibility(View.GONE);
+                    cv_create_custom_pwd_tips.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
 
 	private void initListener() {
 		mTvSend.setOnClickListener(this);

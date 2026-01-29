@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">请在创建密码后的24小时内至少使用一次，以让密码激活。否则过后自动失效</string>
     <string name="create_dialog_one_time_pwd_tips">请在密码生成后6小时内使用，否则过后自动失效</string>
     <string name="pin_code_details">数字密码详情</string>
-    <string name="edit_pwd_hint">在修改前，请确保您已在设备附近或已连接网关</string>
     <string name="note_pwd_delete_confirm_dialog_hint">你是否确认要删除当前密码？删除后密码会失效以及清空所有记录</string>
     <string name="note_pwd_delete_confirm_ok_btn">是的,删除</string>
     <string name="note_pwd_edit_effective_period_hint">在修改前，请确保您已在设备附近或已连接网关</string>
@@ -1046,4 +1045,8 @@
     <string name="key_pwd_type_custom">自定义</string>
     <string name="create_custom_pwd_hint">远程生成随机密码并与您的客人分享。无需WiFi或靠近智能设备。</string>
     <string name="create_random_pwd_hint">当靠近设备或连接到网关时，使用蓝牙添加自定义密码。</string>
+
+    <string name="edit_pwd_hint">在修改前，请确保您已在设备附近或已连接网关</string>
+    <string name="edit_pwd_hint_permanent">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 密码必须在创建后的24小时内使用，否则将过期。状态未必更新。</string>
+    <string name="edit_pwd_hint_one_time">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 此密码在创建后有效期为6小时，仅可使用一次。状态未必更新。</string>
 </resources>

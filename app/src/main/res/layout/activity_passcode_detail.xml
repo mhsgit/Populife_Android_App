@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray_background"
     android:orientation="vertical">
 
@@ -322,7 +323,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimens_dp_10"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/dimens_dp_10"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingLeft="@dimen/common_page_left_right_space"
                 android:paddingTop="@dimen/dimens_dp_10"
@@ -331,6 +332,49 @@
                 android:text="@string/edit_pwd_hint"
                 android:textColor="@color/text_gray_medium"
                 android:textSize="12sp" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_create_custom_pwd_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimens_dp_10"
+                android:layout_marginBottom="20dp"
+                android:layout_marginHorizontal="20dp"
+                app:cardBackgroundColor="#f2f2f2"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
+                android:visibility="gone"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <!-- Info Icon on the left -->
+                    <ImageView
+                        android:id="@+id/infoIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="info"
+                        android:src="@mipmap/ic_info" />
+
+                    <!-- Right content text -->
+                    <TextView
+                        android:id="@+id/infoText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_pwd_hint_permanent"
+                        android:textSize="12sp"
+                        android:textColor="#A6A6A6"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="10"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

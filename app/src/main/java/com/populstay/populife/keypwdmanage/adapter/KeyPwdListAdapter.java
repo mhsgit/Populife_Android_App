@@ -3,6 +3,7 @@ package com.populstay.populife.keypwdmanage.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,7 @@ public class KeyPwdListAdapter extends HeaderAndFooterAdapter<KeyPwd> {
 
 		// 蓝牙钥匙
 		if (KeyPwdConstant.IType.TYPE_KEY == mKeyType) {
-
+            Log.d("TESTTEST", "type: "+ item.getType() + "; name: "+ item.getAlias());
 			// 限时
 			if (1 == item.getType()) {
 				videoViewHolder.tvTypeName.setText(R.string.pwd_type_name_time_limited);
@@ -128,6 +129,7 @@ public class KeyPwdListAdapter extends HeaderAndFooterAdapter<KeyPwd> {
 		}
 		// 数字密码
 		else if (KeyPwdConstant.IType.TYPE_PWD == mKeyType) {
+            Log.d("TESTTEST", "type: "+ item.getKeyboardPwdType() + "; name: "+ item.getAlias());
 			//2失效不显示分享按钮
 			if ("2".equals(item.getStatus())) {
 				videoViewHolder.ivShare.setVisibility(View.GONE);
@@ -152,13 +154,12 @@ public class KeyPwdListAdapter extends HeaderAndFooterAdapter<KeyPwd> {
 				videoViewHolder.llTimeRange.setVisibility(View.VISIBLE);
 				videoViewHolder.tvStartTime.setText(DateUtil.getDateToString(item.getStartDate(), DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
 				videoViewHolder.tvEndTime.setText(DateUtil.getDateToString(item.getEndDate(), DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-
 			} else if (1 == item.getKeyboardPwdType()) {
 				videoViewHolder.tvTypeName.setText(R.string.pwd_type_name_one_time);
 				videoViewHolder.ivTypeIcon.setImageResource(R.drawable.pwd_one_time_icon);
 				videoViewHolder.tvTime.setVisibility(View.GONE);
 				videoViewHolder.tvTime.setText(DateUtil.getDateToString(item.getCreateDate(), DateUtil.DATE_TIME_PATTERN_1));
-			} else if (2 == item.getKeyboardPwdType()) {
+			} else if (2 == item.getKeyboardPwdType() || 16 == item.getKeyboardPwdType()) {
 				videoViewHolder.tvTypeName.setText(R.string.pwd_type_name_permanent);
 				videoViewHolder.ivTypeIcon.setImageResource(R.drawable.pwd_permanent_icon);
 				videoViewHolder.tvTime.setVisibility(View.GONE);
