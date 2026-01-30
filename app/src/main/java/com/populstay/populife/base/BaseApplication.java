@@ -174,7 +174,7 @@ public class BaseApplication extends Application {
 		initLogger(Constant.IS_SHOW_LOG);
 		// TTLock SDK
 		LogUtil.setDBG(isDebug);
-		com.ttlock.gateway.sdk.util.LogUtil.setDBG(isDebug);
+//		com.ttlock.gateway.sdk.util.LogUtil.setDBG(isDebug);
 		// 美洽
 		MQManager.setDebugMode(isDebug);
 	}

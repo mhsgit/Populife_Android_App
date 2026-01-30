@@ -21,7 +21,6 @@ import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
-import com.ttlock.bl.sdk.api.DeviceFirmwareUpdateApi;
 import com.ttlock.bl.sdk.service.DfuService;
 
 import no.nordicsemi.android.dfu.DfuProgressListener;
@@ -35,7 +34,6 @@ public class LockUpdateActivity extends BaseActivity {
 
 	private TextView mTvState, mTvVersion, mTvUpdate;
 
-	private DeviceFirmwareUpdateApi mDeviceFirmwareUpdateApi;
 	private FirmwareInfo firmwareInfo;
 	private Key mKey = MyApplication.CURRENT_KEY;
 
@@ -248,40 +246,40 @@ public class LockUpdateActivity extends BaseActivity {
 		});
 	}
 
-	private void getLockFirmware() {
-		PeachLoader.showLoading(this);
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mDeviceFirmwareUpdateApi.getLockFirmware(mKey.getLockMac(), mKey.getLockVersion(),
-					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-		} else {//connect the lock
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setOperation(Operation.GET_LOCK_VERSION_INFO);
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+//	private void getLockFirmware() {
+//		PeachLoader.showLoading(this);
+//		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
+//			mDeviceFirmwareUpdateApi.getLockFirmware(mKey.getLockMac(), mKey.getLockVersion(),
+//					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
+//		} else {//connect the lock
+//			MyApplication.bleSession.setLockmac(mKey.getLockMac());
+//			MyApplication.bleSession.setOperation(Operation.GET_LOCK_VERSION_INFO);
+////			mTTLockAPI.connect(mKey.getLockMac());
+//			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
+//		}
+//	}
 
-	private void setGetFirmwareCallback() {
-		MyApplication.bleSession.setOperation(Operation.GET_LOCK_VERSION_INFO);
-		MyApplication.bleSession.setILockGetFirmware(new ILockGetFirmware() {
-			@Override
-			public void onGetFirmwareSuccess() {
-				PeachLoader.stopLoading();
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-
-					}
-				});
-			}
-
-			@Override
-			public void onGetFirmwareFail() {
-				PeachLoader.stopLoading();
-
-			}
-		});
-	}
+//	private void setGetFirmwareCallback() {
+//		MyApplication.bleSession.setOperation(Operation.GET_LOCK_VERSION_INFO);
+//		MyApplication.bleSession.setILockGetFirmware(new ILockGetFirmware() {
+//			@Override
+//			public void onGetFirmwareSuccess() {
+//				PeachLoader.stopLoading();
+//				runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//
+//					}
+//				});
+//			}
+//
+//			@Override
+//			public void onGetFirmwareFail() {
+//				PeachLoader.stopLoading();
+//
+//			}
+//		});
+//	}
 
 	private void requestFirmwareInfo() {
 		RestClient.builder()

@@ -38,7 +38,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
 
 /**
@@ -137,7 +136,7 @@ public abstract class BaseFragment extends Fragment {
 			requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
 				@Override
 				public void onGranted() {
-					mTTLockAPI.connect(address);
+//                    mTTLockAPI.connect(address);
 				}
 
 				@Override
@@ -146,7 +145,7 @@ public abstract class BaseFragment extends Fragment {
 				}
 			});
 		} else {
-			mTTLockAPI.connect(address);
+//			mTTLockAPI.connect(address);
 		}
 	}
 
@@ -158,7 +157,7 @@ public abstract class BaseFragment extends Fragment {
 			requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
 				@Override
 				public void onGranted() {
-					mTTLockAPI.connect(address);
+//					mTTLockAPI.connect(address);
 				}
 
 				@Override
@@ -167,7 +166,7 @@ public abstract class BaseFragment extends Fragment {
 				}
 			});
 		} else {
-			mTTLockAPI.connect(address);
+//			mTTLockAPI.connect(address);
 		}
 	}
 

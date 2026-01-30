@@ -48,15 +48,16 @@ import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.net.NetworkUtil;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
-import com.ttlock.bl.sdk.scanner.ExtendedBluetoothDevice;
-import com.ttlock.gateway.sdk.api.G2GatewayAPI;
-import com.ttlock.gateway.sdk.callback.G2GatewayCallback;
-import com.ttlock.gateway.sdk.callback.G2GatewayConnectCallback;
-import com.ttlock.gateway.sdk.callback.ScanCallback;
-import com.ttlock.gateway.sdk.model.ConfigureGatewayInfo;
-import com.ttlock.gateway.sdk.model.DeviceInfo;
-import com.ttlock.gateway.sdk.model.Error;
-import com.ttlock.gateway.sdk.model.WiFi;
+import com.ttlock.bl.sdk.api.ExtendedBluetoothDevice;
+import com.ttlock.bl.sdk.gateway.api.GatewayClient;
+import com.ttlock.bl.sdk.gateway.callback.ConnectCallback;
+import com.ttlock.bl.sdk.gateway.callback.InitGatewayCallback;
+import com.ttlock.bl.sdk.gateway.callback.ScanGatewayCallback;
+import com.ttlock.bl.sdk.gateway.callback.ScanWiFiByGatewayCallback;
+import com.ttlock.bl.sdk.gateway.model.ConfigureGatewayInfo;
+import com.ttlock.bl.sdk.gateway.model.DeviceInfo;
+import com.ttlock.bl.sdk.gateway.model.GatewayError;
+import com.ttlock.bl.sdk.gateway.model.WiFi;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -79,7 +80,7 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 	private ListView mListView;
 	private GatewayAddListAdapter mAdapter;
 	private List<ExtendedBluetoothDevice> mDeviceList = new ArrayList<>();
-	private G2GatewayAPI mGatewayAPI;
+	private GatewayClient mGatewayAPI = GatewayClient.getDefault();
 	private CustomProgress mCustomProgress;
 	private ExtendedBluetoothDevice mSelectedDevice;
 	private AlertDialog DIALOG;
@@ -157,9 +158,10 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 							@Override
 							public void onGranted() {
 								// 开始蓝牙连接网关
-								mGatewayAPI.connectGateway(mSelectedDevice, new G2GatewayConnectCallback() {
+
+								mGatewayAPI.connectGateway(mSelectedDevice, new ConnectCallback() {
 									@Override
-									public void onConnectGateway(ExtendedBluetoothDevice extendedBluetoothDevice) {
+                                    public void onConnectSuccess(ExtendedBluetoothDevice device) {
 										runOnUiThread(new Runnable() {
 											@Override
 											public void run() {
@@ -172,7 +174,7 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 												if (TextUtils.isEmpty(lastWifiSSID) || TextUtils.isEmpty(laseWifiPwd)){
 													// 展示wifi列表对话框
 													showWifiListDialog(MyHandler.SEARCH_WIFI_STATE_START);
-													mGatewayAPI.scanWiFiByGateway(mSelectedDevice.getAddress());
+													scanWiFiByGateway(mSelectedDevice.getAddress());
 												}else {
 													mEtWifiName.setText(lastWifiSSID);
 													mEtWifiPwd.setText(laseWifiPwd);
@@ -182,7 +184,7 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 									}
 
 									@Override
-									public void onDisconnectGateway(ExtendedBluetoothDevice extendedBluetoothDevice) {
+                                    public void onDisconnected() {
 										stopLoading();
 									}
 								});
@@ -217,38 +219,38 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 			@Override
 			public void onClick(View v) {
 				showWifiListDialog(MyHandler.SEARCH_WIFI_STATE_START);
-				mGatewayAPI.scanWiFiByGateway(mSelectedDevice.getAddress());
+				scanWiFiByGateway(mSelectedDevice.getAddress());
 			}
 		});
 	}
 
+    private void scanWiFiByGateway(String address) {
+        mGatewayAPI.scanWiFiByGateway(mSelectedDevice.getAddress(), new ScanWiFiByGatewayCallback() {
+            @Override
+            public void onScanWiFiByGateway(List<WiFi> list) {
+                mTempWifiList.clear();
+                for (WiFi wiFi : list){
+                    if (!TextUtils.isEmpty(wiFi.getSsid())) {
+                        mTempWifiList.add(wiFi);
+                    }
+                }
+                mMyHandler.sendEmptyMessage(MyHandler.WHAT_SHOW_WIFI_LIST_DIALOG);
+            }
+
+            @Override
+            public void onScanWiFiByGatewaySuccess() {
+
+            }
+
+            @Override
+            public void onFail(GatewayError gatewayError) {
+
+            }
+        });
+    }
+
 	private void initData() {
 		mMyHandler = new MyHandler(this);
-		mGatewayAPI = new G2GatewayAPI(this, new G2GatewayCallback() {
-			@Override
-			public void onScanWiFiByGateway(final List<WiFi> list, int i, Error error) {
-				PeachLogger.d("onScanWiFiByGateway=" + list + ",i=" + i + ",error=" + error.name());
-				mTempWifiList.clear();
-				for (WiFi wiFi : list){
-					if (!TextUtils.isEmpty(wiFi.getSsid())) {
-						mTempWifiList.add(wiFi);
-					}
-				}
-				mMyHandler.sendEmptyMessage(MyHandler.WHAT_SHOW_WIFI_LIST_DIALOG);
-			}
-
-			@Override
-			public void onInitializeGateway(Error error, DeviceInfo deviceInfo) {
-				PeachLogger.d("onInitializeGateway deviceInfo=" + deviceInfo.toString());
-				PeachLogger.d("onInitializeGateway mSelectedDevice=" + mSelectedDevice.toString());
-				checkInitGatewaySuccess(mSelectedDevice.getAddress(), deviceInfo);
-			}
-
-			@Override
-			public void onEnterDFU(Error error) {
-
-			}
-		});
 		startScanGateway();
 		initSeekbarScanDevice();
 	}
@@ -351,30 +353,31 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 					@Override
 					public void onGranted() {
 						// 开始蓝牙扫描
-						mGatewayAPI.startScanGateway(new ScanCallback() {
-							@Override
-							public void onScanResult(ExtendedBluetoothDevice extendedBluetoothDevice) {
-								String name = extendedBluetoothDevice.getName();
-								// 网关(G2开头的，在添加设备时，转为 Gateway)
-								if (name.contains("G2")) {
-									extendedBluetoothDevice.setName(name.replace("G2", HomeDeviceInfo.IDeviceName.NAME_GATEWAY));
-								}
-								PeachLogger.d(extendedBluetoothDevice);
-								if (mAdapter != null) {
-									mAdapter.updateDevice(extendedBluetoothDevice);
-								}
-								BaseApplication.getHandler().removeCallbacks(mRunnable);
-								mListView.setVisibility(View.VISIBLE);
-								mLlFoundDeviceView.setVisibility(View.GONE);
-								if (DIALOG != null) {
-									DIALOG.cancel();
-								}
-							}
+                        mGatewayAPI.startScanGateway(new ScanGatewayCallback() {
+                            @Override
+                            public void onScanGatewaySuccess(ExtendedBluetoothDevice extendedBluetoothDevice) {
+                                String name = extendedBluetoothDevice.getName();
+                                // 网关(G2开头的，在添加设备时，转为 Gateway)
+                                if (name.contains("G2")) {
+                                    extendedBluetoothDevice.setName(name.replace("G2", HomeDeviceInfo.IDeviceName.NAME_GATEWAY));
+                                }
+                                PeachLogger.d(extendedBluetoothDevice);
+                                if (mAdapter != null) {
+                                    mAdapter.updateDevice(extendedBluetoothDevice);
+                                }
+                                BaseApplication.getHandler().removeCallbacks(mRunnable);
+                                mListView.setVisibility(View.VISIBLE);
+                                mLlFoundDeviceView.setVisibility(View.GONE);
+                                if (DIALOG != null) {
+                                    DIALOG.cancel();
+                                }
+                            }
 
-							@Override
-							public void onScanFailed(int i) {
-							}
-						});
+                            @Override
+                            public void onScanFailed(int i) {
+
+                            }
+                        });
 					}
 
 					@Override
@@ -498,8 +501,17 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
 		configureGatewayInfo.ssid = mEtWifiName.getText().toString().trim();
 		configureGatewayInfo.wifiPwd = mEtWifiPwd.getText().toString().trim();
 		configureGatewayInfo.plugName = mSelectedDevice.getAddress();
+        mGatewayAPI.initGateway(configureGatewayInfo, new InitGatewayCallback() {
+            @Override
+            public void onInitGatewaySuccess(DeviceInfo deviceInfo) {
 
-		mGatewayAPI.initializeGateway(configureGatewayInfo);
+            }
+
+            @Override
+            public void onFail(GatewayError gatewayError) {
+
+            }
+        });
 	}
 
 	/**

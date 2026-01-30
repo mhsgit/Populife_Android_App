@@ -19,7 +19,9 @@ import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.GetAllValidICCardCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
@@ -59,47 +61,31 @@ public class IcCardUploadActivity extends BaseActivity {
 	 */
 	private void searchLockIcCards() {
 		PeachLoader.showLoading(this);
+        mTTLockAPI.getAllValidICCards(mKey.getLockData(), mKey.getLockMac(), new GetAllValidICCardCallback() {
+            @Override
+            public void onGetAllValidICCardSuccess(String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        requestUploadIcCard(s);
+                    }
+                });
+            }
 
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			setSearchIcCardCallback();
+            @Override
+            public void onFail(LockError lockError) {
 
-			mTTLockAPI.searchICCard(null, PeachPreference.getOpenid(),
-					mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(),
-					mKey.getLockFlagPos(), mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-		} else {
-			setSearchIcCardCallback();
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        toast(R.string.operation_fail);
+                    }
+                });
+            }
+        });
 
-	private void setSearchIcCardCallback() {
-		MyApplication.bleSession.setOperation(Operation.SEARCH_IC_CARDS);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-
-		MyApplication.bleSession.setILockIcCardSearch(new ILockIcCardSearch() {
-			@Override
-			public void onSuccess(final String icCardInfo) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						requestUploadIcCard(icCardInfo);
-					}
-				});
-			}
-
-			@Override
-			public void onFail(Error error) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						toast(R.string.operation_fail);
-					}
-				});
-			}
-		});
 	}
 
 	/**

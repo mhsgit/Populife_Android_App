@@ -33,7 +33,11 @@ import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.ModifyFingerprintPeriodCallback;
+import com.ttlock.bl.sdk.callback.ModifyICCardPeriodCallback;
+import com.ttlock.bl.sdk.callback.ModifyPasscodeCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -230,18 +234,33 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setModifyPasscodeCallback();
-				mTTLockAPI.modifyKeyboardPassword(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-						3, mPasscodePwd, "", mStartTime, mEndTime,
-						mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-			} else {
-				MyApplication.bleSession.setLockmac(mKey.getLockMac());
-				setModifyPasscodeCallback();
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.modifyPasscode(mPasscodePwd, "", mStartTime, mEndTime, mKey.getLockData(), mKey.getLockMac(), new ModifyPasscodeCallback() {
+                @Override
+                public void onModifyPasscodeSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            requestModifyPasscodePeriod();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            if (lockError == LockError.LOCK_PASSWORD_NOT_EXIST) {
+                                toast(R.string.note_unused_passcode_cannot_be_modified);
+                            } else {
+                                toast(R.string.operation_fail);
+                            }
+                        }
+                    });
+                }
+            });
 		}
 
 	}
@@ -286,45 +305,6 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 					});
 				}
 			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.MODIFY_KEYBOARD_PASSWORD);
-			MyApplication.bleSession.setKeyboardPwdType(3);//永久密码（2）修改期限后，变成限时密码（3）
-			MyApplication.bleSession.setKeyboardPwdOriginal(mPasscodePwd);
-			MyApplication.bleSession.setKeyboardPwdNew("");
-			MyApplication.bleSession.setStartDate(mStartTime);
-			MyApplication.bleSession.setEndDate(mEndTime);
-			MyApplication.bleSession.setILockModifyPasscode(new ILockModifyPasscode() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							requestModifyPasscodePeriod();
-						}
-					});
-				}
-
-				@Override
-				public void onFail(final Error error) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							if (error == Error.LOCK_PASSWORD_NOT_EXIST) {
-								toast(R.string.note_unused_passcode_cannot_be_modified);
-							} else {
-								toast(R.string.operation_fail);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-
-				}
-			});
 		}
 	}
 
@@ -348,16 +328,36 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setModifyIcCardPeriodCallback(cardNumber,"");
-				mTTLockAPI.modifyICPeriod(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), cardNumber,
-						mStartTime, mEndTime, mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-			} else {
-				setModifyIcCardPeriodCallback(cardNumber,"");
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.modifyICCardValidityPeriod(mStartTime, mEndTime, String.valueOf(cardNumber), mKey.getLockData(), mKey.getLockMac(), new ModifyICCardPeriodCallback() {
+                @Override
+                public void onModifyICCardPeriodSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            updateIcCardInfo(1);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+
+                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                updateIcCardInfo(2);
+                            } else {
+                                toast(R.string.operation_fail);
+                            }
+                        }
+                    });
+                }
+            });
 		}
 
 	}
@@ -396,54 +396,7 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 				}
 
 			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.MODIFY_IC_CARD_PERIOD);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setStartDate(mStartTime);
-			MyApplication.bleSession.setEndDate(mEndTime);
-			MyApplication.bleSession.setIcCardNumber(cardNumber);
-			MyApplication.bleSession.setILockIcCardModifyPeriod(new ILockIcCardModifyPeriod() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							updateIcCardInfo(1);
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-
-							if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-								updateIcCardInfo(2);
-							} else {
-								toast(R.string.operation_fail);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-					if (!mIsLockOperationSuccess) {
-						if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-							updateIcCardInfo(2);
-						}
-					}
-				}
-			});
-
 		}
-
 	}
 
 	private void MHModifyFingerprintPeriod () {
@@ -468,16 +421,35 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 
 	private void modifyFingerprintPeriod(long fingerprintNumber) {
 		showLoading();
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			setModifyFingerprintPeriodCallback(fingerprintNumber, "");
-			mTTLockAPI.modifyFingerPrintPeriod(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), fingerprintNumber,
-					mStartTime, mEndTime, mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-		} else {
-			setModifyFingerprintPeriodCallback(fingerprintNumber, "");
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
+        mTTLockAPI.modifyFingerprintValidityPeriod(mStartTime, mEndTime, String.valueOf(fingerprintNumber), mKey.getLockData(), mKey.getLockMac(), new ModifyFingerprintPeriodCallback() {
+            @Override
+            public void onModifyPeriodSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        mIsLockOperationSuccess = true;
+                        updateFingerprintInfo(1);
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        mIsLockOperationSuccess = true;
+                        if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                            updateFingerprintInfo(2);
+                        } else {
+                            toast(R.string.operation_fail);
+                        }
+                    }
+                });
+            }
+        });
 	}
 
 	private void setMHModifyFingerprintPeriodCallback(String fingerType) {
@@ -513,52 +485,6 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
 			}
 		});
 
-	}
-
-	private void setModifyFingerprintPeriodCallback(final long fingerprintNumber,String fingerType) {
-			MyApplication.bleSession.setOperation(Operation.FINGERPRINT_MODIFY_PERIOD);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setStartDate(mStartTime);
-			MyApplication.bleSession.setEndDate(mEndTime);
-			MyApplication.bleSession.setFingerprintNumber(fingerprintNumber);
-			MyApplication.bleSession.setILockFingerprintModifyPeriod(new ILockFingerprintModifyPeriod() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							updateFingerprintInfo(1);
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-								updateFingerprintInfo(2);
-							} else {
-								toast(R.string.operation_fail);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-					if (!mIsLockOperationSuccess) {
-						if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-							updateFingerprintInfo(2);
-						}
-					}
-				}
-			});
 	}
 
 	/**

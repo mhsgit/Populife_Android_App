@@ -215,11 +215,16 @@ public class Key implements Parcelable {
 	 */
 	private String k2;
 
-	public Key() {
+    /**
+     * KJX V3  lockData
+     */
+    private String lockData;
+
+    public Key() {
 	}
 
 	public Key(Long id, String userId, String userType, String keyStatus, int lockId, int keyId,
-			   String lockVersion, String lockName, String lockAlias, String lockMac, int electricQuantity,
+			   String lockVersion, String lockName, String lockAlias, String lockMac, String lockData, int electricQuantity,
 			   int lockFlagPos, String adminPwd, String lockKey, String noKeyPwd, String deletePwd,
 			   String pwdInfo, long timestamp, String aesKeyStr, long startDate, long endDate, int specialValue,
 			   int timezoneRawOffset, int keyRight, int keyboardPwdVersion, int remoteEnable, String remarks,
@@ -234,7 +239,8 @@ public class Key implements Parcelable {
 		this.lockVersion = lockVersion;
 		this.lockName = lockName;
 		this.lockAlias = lockAlias;
-		this.lockMac = lockMac;
+        this.lockMac = lockMac;
+        this.lockData = lockData;
 		this.electricQuantity = electricQuantity;
 		this.lockFlagPos = lockFlagPos;
 		this.adminPwd = adminPwd;
@@ -278,7 +284,8 @@ public class Key implements Parcelable {
 		lockVersion = in.readString();
 		lockName = in.readString();
 		lockAlias = in.readString();
-		lockMac = in.readString();
+        lockMac = in.readString();
+        lockData = in.readString();
 		electricQuantity = in.readInt();
 		lockFlagPos = in.readInt();
 		adminPwd = in.readString();
@@ -617,7 +624,8 @@ public class Key implements Parcelable {
 				", k1='" + k1 + '\'' +
 				", k2='" + k2 + '\'' +
 				", lockAlias='" + lockAlias + '\'' +
-				", lockMac='" + lockMac + '\'' +
+                ", lockMac='" + lockMac + '\'' +
+                ", lockData='" + lockData + '\'' +
 				", electricQuantity=" + electricQuantity +
 				", lockFlagPos=" + lockFlagPos +
 				", adminPwd='" + adminPwd + '\'' +
@@ -690,7 +698,15 @@ public class Key implements Parcelable {
 		this.lockCurrentTime = lockCurrentTime;
 	}
 
-	@Override
+    public String getLockData() {
+        return lockData;
+    }
+
+    public void setLockData(String lockData) {
+        this.lockData = lockData;
+    }
+
+    @Override
 	public int describeContents() {
 		return 0;
 	}
@@ -713,7 +729,8 @@ public class Key implements Parcelable {
 		dest.writeString(lockVersion);
 		dest.writeString(lockName);
 		dest.writeString(lockAlias);
-		dest.writeString(lockMac);
+        dest.writeString(lockMac);
+        dest.writeString(lockData);
 		dest.writeInt(electricQuantity);
 		dest.writeInt(lockFlagPos);
 		dest.writeString(adminPwd);

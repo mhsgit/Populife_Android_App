@@ -127,9 +127,8 @@ public class MainActivity extends BaseActivity {
 	 */
 	private void init() {
 		//turn on bluetooth
-//		MyApplication.mTTLockAPI.requestBleEnable(this);
 		MyApplication.sPPLOCK.startBleService(this);
-		MyApplication.mTTLockAPI.startBleService(this);
+
 		Intent pushServiceIntent = new Intent(this, EventPushService.class);
 		startService(pushServiceIntent);
 	}

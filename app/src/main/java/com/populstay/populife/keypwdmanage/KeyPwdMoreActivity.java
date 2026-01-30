@@ -42,7 +42,11 @@ import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.ClearAllFingerprintCallback;
+import com.ttlock.bl.sdk.callback.ClearAllICCardCallback;
+import com.ttlock.bl.sdk.callback.ResetPasscodeCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -312,25 +316,38 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 	private void lockClearIcCards() {
 		showLoading();
 		if (mKey.getLockId()<0){
+            setClearIcCardCallback();
 			if (sPPLOCK.isConnected(mKey.getLockMac())) {
-				setClearIcCardCallback();
 				sPPLOCK.clearCards(PeachPreference.readUserId(),String.valueOf(mKey.getLockId()),
 						String.valueOf(mKey.getKeyId()),mKey.getK1());
 			} else {
-				setClearIcCardCallback();
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setClearIcCardCallback();
-				mTTLockAPI.clearICCard(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-						mKey.getAesKeyStr());
-			} else {
-				setClearIcCardCallback();
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.clearAllICCard(mKey.getLockData(), mKey.getLockMac(), new ClearAllICCardCallback() {
+                @Override
+                public void onClearAllICCardSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            requestClearIcCard();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toast(R.string.operation_fail);
+                        }
+                    });
+                }
+            });
+
 		}
 
 	}
@@ -362,32 +379,6 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 					});
 				}
 			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.CLEAR_IC_CARDS);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockIcCardClear(new ILockIcCardClear() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							requestClearIcCard();
-						}
-					});
-				}
-
-				@Override
-				public void onFail(Error error) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toast(R.string.operation_fail);
-						}
-					});
-				}
-			});
 		}
 	}
 
@@ -397,25 +388,37 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 	private void lockClearFingerprints() {
 		showLoading();
 		if(mKey.getLockId()<0) {
+            setCleaFingerprintCallback();
 			if (sPPLOCK.isConnected(mKey.getLockMac())) {
-				setCleaFingerprintCallback();
 				sPPLOCK.clearFingers(PeachPreference.readUserId(),String.valueOf(mKey.getLockId()),
 						String.valueOf(mKey.getKeyId()),mKey.getK1());
 			} else {
-				setCleaFingerprintCallback();
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setCleaFingerprintCallback();
-				mTTLockAPI.clearFingerPrint(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-						mKey.getAesKeyStr());
-			} else {
-				setCleaFingerprintCallback();
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.clearAllFingerprints(mKey.getLockData(), mKey.getLockMac(), new ClearAllFingerprintCallback() {
+                @Override
+                public void onClearAllFingerprintSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            requestClearFingerprint();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toast(R.string.operation_fail);
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -437,32 +440,6 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 
 				@Override
 				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toast(R.string.operation_fail);
-						}
-					});
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.FINGERPRINT_CLEAR);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockIcCardClear(new ILockIcCardClear() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							requestClearFingerprint();
-						}
-					});
-				}
-
-				@Override
-				public void onFail(Error error) {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -569,14 +546,29 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.resetKeyboardPassword(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-			} else {
-				MyApplication.bleSession.setLockmac(mKey.getLockMac());
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.resetPasscode(mKey.getLockData(), mKey.getLockMac(), new ResetPasscodeCallback() {
+                @Override
+                public void onResetPasscodeSuccess(String s) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            requestResetPasscode(s, System.currentTimeMillis());
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toast(R.string.note_passcode_reset_fail);
+                        }
+                    });
+                }
+            });
 		}
 
 	}
@@ -607,32 +599,6 @@ public class KeyPwdMoreActivity extends BaseActivity implements View.OnClickList
 						public void run() {
 							stopLoading();
 							toast(R.string.note_clear_lock_pwd_fail);
-						}
-					});
-
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.RESET_KEYBOARD_PASSWORD);
-			MyApplication.bleSession.setILockResetKeyboardPwd(new ILockResetKeyboardPwd() {
-				@Override
-				public void onSuccess(final String pwdInfo, final long timestamp) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							requestResetPasscode(pwdInfo, timestamp);
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toast(R.string.note_passcode_reset_fail);
 						}
 					});
 

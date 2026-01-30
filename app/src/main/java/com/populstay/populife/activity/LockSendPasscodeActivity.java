@@ -26,6 +26,8 @@ import com.populstay.populife.fragment.LockSendPasscodeFragment;
 import com.populstay.populife.keypwdmanage.KeyPwdConstant;
 import com.populstay.populife.lock.ILockGetTime;
 import com.populstay.populife.manhattanlock.MHILockGetTime;
+import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import static com.populstay.populife.app.MyApplication.CURRENT_KEY;
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 import static com.populstay.populife.app.MyApplication.sPPLOCK;
 
@@ -108,12 +111,16 @@ public class LockSendPasscodeActivity extends BaseActivity {
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.getLockTime(null, mKey.getLockVersion(), mKey.getAesKeyStr(), mKey.getTimezoneRawOffset());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.getLockTime(mKey.getLockKey(), mKey.getLockMac(), new GetLockTimeCallback() {
+                @Override
+                public void onGetLockTimeSuccess(long l) {
+                    mKey.setLockCurrentTime(l);
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                }
+            });
 		}
 
 	}
@@ -129,23 +136,6 @@ public class LockSendPasscodeActivity extends BaseActivity {
 
 				@Override
 				public void onFail() {
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.GET_LOCK_TIME);
-			MyApplication.bleSession.setILockGetTime(new ILockGetTime() {
-				@Override
-				public void onSuccess(final long time) {
-					mKey.setLockCurrentTime(time);
-				}
-
-				@Override
-				public void onFail() {
-				}
-
-				@Override
-				public void onTimeOut() {
-
 				}
 			});
 		}

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.populstay.populife.R;
 import com.populstay.populife.ui.ViewHolder;
-import com.ttlock.bl.sdk.scanner.ExtendedBluetoothDevice;
+import com.ttlock.bl.sdk.api.ExtendedBluetoothDevice;
 
 import java.util.List;
 

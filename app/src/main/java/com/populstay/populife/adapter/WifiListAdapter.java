@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.populstay.populife.R;
 import com.populstay.populife.util.CollectionUtil;
-import com.ttlock.gateway.sdk.model.WiFi;
+import com.ttlock.bl.sdk.gateway.model.WiFi;
 
 import java.util.List;
 

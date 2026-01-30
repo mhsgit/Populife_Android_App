@@ -93,10 +93,6 @@
         <!-- Register Bluetooth Service -->
         <!-- Register Bluetooth Service -->
         <service android:name="com.populock.manhattan.sdk.service.BleService" android:exported="true"/>
-        <service android:name="com.ttlock.bl.sdk.service.BluetoothLeService" android:exported="true"/> <!-- Register Device Firmware Upgrade Service -->
-        <service
-            android:name="com.ttlock.bl.sdk.service.DfuService"
-            android:exported="true" /> <!-- 事件推送服务 -->
         <service android:name=".push.EventPushService"       android:exported="true"/>
 
         <provider

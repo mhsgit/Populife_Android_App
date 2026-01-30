@@ -43,6 +43,11 @@ import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.AddFingerprintCallback;
+import com.ttlock.bl.sdk.callback.AddICCardCallback;
+import com.ttlock.bl.sdk.callback.ModifyFingerprintPeriodCallback;
+import com.ttlock.bl.sdk.callback.ModifyICCardPeriodCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -359,13 +364,54 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 //				startLockActionScan();
 //			}
 		} else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.addFingerPrint(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.addFingerprint(0, 0, mKey.getLockData(), mKey.getLockMac(), new AddFingerprintCallback() {
+                @Override
+                public void onEnterAddMode(int i) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            refreshStatus(false);
+                            updateNoteText(0, i);
+                        }
+                    });
+                }
+
+                @Override
+                public void onCollectFingerprint(int i) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateNoteText(i, mTotalCount);
+                        }
+                    });
+                }
+
+                @Override
+                public void onAddFingerpintFinished(long l) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateNoteText(mTotalCount, mTotalCount);
+                            if (mValidPeriodType == KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED) {
+                                // 限时指纹，需要再调用一个修改期限的 SDK 方法
+                                lockModifyFingerprintPeriod(l);
+                            } else {
+                                // 永久指纹，直接上传数据到服务器
+                                mIsLockOperationSuccessAdd = true;
+                                requestAddFingerprint(String.valueOf(l));
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    if (!mIsLockOperationSuccessAdd) {
+                        addFail();
+                    }
+                }
+            });
 		}
 
 	}
@@ -435,62 +481,7 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 
 			});
 		} else {
-			MyApplication.bleSession.setOperation(Operation.FINGERPRINT_ADD);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockFingerprintAdd(new ILockFingerprintAdd() {
-				@Override
-				public void onEnterAddMode(final int totalCount) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							refreshStatus(false);
-							updateNoteText(0, totalCount);
-						}
-					});
-				}
 
-				@Override
-				public void onCollectSuccess(final int currentCount, final int totalCount) { // 指纹录入成功，继续录入
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							updateNoteText(currentCount, totalCount);
-						}
-					});
-				}
-
-				@Override
-				public void onAddSuccess(final long fingerprintNumber, final int totalCount) { // 指纹添加成功
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							updateNoteText(mTotalCount, mTotalCount);
-							if (mValidPeriodType == KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED) {
-								// 限时指纹，需要再调用一个修改期限的 SDK 方法
-								lockModifyFingerprintPeriod(fingerprintNumber);
-							} else {
-								// 永久指纹，直接上传数据到服务器
-								mIsLockOperationSuccessAdd = true;
-								requestAddFingerprint(String.valueOf(fingerprintNumber));
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					mIsLockOperationSuccessAdd = true;
-					addFail();
-				}
-
-				@Override
-				public void onDeviceDisconnected() {
-					if (!mIsLockOperationSuccessAdd) {
-						addFail();
-					}
-				}
-			});
 		}
 	}
 
@@ -512,14 +503,46 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 
 	private void lockAddIcCard() {
 		showLoading();
-		setAddIcCardCallback();
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mTTLockAPI.addICCard(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-		} else {
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
+        mTTLockAPI.addICCard(0, 0, mKey.getLockData(), mKey.getLockMac(), new AddICCardCallback() {
+            @Override
+            public void onEnterAddMode() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        refreshStatus(false);
+                    }
+                });
+            }
+
+            @Override
+            public void onAddICCardSuccess(long l) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//						BaseApplication.getHandler().removeCallbacks(mRunnable);
+                        // 限时 IC 卡，需要再调用一个修改期限的 SDK 方法
+                        if (mValidPeriodType == KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED) {
+                            lockModifyIcCardPeriod(l);
+                        } else {
+                            requestAddIcCard(String.valueOf(l));
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        toast(R.string.adding_ic_card_operation_fail);
+                        finish();
+                    }
+                });
+            }
+        });
 	}
 
 	private void mh_addIcCard() {
@@ -585,160 +608,74 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 		});
 	}
 
-	private void setAddIcCardCallback() {
-		MyApplication.bleSession.setOperation(Operation.ADD_IC_CARD);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-		MyApplication.bleSession.setILockIcCardAdd(new ILockIcCardAdd() {
-			@Override
-			public void onEnterAddMode() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						refreshStatus(false);
-					}
-				});
-			}
-
-			@Override
-			public void onSuccess(final long cardNumber) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-//						BaseApplication.getHandler().removeCallbacks(mRunnable);
-						// 限时 IC 卡，需要再调用一个修改期限的 SDK 方法
-						if (mValidPeriodType == KeyPwdConstant.IFingerprintCardValidType.TIME_LIMITED) {
-							lockModifyIcCardPeriod(cardNumber);
-						} else {
-							requestAddIcCard(String.valueOf(cardNumber));
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onFail() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						toast(R.string.adding_ic_card_operation_fail);
-						finish();
-					}
-				});
-			}
-		});
-	}
 
 	private void lockModifyIcCardPeriod(long cardNumber) {
 		showLoading();
-		setModifyIcCardPeriodCallback(cardNumber);
+        mTTLockAPI.modifyICCardValidityPeriod(
+                DateUtil.getStringToDate(mStartDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM),
+                DateUtil.getStringToDate(mEndDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM),
+                String.valueOf(cardNumber),
+                mKey.getLockData(),
+                mKey.getLockMac(),
+                new ModifyICCardPeriodCallback() {
+                    @Override
+                    public void onModifyICCardPeriodSuccess() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                stopLoading();
+                                requestAddIcCard(String.valueOf(cardNumber));
+                            }
+                        });
+                    }
 
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mTTLockAPI.modifyICPeriod(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), cardNumber,
-					DateUtil.getStringToDate(mStartDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM),
-					DateUtil.getStringToDate(mEndDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM),
-					mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-		} else {
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
-
-	private void setModifyIcCardPeriodCallback(final long cardNumber) {
-		MyApplication.bleSession.setOperation(Operation.MODIFY_IC_CARD_PERIOD);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-		MyApplication.bleSession.setStartDate(DateUtil.getStringToDate(mStartDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-		MyApplication.bleSession.setEndDate(DateUtil.getStringToDate(mEndDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-		MyApplication.bleSession.setIcCardNumber(cardNumber);
-
-		MyApplication.bleSession.setILockIcCardModifyPeriod(new ILockIcCardModifyPeriod() {
-			@Override
-			public void onSuccess() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						requestAddIcCard(String.valueOf(cardNumber));
-					}
-				});
-			}
-
-			@Override
-			public void onFail() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						toast(R.string.adding_ic_card_operation_fail);
-						finish();
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-
-			}
-		});
+                    @Override
+                    public void onFail(LockError lockError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                stopLoading();
+                                toast(R.string.adding_ic_card_operation_fail);
+                                finish();
+                            }
+                        });
+                    }
+                }
+        );
 	}
 
 	private void lockModifyFingerprintPeriod(long fingerprintNumber) {
-		setModifyFingerprintPeriodCallback(fingerprintNumber);
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mTTLockAPI.modifyFingerPrintPeriod(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), fingerprintNumber,
-					DateUtil.getStringToDate(mStartDate, "yyyy-MM-dd HH:mm"),
-					DateUtil.getStringToDate(mEndDate, "yyyy-MM-dd HH:mm"),
-					mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-		} else {
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+        mTTLockAPI.modifyFingerprintValidityPeriod(
+                DateUtil.getStringToDate(mStartDate, "yyyy-MM-dd HH:mm"),
+                DateUtil.getStringToDate(mEndDate, "yyyy-MM-dd HH:mm"),
+                String.valueOf(fingerprintNumber),
+                mKey.getLockData(),
+                mKey.getLockMac(),
+                new ModifyFingerprintPeriodCallback() {
+                    @Override
+                    public void onModifyPeriodSuccess() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mIsLockOperationSuccessModify = true;
+                                requestAddFingerprint(String.valueOf(fingerprintNumber));
+                            }
+                        });
+                    }
 
-	private void setModifyFingerprintPeriodCallback(final long fingerprintNumber) {
-		MyApplication.bleSession.setOperation(Operation.FINGERPRINT_MODIFY_PERIOD);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-		MyApplication.bleSession.setStartDate(DateUtil.getStringToDate(mStartDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-		MyApplication.bleSession.setEndDate(DateUtil.getStringToDate(mEndDate, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM));
-		MyApplication.bleSession.setFingerprintNumber(fingerprintNumber);
-		MyApplication.bleSession.setILockFingerprintModifyPeriod(new ILockFingerprintModifyPeriod() {
-			@Override
-			public void onSuccess() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						mIsLockOperationSuccessModify = true;
-						requestAddFingerprint(String.valueOf(fingerprintNumber));
-					}
-				});
-			}
+                    @Override
+                    public void onFail(LockError lockError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mIsLockOperationSuccessModify = true;
+                                addFail();
+                            }
+                        });
+                    }
+                }
 
-			@Override
-			public void onFail() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						mIsLockOperationSuccessModify = true;
-						addFail();
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (!mIsLockOperationSuccessModify) {
-							addFail();
-						}
-					}
-				});
-			}
-		});
+        );
 	}
 
 	/**

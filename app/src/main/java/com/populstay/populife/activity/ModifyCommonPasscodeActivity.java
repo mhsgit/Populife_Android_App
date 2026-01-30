@@ -33,7 +33,10 @@ import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.ModifyAdminPasscodeCallback;
+import com.ttlock.bl.sdk.callback.ModifyPasscodeCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -188,18 +191,41 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
 			}
 
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setModifyPasscodeCallback(newPwd);
-				mTTLockAPI.modifyKeyboardPassword(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-						mPasscode.getKeyboardPwdType(), mPasscode.getKeyboardPwd(), newPwd, 0, 0,
-						mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-			} else {
-				MyApplication.bleSession.setLockmac(mKey.getLockMac());
-				setModifyPasscodeCallback(newPwd);
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.modifyPasscode(mPasscode.getKeyboardPwd(), newPwd, 0, 0, mKey.getLockData(), mKey.getLockMac(), new ModifyPasscodeCallback() {
+                @Override
+                public void onModifyPasscodeSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            requestModifyPasscode(newPwd, 1);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mIsLockOperationSuccess = true;
+
+                            if (lockError == LockError.LOCK_PASSWORD_NOT_EXIST) {
+                                stopLoading();
+                                toast(R.string.note_unused_passcode_cannot_be_modified);
+                            } else {
+                                if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                    requestModifyPasscode(newPwd, 2);
+                                } else {
+                                    stopLoading();
+                                    toast(R.string.operation_fail);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -237,59 +263,7 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
 					});
 				}
 			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.MODIFY_KEYBOARD_PASSWORD);
-			MyApplication.bleSession.setKeyboardPwdType(mPasscode.getKeyboardPwdType());
-			MyApplication.bleSession.setKeyboardPwdOriginal(mPasscode.getKeyboardPwd());
-			MyApplication.bleSession.setKeyboardPwdNew(newPwd);
-			MyApplication.bleSession.setStartDate(0);
-			MyApplication.bleSession.setEndDate(0);
-			MyApplication.bleSession.setILockModifyPasscode(new ILockModifyPasscode() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							requestModifyPasscode(newPwd, 1);
-						}
-					});
-				}
-
-				@Override
-				public void onFail(final Error error) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							mIsLockOperationSuccess = true;
-
-							if (error == Error.LOCK_PASSWORD_NOT_EXIST) {
-								stopLoading();
-								toast(R.string.note_unused_passcode_cannot_be_modified);
-							} else {
-								if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-									requestModifyPasscode(newPwd, 2);
-								} else {
-									stopLoading();
-									toast(R.string.operation_fail);
-								}
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-					if (!mIsLockOperationSuccess) {
-						if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-							requestModifyPasscode(newPwd, 2);
-						}
-					}
-				}
-			});
 		}
-
 	}
 
 	/**
@@ -352,16 +326,19 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
 			}
 
 		}else{
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setAdminKeyboardPwdCallback(input);
-				mTTLockAPI.setAdminKeyboardPassword(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(),
-						mKey.getLockFlagPos(), mKey.getAesKeyStr(), input);
-			} else {//connect the lock
-				setAdminKeyboardPwdCallback(input);
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.modifyAdminPasscode(input, mKey.getLockData(), mKey.getLockMac(), new ModifyAdminPasscodeCallback() {
+                @Override
+                public void onModifyAdminPasscodeSuccess(String s) {
+                    stopLoading();
+                    setAdminKeyboardPwd(input);
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    stopLoading();
+                    toast(R.string.note_modify_admin_passcode_fail);
+                }
+            });
 		}
 
 	}
@@ -381,23 +358,6 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
 
 				@Override
 				public void onFail() {
-					stopLoading();
-					toast(R.string.note_modify_admin_passcode_fail);
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.SET_ADMIN_KEYBOARD_PASSWORD);
-			MyApplication.bleSession.setPassword(input);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockSetAdminKeyboardPwd(new ILockSetAdminKeyboardPwd() {
-				@Override
-				public void onSetPwdSuccess() {
-					stopLoading();
-					setAdminKeyboardPwd(input);
-				}
-
-				@Override
-				public void onSetPwdFail() {
 					stopLoading();
 					toast(R.string.note_modify_admin_passcode_fail);
 				}

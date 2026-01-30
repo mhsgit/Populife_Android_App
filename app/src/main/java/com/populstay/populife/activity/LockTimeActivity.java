@@ -24,6 +24,8 @@ import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.SetLockTimeCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 import static com.populstay.populife.app.MyApplication.sPPLOCK;
@@ -109,14 +111,37 @@ public class LockTimeActivity extends BaseActivity {
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.setLockTime(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getLockKey(), mLockTime,
-						mKey.getLockFlagPos(), mKey.getAesKeyStr(), mKey.getTimezoneRawOffset());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.setLockTime(mLockTime, mKey.getLockData(), mKey.getLockMac(), new SetLockTimeCallback() {
+                @Override
+                public void onSetTimeSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            toast(R.string.calibrate_time_success);
+                            mTvTime.setText(DateUtil.getDateToString(mLockTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS));
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            if (isNetEnableWithoutToast()) { // 网络开启
+                                // 通过网关校准锁时间
+                                calibrateLockTimeViaGateway();
+                            } else {
+                                toastFail();
+                            }
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -147,47 +172,6 @@ public class LockTimeActivity extends BaseActivity {
 							toastFail();
 						}
 					});
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.SET_LOCK_TIME);
-			MyApplication.bleSession.setILockSetTime(new ILockSetTime() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							toast(R.string.calibrate_time_success);
-							mTvTime.setText(DateUtil.getDateToString(mLockTime, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS));
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							if (isNetEnableWithoutToast()) { // 网络开启
-								// 通过网关校准锁时间
-								calibrateLockTimeViaGateway();
-							} else {
-								toastFail();
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-					if (!mIsLockOperationSuccess) {
-						// 通过网关校准锁时间
-						calibrateLockTimeViaGateway();
-					}
 				}
 			});
 		}

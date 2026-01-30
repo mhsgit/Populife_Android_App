@@ -40,7 +40,11 @@ import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.ClearAllICCardCallback;
+import com.ttlock.bl.sdk.callback.DeleteICCardCallback;
+import com.ttlock.bl.sdk.callback.GetAllValidICCardCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,37 +192,22 @@ public class LockManageIcCardActivity extends BaseActivity implements View.OnCli
 	 * 通过 SDK 读取锁的 IC 卡信息
 	 */
 	private void searchLockIcCards() {
-		setSearchIcCardCallback();
+        mTTLockAPI.getAllValidICCards(mKey.getLockData(), mKey.getLockMac(), new GetAllValidICCardCallback() {
+            @Override
+            public void onGetAllValidICCardSuccess(String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestUploadIcCard(s);
+                    }
+                });
+            }
 
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mTTLockAPI.searchICCard(null, PeachPreference.getOpenid(),
-					mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(),
-					mKey.getLockFlagPos(), mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-		} else {
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+            @Override
+            public void onFail(LockError lockError) {
 
-	private void setSearchIcCardCallback() {
-		MyApplication.bleSession.setOperation(Operation.SEARCH_IC_CARDS);
-
-		MyApplication.bleSession.setILockIcCardSearch(new ILockIcCardSearch() {
-			@Override
-			public void onSuccess(final String icCardInfo) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						requestUploadIcCard(icCardInfo);
-					}
-				});
-			}
-
-			@Override
-			public void onFail(Error error) {
-
-			}
-		});
+            }
+        });
 	}
 
 	/**
@@ -256,51 +245,29 @@ public class LockManageIcCardActivity extends BaseActivity implements View.OnCli
 	 */
 	private void lockDeleteIcCard(long cardNumber) {
 		PeachLoader.showLoading(this);
+        mTTLockAPI.deleteICCard(String.valueOf(cardNumber), mKey.getLockKey(), mKey.getLockMac(), new DeleteICCardCallback() {
+            @Override
+            public void onDeleteICCardSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        requestDeleteIcCard(String.valueOf(cardNumber));
+                    }
+                });
+            }
 
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			setDeleteIcCardCallback(cardNumber);
-			mTTLockAPI.deleteICCard(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-					mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), cardNumber, mKey.getAesKeyStr());
-		} else {
-			setDeleteIcCardCallback(cardNumber);
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
-
-	private void setDeleteIcCardCallback(final long cardNumber) {
-		MyApplication.bleSession.setOperation(Operation.DELETE_IC_CARD);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-		MyApplication.bleSession.setIcCardNumber(cardNumber);
-
-		MyApplication.bleSession.setILockIcCardDelete(new ILockIcCardDelete() {
-			@Override
-			public void onSuccess() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						requestDeleteIcCard(String.valueOf(cardNumber));
-					}
-				});
-			}
-
-			@Override
-			public void onFail(Error error) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						toast(R.string.operation_fail);
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-
-			}
-		});
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        toast(R.string.operation_fail);
+                    }
+                });
+            }
+        });
 	}
 
 	/**
@@ -341,25 +308,37 @@ public class LockManageIcCardActivity extends BaseActivity implements View.OnCli
 	private void lockClearIcCards() {
 		PeachLoader.showLoading(this);
 		if(mKey.getLockId()<0){
+            setClearIcCardCallback();
 			if (sPPLOCK.isConnected(mKey.getLockMac())) {
-				setClearIcCardCallback();
 				sPPLOCK.clearFingers(PeachPreference.readUserId(),String.valueOf(mKey.getLockId()),
 						String.valueOf(mKey.getKeyId()),mKey.getK1());
 			} else {
-				setClearIcCardCallback();
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setClearIcCardCallback();
-				mTTLockAPI.clearICCard(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-						mKey.getAesKeyStr());
-			} else {
-				setClearIcCardCallback();
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.clearAllICCard(mKey.getLockData(), mKey.getLockMac(), new ClearAllICCardCallback() {
+                @Override
+                public void onClearAllICCardSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            PeachLoader.stopLoading();
+                            requestClearIcCard();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            PeachLoader.stopLoading();
+                            toast(R.string.operation_fail);
+                        }
+                    });
+                }
+            });
 		}
 
 	}
@@ -382,32 +361,6 @@ public class LockManageIcCardActivity extends BaseActivity implements View.OnCli
 
 				@Override
 				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							PeachLoader.stopLoading();
-							toast(R.string.operation_fail);
-						}
-					});
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.CLEAR_IC_CARDS);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockIcCardClear(new ILockIcCardClear() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							PeachLoader.stopLoading();
-							requestClearIcCard();
-						}
-					});
-				}
-
-				@Override
-				public void onFail(Error error) {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {

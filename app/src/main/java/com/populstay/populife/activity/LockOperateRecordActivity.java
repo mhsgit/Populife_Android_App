@@ -32,6 +32,9 @@ import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.GetOperationLogCallback;
+import com.ttlock.bl.sdk.constant.LogType;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -232,13 +235,25 @@ public class LockOperateRecordActivity extends BaseActivity implements View.OnCl
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.getOperateLog(null, mKey.getLockVersion(),
-						mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.getOperationLog(LogType.ALL, mKey.getLockData(), mKey.getLockMac(), new GetOperationLogCallback() {
+                @Override
+                public void onGetLogSuccess(String s) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            PeachLogger.d(s);
+                            uploadLockOperateLog(s);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    stopLoading();
+                    toastFail();
+                }
+            });
 		}
 	}
 
@@ -256,27 +271,6 @@ public class LockOperateRecordActivity extends BaseActivity implements View.OnCl
 						}
 					});
 				}
-				@Override
-				public void onFail() {
-					stopLoading();
-					toastFail();
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.GET_OPERATE_LOG);
-			MyApplication.bleSession.setILockGetOperateLog(new ILockGetOperateLog() {
-				@Override
-				public void onSuccess(final String operateLog) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							PeachLogger.d(operateLog);
-							uploadLockOperateLog(operateLog);
-						}
-					});
-				}
-
 				@Override
 				public void onFail() {
 					stopLoading();

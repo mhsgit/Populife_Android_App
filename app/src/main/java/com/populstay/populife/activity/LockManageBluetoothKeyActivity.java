@@ -41,6 +41,8 @@ import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.ResetKeyCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -279,44 +281,29 @@ public class LockManageBluetoothKeyActivity extends BaseActivity implements View
 
 	private void lockResetAllEkeys() {
 		PeachLoader.showLoading(this);
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			setResetEkeyCallback();
-			mTTLockAPI.resetEKey(null, PeachPreference.getOpenid(),
-					mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-		} else {//connect the lock
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			setResetEkeyCallback();
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+        mTTLockAPI.resetEkey(mKey.getLockData(), mKey.getLockMac(), new ResetKeyCallback() {
+            @Override
+            public void onResetKeySuccess(String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        requestResetEkey();
+                    }
+                });
+            }
 
-	private void setResetEkeyCallback() {
-		MyApplication.bleSession.setOperation(Operation.RESET_EKEY);
-
-		MyApplication.bleSession.setILockResetEkey(new ILockResetEkey() {
-			@Override
-			public void onSuccess() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						requestResetEkey();
-					}
-				});
-			}
-
-			@Override
-			public void onFail() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						toast(R.string.note_ekey_reset_fail);
-					}
-				});
-			}
-		});
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        toast(R.string.note_ekey_reset_fail);
+                    }
+                });
+            }
+        });
 	}
 
 	/**

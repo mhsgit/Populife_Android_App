@@ -27,6 +27,8 @@ import com.populstay.populife.ui.widget.exedittext.ExEditText;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.ModifyAdminPasscodeCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 import static com.populstay.populife.app.MyApplication.sPPLOCK;
@@ -129,16 +131,19 @@ public class ModifyAdminPasscodeActivity extends BaseActivity {
 								startLockActionScan();
 							}
 						} else {
-							if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-								//setCallback(input);
-								mTTLockAPI.setAdminKeyboardPassword(null, PeachPreference.getOpenid(),
-										mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(),
-										mKey.getLockFlagPos(), mKey.getAesKeyStr(), input);
-							} else {//connect the lock
-								//setCallback(input);
-//								mTTLockAPI.connect(mKey.getLockMac());
-								kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-							}
+                            mTTLockAPI.modifyAdminPasscode(input, mKey.getLockData(), mKey.getLockMac(), new ModifyAdminPasscodeCallback() {
+                                @Override
+                                public void onModifyAdminPasscodeSuccess(String s) {
+                                    stopLoading();
+                                    setAdminKeyboardPwd(input);
+                                }
+
+                                @Override
+                                public void onFail(LockError lockError) {
+                                    stopLoading();
+                                    toast(R.string.note_modify_admin_passcode_fail);
+                                }
+                            });
 						}
 
 					}
@@ -180,24 +185,6 @@ public class ModifyAdminPasscodeActivity extends BaseActivity {
 //					toast(R.string.note_modify_admin_passcode_fail);
 //				}
 			});
-		} else {
-			MyApplication.bleSession.setOperation(Operation.SET_ADMIN_KEYBOARD_PASSWORD);
-			MyApplication.bleSession.setPassword(input);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockSetAdminKeyboardPwd(new ILockSetAdminKeyboardPwd() {
-				@Override
-				public void onSetPwdSuccess() {
-					stopLoading();
-					setAdminKeyboardPwd(input);
-				}
-
-				@Override
-				public void onSetPwdFail() {
-					stopLoading();
-					toast(R.string.note_modify_admin_passcode_fail);
-				}
-			});
-
 		}
 	}
 

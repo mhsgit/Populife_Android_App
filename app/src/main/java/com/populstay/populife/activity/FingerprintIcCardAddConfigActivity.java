@@ -29,6 +29,8 @@ import com.populstay.populife.manhattanlock.MHILockGetTime;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.device.KeyboardUtil;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -190,12 +192,32 @@ public class FingerprintIcCardAddConfigActivity extends BaseActivity implements 
 				startLockActionScan();
 			}
 		}else{
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.getLockTime(null, mKey.getLockVersion(), mKey.getAesKeyStr(), mKey.getTimezoneRawOffset());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.getLockTime(mKey.getLockData(),mKey.getLockMac(), new GetLockTimeCallback() {
+                @Override
+                public void onGetLockTimeSuccess(long time) {
+                    CURRENT_KEY.setLockCurrentTime(time);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!isFinishing()) {
+                                showDeviceTime(time);
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError error) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!isFinishing()) {
+                                showDeviceTime(-1);
+                            }
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -227,39 +249,6 @@ public class FingerprintIcCardAddConfigActivity extends BaseActivity implements 
 							}
 						}
 					});
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.GET_LOCK_TIME);
-			MyApplication.bleSession.setILockGetTime(new ILockGetTime() {
-				@Override
-				public void onSuccess(final long time) {
-					CURRENT_KEY.setLockCurrentTime(time);
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							if (!isFinishing()) {
-								showDeviceTime(time);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							if (!isFinishing()) {
-								showDeviceTime(-1);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-
 				}
 			});
 		}

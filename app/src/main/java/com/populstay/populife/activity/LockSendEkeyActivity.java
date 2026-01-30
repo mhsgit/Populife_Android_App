@@ -53,6 +53,9 @@ import com.populstay.populife.util.locale.LanguageUtil;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
+import com.ttlock.bl.sdk.api.TTLockClient;
+import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -227,51 +230,34 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 
 	private void readLockTime() {
 		//showLoading();
-		setGetTimeCallback();
+        mTTLockAPI.getLockTime(mKey.getLockKey(), mKey.getLockMac(), new GetLockTimeCallback() {
+            @Override
+            public void onGetLockTimeSuccess(long l) {
+                CURRENT_KEY.setLockCurrentTime(l);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isFinishing()) {
+                            showDeviceTime(l);
+                        }
+                    }
+                });
+            }
 
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mTTLockAPI.getLockTime(null, mKey.getLockVersion(), mKey.getAesKeyStr(), mKey.getTimezoneRawOffset());
-		} else {
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isFinishing()) {
+                            showDeviceTime(-1);
+                        }
+                    }
+                });
+            }
+        });
 	}
 
-	private void setGetTimeCallback() {
-		MyApplication.bleSession.setOperation(Operation.GET_LOCK_TIME);
-
-		MyApplication.bleSession.setILockGetTime(new ILockGetTime() {
-			@Override
-			public void onSuccess(final long time) {
-				CURRENT_KEY.setLockCurrentTime(time);
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (!isFinishing()) {
-							showDeviceTime(time);
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onFail() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (!isFinishing()) {
-							showDeviceTime(-1);
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-
-			}
-		});
-	}
 
 	private void initTimePicker() {
 		// 获取当前时间

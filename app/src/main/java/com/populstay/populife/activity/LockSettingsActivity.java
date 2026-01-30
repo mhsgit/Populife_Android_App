@@ -60,6 +60,15 @@ import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.GetAutoLockingPeriodCallback;
+import com.ttlock.bl.sdk.callback.GetBatteryLevelCallback;
+import com.ttlock.bl.sdk.callback.GetLockSoundWithSoundVolumeCallback;
+import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
+import com.ttlock.bl.sdk.callback.ResetLockCallback;
+import com.ttlock.bl.sdk.callback.SetLockConfigCallback;
+import com.ttlock.bl.sdk.entity.LockError;
+import com.ttlock.bl.sdk.entity.SoundVolume;
+import com.ttlock.bl.sdk.entity.TTLockConfigType;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -577,50 +586,38 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		if (isClickKeypadVolume) {
 			showLoading();
 		}
-		setQueryKeypadVolumeCallback();
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			mTTLockAPI.operateAudioSwitch(null, 1, 0,
-					PeachPreference.getOpenid(), mKey.getLockVersion(), mKey.getAdminPwd(),
-					mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-		} else {
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
+        mTTLockAPI.getLockSoundWithSoundVolume(mKey.getLockData(), new GetLockSoundWithSoundVolumeCallback() {
+            @Override
+            public void onGetLockSoundSuccess(boolean b, SoundVolume keypadVolume) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        if (isClickKeypadVolume) {
+                            isClickKeypadVolume = false;
+                            LockSoundActivity.actionStart(LockSettingsActivity.this, keypadVolume != SoundVolume.OFF ? 1 : 0, REQUEST_CODE_KEYPAD_VOLUME);
+                        } else {
+                            if (keypadVolume != SoundVolume.OFF) {
+                                tv_lock_settings_keypad_volume.setText(R.string.on);
+                            } else {
+                                tv_lock_settings_keypad_volume.setText(R.string.off);
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(LockError lockError) {
+                stopLoading();
+                if (isClickKeypadVolume) {
+                    toastFail();
+                }
+                tv_lock_settings_keypad_volume.setText(R.string.unknown);
+            }
+        });
 	}
 
-	private void setQueryKeypadVolumeCallback() {
-		MyApplication.bleSession.setOperation(Operation.QUERY_KEYPAD_VOLUME);
-		MyApplication.bleSession.setILockQueryKeypadVolume(new ILockQueryKeypadVolume() {
-			@Override
-			public void onSuccess(final int keypadVolume) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						if (isClickKeypadVolume) {
-							isClickKeypadVolume = false;
-							LockSoundActivity.actionStart(LockSettingsActivity.this, keypadVolume, REQUEST_CODE_KEYPAD_VOLUME);
-						} else {
-							if (keypadVolume == 1) {
-								tv_lock_settings_keypad_volume.setText(R.string.on);
-							} else {
-								tv_lock_settings_keypad_volume.setText(R.string.off);
-							}
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onFail() {
-				stopLoading();
-				if (isClickKeypadVolume) {
-					toastFail();
-				}
-				tv_lock_settings_keypad_volume.setText(R.string.unknown);
-			}
-		});
-	}
 
 	/**
 	 * 读取锁时间
@@ -643,16 +640,56 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 				}
 			}
 		} else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.getLockTime(null, mKey.getLockVersion(), mKey.getAesKeyStr(), mKey.getTimezoneRawOffset());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				if (!isBackground) {
-					kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-				} else {
-					kjxRequestBleConnectPermissionNoToastStartConnect(mKey.getLockMac());
-				}
-			}
+            mTTLockAPI.getLockTime(mKey.getLockData(), mKey.getLockMac(), new GetLockTimeCallback() {
+                @Override
+                public void onGetLockTimeSuccess(long time) {
+                    CURRENT_KEY.setLockCurrentTime(time);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            if (isClickReadTime) {
+                                LockTimeActivity.actionStart(LockSettingsActivity.this, time, REQUEST_CODE_ADJUST_LOCK_TIME, mKey);
+                            } else {
+                                tv_read_lock_time.setText(DateUtil.getDateToString(time, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS));
+                                searchAutoLockTime();
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            if (isClickReadTime) {
+                                if (isNetEnableWithoutToast()) { // 网络开启
+                                    // 通过网关读取锁时间
+                                    if (mKey.getLockId() > 0) {
+                                        readLockTimeViaGateway();
+                                    }
+                                } else {
+                                    toastFail();
+                                }
+                            } else {
+                                searchAutoLockTime();
+                                if (isNetEnableWithoutToast()) { // 网络开启
+                                    // 通过网关读取锁时间
+                                    if (mKey.getLockId() > 0) {
+                                        readLockTimeViaGateway();
+                                    }
+                                } else {
+                                    tv_read_lock_time.setText(R.string.unknown);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -711,68 +748,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 
 			});
 
-		} else {
-			MyApplication.bleSession.setOperation(Operation.GET_LOCK_TIME);
-			MyApplication.bleSession.setILockGetTime(new ILockGetTime() {
-				@Override
-				public void onSuccess(final long time) {
-					CURRENT_KEY.setLockCurrentTime(time);
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							if (isClickReadTime) {
-								LockTimeActivity.actionStart(LockSettingsActivity.this, time, REQUEST_CODE_ADJUST_LOCK_TIME, mKey);
-							} else {
-								tv_read_lock_time.setText(DateUtil.getDateToString(time, DateUtil.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS));
-								searchAutoLockTime();
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							if (isClickReadTime) {
-								if (isNetEnableWithoutToast()) { // 网络开启
-									// 通过网关读取锁时间
-									if (mKey.getLockId() > 0) {
-										readLockTimeViaGateway();
-									}
-								} else {
-									toastFail();
-								}
-							} else {
-								searchAutoLockTime();
-								if (isNetEnableWithoutToast()) { // 网络开启
-									// 通过网关读取锁时间
-									if (mKey.getLockId() > 0) {
-										readLockTimeViaGateway();
-									}
-								} else {
-									tv_read_lock_time.setText(R.string.unknown);
-								}
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-					if (!mIsLockOperationSuccess) {
-						// 通过网关读取锁时间
-						if (mKey.getLockId() > 0) {
-							readLockTimeViaGateway();
-						}
-					}
-				}
-			});
 		}
 	}
 
@@ -848,14 +823,46 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 			}
 
 		} else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.searchAutoLockTime(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(),
-						mKey.getLockFlagPos(), mKey.getAesKeyStr());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.getAutomaticLockingPeriod(mKey.getLockData(), new GetAutoLockingPeriodCallback() {
+                @Override
+                public void onGetAutoLockingPeriodSuccess(int second, int i1, int i2) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            if (isClickAutoLocking) {
+                                LockAutoLockingActivity.actionStart(LockSettingsActivity.this, second, REQUEST_CODE_AUTO_LOCKING, mKey);
+                            } else {
+                                if (mKey.getLockId() > 0) {
+                                    queryKeypadVolume();
+                                }
+                            }
+                            if (second > 0) {
+                                tv_auto_locking.setText(R.string.on);
+                            } else {
+                                tv_auto_locking.setText(R.string.off);
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            if (isClickAutoLocking) {
+                                toastFail();
+                            } else {
+                                queryKeypadVolume();
+                            }
+                            tv_auto_locking.setText(R.string.unknown);
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -905,51 +912,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 				}
 			});
 
-		} else {
-			MyApplication.bleSession.setOperation(Operation.SEARCH_AUTO_LOCK_TIME);
-			MyApplication.bleSession.setILockSearchAutoLockTime(new ILockSearchAutoLockTime() {
-				@Override
-				public void onSearchAutoLockTimeSuccess(final int second) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							if (isClickAutoLocking) {
-								LockAutoLockingActivity.actionStart(LockSettingsActivity.this, second, REQUEST_CODE_AUTO_LOCKING, mKey);
-							} else {
-								if (mKey.getLockId() > 0) {
-									queryKeypadVolume();
-								}
-							}
-							if (second > 0) {
-								tv_auto_locking.setText(R.string.on);
-							} else {
-								tv_auto_locking.setText(R.string.off);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onSearchAutoLockTimeFail() {
-					runOnUiThread(new Runnable() {
-						@SuppressLint("SetTextI18n")
-						@Override
-						public void run() {
-							stopLoading();
-							if (isClickAutoLocking) {
-								toastFail();
-							} else {
-								queryKeypadVolume();
-							}
-							tv_auto_locking.setText(R.string.unknown);
-						}
-					});
-				}
-			});
-
 		}
-
 	}
 
 	private WeakHashMap<String, Object> getLockParams() {
@@ -1140,13 +1103,31 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 					startLockActionScan();
 				}
 			} else {
-				if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-					mTTLockAPI.resetLock(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-							mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-				} else {//connect the lock
-//					mTTLockAPI.connect(mKey.getLockMac());
-					kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-				}
+                mTTLockAPI.resetLock(mKey.getLockData(), mKey.getLockMac(), new ResetLockCallback() {
+                    @Override
+                    public void onResetLockSuccess() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mIsDeleteCallbackCalled = true;
+                                stopLoading();
+                                requestDeleteLock();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFail(LockError lockError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mIsDeleteCallbackCalled = true;
+                                stopLoading();
+                                toastFail();
+                            }
+                        });
+                    }
+                });
 			}
 		}
 	}
@@ -1155,47 +1136,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		if (mKey.getLockId() < 0) {
 			MyApplication.pplBleSession.setOperation(LockOperation.DELETE_LOCK);
 			MyApplication.pplBleSession.setmILockDeleteLock(new MHILockDeleteLock() {
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							mIsDeleteCallbackCalled = true;
-							stopLoading();
-							requestDeleteLock();
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							mIsDeleteCallbackCalled = true;
-							stopLoading();
-							toastFail();
-						}
-					});
-				}
-
-				@Override
-				public void onFinish() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							if (!mIsDeleteCallbackCalled) {
-								mIsDeleteCallbackCalled = true;
-								stopLoading();
-								toast(R.string.note_make_sure_lock_nearby);
-							}
-						}
-					});
-				}
-			});
-		} else {
-			MyApplication.bleSession.setOperation(Operation.RESET_LOCK);
-			MyApplication.bleSession.setILockResetLock(new ILockResetLock() {
 				@Override
 				public void onSuccess() {
 					runOnUiThread(new Runnable() {
@@ -1301,12 +1241,29 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 				startLockActionScan();
 			}
 		} else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.getElectricQuantity(null, mKey.getLockVersion(), mKey.getAesKeyStr());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.getBatteryLevel(mKey.getLockData(), mKey.getLockMac(), new GetBatteryLevelCallback() {
+                @Override
+                public void onGetBatteryLevelSuccess(int battery) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            requestUploadLockBattery(battery);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toastFail();
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -1328,32 +1285,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 
 				@Override
 				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toastFail();
-						}
-					});
-				}
-			});
-		} else {
-			MyApplication.bleSession.setOperation(Operation.GET_LOCK_BATTERY);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setILockGetBattery(new ILockGetBattery() {
-				@Override
-				public void onGetBatterySuccess(final int battery) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							requestUploadLockBattery(battery);
-						}
-					});
-				}
-
-				@Override
-				public void onGetBatteryFail() {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {

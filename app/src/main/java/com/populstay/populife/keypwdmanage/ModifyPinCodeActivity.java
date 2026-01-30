@@ -27,7 +27,9 @@ import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.ModifyPasscodeCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
@@ -194,60 +196,33 @@ public class ModifyPinCodeActivity extends BaseActivity {
 
 	private void modifyPasscode(String newPwd) {
 		PeachLoader.showLoading(this);
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			setModifyPasscodeCallback(newPwd);
-			mTTLockAPI.modifyKeyboardPassword(null, PeachPreference.getOpenid(),
-					mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-					mPasscode.getKeyboardPwdType(), mPasscode.getKeyboardPwd(), newPwd, 0, 0,
-					mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-		} else {
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			setModifyPasscodeCallback(newPwd);
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+        mTTLockAPI.modifyPasscode(mPasscode.getKeyboardPwd(), newPwd, 0, 0, mKey.getLockData(), mKey.getLockMac(), new ModifyPasscodeCallback() {
+            @Override
+            public void onModifyPasscodeSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        requestModifyPasscode(newPwd);
+                    }
+                });
+            }
 
-	private void setModifyPasscodeCallback(final String newPwd) {
-		MyApplication.bleSession.setOperation(Operation.MODIFY_KEYBOARD_PASSWORD);
-		MyApplication.bleSession.setKeyboardPwdType(mPasscode.getKeyboardPwdType());
-		MyApplication.bleSession.setKeyboardPwdOriginal(mPasscode.getKeyboardPwd());
-		MyApplication.bleSession.setKeyboardPwdNew(newPwd);
-		MyApplication.bleSession.setStartDate(0);
-		MyApplication.bleSession.setEndDate(0);
-
-		MyApplication.bleSession.setILockModifyPasscode(new ILockModifyPasscode() {
-			@Override
-			public void onSuccess() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						requestModifyPasscode(newPwd);
-					}
-				});
-			}
-
-			@Override
-			public void onFail(final Error error) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						PeachLoader.stopLoading();
-						if (error == Error.LOCK_PASSWORD_NOT_EXIST) {
-							toast(R.string.note_unused_passcode_cannot_be_modified);
-						} else {
-							toast(R.string.operation_fail);
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-
-			}
-		});
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeachLoader.stopLoading();
+                        if (lockError == LockError.LOCK_PASSWORD_NOT_EXIST) {
+                            toast(R.string.note_unused_passcode_cannot_be_modified);
+                        } else {
+                            toast(R.string.operation_fail);
+                        }
+                    }
+                });
+            }
+        });
 	}
 
 	/**

@@ -49,6 +49,9 @@ import com.populstay.populife.util.device.KeyboardUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.CreateCustomPasscodeCallback;
+import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,9 +66,6 @@ import java.util.WeakHashMap;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
-//import cn.sharesdk.framework.Platform;
-//import cn.sharesdk.framework.PlatformActionListener;
-//import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 import static com.populstay.populife.app.MyApplication.sPPLOCK;
@@ -555,18 +555,38 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				setAddPwdLockCallback(startDate, endDate, pwd);
-				mTTLockAPI.addPeriodKeyboardPassword(null,
-						PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), pwd,
-						startDate, endDate, mKey.getAesKeyStr(),
-						(long) TimeZone.getDefault().getOffset(System.currentTimeMillis()));
-			} else {
-				setAddPwdLockCallback(startDate, endDate, pwd);
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.createCustomPasscode(pwd, startDate, endDate, mKey.getLockData(), mKey.getLockMac(), new CreateCustomPasscodeCallback() {
+                @Override
+                public void onCreateCustomPasscodeSuccess(String s) {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                PeachLoader.stopLoading();
+                                requestAddPasscode(pwd, "1");
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                PeachLoader.stopLoading();
+                                // 连接超时说明不在锁附近，用网关设置自定义密码
+                                if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                    requestAddPasscode(mInputPwd, "2");
+                                } else {
+                                    toastFail();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
 		}
 
 	}
@@ -600,63 +620,6 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
 							public void run() {
 								PeachLoader.stopLoading();
 								toastFail();
-							}
-						});
-					}
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.ADD_PASSCODE);
-			MyApplication.bleSession.setLockmac(mKey.getLockMac());
-			MyApplication.bleSession.setPassword(pwd);
-			MyApplication.bleSession.setStartDate(startDate);
-			MyApplication.bleSession.setEndDate(endDate);
-			MyApplication.bleSession.setILockAddPasscode(new ILockAddPasscode() {
-				@Override
-				public void onSuccess() {
-					if (getActivity() != null) {
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								PeachLoader.stopLoading();
-								requestAddPasscode(pwd, "1");
-							}
-						});
-					}
-				}
-
-				@Override
-				public void onFail() {
-					if (getActivity() != null) {
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								PeachLoader.stopLoading();
-								// 连接超时说明不在锁附近，用网关设置自定义密码
-								if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-									requestAddPasscode(mInputPwd, "2");
-								} else {
-									toastFail();
-								}
-							}
-						});
-					}
-				}
-
-				@Override
-				public void onTimeOut() {
-
-					if (getActivity() != null) {
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								PeachLoader.stopLoading();
-								// 连接超时说明不在锁附近，用网关设置自定义密码
-								if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-									requestAddPasscode(mInputPwd, "2");
-								} else {
-									toastFail();
-								}
 							}
 						});
 					}

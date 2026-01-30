@@ -28,7 +28,9 @@ import com.populstay.populife.util.GsonUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.pkg.ThirdAppUtil;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.SetRemoteUnlockSwitchCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
@@ -134,52 +136,32 @@ public class LockRemoteUnlockConfigActivity extends BaseActivity {
 	 */
 	private void switchRemoteUnlock() {
 		showLoading();
-		setSwitchRemoteUnlockCallback();
+        boolean state = !DigitUtil.isSupportRemoteUnlock(mSpecialValue);
+        mTTLockAPI.setRemoteUnlockSwitchState(state, mKey.getLockData(), mKey.getLockMac(), new SetRemoteUnlockSwitchCallback() {
+            @Override
+            public void onSetRemoteUnlockSwitchSuccess(String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        toastSuccess();
+                        mKey.setLockData(s);
+                        modifyLockSpcialValue(state ? 1 : 0, state ? 1 : 0);
+                    }
+                });
+            }
 
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			/**
-			 * operateType	1 get, 2 modify
-			 * state		1 on, 0 off
-			 */
-			mTTLockAPI.operateRemoteUnlockSwitch(null, 2,
-					DigitUtil.isSupportRemoteUnlock(mSpecialValue) ? 0 : 1,
-					PeachPreference.getOpenid(), mKey.getLockVersion(), mKey.getAdminPwd(),
-					mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-		} else {//connect the lock
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
-
-
-	private void setSwitchRemoteUnlockCallback() {
-		MyApplication.bleSession.setOperation(Operation.REMOTE_UNLOCK_SWITCH);
-		MyApplication.bleSession.setRemoteUnlockState(DigitUtil.isSupportRemoteUnlock(mSpecialValue) ? 0 : 1);
-
-		MyApplication.bleSession.setILockModifyRemoteUnlockState(new ILockModifyRemoteUnlockState() {
-			@Override
-			public void onSuccess(final int battery, final int operateType, final int state, final int feature) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						toastSuccess();
-						modifyLockSpcialValue(state, feature);
-					}
-				});
-			}
-
-			@Override
-			public void onFail(Error error) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						toastFail();
-					}
-				});
-			}
-		});
+            @Override
+            public void onFail(LockError lockError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        toastFail();
+                    }
+                });
+            }
+        });
 	}
 
 	private void getGatewayInfo() {

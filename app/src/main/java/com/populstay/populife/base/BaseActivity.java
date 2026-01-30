@@ -1,6 +1,5 @@
 package com.populstay.populife.base;
 
-import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
 import android.Manifest;
 import android.app.Activity;
@@ -57,6 +56,7 @@ import com.populstay.populife.util.locale.LocalManageUtils;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.net.NetworkUtil;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.api.TTLockClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -97,6 +97,7 @@ public class BaseActivity extends AppCompatActivity{
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        TTLockClient.getDefault().prepareBTService(getApplicationContext());
 		registerNetStateChangeReceiver();
 		PeachLogger.d("onCreate current activity= " + this.getClass().getSimpleName());
 		// 将当前 activity 加入到活动收集器中
@@ -287,7 +288,7 @@ public class BaseActivity extends AppCompatActivity{
 			requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
 				@Override
 				public void onGranted() {
-					mTTLockAPI.connect(address);
+//					mTTLockAPI.connect(address);
 				}
 
 				@Override
@@ -296,7 +297,7 @@ public class BaseActivity extends AppCompatActivity{
 				}
 			});
 		} else {
-			mTTLockAPI.connect(address);
+//			mTTLockAPI.connect(address);
 		}
 	}
 
@@ -308,7 +309,7 @@ public class BaseActivity extends AppCompatActivity{
 			requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
 				@Override
 				public void onGranted() {
-					mTTLockAPI.connect(address);
+//					mTTLockAPI.connect(address);
 				}
 
 				@Override
@@ -317,7 +318,7 @@ public class BaseActivity extends AppCompatActivity{
 				}
 			});
 		} else {
-			mTTLockAPI.connect(address);
+//			mTTLockAPI.connect(address);
 		}
 	}
 
@@ -465,7 +466,7 @@ public class BaseActivity extends AppCompatActivity{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
+        TTLockClient.getDefault().stopBTService();
 		stopLoading();
 
 		EventBus.getDefault().unregister(this);

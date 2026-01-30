@@ -22,6 +22,8 @@ import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.lock.ILockModifyAutoLockTime;
 import com.populstay.populife.manhattanlock.MHILockModifyAutoLockTime;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.SetAutoLockingPeriodCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,14 +182,31 @@ public class LockAutoLockingActivity extends BaseActivity implements View.OnClic
 			}
 		}else {
 			setModifyAutoLockTimeCallback();
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.modifyAutoLockTime(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(),
-						mKey.getLockFlagPos(), mSwitch.isChecked() ? mSeconds : 0, mKey.getAesKeyStr());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.setAutomaticLockingPeriod(mSwitch.isChecked() ? mSeconds : 0, mKey.getLockData(), mKey.getLockMac(), new SetAutoLockingPeriodCallback() {
+                @Override
+                public void onSetAutoLockingPeriodSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toast(R.string.modify_auto_lock_success);
+                            setResultToBack();
+                            finish();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toast(R.string.modify_auto_lock_fail);
+                        }
+                    });
+                }
+            });
 		}
 
 	}
@@ -213,34 +232,6 @@ public class LockAutoLockingActivity extends BaseActivity implements View.OnClic
 
 				@Override
 				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toast(R.string.modify_auto_lock_fail);
-						}
-					});
-				}
-			});
-		}else {
-			MyApplication.bleSession.setOperation(Operation.MODIFY_AUTO_LOCK_TIME);
-			MyApplication.bleSession.setAutoLockTime(mSwitch.isChecked() ? mSeconds : 0);
-			MyApplication.bleSession.setILockModifyAutoLockTime(new ILockModifyAutoLockTime() {
-				@Override
-				public void onModifyAutoLockTimeSuccess() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toast(R.string.modify_auto_lock_success);
-							setResultToBack();
-							finish();
-						}
-					});
-				}
-
-				@Override
-				public void onModifyAutoLockTimeFail() {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {

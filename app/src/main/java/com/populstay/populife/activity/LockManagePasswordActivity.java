@@ -47,6 +47,10 @@ import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.GetOperationLogCallback;
+import com.ttlock.bl.sdk.callback.ResetPasscodeCallback;
+import com.ttlock.bl.sdk.constant.LogType;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -240,13 +244,25 @@ public class LockManagePasswordActivity extends BaseActivity implements View.OnC
 				startLockActionScan();
 			}
 		} else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.getOperateLog(null, mKey.getLockVersion(),
-						mKey.getAesKeyStr(), DateUtil.getTimeZoneOffset());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.getOperationLog(LogType.ALL, mKey.getLockData(), mKey.getLockMac(), new GetOperationLogCallback() {
+                @Override
+                public void onGetLogSuccess(String s) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            PeachLogger.d(s);
+                            uploadLockOperateLog(s);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    stopLoading();
+                    toastFail();
+                }
+            });
 		}
 
 	}
@@ -272,29 +288,7 @@ public class LockManagePasswordActivity extends BaseActivity implements View.OnC
 					toastFail();
 				}
 			});
-		} else {
-			MyApplication.bleSession.setOperation(Operation.GET_OPERATE_LOG);
-			MyApplication.bleSession.setILockGetOperateLog(new ILockGetOperateLog() {
-				@Override
-				public void onSuccess(final String operateLog) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							PeachLogger.d(operateLog);
-							uploadLockOperateLog(operateLog);
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					stopLoading();
-					toastFail();
-				}
-			});
 		}
-
 	}
 
 	/**
@@ -398,14 +392,29 @@ public class LockManagePasswordActivity extends BaseActivity implements View.OnC
 				startLockActionScan();
 			}
 		} else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.resetKeyboardPassword(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-			} else {
-				MyApplication.bleSession.setLockmac(mKey.getLockMac());
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.resetPasscode(mKey.getLockData(), mKey.getLockMac(), new ResetPasscodeCallback() {
+                @Override
+                public void onResetPasscodeSuccess(String s) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            requestResetPasscode(s, System.currentTimeMillis());
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            toast(R.string.note_passcode_reset_fail);
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -419,32 +428,6 @@ public class LockManagePasswordActivity extends BaseActivity implements View.OnC
 						@Override
 						public void run() {
 							stopLoading();
-						}
-					});
-				}
-
-				@Override
-				public void onFail() {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							toast(R.string.note_passcode_reset_fail);
-						}
-					});
-
-				}
-			});
-		} else {
-			MyApplication.bleSession.setOperation(Operation.RESET_KEYBOARD_PASSWORD);
-			MyApplication.bleSession.setILockResetKeyboardPwd(new ILockResetKeyboardPwd() {
-				@Override
-				public void onSuccess(final String pwdInfo, final long timestamp) {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							requestResetPasscode(pwdInfo, timestamp);
 						}
 					});
 				}

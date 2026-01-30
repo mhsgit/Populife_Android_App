@@ -58,7 +58,11 @@ import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+import com.ttlock.bl.sdk.callback.DeleteFingerprintCallback;
+import com.ttlock.bl.sdk.callback.DeleteICCardCallback;
+import com.ttlock.bl.sdk.callback.DeletePasscodeCallback;
 import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -882,15 +886,36 @@ public class KeyPwdListFragment extends BaseFragment {
 				startLockActionScan();
 			}
 		}else {
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.deleteOneKeyboardPassword(null, PeachPreference.getOpenid(),
-						mKey.getLockVersion(), mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(),
-						item.getKeyboardPwdType(), item.getKeyboardPwd(), mKey.getAesKeyStr());
-			} else {
-				MyApplication.bleSession.setLockmac(mKey.getLockMac());
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.deletePasscode(item.getKeyboardPwd(), mKey.getLockData(), mKey.getLockMac(), new DeletePasscodeCallback() {
+                @Override
+                public void onDeletePasscodeSuccess() {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            requestDeletePwdFpCard(1);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+
+                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                requestDeletePwdFpCard(2);
+                            } else {
+                                makeToast(false);
+                            }
+                        }
+                    });
+                }
+            });
 		}
 	}
 
@@ -940,48 +965,7 @@ public class KeyPwdListFragment extends BaseFragment {
 				}
 			});
 		}else {
-			MyApplication.bleSession.setOperation(Operation.DELETE_ONE_KEYBOARDPASSWORD);
-			MyApplication.bleSession.setKeyboardPwdType(item.getKeyboardPwdType());
-			MyApplication.bleSession.setKeyboardPwdOriginal(item.getKeyboardPwd());
-			MyApplication.bleSession.setILockDeletePasscode(new ILockDeletePasscode() {
-				@Override
-				public void onSuccess() {
-					mActivity.runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-							requestDeletePwdFpCard(1);
-						}
-					});
-				}
 
-				@Override
-				public void onFail() {
-					mActivity.runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							stopLoading();
-							mIsLockOperationSuccess = true;
-
-							if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-								requestDeletePwdFpCard(2);
-							} else {
-								makeToast(false);
-							}
-						}
-					});
-				}
-
-				@Override
-				public void onTimeOut() {
-					if (!mIsLockOperationSuccess) {
-						if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-							requestDeletePwdFpCard(2);
-						}
-					}
-				}
-			});
 		}
 
 	}
@@ -1002,67 +986,44 @@ public class KeyPwdListFragment extends BaseFragment {
 				startLockActionScan();
 			}
 		}else {
-			long cardId = Long.parseLong(cardNumber);
-			setDeleteIcCardCallback(cardId);
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.deleteICCard(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), cardId, mKey.getAesKeyStr());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.deleteICCard(cardNumber, mKey.getLockData(), mKey.getLockMac(), new DeleteICCardCallback() {
+                @Override
+                public void onDeleteICCardSuccess() {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            requestDeletePwdFpCard(1);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            if (lockError == LockError.IC_CARD_NOT_EXIST) {
+                                // 锁里不存在该卡片，直接删除服务器卡片数据
+                                requestDeletePwdFpCard(1);
+                            } else {
+                                if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                    requestDeletePwdFpCard(2);
+                                } else {
+                                    toast(R.string.operation_fail);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
 		}
 
 	}
 
-	private void setDeleteIcCardCallback(final long cardNumber) {
-		MyApplication.bleSession.setOperation(Operation.DELETE_IC_CARD);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-		MyApplication.bleSession.setIcCardNumber(cardNumber);
-		MyApplication.bleSession.setILockIcCardDelete(new ILockIcCardDelete() {
-			@Override
-			public void onSuccess() {
-				mActivity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						mIsLockOperationSuccess = true;
-						requestDeletePwdFpCard(1);
-					}
-				});
-			}
-
-			@Override
-			public void onFail(final Error error) {
-				mActivity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						mIsLockOperationSuccess = true;
-						if (error == Error.FR_NOT_EXIST) {
-							// 锁里不存在该卡片，直接删除服务器卡片数据
-							requestDeletePwdFpCard(1);
-						} else {
-							if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-								requestDeletePwdFpCard(2);
-							} else {
-								toast(R.string.operation_fail);
-							}
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-				if (!mIsLockOperationSuccess) {
-					if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-						requestDeletePwdFpCard(2);
-					}
-				}
-			}
-		});
-	}
 
 	/**
 	 * 通过 SDK 删除某个指纹
@@ -1079,66 +1040,44 @@ public class KeyPwdListFragment extends BaseFragment {
 				startLockActionScan();
 			}
 		}else {
-			setDeleteFingerprintCallback(fingerprintNumber);
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.deleteFingerPrint(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), fingerprintNumber, mKey.getAesKeyStr());
-			} else {
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.deleteFingerprint(String.valueOf(fingerprintNumber), mKey.getLockData(), mKey.getLockMac(), new DeleteFingerprintCallback() {
+                @Override
+                public void onDeleteFingerprintSuccess() {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            requestDeletePwdFpCard(1);
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopLoading();
+                            mIsLockOperationSuccess = true;
+                            if (lockError == LockError.FINGER_PRINT_NOT_EXIST) {
+                                // 锁里不存在该指纹，直接删除服务器指纹数据
+                                requestDeletePwdFpCard(1);
+                            } else {
+                                if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                    requestDeletePwdFpCard(2);
+                                } else {
+                                    toast(R.string.operation_fail);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
 		}
 
 	}
 
-	private void setDeleteFingerprintCallback(final long fingerprintNumber) {
-		MyApplication.bleSession.setOperation(Operation.FINGERPRINT_DELETE);
-		MyApplication.bleSession.setLockmac(mKey.getLockMac());
-		MyApplication.bleSession.setFingerprintNumber(fingerprintNumber);
-		MyApplication.bleSession.setILockFingerprintDelete(new ILockFingerprintDelete() {
-			@Override
-			public void onSuccess() {
-				mActivity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						mIsLockOperationSuccess = true;
-						requestDeletePwdFpCard(1);
-					}
-				});
-			}
-
-			@Override
-			public void onFail(final Error error) {
-				mActivity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						mIsLockOperationSuccess = true;
-						if (error == Error.FR_NOT_EXIST) {
-							// 锁里不存在该指纹，直接删除服务器指纹数据
-							requestDeletePwdFpCard(1);
-						} else {
-							if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-								requestDeletePwdFpCard(2);
-							} else {
-								toast(R.string.operation_fail);
-							}
-						}
-					}
-				});
-			}
-
-			@Override
-			public void onTimeOut() {
-				if (!mIsLockOperationSuccess) {
-					if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
-						requestDeletePwdFpCard(2);
-					}
-				}
-			}
-		});
-	}
 
 	private void setMH_DeleteFingerprintCallback(String fingerprintId) {
 		MyApplication.pplBleSession.setOperation(LockOperation.DEL_FINGERPRINT);

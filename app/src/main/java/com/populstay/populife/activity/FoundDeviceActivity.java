@@ -49,7 +49,11 @@ import com.populstay.populife.permission.PermissionListener;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
-import com.ttlock.bl.sdk.scanner.ExtendedBluetoothDevice;
+import com.ttlock.bl.sdk.api.ExtendedBluetoothDevice;
+import com.ttlock.bl.sdk.callback.InitLockCallback;
+import com.ttlock.bl.sdk.callback.ResetLockCallback;
+import com.ttlock.bl.sdk.callback.ScanLockCallback;
+import com.ttlock.bl.sdk.entity.LockError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -112,11 +116,9 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 						mAdapter.setMHTState(true);
 						mAdapter.UpdateMHTDevice(device);
 					} else {
-						ExtendedBluetoothDevice device = (ExtendedBluetoothDevice) obj;
-						PeachLogger.d("device=" + device.toString());
-						mAdapter.setMHTState(false);
-						mAdapter.updateKJXDevice(device);
-					}
+                        return;
+                    }
+
 					mListView.setAdapter(mAdapter);
 //					if (isMHLock) {
 //						BleDevice device = bundle.getParcelable(BleConstant.DEVICE);
@@ -413,9 +415,18 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 				mLockType = HomeDeviceInfo.IDeviceName.NAME_LOCK_KEY_BOX_3;
 			}
 		} else {
-			MyApplication.bleSession.setOperation(Operation.ADD_ADMIN);
-			mTTLockAPI.connect((ExtendedBluetoothDevice) obj);
-			isMHTLock = false;
+            isMHTLock = false;
+			mTTLockAPI.initLock((ExtendedBluetoothDevice) obj, new InitLockCallback() {
+                @Override
+                public void onInitLockSuccess(String s) {
+
+                }
+
+                @Override
+                public void onFail(LockError lockError) {
+
+                }
+            });
 		}
 //				if (isMHLock) {
 //					PeachLogger.d(TAG + " 点击锁头，开始初始化");
@@ -430,12 +441,33 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 	}
 
 	private void startScan() {
-		mTTLockAPI.startBTDeviceScan();
+		mTTLockAPI.startScanLock(new ScanLockCallback() {
+            @Override
+            public void onScanLockSuccess(ExtendedBluetoothDevice extendedBluetoothDevice) {
+
+                ExtendedBluetoothDevice device = extendedBluetoothDevice;
+                PeachLogger.d("device=" + device.toString());
+                mAdapter.setMHTState(false);
+                mAdapter.updateKJXDevice(device);
+                mListView.setAdapter(mAdapter);
+                BaseApplication.getHandler().removeCallbacks(mRunnable);
+                ll_found_device.setVisibility(View.VISIBLE);
+                mLlFoundDeviceView.setVisibility(View.GONE);
+                if (DIALOG != null) {
+                    DIALOG.cancel();
+                }
+            }
+
+            @Override
+            public void onFail(LockError lockError) {
+
+            }
+        });
 		initSeekbarScanDevice();
 	}
 
 	private void stopScan() {
-		mTTLockAPI.stopBTDeviceScan();
+		mTTLockAPI.stopScanLock();
 	}
 
 	@Override
@@ -485,8 +517,16 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 				if (isMHTLock) {
 					sPPLOCK.deleteLock(mKey.getUserId(), String.valueOf(mKey.getLockId()), String.valueOf(mKey.getKeyId()), mKey.getK1());
 				} else {
-					mTTLockAPI.resetLock(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-							mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
+
+					mTTLockAPI.resetLock(mKey.getLockData(), mKey.getLockMac(),new ResetLockCallback() {
+                        @Override
+                        public void onResetLockSuccess() {
+                        }
+
+                        @Override
+                        public void onFail(LockError error) {
+                        }
+                    });
 				}
 				break;
 		}
@@ -660,14 +700,18 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 				startLockActionScan();
 			}
 		} else {
-			MyApplication.bleSession.setOperation(Operation.RESET_LOCK_FOR_INIT_LOCK_FAIL);
-			if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-				mTTLockAPI.resetLock(null, PeachPreference.getOpenid(), mKey.getLockVersion(),
-						mKey.getAdminPwd(), mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-			} else {//connect the lock
-//				mTTLockAPI.connect(mKey.getLockMac());
-				kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-			}
+            mTTLockAPI.resetLock(mKey.getLockData(), mKey.getLockMac(),new ResetLockCallback() {
+                @Override
+                public void onResetLockSuccess() {
+//                    makeToast("-lock is reset and now upload to  server -");
+//                    uploadResetLock2Server();
+                }
+
+                @Override
+                public void onFail(LockError error) {
+                    kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
+                }
+            });
 		}
 
 		AddDeviceFailActivity.actionStart(this, mLockType);
@@ -724,7 +768,8 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 		mKey.setLockKey(lockInfo.getString("lockKey"));
 		mKey.setLockFlagPos(lockInfo.getInteger("lockFlagPos"));
 		mKey.setAesKeyStr(lockInfo.getString("aesKeyStr"));
-		mKey.setLockMac(lockInfo.getString("lockMac"));
+        mKey.setLockMac(lockInfo.getString("lockMac"));
+        mKey.setLockData(lockInfo.getString("lockData"));
 		mKey.setUserId(PeachPreference.readUserId());
 		if (lockInfo.containsKey("keyId")) {
 			mKey.setKeyId(lockInfo.getInteger("keyId"));
@@ -784,6 +829,7 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 		mKey.setLockFlagPos(1);
 		mKey.setAesKeyStr(lockInfo.getString("aesKey"));
 		mKey.setLockMac(lockInfo.getString("lockMac"));
+        mKey.setLockData(lockInfo.getString("lockData"));
 		mKey.setUserId(PeachPreference.readUserId());
 		if (lockInfo.containsKey("keyId")) {
 			mKey.setKeyId(lockInfo.getInteger("keyId"));

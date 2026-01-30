@@ -13,6 +13,9 @@ import com.populstay.populife.entity.Key;
 import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.lock.ILockModifyKeypadVolume;
 import com.populstay.populife.util.storage.PeachPreference;
+import com.ttlock.bl.sdk.callback.SetLockConfigCallback;
+import com.ttlock.bl.sdk.entity.LockError;
+import com.ttlock.bl.sdk.entity.TTLockConfigType;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
@@ -84,42 +87,27 @@ public class LockSoundActivity extends BaseActivity {
 
 	private void switchKeypadVolume() {
 		showLoading();
-		if (mTTLockAPI.isConnected(mKey.getLockMac())) {
-			setModifyKeypadVolumeCallback();
-			mTTLockAPI.operateAudioSwitch(null, 2, mLockSoundState == 1 ? 0 : 1,
-					PeachPreference.getOpenid(), mKey.getLockVersion(), mKey.getAdminPwd(),
-					mKey.getLockKey(), mKey.getLockFlagPos(), mKey.getAesKeyStr());
-		} else {
-			setModifyKeypadVolumeCallback();
-//			mTTLockAPI.connect(mKey.getLockMac());
-			kjxRequestBleConnectPermissionStartConnect(mKey.getLockMac());
-		}
-	}
+        boolean value = mLockSoundState != 1;
+        mTTLockAPI.setLockConfig(TTLockConfigType.LOCK_SOUND, value, mKey.getLockData(), new SetLockConfigCallback() {
+            @Override
+            public void onSetLockConfigSuccess(TTLockConfigType ttLockConfigType) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopLoading();
+                        toastSuccess();
+                        mLockSoundState = value ? 1 : 0;
+                        refreshKeypadVolume();
+                    }
+                });
+            }
 
-	private void setModifyKeypadVolumeCallback() {
-		MyApplication.bleSession.setOperation(Operation.MODIFY_KEYPAD_VOLUME);
-		MyApplication.bleSession.setKeypadVolumeState(mLockSoundState == 1 ? 0 : 1);
-
-		MyApplication.bleSession.setILockModifyKeypadVolume(new ILockModifyKeypadVolume() {
-			@Override
-			public void onSuccess(final int state) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						stopLoading();
-						toastSuccess();
-						mLockSoundState = state;
-						refreshKeypadVolume();
-					}
-				});
-			}
-
-			@Override
-			public void onFail() {
-				stopLoading();
-				toastFail();
-			}
-		});
+            @Override
+            public void onFail(LockError lockError) {
+                stopLoading();
+                toastFail();
+            }
+        });
 	}
 
 	@Override

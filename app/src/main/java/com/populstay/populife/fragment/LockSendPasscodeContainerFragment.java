@@ -1,76 +1,26 @@
 package com.populstay.populife.fragment;
 
-import static com.populstay.populife.app.MyApplication.mTTLockAPI;
-import static com.populstay.populife.app.MyApplication.sPPLOCK;
-
-import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.CustomListener;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.bigkoo.pickerview.view.TimePickerView;
-import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BaseFragment;
 import com.populstay.populife.base.BasePagerAdapter;
-import com.populstay.populife.common.Urls;
 import com.populstay.populife.entity.Key;
-import com.populstay.populife.enumtype.Operation;
-import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.keypwdmanage.KeyPwdConstant;
-import com.populstay.populife.keypwdmanage.entity.CreatePwdKeyActionInfo;
-import com.populstay.populife.keypwdmanage.entity.KeyPwd;
-import com.populstay.populife.lock.ILockAddPasscode;
-import com.populstay.populife.manhattanlock.MHILockAddPasscode;
-import com.populstay.populife.net.RestClient;
-import com.populstay.populife.net.callback.IFailure;
-import com.populstay.populife.net.callback.ISuccess;
-import com.populstay.populife.ui.loader.PeachLoader;
-import com.populstay.populife.util.date.DateUtil;
-import com.populstay.populife.util.device.KeyboardUtil;
-import com.populstay.populife.util.log.PeachLogger;
-import com.populstay.populife.util.storage.PeachPreference;
-import com.populstay.populife.util.string.StringUtil;
-import com.ttlock.bl.sdk.util.DigitUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.WeakHashMap;
 
 /**
  * 发送“永久密码” Fragment
