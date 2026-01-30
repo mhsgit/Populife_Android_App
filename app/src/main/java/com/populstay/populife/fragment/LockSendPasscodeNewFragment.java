@@ -365,6 +365,9 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 		switch (mCurTabType) {
 			case VAL_TAB_TYPE_PERMANENT://永久密码
 				mPasscodeType = 2;
+                if (mType == LockSendPasscodeContainerFragment.Type.CUSTOM) {
+                    mPasscodeType = 16;
+                }
 				mLlCyclicMode.setVisibility(View.GONE);
 				mLlTime.setVisibility(View.GONE);
 				pwdCreatehint = R.string.create_dialog_permanent_pwd_tips;
@@ -372,6 +375,9 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 
 			case VAL_TAB_TYPE_PERIOD://限时密码
 				mPasscodeType = 3;
+                if (mType == LockSendPasscodeContainerFragment.Type.CUSTOM) {
+                    mPasscodeType = 15;
+                }
 				mLlCyclicMode.setVisibility(View.GONE);
 				pwdCreatehint = R.string.create_dialog_time_limit_pwd_tips;
 				break;

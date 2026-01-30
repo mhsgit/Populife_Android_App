@@ -165,7 +165,8 @@ public class LockNameAddActivity extends BaseActivity implements View.OnClickLis
 		mEtName.setText(name);
 		mEtName.setSelection(name.length());
 		params.put("alias", "");
-		params.put("mac", lockInfo.getString("lockMac"));
+        params.put("mac", lockInfo.getString("lockMac"));
+        params.put("lockData", lockInfo.getString("lockData"));
 		params.put("key", lockInfo.getString("lockKey"));
 		params.put("flagPos", lockInfo.getInteger("lockFlagPos"));
 		params.put("aesKey", lockInfo.getString("aesKeyStr"));

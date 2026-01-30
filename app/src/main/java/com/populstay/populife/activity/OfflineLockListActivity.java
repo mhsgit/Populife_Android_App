@@ -262,6 +262,7 @@ public class OfflineLockListActivity extends BaseActivity {
 		params.put("lockName", lockName);
 		mLockName = lockName;
 		params.put("mac", lockInfo.getString("lockMac"));
+        params.put("lockData", lockInfo.getString("lockData"));
 		params.put("key", lockInfo.getString("lockKey"));
 		params.put("flagPos", lockInfo.getInteger("lockFlagPos"));
 		params.put("aesKey", lockInfo.getString("aesKeyStr"));

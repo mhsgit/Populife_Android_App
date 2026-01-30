@@ -61,7 +61,7 @@ public class Urls {
 	public static final String LOCK_GROUP_GET_DEVICE = "home/device/get"; //（get）根据当前用户id、组id，获取家庭中的设备
 	public static final String LOCK_GROUP_BIND = "setting/lock/home/bind"; //（post）根据当前用户id、锁id、以及选择的分组id绑定锁分组，将当前用户拥有的锁绑定在自己的分组下，方便对锁进行分类
 
-	public static final String LOCK_INIT = "lock/init"; //（post）初始化锁,(谁初始化锁，谁就是该锁的管理员。初始化后，之前所有的钥匙密码失效)
+	public static final String LOCK_INIT = "lock/init/v3"; //（post）初始化锁,(谁初始化锁，谁就是该锁的管理员。初始化后，之前所有的钥匙密码失效)
 	public static final String MH_LOCK_INIT = "lock/mhd_init"; //（post）曼哈顿初始化锁,(谁初始化锁，谁就是该锁的管理员。初始化后，之前所有的钥匙密码失效)
 	public static final String LOCK_ADMIN_DELETE = "lock/del"; //（post）删除锁(只有管理员可以操作)
 	public static final String LOCK_NAME_MODIFY = "lock/rename"; //（post）修改锁名称

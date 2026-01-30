@@ -37,6 +37,7 @@ import com.populstay.populife.common.Urls;
 import com.populstay.populife.constant.BleConstant;
 import com.populstay.populife.db.PopulifeDBUtil;
 import com.populstay.populife.entity.Key;
+import com.populstay.populife.entity.OfflineLock;
 import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.home.entity.HomeDevice;
@@ -46,6 +47,7 @@ import com.populstay.populife.net.callback.IError;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.permission.PermissionListener;
+import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
@@ -53,7 +55,10 @@ import com.ttlock.bl.sdk.api.ExtendedBluetoothDevice;
 import com.ttlock.bl.sdk.callback.InitLockCallback;
 import com.ttlock.bl.sdk.callback.ResetLockCallback;
 import com.ttlock.bl.sdk.callback.ScanLockCallback;
+import com.ttlock.bl.sdk.entity.Error;
+import com.ttlock.bl.sdk.entity.LockData;
 import com.ttlock.bl.sdk.entity.LockError;
+import com.ttlock.bl.sdk.entity.LockVersion;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -416,28 +421,33 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 			}
 		} else {
             isMHTLock = false;
-			mTTLockAPI.initLock((ExtendedBluetoothDevice) obj, new InitLockCallback() {
+            ExtendedBluetoothDevice device = (ExtendedBluetoothDevice) obj;
+			mTTLockAPI.initLock(device, new InitLockCallback() {
                 @Override
                 public void onInitLockSuccess(String s) {
-
+                    LockData lockData = new LockData();
+                    mTTLockAPI.stopScanLock();
+                    // 保存锁信息
+                    String userId = PeachPreference.readUserId();
+                    String lockMac = device.getAddress();
+                    String lockName = device.getName();
+                    lockData.setLockMac(lockMac);
+                    lockData.setLockName(lockName);
+                    String defaultLockDataJson = lockData.toJson();
+                    JSONObject lockInfo = JSON.parseObject(defaultLockDataJson);
+                    lockInfo.put("lockData", s);
+                    lockInfo.put("lockVersion", JSON.parseObject(device.getLockVersionJson()));
+                    String lockDataJson = lockInfo.toJSONString();
+                    PopulifeDBUtil.getInstance(getApplicationContext()).save(new OfflineLock(userId, lockMac, lockName, lockDataJson, 0));
+                    EventBus.getDefault().post(new Event(Event.EventType.LOCK_LOCAL_INITIALIZE_SUCCEED, lockDataJson));
                 }
 
                 @Override
                 public void onFail(LockError lockError) {
-
+                    EventBus.getDefault().post(new Event(Event.EventType.LOCK_LOCAL_INITIALIZE_FAIL));
                 }
             });
 		}
-//				if (isMHLock) {
-//					PeachLogger.d(TAG + " 点击锁头，开始初始化");
-//					MyApplication.pplBleSession.setOperation(LockOperation.ADD_ADMIN);
-//					sPPLOCK.connect((BleDevice) mAdapter.getItem(position));
-//				}else {
-//
-//					PeachLogger.d(TAG + " 点击锁头，开始初始化");
-//					MyApplication.bleSession.setOperation(Operation.ADD_ADMIN);
-//					mTTLockAPI.connect((ExtendedBluetoothDevice) mAdapter.getItem(position));
-//				}
 	}
 
 	private void startScan() {
@@ -567,7 +577,6 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 							}
 
 							mKey.setLockId(mLockId);
-							mBattery = (int) requestParams.get("electricQuantity");
 							mHomeDevice.setDeviceId(String.valueOf(mLockId));
 							mHomeDevice.setName(mLockName);
 							PeachPreference.setBoolean(PeachPreference.HAVE_NEW_MESSAGE, true);
@@ -729,30 +738,11 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 
 		//todo
 		params.put("name", lockName);
-		params.put("lockName", lockName);
 		mLockName = lockName;
 		params.put("mac", lockInfo.getString("lockMac"));
-		params.put("key", lockInfo.getString("lockKey"));
-		params.put("flagPos", lockInfo.getInteger("lockFlagPos"));
-		params.put("aesKey", lockInfo.getString("aesKeyStr"));
-		params.put("adminPwd", lockInfo.getString("adminPwd"));
-		params.put("noKeyPwd", lockInfo.getString("noKeyPwd"));
-		String deletePwd = lockInfo.getString("deletePwd");
-		params.put("deletePwd", StringUtil.isBlank(deletePwd) ? "" : deletePwd);
-		params.put("pwdInfo", lockInfo.getString("pwdInfo"));
-		params.put("timestamp", lockInfo.getString("timestamp"));
-		params.put("specialValue", lockInfo.getInteger("specialValue"));
-		params.put("electricQuantity", lockInfo.getInteger("electricQuantity"));
-		params.put("timezoneRawOffSet", String.valueOf(lockInfo.getInteger("timezoneRawOffset")));
-		params.put("modelNum", lockInfo.getString("modelNum"));
-		params.put("hardwareRevision", lockInfo.getString("hardwareRevision"));
-		params.put("firmwareRevision", lockInfo.getString("firmwareRevision"));
+        params.put("lockData", lockInfo.getString("lockData"));
+        params.put("lockAlias", lockName);
 		JSONObject lockVersion = lockInfo.getJSONObject("lockVersion");
-		params.put("protocolType", lockVersion.getInteger("protocolType"));
-		params.put("protocolVersion", lockVersion.getInteger("protocolVersion"));
-		params.put("scene", lockVersion.getInteger("scene"));
-		params.put("groupId", lockVersion.getInteger("groupId"));
-		params.put("orgId", lockVersion.getInteger("orgId"));
 
 
 		// 这些数据用于重置锁
