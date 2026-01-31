@@ -14,7 +14,9 @@ import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.lock.ILockModifyKeypadVolume;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.ttlock.bl.sdk.callback.SetLockConfigCallback;
+import com.ttlock.bl.sdk.callback.SetLockSoundWithSoundVolumeCallback;
 import com.ttlock.bl.sdk.entity.LockError;
+import com.ttlock.bl.sdk.entity.SoundVolume;
 import com.ttlock.bl.sdk.entity.TTLockConfigType;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
@@ -88,9 +90,9 @@ public class LockSoundActivity extends BaseActivity {
 	private void switchKeypadVolume() {
 		showLoading();
         boolean value = mLockSoundState != 1;
-        mTTLockAPI.setLockConfig(TTLockConfigType.LOCK_SOUND, value, mKey.getLockData(), new SetLockConfigCallback() {
+        mTTLockAPI.setLockSoundWithSoundVolume(value ? SoundVolume.ON : SoundVolume.OFF, mKey.getLockData(), new SetLockSoundWithSoundVolumeCallback() {
             @Override
-            public void onSetLockConfigSuccess(TTLockConfigType ttLockConfigType) {
+            public void onSetLockSoundSuccess() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
