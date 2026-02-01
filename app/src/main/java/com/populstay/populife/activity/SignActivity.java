@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -40,6 +41,7 @@ import com.populstay.populife.sign.SignHandler;
 import com.populstay.populife.ui.widget.SwitchLanguagePopupWindow;
 import com.populstay.populife.ui.widget.exedittext.ExEditText;
 import com.populstay.populife.ui.widget.language.SwitchLanguageBottomSheet;
+import com.populstay.populife.util.Utils;
 import com.populstay.populife.util.activity.ActivityCollector;
 import com.populstay.populife.util.device.DeviceUtil;
 import com.populstay.populife.util.locale.LanguageUtil;
@@ -65,6 +67,7 @@ import androidx.annotation.Nullable;
  */
 public class SignActivity extends BaseActivity implements View.OnClickListener, ISignListener, ITimerListener,SwitchLanguagePopupWindow.SelectLanguageListener {
 
+    private Context mContext;
 	public static final String TAG = SignActivity.class.getSimpleName();
 
 	public static final String VAL_ACCOUNT_SIGN_IN = "val_account_sign_in";
@@ -128,6 +131,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        mContext = this;
 		setContentView(R.layout.activity_sign);
 		getIntentData(getIntent());
 
@@ -747,6 +751,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 			if (mSignType == Constant.ACCOUNT_TYPE_PHONE) { // 使用手机找回密码时，需传入国家编码（如：+86）
 				params.put("country", mCountryCodePicker.getSelectedCountryCodeWithPlus());
 			}
+            startTimer();
 			RestClient.builder()
 					.url(Urls.VERIFICATION_CODE_RESETPWD_DELETEACCOUNT_NEWDEVICELOGIN)
 					.params(params)
@@ -756,11 +761,10 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 							PeachLogger.d("GET_VIRIFICATION_CODE_RESET_PWD", response);
 							JSONObject result = JSON.parseObject(response);
 							int code = result.getInteger("code");
+                            String msg = result.getString("msg");
 							switch (code) {
 								case 200:
 									// 获取验证码成功，开始倒计时
-									startTimer();
-
 									if (mSignType == Constant.ACCOUNT_TYPE_PHONE) {
 										toast(R.string.note_success_get_verification_code_phone);
 									} else if (mSignType == Constant.ACCOUNT_TYPE_EMAIL) {
@@ -776,7 +780,10 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 										toast(R.string.note_email_has_not_been_registered);
 									}
 									break;
-
+//                                    频繁获取验证码
+                                case 955:
+                                    toast(Utils.get955CodeLimit(mContext, msg));
+                                    break;
 								default:
 									toast(R.string.note_get_verification_code_fail);
 									break;
@@ -799,6 +806,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 			if (mSignType == Constant.ACCOUNT_TYPE_PHONE) { // 使用手机找回密码时，需传入国家编码（如：+86）
 				params.put("country", mCountryCodePicker.getSelectedCountryCodeWithPlus());
 			}
+            startTimer();
 			RestClient.builder()
 					.url(Urls.USER_LOGIN_BYCODE_SEND_CODE)
 					.params(params)
@@ -808,10 +816,10 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 							PeachLogger.d("USER_LOGIN_BYCODE_SEND_CODE", response);
 							JSONObject result = JSON.parseObject(response);
 							int code = result.getInteger("code");
+                            String msg = result.getString("msg");
 							switch (code) {
 								case 200:
 									// 获取验证码成功，开始倒计时
-									startTimer();
 
 									if (mSignType == Constant.ACCOUNT_TYPE_PHONE) {
 										toast(R.string.note_success_get_verification_code_phone);
@@ -828,7 +836,10 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 										toast(R.string.note_email_has_not_been_registered);
 									}
 									break;
-
+//                                    频繁获取验证码
+                                case 955:
+                                    toast(Utils.get955CodeLimit(mContext, msg));
+                                    break;
 								default:
 									toast(R.string.note_get_verification_code_fail);
 									break;

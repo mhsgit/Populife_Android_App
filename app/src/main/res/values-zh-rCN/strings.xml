@@ -844,6 +844,7 @@
     <string name="create_dialog_permanent_pwd_tips">请在创建密码后的24小时内至少使用一次，以让密码激活。否则过后自动失效</string>
     <string name="create_dialog_one_time_pwd_tips">请在密码生成后6小时内使用，否则过后自动失效</string>
     <string name="pin_code_details">数字密码详情</string>
+    <string name="edit_pwd_hint">在修改前，请确保您已在设备附近或已连接网关</string>
     <string name="note_pwd_delete_confirm_dialog_hint">你是否确认要删除当前密码？删除后密码会失效以及清空所有记录</string>
     <string name="note_pwd_delete_confirm_ok_btn">是的,删除</string>
     <string name="note_pwd_edit_effective_period_hint">在修改前，请确保您已在设备附近或已连接网关</string>
@@ -1032,7 +1033,11 @@
     <string name="sync">同步</string>
     <string name="sync_successfully">同步成功</string>
     <string name="sync_fail">同步失败，请重试</string>
-<!--  新需求  -->
+    <!--  新需求  -->
+    <string name="note_get_verification_code_limit1">请求过于频繁，请稍后再试</string>
+    <string name="note_get_verification_code_limit2">您在 1 小时内的请求次数过多，请稍后再试</string>
+    <string name="note_get_verification_code_limit3">您已达到今日短信请求上限，请明天再试</string>
+
     <string name="create_time_limited_pwd_hint">与别人共享一段时间内有效的密码</string>
     <string name="create_permanent_pwd_hint">永久有效的密码，直到密码被删除</string>
     <string name="create_recurring_pwd_hint">每周在固定时间会重复生效的密码</string>

@@ -1,6 +1,7 @@
 package com.populstay.populife.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import com.populstay.populife.net.RestClient;
 import com.populstay.populife.net.callback.IError;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
+import com.populstay.populife.util.Utils;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
@@ -28,6 +30,7 @@ import java.text.MessageFormat;
 import java.util.WeakHashMap;
 
 public class ResetPwdActivity extends BaseActivity implements TextWatcher, View.OnClickListener, ITimerListener {
+    private Context mContext;
 
 	private EditText mEtCode, mEtPwd;
 	private TextView mTvGetCode, mTvNote, mTvReset;
@@ -39,6 +42,7 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher, View.
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        mContext = this;
 		setContentView(R.layout.activity_reset_pwd);
 
 		loadCachePersonalInfo();
@@ -96,6 +100,7 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher, View.
 //		if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) { // 使用手机找回密码时，需传入国家编码（如：+86）
 //			params.put("country", mCountryCode);
 //		}
+        startTimer();
 		RestClient.builder()
 				.url(Urls.VERIFICATION_CODE_RESETPWD_DELETEACCOUNT_NEWDEVICELOGIN)
 				.loader(this)
@@ -106,11 +111,13 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher, View.
 						PeachLogger.d("GET_VIRIFICATION_CODE_RETRIEVE_PWD", response);
 						JSONObject result = JSON.parseObject(response);
 						int code = result.getInteger("code");
+                        String msg = result.getString("msg");
 						if (code == 200) {
 							// 获取验证码成功，开始倒计时
-							startTimer();
 							toast(R.string.note_get_verification_code_success);
-						} else {
+						} else if (code == 955) {
+                            toast(Utils.get955CodeLimit(mContext, msg));
+                        } else {
 							toast(R.string.note_get_verification_code_fail);
 						}
 					}

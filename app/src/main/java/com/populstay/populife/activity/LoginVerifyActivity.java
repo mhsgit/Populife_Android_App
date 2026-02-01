@@ -22,6 +22,7 @@ import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.sign.ISignListener;
 import com.populstay.populife.sign.SignHandler;
 import com.populstay.populife.ui.widget.exedittext.ExEditText;
+import com.populstay.populife.util.Utils;
 import com.populstay.populife.util.activity.ActivityCollector;
 import com.populstay.populife.util.device.DeviceUtil;
 import com.populstay.populife.util.log.PeachLogger;
@@ -42,7 +43,8 @@ public class LoginVerifyActivity extends BaseActivity implements View.OnClickLis
 	private static final String KEY_LOGIN_RESPONSE = "key_login_response";
 	private static final String KEY_LOGIN_PWD = "key_login_pwd";
 
-	private ExEditText mEtCode;
+    private Context mContext;
+    private ExEditText mEtCode;
 	private TextView mTvGetCode, mTvNote, mTvVerify;
 
 	private BaseCountDownTimer mTimer = null;
@@ -74,8 +76,8 @@ public class LoginVerifyActivity extends BaseActivity implements View.OnClickLis
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        mContext = this;
 		setContentView(R.layout.activity_login_verify);
-
 		getIntentData();
 		initView();
 		initListener();
@@ -145,6 +147,8 @@ public class LoginVerifyActivity extends BaseActivity implements View.OnClickLis
 		if (mAccountType == Constant.ACCOUNT_TYPE_PHONE) { // 使用手机找回密码时，需传入国家编码（如：+86）
 			params.put("country", mCountryCode);
 		}
+        mTimer = new BaseCountDownTimer(60, LoginVerifyActivity.this);
+        mTimer.start();
 		RestClient.builder()
 				.url(Urls.USER_LOGIN_BYCODE_SEND_CODE)
 				.loader(this)
@@ -154,13 +158,13 @@ public class LoginVerifyActivity extends BaseActivity implements View.OnClickLis
 					public void onSuccess(String response) {
 						PeachLogger.d("USER_LOGIN_BYCODE_SEND_CODE", response);
 						JSONObject result = JSON.parseObject(response);
-						int code = result.getInteger("code");
+                        int code = result.getInteger("code");
+                        String msg = result.getString("msg");
 						if (code == 200) {
-							// 获取验证码成功，开始倒计时
-							mTimer = new BaseCountDownTimer(60, LoginVerifyActivity.this);
-							mTimer.start();
 							toast(R.string.note_get_verification_code_success);
-						} else {
+						} else if (code == 955) {
+                            toast(Utils.get955CodeLimit(mContext, msg));
+                        } else {
 							toast(R.string.note_get_verification_code_fail);
 						}
 					}
