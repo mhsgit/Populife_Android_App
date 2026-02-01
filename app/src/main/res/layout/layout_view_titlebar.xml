@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/common_page_title_bar_height"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorTitleBarBg"
     android:gravity="center_vertical">
 
@@ -47,7 +48,8 @@
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@color/sign_page_title_text"
-        android:textSize="@dimen/common_page_title_text" />
+        android:textSize="@dimen/common_page_title_text"
+        tools:text="title"/>
 
     <TextView
         android:id="@+id/page_action"

@@ -1049,4 +1049,19 @@
     <string name="edit_pwd_hint">在修改前，请确保您已在设备附近或已连接网关</string>
     <string name="edit_pwd_hint_permanent">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 密码必须在创建后的24小时内使用，否则将过期。状态未必更新。</string>
     <string name="edit_pwd_hint_one_time">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 此密码在创建后有效期为6小时，仅可使用一次。状态未必更新。</string>
+
+    <string name="setting_transfer">转移管理员权限</string>
+    <string name="setting_transfer_title">转移锁</string>
+    <string name="setting_transfer_subtitle">将锁转移给其他用户</string>
+    <string name="setting_transfer_desc">将锁的管理员权限转移给另一个Populife App用户，无需重置锁。所有现有的密码、数字钥匙和解锁记录都将转移到新管理员的应用中。</string>
+    <string name="setting_transfer_link_pre">您希望别人和你都可以在App同时管理锁？</string>
+    <string name="setting_transfer_link">共享数字钥匙</string>
+    <string name="setting_transfer_confirm_subtitle">输入新管理员</string>
+    <string name="setting_transfer_confirm_desc">%s将被转移到您在下方输入的Populife账号。您将失去锁的所有权限，并且它将从您的应用中移除。此操作无法撤销。</string>
+    <string name="setting_transfer_confirm_desc1">请确认新管理员已经注册了Populife App。</string>
+    <string name="setting_transfer_confirm_agree">我明白在转移锁之后，我不再是锁的管理员，也无法在应用中查看或管理它。</string>
+    <string name="setting_transfer_request_success">转移成功</string>
+    <string name="setting_transfer_request_951">被转移的用户不是 Populife 用户</string>
+    <string name="setting_transfer_request_952">无法将锁转移给自己</string>
+    <string name="setting_transfer_request_920">无效用户</string>
 </resources>

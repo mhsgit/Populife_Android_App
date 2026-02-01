@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include android:id="@+id/title_bar" layout="@layout/layout_view_titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/common_page_left_right_space"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_transfer_confirm_subtitle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/setting_transfer_confirm_desc"
+            android:textSize="14sp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_input_tabs"
+            style="@style/TabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:tabIndicatorColor="@color/text_main"
+            app:tabMode="scrollable"
+            android:layout_marginLeft="3dp"
+            android:overScrollMode="never"
+            app:tabSelectedTextColor="@color/text_main"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorGravity="bottom"
+            app:tabBackground="@drawable/download_tab_bg_selector"
+            app:tabTextColor="@color/gray_medium"/>
+
+        <com.populstay.populife.ui.widget.exedittext.ExEditText
+            android:id="@+id/et_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hint="@string/user_name_edit_hint"
+            app:inputType="email" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/setting_transfer_confirm_desc1"
+            android:textColor="@color/text_gray_light"
+            android:textSize="14sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_contine"
+            style="@style/btn_style_main"
+            android:layout_marginBottom="20dp"
+            android:text="@string/next_step" />
+
+        <RelativeLayout
+            android:id="@+id/rl_user_terms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/common_edit_text_margin_top">
+
+            <CheckBox
+                android:id="@+id/cb_agree"
+                style="@style/user_terms_confirm_check_box"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="10dp"
+                android:text="@null" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/cb_agree"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_transfer_confirm_agree"
+                    android:textColor="@color/text_gray_light"
+                    android:clickable="false"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

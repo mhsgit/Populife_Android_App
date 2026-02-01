@@ -43,7 +43,7 @@ public class ExEditText extends FrameLayout implements IExEdit {
     private View bottomLineView;
     private TextView editStatusHintTv;
     private LinearLayout llCcPicker;
-    private CountryCodePicker cCPicker;
+    public CountryCodePicker cCPicker;
     private View cCPickerLine;
 
     private boolean isVisiblePwd = false;

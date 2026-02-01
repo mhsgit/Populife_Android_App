@@ -33,6 +33,7 @@ import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.common.Urls;
+import com.populstay.populife.databinding.ActivityLockSettingsBinding;
 import com.populstay.populife.entity.Key;
 import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.eventbus.Event;
@@ -99,6 +100,8 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 	private static final int REQUEST_CODE_AUTO_LOCKING = 6;
 	private static final int REQUEST_CODE_KEYPAD_VOLUME = 7;
 
+    private ActivityLockSettingsBinding binding;
+
 	private TextView mTvSerialNum, mTvMacId, mTvBattery, mTvValidity, mTvStartTime, mTvEndTime,
 			mTvLockName, mTvAdminPasscode, mTvDelete, mTvRemoteUnlockState, tv_lock_settings_space;
 	private ImageView mIvSyncBattery, mIvBattery, mIvMacDisplay, mIvSetLockTimeHelp, tv_lock_settings_space_more, tv_lock_settings_lock_name_more;
@@ -144,7 +147,8 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lock_settings);
+        binding = ActivityLockSettingsBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 		getIntentData();
 		initView();
 		initPicker();
@@ -308,6 +312,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 			mLlStartEndTime.setVisibility(View.GONE);
 			mTvAdminPasscode.setText(mKey.getNoKeyPwd());
 		} else {
+            binding.llLockSettingsTransfer.setVisibility(View.GONE);
 			if (mKey.getKeyRight() == 1) { // 授权用户
 				mLlAdminPasscode.setVisibility(View.GONE);
 				tv_lock_settings_space.setEnabled(false);
@@ -444,6 +449,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		mLlNotification.setOnClickListener(this);
 		mIvSetLockTimeHelp.setOnClickListener(this);
 		tv_lock_settings_space.setOnClickListener(this);
+        binding.llLockSettingsTransfer.setOnClickListener(this);
 	}
     @Override
     public void onClick(View view) {
@@ -545,6 +551,8 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
             } else {
                 mPickerHome.show();
             }
+        } else if (id == R.id.ll_lock_settings_transfer) {
+            LockTransferActivity.actionStart(this);
         }
     }
 

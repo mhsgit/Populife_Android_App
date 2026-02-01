@@ -159,5 +159,6 @@ public class Urls {
 
 	public static final String KEY_KEYBOARD_LIST_V2_TOTALNUM = "key/keyboard/list/v2/totalnum";//密码列表V2总数量
 	public static final String KEY_LIST_V2_TOTALNUM = "key/list/v2/totalnum";//钥匙列表v2总数
+    public static final String LOCK_TRANSFER = "lock/transfer"; //（post）转移锁
 
 }

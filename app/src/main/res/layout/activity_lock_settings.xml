@@ -506,6 +506,34 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout style="@style/list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/setting_transfer" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_transfer"
+                        style="@style/list_item_description" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_lock_settings_delete"
                 style="@style/btn_style_main"

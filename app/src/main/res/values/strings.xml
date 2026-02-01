@@ -1051,4 +1051,20 @@
     <string name="edit_pwd_hint">Make sure you’re near the lock or connected to a gateway before editing</string>
     <string name="edit_pwd_hint_permanent">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. The code must be used within 24 hours of creation, or it will expire. Status may not update correctly.</string>
     <string name="edit_pwd_hint_one_time">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. This code is valid for 6 hours after it\'s created and can only be used once. Status may not update correctly.</string>
+
+
+    <string name="setting_transfer">Transfer ownership</string>
+    <string name="setting_transfer_title">Transfer lock</string>
+    <string name="setting_transfer_subtitle">Transfer Lock to Another User</string>
+    <string name="setting_transfer_desc">Transfer full ownership of the lock to another Populife App user without resetting the lock. All existing passcodes, digital keys, and unlock records will transfer to the new admin\'s app.</string>
+    <string name="setting_transfer_link_pre">Want to share access instead of transferring the lock?</string>
+    <string name="setting_transfer_link">Share a digital key</string>
+    <string name="setting_transfer_confirm_subtitle">Enter the New Admin</string>
+    <string name="setting_transfer_confirm_desc">%s will be transferred to the Populife account you enter below. You will lose ownership of the lock, and it will be removed from your app. This action cannot be undone.</string>
+    <string name="setting_transfer_confirm_desc1">Please confirm that the new admin has already registered with the Populife App.</string>
+    <string name="setting_transfer_confirm_agree">I understand that after transferring the lock, I will no longer be the lock\'s admin or able to view or manage it in the app.</string>
+    <string name="setting_transfer_request_success">Transfer successful</string>
+    <string name="setting_transfer_request_951">The transferred user is not a Populife user</string>
+    <string name="setting_transfer_request_952">Cannot transfer the lock to oneself</string>
+    <string name="setting_transfer_request_920">Invalid user</string>
 </resources>

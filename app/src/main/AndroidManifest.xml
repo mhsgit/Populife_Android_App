@@ -508,6 +508,12 @@
         <activity android:name=".activity.LockSendPasscodeNewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.LockTransferActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.LockTransferConfirmActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
