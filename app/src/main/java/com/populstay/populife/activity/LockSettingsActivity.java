@@ -35,15 +35,9 @@ import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.common.Urls;
 import com.populstay.populife.databinding.ActivityLockSettingsBinding;
 import com.populstay.populife.entity.Key;
-import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.home.entity.Home;
 import com.populstay.populife.home.entity.HomeDeviceInfo;
-import com.populstay.populife.lock.ILockGetBattery;
-import com.populstay.populife.lock.ILockGetTime;
-import com.populstay.populife.lock.ILockQueryKeypadVolume;
-import com.populstay.populife.lock.ILockResetLock;
-import com.populstay.populife.lock.ILockSearchAutoLockTime;
 import com.populstay.populife.manhattanlock.MHILockDeleteLock;
 import com.populstay.populife.manhattanlock.MHILockGetAutoLockTime;
 import com.populstay.populife.manhattanlock.MHILockGetBattery;
@@ -66,10 +60,8 @@ import com.ttlock.bl.sdk.callback.GetBatteryLevelCallback;
 import com.ttlock.bl.sdk.callback.GetLockSoundWithSoundVolumeCallback;
 import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
 import com.ttlock.bl.sdk.callback.ResetLockCallback;
-import com.ttlock.bl.sdk.callback.SetLockConfigCallback;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.entity.SoundVolume;
-import com.ttlock.bl.sdk.entity.TTLockConfigType;
 import com.ttlock.bl.sdk.util.DigitUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -603,9 +595,9 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
                         stopLoading();
                         if (isClickKeypadVolume) {
                             isClickKeypadVolume = false;
-                            LockSoundActivity.actionStart(LockSettingsActivity.this, keypadVolume != SoundVolume.OFF ? 1 : 0, REQUEST_CODE_KEYPAD_VOLUME);
+                            LockSoundActivity.actionStart(LockSettingsActivity.this, b ? 1 : 0, REQUEST_CODE_KEYPAD_VOLUME);
                         } else {
-                            if (keypadVolume != SoundVolume.OFF) {
+                            if (b) {
                                 tv_lock_settings_keypad_volume.setText(R.string.on);
                             } else {
                                 tv_lock_settings_keypad_volume.setText(R.string.off);

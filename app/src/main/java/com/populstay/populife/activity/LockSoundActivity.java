@@ -10,14 +10,9 @@ import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.entity.Key;
-import com.populstay.populife.enumtype.Operation;
-import com.populstay.populife.lock.ILockModifyKeypadVolume;
-import com.populstay.populife.util.storage.PeachPreference;
-import com.ttlock.bl.sdk.callback.SetLockConfigCallback;
 import com.ttlock.bl.sdk.callback.SetLockSoundWithSoundVolumeCallback;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.entity.SoundVolume;
-import com.ttlock.bl.sdk.entity.TTLockConfigType;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 

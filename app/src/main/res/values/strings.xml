@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">Please use this code within 24 hrs of created time to activate it. Otherwise, it will be invalid</string>
     <string name="create_dialog_one_time_pwd_tips">Please use this code within 6 hrs of created time before it expires.</string>
     <string name="pin_code_details">PIN code details</string>
-    <string name="edit_pwd_hint">Make sure you are near the device or have already connected to the gateway before modify any information</string>
     <string name="note_pwd_delete_confirm_dialog_hint">Are you sure you want to delete this code? This code will invalidate and clean all records immediately.</string>
     <string name="note_pwd_delete_confirm_ok_btn">Yes, delete</string>
     <string name="note_pwd_edit_effective_period_hint">Make sure you are near the device or have already connected to the gateway before motifying the information</string>

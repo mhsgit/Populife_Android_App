@@ -146,7 +146,7 @@ public class LockRemoteUnlockConfigActivity extends BaseActivity {
                         stopLoading();
                         toastSuccess();
                         mKey.setLockData(s);
-                        modifyLockSpcialValue(state ? 1 : 0, state ? 1 : 0);
+//                        modifyLockSpcialValue(state ? 1 : 0, state ? 1 : 0);
                     }
                 });
             }
