@@ -1197,6 +1197,10 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 								// 显示设备列表
 								else {
 									setLockInfoVisible(SHOW_DEVICE_LIST);
+                                    if(mDeviceList.isEmpty() && tempDatas.size() == 1){
+                                        HomeDevice device = tempDatas.get(0);
+                                        LockDetailActivity.actionStart(requireContext(), device.getDeviceId(), device.getName());
+                                    }
 									mDeviceList.clear();
 									mDeviceList.addAll(tempDatas);
 									mDeviceListAdapter.notifyDataSetChanged();

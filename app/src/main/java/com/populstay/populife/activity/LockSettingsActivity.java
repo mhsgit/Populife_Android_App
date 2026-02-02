@@ -545,7 +545,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
                 mPickerHome.show();
             }
         } else if (id == R.id.ll_lock_settings_notification) {
-            LockTransferActivity.actionStart(this);
+            LockNotificationActivity.actionStart(this);
         } else if (id == R.id.ll_lock_settings_transfer) {
             LockTransferActivity.actionStart(this);
         }
