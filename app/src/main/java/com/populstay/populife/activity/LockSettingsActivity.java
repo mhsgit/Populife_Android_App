@@ -441,6 +441,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		mLlNotification.setOnClickListener(this);
 		mIvSetLockTimeHelp.setOnClickListener(this);
 		tv_lock_settings_space.setOnClickListener(this);
+        binding.llLockSettingsNotification.setOnClickListener(this);
         binding.llLockSettingsTransfer.setOnClickListener(this);
 	}
     @Override
@@ -543,6 +544,8 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
             } else {
                 mPickerHome.show();
             }
+        } else if (id == R.id.ll_lock_settings_notification) {
+            LockTransferActivity.actionStart(this);
         } else if (id == R.id.ll_lock_settings_transfer) {
             LockTransferActivity.actionStart(this);
         }
