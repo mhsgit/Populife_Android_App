@@ -14,7 +14,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#f7f7f5"
             android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:id="@+id/ll_lock_settings_lock_name"
@@ -22,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -50,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -66,9 +74,72 @@
 
             </LinearLayout>
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/dependent_space" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_space"
+                        style="@style/list_item_description" />
+
+                    <ImageView
+                        android:id="@+id/tv_lock_settings_space_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_admin_passcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/admin_password" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_admin_passcode"
+                        style="@style/list_item_description" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_lock_settings_mac_id"
-                style="@style/list_item_overall"
+                style="@style/setting_list_item_overall"
                 android:visibility="gone">
 
                 <TextView
@@ -87,16 +158,13 @@
 
             </LinearLayout>
 
-            <include
-                layout="@layout/layout_view_line"
-                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -135,169 +203,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/dependent_space" />
-
-                    <TextView
-                        android:id="@+id/tv_lock_settings_space"
-                        style="@style/list_item_description" />
-
-                    <ImageView
-                        android:id="@+id/tv_lock_settings_space_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_go_to_light_grey" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_lock_settings_validity_period"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/list_item_overall">
-
-                        <TextView
-                            style="@style/list_item_title"
-                            android:text="@string/validity_period" />
-
-                        <TextView
-                            android:id="@+id/tv_lock_settings_validity_period"
-                            style="@style/list_item_description" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_lock_settings_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/start_time" />
-
-                    <TextView
-                        android:id="@+id/tv_lock_settings_start_time"
-                        style="@style/list_item_description" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/end_time" />
-
-                    <TextView
-                        android:id="@+id/tv_lock_settings_end_time"
-                        style="@style/list_item_description" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_lock_settings_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/key_status" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/tv_key_status"
-                        style="@style/list_item_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_lock_settings_admin_passcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/admin_password" />
-
-                    <TextView
-                        android:id="@+id/tv_lock_settings_admin_passcode"
-                        style="@style/list_item_description" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_go_to_light_grey" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <Space
-                android:id="@+id/space_lock_settings_lock_time"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" />
-
-            <LinearLayout
                 android:id="@+id/ll_lock_settings_show_lock_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
-                        android:layout_height="58dp"
                         android:clickable="true"
                         android:gravity="center"
                         android:text="@string/device_time" />
@@ -325,23 +239,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
-                        android:layout_height="58dp"
                         android:clickable="true"
                         android:gravity="center"
                         android:text="@string/adjus_lock_time" />
 
                     <ImageView
                         android:id="@+id/iv_lock_settings_lock_time_help"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"
-                        android:paddingLeft="6dp"
-                        android:paddingTop="18dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+
                         android:src="@drawable/help_icon" />
 
                     <View
@@ -360,13 +270,163 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_keypad_volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/lock_sound" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_keypad_volume"
+                        style="@style/list_item_description" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_remote_unlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/gateway_remote_control" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_remote_unlock_state"
+                        style="@style/list_item_description" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_go_to_light_grey" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_validity_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/setting_list_item_overall">
+
+                        <TextView
+                            style="@style/list_item_title"
+                            android:text="@string/validity_period" />
+
+                        <TextView
+                            android:id="@+id/tv_lock_settings_validity_period"
+                            style="@style/list_item_description" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/start_time" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_start_time"
+                        style="@style/list_item_description" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/end_time" />
+
+                    <TextView
+                        android:id="@+id/tv_lock_settings_end_time"
+                        style="@style/list_item_description" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_lock_settings_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/setting_list_item_overall">
+
+                    <TextView
+                        style="@style/list_item_title"
+                        android:text="@string/key_status" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_key_status"
+                        style="@style/list_item_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_view_line" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_lock_settings_auto_locking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -396,40 +456,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_lock_settings_remote_unlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/gateway_remote_control" />
-
-                    <TextView
-                        android:id="@+id/tv_lock_settings_remote_unlock_state"
-                        style="@style/list_item_description" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_go_to_light_grey" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/ll_lock_settings_lock_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -452,39 +485,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_lock_settings_keypad_volume"
+                android:id="@+id/ll_lock_settings_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/list_item_overall">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/lock_sound" />
-
-                    <TextView
-                        android:id="@+id/tv_lock_settings_keypad_volume"
-                        style="@style/list_item_description" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_go_to_light_grey" />
-
-                </LinearLayout>
-
-                <include layout="@layout/layout_view_line" android:visibility="gone"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_lock_settings_notification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -504,7 +510,13 @@
                 <include layout="@layout/layout_view_line" />
 
             </LinearLayout>
-
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
             <LinearLayout
                 android:id="@+id/ll_lock_settings_transfer"
                 android:layout_width="match_parent"
@@ -512,7 +524,7 @@
                 android:orientation="vertical"
                 >
 
-                <LinearLayout style="@style/list_item_overall">
+                <LinearLayout style="@style/setting_list_item_overall">
 
                     <TextView
                         style="@style/list_item_title"
@@ -533,15 +545,15 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_lock_settings_delete"
-                style="@style/btn_style_main"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginBottom="40dp"
-                android:text="@string/delete" />
-
+                <TextView
+                    android:id="@+id/tv_lock_settings_delete"
+                    style="@style/btn_style_main"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/delete" />
+        </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

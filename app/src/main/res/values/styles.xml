@@ -103,6 +103,18 @@
     <!-- +++++++++++++++++++++++++++++ 主按钮 +++++++++++++++++++++++++++++ -->
 
     <!-- ++++++++++++++++++++++++++++++ 列表栏 ++++++++++++++++++++++++++++++ -->
+<!--  设置栏  -->
+    <style name="setting_list_item_overall">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">54dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/common_page_left_right_space</item>
+        <item name="android:paddingRight">@dimen/common_page_left_right_space</item>
+        <item name="android:background">@color/white</item>
+    </style>
     <!-- 列表栏中整个 item 的格式 -->
     <style name="list_item_overall">
         <item name="android:layout_width">match_parent</item>

@@ -99,7 +99,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 	private ImageView mIvSyncBattery, mIvBattery, mIvMacDisplay, mIvSetLockTimeHelp, tv_lock_settings_space_more, tv_lock_settings_lock_name_more;
 	private LinearLayout mLlMacId, mLlValidity, mLlStartEndTime, mLlLockName, ll_serial_number, mLlKeyStatus,
 			mLlAdminPasscode, mLlLockTime, mLlAutoLocking, mLlLockUpgrade, mLlRemoteUnlock, mLlKeypadVolume, mLlNotification;
-	private Space mSpace;
 	private AlertDialog DIALOG;
 	private EditText mEtDialogInput;
 	private CheckBox mCbDeleteKeys;
@@ -219,7 +218,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 		mLlKeypadVolume = findViewById(R.id.ll_lock_settings_keypad_volume);
 		mLlNotification = findViewById(R.id.ll_lock_settings_notification);
 		mTvDelete = findViewById(R.id.tv_lock_settings_delete);
-		mSpace = findViewById(R.id.space_lock_settings_lock_time);
 		mIvSetLockTimeHelp = findViewById(R.id.iv_lock_settings_lock_time_help);
 		tv_read_lock_time = findViewById(R.id.tv_read_lock_time);
 		tv_auto_locking = findViewById(R.id.tv_auto_locking);
@@ -337,7 +335,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 				tv_lock_settings_lock_name_more.setVisibility(View.GONE);
 				mLlLockName.setVisibility(View.VISIBLE);
 				mLlAdminPasscode.setVisibility(View.GONE);
-				mSpace.setVisibility(View.GONE);
 				mLlMacId.setVisibility(View.GONE);
 				mLlValidity.setVisibility(View.GONE);
 				mLlAdminPasscode.setVisibility(View.GONE);
