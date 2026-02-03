@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray_background"
     android:orientation="vertical">
 
@@ -10,50 +10,28 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:visibility="visible"
         style="@style/list_item_overall">
 
         <TextView
             style="@style/list_item_title"
-            android:text="@string/permission_types" />
+            android:text="@string/permission_types"/>
 
-        <RadioGroup
-            android:id="@+id/rg_permission_types"
-            android:layout_marginTop="16dp"
+        <LinearLayout
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_permission_types"
+                style="@style/list_item_description2"
+                android:text="@string/app_name"/>
 
-            <RadioButton
-                android:id="@+id/rb_general_user"
-                style="@style/radio_btn_key_pwd"
-                android:layout_weight="1"
-                android:text="@string/general_user"
-                android:minHeight="30dp"
-                android:checked="true"
-                android:layout_marginRight="@dimen/dimens_dp_20"
-                android:layout_width="0dp" />
 
-            <RadioButton
-                android:id="@+id/rb_authorized_user"
-                android:layout_weight="1"
-                style="@style/radio_btn_key_pwd"
-                android:text="@string/authorized_user"
-                android:minHeight="30dp"
-                android:layout_width="0dp" />
-
-        </RadioGroup>
-
-        <TextView
-            android:layout_marginTop="15dp"
-            android:textSize="12sp"
-            android:textColor="@color/text_gray_light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_permission_types_hint"
-            android:text="@string/general_user_hint" />
+        </LinearLayout>
 
     </LinearLayout>
+
+    <include layout="@layout/view_permission_panel" android:id="@+id/vpp_permission"/>
 
     <TextView
         android:id="@+id/tv_save_btn"
@@ -64,14 +42,5 @@
         android:background="@drawable/selector_btn_main"
         android:text="@string/save" />
 
-    <TextView
-        android:layout_marginTop="@dimen/dimens_dp_10"
-        android:layout_marginLeft="@dimen/common_page_left_right_space"
-        android:layout_marginRight="@dimen/common_page_left_right_space"
-        android:layout_width="match_parent"
-        android:textColor="@color/text_gray_light"
-        android:textSize="12sp"
-        android:text="@string/modify_lock_info_hint"
-        android:layout_height="wrap_content"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

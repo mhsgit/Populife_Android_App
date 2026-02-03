@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="titleText" format="string" />
+    <attr name="tooltipText" format="string" />
+    <attr name="checked" format="boolean"/>
+
     <declare-styleable name="MultiLineHintEditText">
         <attr name="hintText" format="string" />
         <attr name="hintColor" format="color" />
         <attr name="hintSize" format="dimension" />
     </declare-styleable>
     <declare-styleable name="FlowRadioGroup">
-        <attr name="columnCount" format="integer"/>
-        <attr name="columnGap" format="dimension"/>
-        <attr name="rowGap" format="dimension"/>
+        <attr name="columnCount" format="integer" />
+        <attr name="columnGap" format="dimension" />
+        <attr name="rowGap" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="InfoTooltipView">
+        <attr name="titleText" />
+        <attr name="tooltipText" />
+    </declare-styleable>
+
+    <declare-styleable name="IconSwitchItemView">
+        <attr name="titleText" />
+        <attr name="iconSrc" format="reference" />
+        <attr name="checked" />
+    </declare-styleable>
+
+    <declare-styleable name="SwitchTooltipView">
+        <attr name="titleText"/>
+        <attr name="tooltipText"/>
+        <attr name="checked"/>
+    </declare-styleable>
+
+
 </resources>

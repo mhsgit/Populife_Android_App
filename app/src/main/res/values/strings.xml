@@ -1038,18 +1038,18 @@
     <string name="note_get_verification_code_limit2">You’ve made too many requests in the past hour. Please try again later.</string>
     <string name="note_get_verification_code_limit3">You’ve reached today’s SMS request limit. Please try again tomorrow.</string>
 
-    <string name="create_time_limited_pwd_hint">与别人共享一段时间内有效的密码</string>
-    <string name="create_permanent_pwd_hint">永久有效的密码，直到密码被删除</string>
-    <string name="create_recurring_pwd_hint">每周在固定时间会重复生效的密码</string>
-    <string name="create_one_time_pwd_hint">与别人分享一次性有效密码</string>
-    <string name="key_pwd_type_period">限时</string>
-    <string name="key_pwd_type_permanent">永久</string>
-    <string name="key_pwd_type_recurring">循环</string>
-    <string name="key_pwd_type_one_time">单次</string>
-    <string name="key_pwd_type_random">随机</string>
-    <string name="key_pwd_type_custom">自定义</string>
-    <string name="create_custom_pwd_hint">远程生成随机密码并与您的客人分享。无需WiFi或靠近智能设备。</string>
-    <string name="create_random_pwd_hint">当靠近设备或连接到网关时，使用蓝牙添加自定义密码。</string>
+    <string name="create_time_limited_pwd_hint">Share a password that is valid for a limited time</string>
+    <string name="create_permanent_pwd_hint">Password remains valid until it is deleted</string>
+    <string name="create_recurring_pwd_hint">Password that becomes active weekly at set times</string>
+    <string name="create_one_time_pwd_hint">Share a one-time-use password</string>
+    <string name="key_pwd_type_period">Time-limited</string>
+    <string name="key_pwd_type_permanent">Permanent</string>
+    <string name="key_pwd_type_recurring">Recurring</string>
+    <string name="key_pwd_type_one_time">One-time</string>
+    <string name="key_pwd_type_random">Random</string>
+    <string name="key_pwd_type_custom">Custom</string>
+    <string name="create_custom_pwd_hint">Generate a random password remotely and share it with your guests. No WiFi or proximity to the device required.</string>
+    <string name="create_random_pwd_hint">Add a custom password via Bluetooth when near the device or connected to the gateway.</string>
     <string name="edit_pwd_hint">Make sure you’re near the lock or connected to a gateway before editing</string>
     <string name="edit_pwd_hint_permanent">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. The code must be used within 24 hours of creation, or it will expire. Status may not update correctly.</string>
     <string name="edit_pwd_hint_one_time">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. This code is valid for 6 hours after it\'s created and can only be used once. Status may not update correctly.</string>
@@ -1069,4 +1069,15 @@
     <string name="setting_transfer_request_951">The transferred user is not a Populife user</string>
     <string name="setting_transfer_request_952">Cannot transfer the lock to oneself</string>
     <string name="setting_transfer_request_920">Invalid user</string>
+    <string name="ekey_permission_hint_1">Unlock via the app</string>
+    <string name="ekey_permission_hint_2">View unlock history</string>
+    <string name="ekey_permission_hint_3">Add passcodes or digital keys</string>
+    <string name="ekey_permission_1_title">manage all user passcodes and keys</string>
+    <string name="ekey_permission_2_title">Allow remote unlocking</string>
+    <string name="ekey_permission_3_title">Sync lockbox battery level</string>
+    <string name="ekey_permission_4_title">Calibrate the lockbox time</string>
+    <string name="ekey_permission_1_hint">When enabled, the user can view and manage all passcodes and keys for this lock, similar to an admin. If disabled, they can only see keys and passcode they\'ve created.</string>
+    <string name="ekey_permission_2_hint">Grants permission to unlock remotely, but requires a connected gateway and a stable WiFi connection. Actual remote access depends on the admin’s setup.</string>
+    <string name="ekey_permission_3_hint">Allows the user to manually check the lock\'s battery level to help ensure timely battery replacement.</string>
+    <string name="ekey_permission_4_hint">Lets the user sync the lockbox time with their phone\'s clock. This is useful if the lock has been without power for a while. Note: the lockbox\'s time zone remains unchanged.</string>
 </resources>

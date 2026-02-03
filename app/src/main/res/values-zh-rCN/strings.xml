@@ -1068,4 +1068,15 @@
     <string name="setting_transfer_request_951">被转移的用户不是 Populife 用户</string>
     <string name="setting_transfer_request_952">无法将锁转移给自己</string>
     <string name="setting_transfer_request_920">无效用户</string>
+    <string name="ekey_permission_hint_1">通过应用程序开锁</string>
+    <string name="ekey_permission_hint_2">查看开锁记录</string>
+    <string name="ekey_permission_hint_3">添加密码或数字钥匙</string>
+    <string name="ekey_permission_1_title">管理所有用户密码和钥匙</string>
+    <string name="ekey_permission_2_title">允许远程开锁</string>
+    <string name="ekey_permission_3_title">同步电池电量</string>
+    <string name="ekey_permission_4_title">校准锁时间</string>
+    <string name="ekey_permission_1_hint">启用后，用户可以查看并管理此锁的所有密码和钥匙，权限类似于管理员。如果禁用，用户只能看到自己创建的钥匙和密码。</string>
+    <string name="ekey_permission_2_hint">授予远程开锁权限，但需要连接的网关和稳定的WiFi连接。实际远程访问取决于管理员的设置。</string>
+    <string name="ekey_permission_3_hint">允许用户手动检查锁的电池电量，以便及时更换电池。</string>
+    <string name="ekey_permission_4_hint">允许用户将锁时间与其手机的时钟同步。这在锁长时间断电后非常有用。注意：锁的时区不会更改。</string>
 </resources>

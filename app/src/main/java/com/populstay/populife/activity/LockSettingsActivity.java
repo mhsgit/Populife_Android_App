@@ -302,6 +302,12 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 			mLlStartEndTime.setVisibility(View.GONE);
 			mTvAdminPasscode.setText(mKey.getNoKeyPwd());
 		} else {
+            if (mKey.isAllowSyncBattery()) {
+                mIvSyncBattery.setVisibility(View.VISIBLE);
+            }
+            if (mKey.isAllowCalibrateTime()) {
+                mLlLockTime.setVisibility(View.VISIBLE);
+            }
             binding.llLockSettingsTransfer.setVisibility(View.GONE);
 			if (mKey.getKeyRight() == 1) { // 授权用户
 				mLlAdminPasscode.setVisibility(View.GONE);
@@ -338,7 +344,6 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 				mLlMacId.setVisibility(View.GONE);
 				mLlValidity.setVisibility(View.GONE);
 				mLlAdminPasscode.setVisibility(View.GONE);
-				mLlLockTime.setVisibility(View.GONE);
 				mLlAutoLocking.setVisibility(View.GONE);
 				mLlLockUpgrade.setVisibility(View.GONE);
 				mLlRemoteUnlock.setVisibility(View.GONE);

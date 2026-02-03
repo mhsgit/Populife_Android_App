@@ -75,5 +75,7 @@ public class Event {
         int ADD_IC_CARD_SUCCESS = 29;
         // 添指纹卡成功
         int ADD_FINGERPRINT_SUCCESS = 30;
+        // 添指纹卡成功
+        int PERMISSION_CHANGED = 31;
     }
 }

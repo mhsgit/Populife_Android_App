@@ -35,6 +35,7 @@ import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.common.Urls;
+import com.populstay.populife.databinding.ActivityLockSendEkeyBinding;
 import com.populstay.populife.entity.Key;
 import com.populstay.populife.enumtype.Operation;
 import com.populstay.populife.eventbus.Event;
@@ -77,13 +78,14 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 	private static final String KEY_IS_ADMIN = "key_is_admin";
 	private final int REQUEST_CONTACT = 3;
 
+    private ActivityLockSendEkeyBinding binding;
+
 	private AlertDialog DIALOG;
-	private LinearLayout mLlTime, mLlAuth, ll_receiver;
+	private LinearLayout mLlTime, ll_receiver;
 	private TextView mTvStartTime, mTvEndTime, mTvOneTimeNote, mTvSend;
 	private CountryCodePicker mCountryCodePicker;
 	private ImageView mIvContact;
 	private MultiLineHintEditText mEtReceiver,mEtKeyName;
-	private Switch mSwitchRemoteUnlock;
 	//时间选择器
 	private TimePickerView mTimePicker;
 
@@ -99,7 +101,7 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 	private CreatePwdKeyActionInfo mCreatePwdKeyActionInfo = new CreatePwdKeyActionInfo();
 
 	private RadioGroup rg_valid_period, rg_permission_types, rg_share_the_key_through;
-	private TextView tv_permission_types_hint, tv_show_current_date, tv_share_the_key_through_hint;
+	private TextView tv_show_current_date, tv_share_the_key_through_hint;
 
 	/**
 	 * 启动当前 activity
@@ -126,7 +128,8 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lock_send_ekey);
+        binding = ActivityLockSendEkeyBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
 		getIntentData();
 		initView();
@@ -146,7 +149,6 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 		findViewById(R.id.page_action).setVisibility(View.GONE);
 
 		mLlTime = findViewById(R.id.ll_lock_send_ekey_time);
-		mLlAuth = findViewById(R.id.ll_lock_send_ekey_auth);
 		ll_receiver = findViewById(R.id.ll_receiver);
 		mTvStartTime = findViewById(R.id.tv_lock_send_ekey_start_time);
 		mTvEndTime = findViewById(R.id.tv_lock_send_ekey_end_time);
@@ -160,26 +162,22 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 		mIvContact = findViewById(R.id.iv_lock_send_ekey_receiver);
 		mEtReceiver = findViewById(R.id.et_lock_send_ekey_receiver);
 		mEtKeyName = findViewById(R.id.et_lock_send_ekey_name);
-		mSwitchRemoteUnlock = findViewById(R.id.switch_lock_send_ekey_remote_unlock);
 		mTvSend = findViewById(R.id.tv_lock_send_ekey_send);
 
 		rg_valid_period = findViewById(R.id.rg_valid_period);
 		rg_permission_types = findViewById(R.id.rg_permission_types);
-		tv_permission_types_hint = findViewById(R.id.tv_permission_types_hint);
 		tv_share_the_key_through_hint = findViewById(R.id.tv_share_the_key_through_hint);
 		tv_show_current_date = findViewById(R.id.tv_device_current_time);
 		rg_share_the_key_through = findViewById(R.id.rg_share_the_key_through);
 
+        setPermissionTypes(R.id.rb_general_user);
 		if (mIsAdmin) {
-			mLlAuth.setVisibility(View.VISIBLE);
 		} else {
-			mLlAuth.setVisibility(View.GONE);
 			// 非管理员，不能选择授权用户类型
-			rg_permission_types.getChildAt(1).setVisibility(View.INVISIBLE);
+            rg_permission_types.getChildAt(0).setVisibility(View.INVISIBLE);
 
 			if (mKey.getKeyRight() == 1 && mKey.getKeyType() == 1) { // 授权用户，限时钥匙：只允许发送限时钥匙（有效期必须在自己钥匙有效期内）
 				rg_valid_period.getChildAt(0).setVisibility(View.GONE);
-				((RadioButton) rg_valid_period.getChildAt(1)).setChecked(true);
 				selectValidPeriod(R.id.rb_valid_period_time_limited);
 			}
 		}
@@ -573,10 +571,17 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 			params.put("timeZone", DateUtil.getTimeZone());
 		}
 
+        params.put("arUnlock", binding.vppPermission.stv2.isChecked());
+        params.put("auAdmin", isAuAdmin);
 		if (mIsAdmin) {
-			params.put("auAdmin", isAuAdmin);
-			params.put("arUnlock", mSwitchRemoteUnlock.isChecked());
-		}
+            params.put("allowAllPermissions", binding.vppPermission.stv1.isChecked());
+            params.put("allowSyncBattery", binding.vppPermission.stv3.isChecked());
+            params.put("allowCalibrateTime", binding.vppPermission.stv4.isChecked());
+		} else {
+            params.put("allowAllPermissions", false);
+            params.put("allowSyncBattery", false);
+            params.put("allowCalibrateTime", false);
+        }
 		return params;
 	}
 
@@ -654,17 +659,20 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setPermissionTypes(int checkedId) {
-        int hint = R.string.general_user_hint;
 
         if (checkedId == R.id.rb_general_user) {
-            hint = R.string.general_user_hint;
+            binding.vppPermission.stv1.setVisibility(View.GONE);
+            binding.vppPermission.isiv3.setChecked(false);
+            binding.vppPermission.stv3.setVisibility(View.GONE);
+            binding.vppPermission.stv4.setVisibility(View.GONE);
             isAuAdmin = false;
         } else if (checkedId == R.id.rb_authorized_user) {
-            hint = R.string.authorized_user_hint;
+            binding.vppPermission.stv1.setVisibility(View.VISIBLE);
+            binding.vppPermission.isiv3.setChecked(true);
+            binding.vppPermission.stv3.setVisibility(View.VISIBLE);
+            binding.vppPermission.stv4.setVisibility(View.VISIBLE);
             isAuAdmin = true;
         }
-
-        tv_permission_types_hint.setText(hint);
     }
 
     private void setShareTheKeyThrough(int checkedId) {

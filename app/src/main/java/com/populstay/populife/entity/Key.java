@@ -179,7 +179,11 @@ public class Key implements Parcelable {
 	private String firmwareRevision;
 
 
-	private boolean isAllowRemoteUnlock;
+    private boolean isAllowAllPermissions;
+    private boolean isAllowRemoteUnlock;
+    private boolean isAllowSyncBattery;
+    private boolean isAllowCalibrateTime;
+
 	/**
 	 * 钥匙的有效类型
 	 * 1 限时
@@ -228,7 +232,7 @@ public class Key implements Parcelable {
 			   int lockFlagPos, String adminPwd, String lockKey, String noKeyPwd, String deletePwd,
 			   String pwdInfo, long timestamp, String aesKeyStr, long startDate, long endDate, int specialValue,
 			   int timezoneRawOffset, int keyRight, int keyboardPwdVersion, int remoteEnable, String remarks,
-			   String modelNum, String hardwareRevision, String firmwareRevision, boolean isAllowRemoteUnlock,
+			   String modelNum, String hardwareRevision, String firmwareRevision, boolean isAllowAllPermissions, boolean isAllowRemoteUnlock, boolean isAllowSyncBattery, boolean isAllowCalibrateTime,
 			   Integer keyType, Integer dayNum, String k1, String k2) {
 		this.id = id;
 		this.userId = userId;
@@ -261,7 +265,10 @@ public class Key implements Parcelable {
 		this.modelNum = modelNum;
 		this.hardwareRevision = hardwareRevision;
 		this.firmwareRevision = firmwareRevision;
-		this.isAllowRemoteUnlock = isAllowRemoteUnlock;
+        this.isAllowAllPermissions = isAllowAllPermissions;
+        this.isAllowRemoteUnlock = isAllowRemoteUnlock;
+        this.isAllowSyncBattery = isAllowSyncBattery;
+        this.isAllowCalibrateTime = isAllowCalibrateTime;
 		this.keyType = keyType;
 		this.dayNum = dayNum;
 		this.k1 = k1;
@@ -306,7 +313,11 @@ public class Key implements Parcelable {
 		modelNum = in.readString();
 		hardwareRevision = in.readString();
 		firmwareRevision = in.readString();
-		isAllowRemoteUnlock = in.readByte() != 0;
+
+        isAllowAllPermissions = in.readByte() != 0;
+        isAllowRemoteUnlock = in.readByte() != 0;
+        isAllowSyncBattery = in.readByte() != 0;
+        isAllowCalibrateTime = in.readByte() != 0;
 		if (in.readByte() == 0) {
 			keyType = null;
 		} else {
@@ -646,7 +657,10 @@ public class Key implements Parcelable {
 				", modelNum='" + modelNum + '\'' +
 				", hardwareRevision='" + hardwareRevision + '\'' +
 				", firmwareRevision='" + firmwareRevision + '\'' +
-				", isAllowRemoteUnlock=" + isAllowRemoteUnlock +
+                ", isAllowAllPermissions=" + isAllowAllPermissions +
+                ", isAllowRemoteUnlock=" + isAllowRemoteUnlock +
+                ", isAllowSyncBattery=" + isAllowSyncBattery +
+                ", isAllowCalibrateTime=" + isAllowCalibrateTime +
 				'}';
 	}
 
@@ -658,7 +672,31 @@ public class Key implements Parcelable {
 		isAllowRemoteUnlock = allowRemoteUnlock;
 	}
 
-	public Integer getDayNum() {
+    public boolean isAllowAllPermissions() {
+        return isAllowAllPermissions;
+    }
+
+    public void setAllowAllPermissions(boolean allowAllPermissions) {
+        isAllowAllPermissions = allowAllPermissions;
+    }
+
+    public boolean isAllowSyncBattery() {
+        return isAllowSyncBattery;
+    }
+
+    public void setAllowSyncBattery(boolean allowSyncBattery) {
+        isAllowSyncBattery = allowSyncBattery;
+    }
+
+    public boolean isAllowCalibrateTime() {
+        return isAllowCalibrateTime;
+    }
+
+    public void setAllowCalibrateTime(boolean allowCalibrateTime) {
+        isAllowCalibrateTime = allowCalibrateTime;
+    }
+
+    public Integer getDayNum() {
 		return this.dayNum;
 	}
 
@@ -751,7 +789,10 @@ public class Key implements Parcelable {
 		dest.writeString(modelNum);
 		dest.writeString(hardwareRevision);
 		dest.writeString(firmwareRevision);
-		dest.writeByte((byte) (isAllowRemoteUnlock ? 1 : 0));
+        dest.writeByte((byte) (isAllowAllPermissions ? 1 : 0));
+        dest.writeByte((byte) (isAllowRemoteUnlock ? 1 : 0));
+        dest.writeByte((byte) (isAllowSyncBattery ? 1 : 0));
+        dest.writeByte((byte) (isAllowCalibrateTime ? 1 : 0));
 		if (keyType == null) {
 			dest.writeByte((byte) 0);
 		} else {

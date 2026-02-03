@@ -245,14 +245,6 @@ public class EkeyDetailActivity extends BaseActivity implements View.OnClickList
 		}
 
 
-		// 产品需求调整，钥匙创建后，所有用户都不能再次调整授权类型
-		ll_permission_types.setEnabled(false);
-		iv_permission_types_more.setVisibility(View.GONE);
-		/*if (!mKey.isAdmin()){
-			// 非管理员不能修改授权类型，只能默认普通用户
-			ll_permission_types.setEnabled(false);
-			iv_permission_types_more.setVisibility(View.GONE);
-		}*/
 	}
 
 	private void setShareStatusUI() {
@@ -296,10 +288,11 @@ public class EkeyDetailActivity extends BaseActivity implements View.OnClickList
         } else if (id == R.id.ll_ekey_detail_records) {
             EkeyRecordActivity.actionStart(EkeyDetailActivity.this, mKeyId, mName);
         } else if (id == R.id.ll_permission_types) {
-            intent = new Intent(this, EkeyPermissionModifyActivity.class);
-            intent.putExtra(EkeyPermissionModifyActivity.KEY_KEY_ID, mKeyId);
-            intent.putExtra(EkeyPermissionModifyActivity.KEY_AUTH_TYPE, mKeyRight);
-            startActivityForResult(intent, REQUEST_CODE_MODIFY_EKEY_PERMISSION);
+            EkeyPermissionModifyActivity.actionStart(this, mKeyId, mKeyRight);
+//            intent = new Intent(this, EkeyPermissionModifyActivity.class);
+//            intent.putExtra(EkeyPermissionModifyActivity.KEY_KEY_ID, mKeyId);
+//            intent.putExtra(EkeyPermissionModifyActivity.KEY_AUTH_TYPE, mKeyRight);
+//            startActivityForResult(intent, REQUEST_CODE_MODIFY_EKEY_PERMISSION);
         } else if (id == R.id.tv_ekey_detail_delete) {
             if ("110405".equals(mKeyStatus)) { // 已冻结
                 DialogUtil.showCommonDialog(EkeyDetailActivity.this, getString(R.string.confirm_to_restore),

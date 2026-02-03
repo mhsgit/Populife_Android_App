@@ -1363,9 +1363,18 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		int keyRight = lockInfo.containsKey("keyRight") ? lockInfo.getInteger("keyRight") : 0;
 //		int remoteEnable = lockInfo.getInteger("remoteEnable");
 //		int keyboardPwdVersion=lockInfo.getInteger("keyboardPwdVersion");
-//		boolean isAllowRemoteUnlock = false;
-//		if (lockInfo.containsKey("allowRemoteUnlock"))
-//			isAllowRemoteUnlock = lockInfo.getBoolean("allowRemoteUnlock");
+        boolean isAllowAllPermissions = false;
+        boolean isAllowRemoteUnlock = false;
+        boolean isAllowSyncBattery = false;
+        boolean isAllowCalibrateTime = false;
+        if (lockInfo.containsKey("allowAllPermissions"))
+            isAllowAllPermissions = lockInfo.getBoolean("allowAllPermissions");
+        if (lockInfo.containsKey("allowRemoteUnlock"))
+            isAllowRemoteUnlock = lockInfo.getBoolean("allowRemoteUnlock");
+        if (lockInfo.containsKey("allowSyncBattery"))
+            isAllowSyncBattery = lockInfo.getBoolean("allowSyncBattery");
+        if (lockInfo.containsKey("allowCalibrateTime"))
+            isAllowCalibrateTime = lockInfo.getBoolean("allowCalibrateTime");
 //		String remarks=lockInfo.getString();
 		String modelNum = lockInfo.containsKey("modelNum") ? lockInfo.getString("modelNum") : "";//产品型号（用于锁固件升级）
 		String hardwareRevision = lockInfo.containsKey("hardwareRevision") ? lockInfo.getString("hardwareRevision") : "";//硬件版本号（用于锁固件升级）
@@ -1462,7 +1471,10 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		mCurKEY.setHardwareRevision(hardwareRevision);
 		mCurKEY.setFirmwareRevision(firmwareRevision);
 //		mCurKEY.setRemarks(group);//锁分组
-		//mCurKEY.setAllowRemoteUnlock(isAllowRemoteUnlock);
+        mCurKEY.setAllowAllPermissions(isAllowAllPermissions);
+        mCurKEY.setAllowRemoteUnlock(isAllowRemoteUnlock);
+        mCurKEY.setAllowSyncBattery(isAllowSyncBattery);
+        mCurKEY.setAllowCalibrateTime(isAllowCalibrateTime);
 
 		mCurKEY.isAdmin(isAdmin);
 		CURRENT_KEY = mCurKEY;
@@ -1656,6 +1668,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 			} else { // 普通用户，只显示 2 个按钮（操作记录、设置）
 				initCommonUserUI(mCurKEY.getKeyStatus());
 			}
+            enableLockingColorFiltr(mCurKEY.isAllowRemoteUnlock(), false, 0);
 		}
 
 		// Deadbolt、keybox 用一排 2 个图标；其他门锁用一排 4 个图标（支持指纹、IC卡）
@@ -2010,6 +2023,9 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 				PeachLoader.showLoading(mActivity, LoaderStyle.BallSpinFadeLoaderIndicator);
 				requestDeviceData();
 				break;
+            case Event.EventType.PERMISSION_CHANGED:
+                doRefresh();
+                break;
 			case Event.EventType.ADD_DEVICE_SUCCESS:
 			case Event.EventType.DELETE_LOCK_SUCCESS:
 				if (VAL_TAG_FRAGMENT.equals(mTag)) {

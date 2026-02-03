@@ -338,53 +338,10 @@
 
                     </RadioGroup>
 
-                    <TextView
-                        android:id="@+id/tv_permission_types_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/general_user_hint"
-                        android:textColor="@color/text_gray_light"
-                        android:textSize="12sp" />
-
                 </LinearLayout>
 
-                <include layout="@layout/layout_view_line" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_lock_send_ekey_auth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/ll_lock_send_ekey_remote_unlock"
-                    style="@style/list_item_overall"
-                    android:visibility="gone">
-
-                    <TextView
-                        style="@style/list_item_title"
-                        android:text="@string/allow_remote_unlocking" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <Switch
-                        android:id="@+id/switch_lock_send_ekey_remote_unlock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <include
-                layout="@layout/layout_view_line"
-                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_lock_send_ekey_note"
@@ -397,6 +354,8 @@
                 android:textColor="@color/text_gray_medium"
                 android:textSize="12sp"
                 android:visibility="gone" />
+
+            <include layout="@layout/view_permission_panel" android:id="@+id/vpp_permission"/>
 
             <Space
                 android:layout_width="match_parent"
