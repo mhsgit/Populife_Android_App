@@ -1079,4 +1079,14 @@
     <string name="ekey_permission_2_hint">授予远程开锁权限，但需要连接的网关和稳定的WiFi连接。实际远程访问取决于管理员的设置。</string>
     <string name="ekey_permission_3_hint">允许用户手动检查锁的电池电量，以便及时更换电池。</string>
     <string name="ekey_permission_4_hint">允许用户将锁时间与其手机的时钟同步。这在锁长时间断电后非常有用。注意：锁的时区不会更改。</string>
+    <string name="notification_running">后台服务运行中</string>
+    <string name="go_setting_notification_link_pre">为了及时接收消息提醒，请开启 Populife 的通知权限。</string>
+    <string name="go_setting_notification_link">去开启</string>
+    <string name="setting_notification_label">解锁通知：</string>
+    <string name="setting_notification_desc">启用通知后，您将收到此锁的解锁状态更新</string>
+    <string name="setting_notification_app_unlock_title">App解锁</string>
+    <string name="setting_notification_app_unlock_desc">当其他人通过App解锁时接收通知，无需网关。</string>
+    <string name="setting_notification_passcode_unlock_title">密码解锁</string>
+    <string name="setting_notification_passcode_unlock_desc">当您的网关在线并连接时，接收密码解锁通知。</string>
+    <string name="setting_notification_unlock_desc">如果网关离线，密码解锁提醒将不是实时的。靠近门锁时可通过蓝牙查看解锁历史记录。</string>
 </resources>

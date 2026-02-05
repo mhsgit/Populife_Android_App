@@ -1,9 +1,19 @@
 package com.populstay.populife.push;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
+import com.populstay.populife.R;
 import com.populstay.populife.app.AccountManager;
 import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.constant.Constant;
@@ -12,254 +22,239 @@ import com.populstay.populife.util.net.NetworkUtil;
 import com.populstay.populife.util.notification.NotificationUtil;
 import com.populstay.populife.util.storage.PeachPreference;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.Nullable;
 import redis.clients.jedis.Jedis;
 
 /**
- * 事件推送服务类
+ * Redis 事件推送服务
  */
 public class EventPushService extends Service {
 
-	public static final String ACTION_NEW_DEVICE_LOGIN = "populife_action_new_device_login";
-	public static final String ACTION_KEY_STATUS_CHANGE = "populife_action_key_status_change";
+    public static final String ACTION_NEW_DEVICE_LOGIN =
+            "populife_action_new_device_login";
+    public static final String ACTION_KEY_STATUS_CHANGE =
+            "populife_action_key_status_change";
 
-//	public static final String LOG_TAG = EventPushService.class.getSimpleName();
-	/**
-	 * 主机地址
-	 */
-	public static final String JEDIS_HOST_ADDR = "server.hafele.yigululock.com";
-//	/**
-//	 * 端口号为默认，不用设置
-//	 */
-//	public static final int JEDIS_PORT = 6379;
-	/**
-	 * 验证密码
-	 */
-	public static final String JEDIS_AUTH_PWD = "c49871320";
-	private static final String DEVICE_MSG_KEY = DeviceUtil.getDeviceId(BaseApplication.getApplication());
-	// Database
-	public static final int JEDIS_DB = Constant.DEBUG ? 7 : 1;
-	/**
-	 * 心跳间隔时间 60s
-	 */
-	private static final int HEART_SPACE_TIME = 1000 * 60;
-	/**
-	 * 是否需要查询推送服务
-	 */
-	private boolean isNeedQueryJedis;
-	/**
-	 * 心跳定时器（用来检测网络连接情况）
-	 */
-	private Timer mHeartTimer;
-	/**
-	 * 当前网络是否连接
-	 */
-	private boolean netDisconnetion = false;
+    private static final String TAG = "EventPushService";
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-	}
+    /** Redis 配置 */
+    private static final String JEDIS_HOST = "api.populife.co";
+    private static final String JEDIS_AUTH = "c49871320";
+    private static final int JEDIS_DB = Constant.DEBUG ? 7 : 1;
+//    private static final int JEDIS_DB =  1;
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		// 发送心跳包
-		sendHeartbeatInfo();
-		// 启动Jedis
-		launchJedisSerivce();
-		return super.onStartCommand(intent, flags, startId);
-	}
+    /** 心跳间隔：60 秒 */
+    private static final long HEARTBEAT_INTERVAL = 60;
 
-	/**
-	 * 发送心跳包（每隔 1 分钟检测一次网络连接情况）
-	 * 间隔 60s 发一次
-	 */
-	private void sendHeartbeatInfo() {
+    /** 当前设备消息 key */
+    private static final String DEVICE_MSG_KEY =
+            DeviceUtil.getDeviceId(BaseApplication.getApplication());
 
-		if (mHeartTimer != null) {
-			mHeartTimer.cancel();
-		}
-		mHeartTimer = new Timer();
+    /** 线程 & 状态控制 */
+    private volatile boolean isRunning = false;
+    private ScheduledExecutorService heartbeatExecutor;
+    private ExecutorService jedisExecutor;
 
-		mHeartTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
+    // -------------------- Service 生命周期 --------------------
 
-//				Log.e(LOG_TAG, LOG_TAG + "----------发送心跳包----------");
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        startHeartbeat();
+        startJedisIfNeeded();
+        return START_STICKY;
+    }
 
-				// 为了不频繁检测，就把网络检测放在Jedis不在线程
-				// 检测网络状态
-				if (NetworkUtil.isNetConnected()) {
-					// 由无网络变成有网络(断网时，Jedis会失联)
-					if (!netDisconnetion) {
-						Jedis jedis = new Jedis(JEDIS_HOST_ADDR);
-						if (!jedis.isConnected()) {
-							// 启动Jedis
-							launchJedisSerivce();
-						}
-					}
-					// 标识联网
-					netDisconnetion = true;
-				} else {
-					// 断网需要结束Jedis线程
-					isNeedQueryJedis = false;
-					// 标识断网
-					netDisconnetion = false;
-					// 打开网络
-//					NetworkUtils.setWifiEnabled(true);
-					// 启动Jedis
-//					launchJedisSerivce();
-				}
-			}
-		}, 0, HEART_SPACE_TIME);
-	}
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startForegroundInternal();
+    }
 
-	/**
-	 * 启动Jedis
-	 */
-	private void launchJedisSerivce() {
+    @Override
+    public void onDestroy() {
+        stopAll();
+        super.onDestroy();
+    }
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-				// 连接本地的 Redis 服务
-				Jedis jedis = new Jedis(JEDIS_HOST_ADDR);
-//				Jedis jedis = new Jedis(JEDIS_HOST_ADDR, JEDIS_PORT);
+    private static final int FOREGROUND_ID = 2001;
+    private static final String CHANNEL_ID = "populife_foreground";
 
-				try {
-					jedis.auth(JEDIS_AUTH_PWD);
-					jedis.select(JEDIS_DB);
-				} catch (Exception e) {
-					e.printStackTrace();
-					isNeedQueryJedis = false;
-					return;
-				}
+    private void startForegroundInternal() {
+        Notification notification =
+                NotificationUtil.buildServiceNotification(this).build();
 
-				// 连接成功
-				if (jedis.isConnected()) {
-//					Log.e(LOG_TAG, LOG_TAG + "--Jedis连接成功 ");
-					// 查看服务是否运行
-//					Log.e(LOG_TAG, LOG_TAG + "-->Jedis服务正在运行: " + jedis.ping());
-					isNeedQueryJedis = true;
-				}
-				// 连接失败
-				else {
-//					Log.e(LOG_TAG, LOG_TAG + "-->Jedis连接失败 ");
-					isNeedQueryJedis = false;
-					return;
-				}
+        startForeground(FOREGROUND_ID, notification);
+    }
 
-				// 取出数据
-				while (isNeedQueryJedis) {
 
-					// 从推送通道获取服务端发过来的数据（List<String>）
-					// 数据格式：[9611d6a201fbb298, {"event":2, "msg":"推送内容"}]
-					List<String> strings = null;
-					try {
-						strings = jedis.brpop(30000, DEVICE_MSG_KEY);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+    // -------------------- 心跳检测 --------------------
 
-					int eventCode = 0;// 推送事件代号
-					String eventMsg = null;// 推送事件消息内容（在手机上显示 Notification 时的内容）
-					String deviceId = null;// 接收推送的设备 id
-					String result = null;
-					// 这里与后台约定strings集合里面只放一条记录（json格式）
-					if (strings != null && strings.size() > 0) {
-						deviceId = strings.get(0);
-						result = strings.get(1);
-					}
-//					Log.e(LOG_TAG, LOG_TAG + "-->jedis data result= " + result);
-//					Log.e(LOG_TAG, LOG_TAG + "-->jedis data end " + strings);
+    private void startHeartbeat() {
+        if (heartbeatExecutor != null) return;
 
-					// 解析数据（具体格式与后台约定）
-					JSONObject jsonObject;
-					try {
-						if (result != null) {
-							jsonObject = new JSONObject(result);
-							eventCode = jsonObject.optInt("event");
-							eventMsg = jsonObject.optString("msg");
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+        heartbeatExecutor = Executors.newSingleThreadScheduledExecutor();
+        heartbeatExecutor.scheduleAtFixedRate(() -> {
+            if (!NetworkUtil.isNetConnected()) {
+                Log.d(TAG, "Network disconnected");
+                isRunning = false;
+                return;
+            }
+            if (!isRunning) {
+                Log.d(TAG, "Restart jedis loop");
+                startJedisIfNeeded();
+            }
+        }, 0, HEARTBEAT_INTERVAL, TimeUnit.SECONDS);
+    }
 
-					// 使用接收到的推送数据，执行对应逻辑
-					if (DEVICE_MSG_KEY != null && DEVICE_MSG_KEY.equals(deviceId)) {// 确定是当前设备接收到的推送
+    // -------------------- Jedis 启动 --------------------
 
-						// 检查用户的登录状态：登录则提示推送，下线则不提示
-						if (AccountManager.isSignIn()) {
-							// 在通知栏显示系统通知
-							NotificationUtil.createNotification(EventPushService.this, eventCode, eventMsg);
-							// 有新的系统消息，更新状态（显示 MainGeneralFragment 中的小红点）
-							PeachPreference.setBoolean(PeachPreference.HAVE_NEW_MESSAGE, true);
+    private synchronized void startJedisIfNeeded() {
+        if (jedisExecutor != null && !jedisExecutor.isShutdown()) return;
 
-							/*
-							 * 1 - 异地登录（账号在另一台设备上登录，当前设备被迫下线）
-							 * 2 - 收到电子钥匙（eKey）
-							 * 3 - 电子钥匙被冻结
-							 * 4 - 电子钥匙被解冻
-							 * 5 - 电子钥匙被授权
-							 * 6 - 电子钥匙被取消授权
-							 * 7 - 删除锁/删除钥匙/清空钥匙
-							 * 8 - 从主界面切换到锁列表
-							 * 9 - 网关冻结锁
-							 * 10 - 网关解冻锁
-							 * 100 - 美洽新消息推送
-							 */
-							switch (eventCode) {
-								case 1: // 当前账号异地登录，给 BaseActivity 发送广播，强制下线
-									final Intent newDeviceLoginIntent = new Intent(ACTION_NEW_DEVICE_LOGIN);
-									sendBroadcast(newDeviceLoginIntent);
-									break;
+        jedisExecutor = Executors.newSingleThreadExecutor();
+        jedisExecutor.execute(this::jedisLoop);
+    }
 
-								case 2:
-								case 3:
-								case 4:
-								case 5:
-								case 6:
-								case 7:
-								case 8:
-								case 9:
-								case 10:
-									// 钥匙状态发生变化，给 LockDetailFragment 和 LockListFragment 发送广播，刷新对应的页面
-									final Intent keyStatusChangeIntent = new Intent(ACTION_KEY_STATUS_CHANGE);
-									sendBroadcast(keyStatusChangeIntent);
-									break;
+    private void jedisLoop() {
+        isRunning = true;
 
-								default:
-									break;
-							}
-						}
-					}
-				}
-			}
-		}).start();
-	}
+        while (isRunning) {
+            try (Jedis jedis = new Jedis(JEDIS_HOST, 6379, 10000)) {
 
-	@Override
-	public void onDestroy() {
-//		Log.e(LOG_TAG, LOG_TAG + "EventPushService is onDestroy");
-		isNeedQueryJedis = false;
-		if (mHeartTimer != null) {
-			mHeartTimer.cancel();
-		}
-		stopSelf();
-		super.onDestroy();
-	}
+                jedis.auth(JEDIS_AUTH);
+                jedis.select(JEDIS_DB);
 
-	@Nullable
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
+                // 添加连接成功日志
+                Log.d(TAG, "Jedis connected successfully");
+                Log.d(TAG, "Ping result: " + jedis.ping());
+                Log.d(TAG, "Current DB: " + JEDIS_DB);
+                Log.d(TAG, "DEVICE_MSG_KEY: " + DEVICE_MSG_KEY);
+
+                // 检查当前数据库是否有数据
+                Long queueSize = jedis.llen(DEVICE_MSG_KEY);
+                Log.d(TAG, "Queue size for " + DEVICE_MSG_KEY + ": " + queueSize);
+
+                // 查看所有相关的key
+                Set<String> keys = jedis.keys("*" + DEVICE_MSG_KEY + "*");
+                Log.d(TAG, "All related keys: " + keys);
+
+                while (isRunning) {
+                    Log.d(TAG, "Waiting for message with brpop...");
+                    List<String> result = jedis.brpop(30, DEVICE_MSG_KEY);
+
+                    if (result == null) {
+                        Log.d(TAG, "BRPOP timeout after 30 seconds, no message");
+                        continue;
+                    }
+
+                    if (result.size() < 2) {
+                        Log.w(TAG, "Unexpected result size: " + result.size());
+                        continue;
+                    }
+
+                    Log.d(TAG, "Received message! Key: " + result.get(0) + ", Value: " + result.get(1));
+                    handleMessage(result.get(0), result.get(1));
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error in Jedis loop", e);
+                sleepQuiet(3000);
+            }
+        }
+    }
+    private void sleepQuiet(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) {}
+    }
+
+
+    // -------------------- 消息处理 --------------------
+
+    private void handleMessage(String deviceId, String json) {
+        if (!DEVICE_MSG_KEY.equals(deviceId)) return;
+        if (!AccountManager.isSignIn()) return;
+
+        try {
+            JSONObject obj = new JSONObject(json);
+            int eventCode = obj.optInt("event");
+            String msg = obj.optString("msg");
+
+            NotificationUtil.showPushNotification(this, eventCode, msg);
+            PeachPreference.setBoolean(
+                    PeachPreference.HAVE_NEW_MESSAGE, true);
+
+            dispatchEvent(eventCode);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Message parse error", e);
+        }
+    }
+
+    private void dispatchEvent(int eventCode) {
+        Intent intent = null;
+
+        switch (eventCode) {
+            case 1:
+                intent = new Intent(ACTION_NEW_DEVICE_LOGIN);
+                break;
+
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                intent = new Intent(ACTION_KEY_STATUS_CHANGE);
+                break;
+
+            case 13:
+                Log.d(TAG, "通过 app 解锁");
+                break;
+
+            case 18:
+                Log.d(TAG, "通过密码解锁");
+                break;
+
+            default:
+                break;
+        }
+
+        if (intent != null) {
+            sendBroadcast(intent);
+        }
+    }
+
+    // -------------------- 资源释放 --------------------
+
+    private void stopAll() {
+        isRunning = false;
+
+        if (heartbeatExecutor != null) {
+            heartbeatExecutor.shutdownNow();
+            heartbeatExecutor = null;
+        }
+
+        if (jedisExecutor != null) {
+            jedisExecutor.shutdownNow();
+            jedisExecutor = null;
+        }
+    }
 }

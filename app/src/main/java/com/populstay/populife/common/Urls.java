@@ -162,6 +162,8 @@ public class Urls {
     public static final String LOCK_TRANSFER = "lock/transfer"; //（post）转移锁
     public static final String LOCK_EKEY_PERMISSION_GET = "key/permission/get"; //（get）钥匙权限
     public static final String LOCK_EKEY_PERMISSION_POST = "key/permission/update"; //（post）钥匙权限
+    public static final String LOCK_NOTIFICATION_GET = "lock/setting/v5/notification/get"; //（post）获取通知状态
+    public static final String LOCK_NOTIFICATION_POST = "lock/setting/v5/notification/update"; //（post）更新通知状态
 
 
 }

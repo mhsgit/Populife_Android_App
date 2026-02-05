@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include android:id="@+id/title_bar" layout="@layout/layout_view_titlebar" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_view_titlebar" />
 
 
     <LinearLayout
@@ -14,48 +16,203 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
         android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/common_page_left_right_space"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/common_page_left_right_space">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_transfer_subtitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_notification_label"
+                android:textColor="#FF282828"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="On"
+                android:textColor="@color/text_main"
+                android:textSize="15sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sc_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:thumbTint="@color/white"
+                app:trackTint="@color/switch_track_color" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/setting_transfer_desc"
-            android:textSize="14sp" />
-        <ImageView
-            android:layout_width="wrap_content"
+            android:text="@string/setting_notification_desc"
+            android:textColor="#FF282828"
+            android:textSize="13sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/lock_transfer_img"/>
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+                    <ImageView
+                        android:id="@+id/iv_unlock"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@mipmap/ic_notification_app_unlocks"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_unlock_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_unlock"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_unlock_desc"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/setting_notification_app_unlock_title"
+                        android:textColor="#FF000000"
+                        android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/tv_unlock_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_unlock"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_unlock_title"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/setting_notification_app_unlock_desc"
+                        android:textColor="#FF666666"
+                        android:textSize="13sp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <TextView
-            android:id="@+id/tv_contine"
-            style="@style/btn_style_main"
-            android:layout_marginTop="20dp"
-            android:text="@string/next_step" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="64dp"
+                    android:background="#FFEBEBEB"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+                    <ImageView
+                        android:id="@+id/iv_pwd_unlock"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@mipmap/ic_notification_pwd_unlocks"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_pwd_unlock_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_pwd_unlock"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_pwd_unlock_desc"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/setting_notification_passcode_unlock_title"
+                        android:textColor="#FF000000"
+                        android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/tv_pwd_unlock_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_pwd_unlock"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pwd_unlock_title"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/setting_notification_passcode_unlock_desc"
+                        android:textColor="#FF666666"
+                        android:textSize="13sp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/ic_info"
+                android:layout_marginEnd="6dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFA6A6A6"
+                android:textSize="13sp"
+                android:text="@string/setting_notification_unlock_desc"/>
+        </LinearLayout>
+        
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/tv_combined"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_go_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="4dp"
-            tools:text="@string/setting_transfer_link_pre"/>
+            app:cardBackgroundColor="#FFF5F5F5"
+            app:cardElevation="0dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/baseline_volume_up_24_f34949"/>
+                <TextView
+                    android:id="@+id/tv_combined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="You haven’t enabled notifications for the Populife App. Go to system settings."/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow_more_detail"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

@@ -309,6 +309,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
                 mLlLockTime.setVisibility(View.VISIBLE);
             }
             binding.llLockSettingsTransfer.setVisibility(View.GONE);
+            binding.llLockSettingsNotification.setVisibility(View.GONE);
 			if (mKey.getKeyRight() == 1) { // 授权用户
 				mLlAdminPasscode.setVisibility(View.GONE);
 				tv_lock_settings_space.setEnabled(false);

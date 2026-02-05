@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity {
 		MyApplication.sPPLOCK.startBleService(this);
 
 		Intent pushServiceIntent = new Intent(this, EventPushService.class);
-		startService(pushServiceIntent);
+        startForegroundService(pushServiceIntent);
 	}
 
 	/**

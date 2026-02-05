@@ -23,6 +23,11 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 指纹识别 -->
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+<!-- 前台 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -93,7 +98,10 @@
         <!-- Register Bluetooth Service -->
         <!-- Register Bluetooth Service -->
         <service android:name="com.populock.manhattan.sdk.service.BleService" android:exported="true"/>
-        <service android:name=".push.EventPushService"       android:exported="true"/>
+        <service
+            android:name=".push.EventPushService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

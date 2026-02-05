@@ -1080,4 +1080,14 @@
     <string name="ekey_permission_2_hint">Grants permission to unlock remotely, but requires a connected gateway and a stable WiFi connection. Actual remote access depends on the admin’s setup.</string>
     <string name="ekey_permission_3_hint">Allows the user to manually check the lock\'s battery level to help ensure timely battery replacement.</string>
     <string name="ekey_permission_4_hint">Lets the user sync the lockbox time with their phone\'s clock. This is useful if the lock has been without power for a while. Note: the lockbox\'s time zone remains unchanged.</string>
+    <string name="notification_running">Background service is running</string>
+    <string name="go_setting_notification_link_pre">You haven’t enabled notifications for the Populife App.</string>
+    <string name="go_setting_notification_link">go to system settings</string>
+    <string name="setting_notification_label">Unlock notification:</string>
+    <string name="setting_notification_desc">When notifications are enabled, you will receive unlock updates for this lock</string>
+    <string name="setting_notification_app_unlock_title">App Unlocks</string>
+    <string name="setting_notification_app_unlock_desc">Receive a notification when others unlock the lock via the app, no gateway required.</string>
+    <string name="setting_notification_passcode_unlock_title">Passcode Unlocks</string>
+    <string name="setting_notification_passcode_unlock_desc">Get notified for passcode unlocks when your gateway is online and connected.</string>
+    <string name="setting_notification_unlock_desc">If the gateway is offline, passcode unlock alerts won\'t be real-time. Check the unlock history via Bluetooth when near the lock.</string>
 </resources>
