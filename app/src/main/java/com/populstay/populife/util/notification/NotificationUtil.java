@@ -1,5 +1,6 @@
 package com.populstay.populife.util.notification;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -105,7 +106,7 @@ public final class NotificationUtil {
 
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_SERVICE,
-                    context.getString(R.string.notification),
+                    context.getString(R.string.notification_background_title),
                     NotificationManager.IMPORTANCE_LOW
             );
             channel.setShowBadge(false);
@@ -115,22 +116,27 @@ public final class NotificationUtil {
 
     private static void createPushChannelIfNeeded(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
             NotificationManager manager =
                     context.getSystemService(NotificationManager.class);
             if (manager == null) return;
 
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_PUSH,
-                    context.getString(R.string.notification),
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            channel.enableVibration(true);
+            NotificationChannel channel =
+                    new NotificationChannel(
+                            CHANNEL_PUSH,
+                            context.getString(R.string.notification_push_title),
+                            NotificationManager.IMPORTANCE_HIGH
+                    );
+
             channel.enableLights(true);
+            channel.enableVibration(true);
             channel.setShowBadge(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
             manager.createNotificationChannel(channel);
         }
     }
+
 
     /* ------------------------------ */
     /* 点击通知跳转逻辑 */

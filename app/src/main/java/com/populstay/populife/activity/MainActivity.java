@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -130,8 +131,12 @@ public class MainActivity extends BaseActivity {
 		MyApplication.sPPLOCK.startBleService(this);
 
 		Intent pushServiceIntent = new Intent(this, EventPushService.class);
-        startForegroundService(pushServiceIntent);
-	}
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(pushServiceIntent);
+        } else {
+            startService(pushServiceIntent);
+        }
+    }
 
 	/**
 	 * 退出 APP

@@ -1,19 +1,14 @@
 package com.populstay.populife.push;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
-import com.populstay.populife.R;
 import com.populstay.populife.app.AccountManager;
 import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.constant.Constant;
@@ -46,7 +41,7 @@ public class EventPushService extends Service {
     private static final String TAG = "EventPushService";
 
     /** Redis 配置 */
-    private static final String JEDIS_HOST = "api.populife.co";
+    private static final String JEDIS_HOST = "v2.server.populife.co";
     private static final String JEDIS_AUTH = "c49871320";
     private static final int JEDIS_DB = Constant.DEBUG ? 7 : 1;
 //    private static final int JEDIS_DB =  1;
@@ -63,6 +58,8 @@ public class EventPushService extends Service {
     private ScheduledExecutorService heartbeatExecutor;
     private ExecutorService jedisExecutor;
 
+    private PowerManager.WakeLock wakeLock;
+
     // -------------------- Service 生命周期 --------------------
 
     @Override
@@ -75,6 +72,7 @@ public class EventPushService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        acquireWakeLock();
         startForegroundInternal();
     }
 
@@ -82,6 +80,9 @@ public class EventPushService extends Service {
     public void onDestroy() {
         stopAll();
         super.onDestroy();
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
     }
 
     @Nullable
@@ -93,6 +94,14 @@ public class EventPushService extends Service {
     private static final int FOREGROUND_ID = 2001;
     private static final String CHANNEL_ID = "populife_foreground";
 
+    private void acquireWakeLock() {
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = pm.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK,
+                "Populife:RedisWakeLock"
+        );
+        wakeLock.acquire();
+    }
     private void startForegroundInternal() {
         Notification notification =
                 NotificationUtil.buildServiceNotification(this).build();
@@ -154,7 +163,7 @@ public class EventPushService extends Service {
 
                 while (isRunning) {
                     Log.d(TAG, "Waiting for message with brpop...");
-                    List<String> result = jedis.brpop(30, DEVICE_MSG_KEY);
+                    List<String> result = jedis.brpop(5, DEVICE_MSG_KEY);
 
                     if (result == null) {
                         Log.d(TAG, "BRPOP timeout after 30 seconds, no message");
