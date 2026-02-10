@@ -223,6 +223,8 @@ public class Key implements Parcelable {
      * KJX V3  lockData
      */
     private String lockData;
+    private boolean hasGateway;
+    private int unlockType; // 开锁类型，1：网关，2：蓝牙
 
     public Key() {
 	}
@@ -233,7 +235,7 @@ public class Key implements Parcelable {
 			   String pwdInfo, long timestamp, String aesKeyStr, long startDate, long endDate, int specialValue,
 			   int timezoneRawOffset, int keyRight, int keyboardPwdVersion, int remoteEnable, String remarks,
 			   String modelNum, String hardwareRevision, String firmwareRevision, boolean isAllowAllPermissions, boolean isAllowRemoteUnlock, boolean isAllowSyncBattery, boolean isAllowCalibrateTime,
-			   Integer keyType, Integer dayNum, String k1, String k2) {
+			   Integer keyType, Integer dayNum, String k1, String k2, boolean hasGateway, int unlockType) {
 		this.id = id;
 		this.userId = userId;
 		this.userType = userType;
@@ -273,6 +275,8 @@ public class Key implements Parcelable {
 		this.dayNum = dayNum;
 		this.k1 = k1;
 		this.k2 = k2;
+        this.hasGateway = hasGateway;
+        this.unlockType = unlockType;
 	}
 
 	protected Key(Parcel in) {
@@ -333,6 +337,8 @@ public class Key implements Parcelable {
 		lockCurrentTime = in.readLong();
 		k1 = in.readString();
 		k2 = in.readString();
+        hasGateway = in.readByte() != 0;
+        unlockType = in.readInt();
 	}
 
 	public static final Creator<Key> CREATOR = new Creator<Key>() {
@@ -661,6 +667,8 @@ public class Key implements Parcelable {
                 ", isAllowRemoteUnlock=" + isAllowRemoteUnlock +
                 ", isAllowSyncBattery=" + isAllowSyncBattery +
                 ", isAllowCalibrateTime=" + isAllowCalibrateTime +
+                ", hasGateway=" + hasGateway +
+                ", unlockType=" + unlockType +
 				'}';
 	}
 
@@ -744,6 +752,23 @@ public class Key implements Parcelable {
         this.lockData = lockData;
     }
 
+    public boolean isHasGateway() {
+        return hasGateway;
+    }
+
+    public void setHasGateway(boolean hasGateway) {
+        this.hasGateway = hasGateway;
+    }
+
+
+    public int getUnlockType() {
+        return unlockType;
+    }
+
+    public void setUnlockType(int unlockType) {
+        this.unlockType = unlockType;
+    }
+
     @Override
 	public int describeContents() {
 		return 0;
@@ -793,6 +818,8 @@ public class Key implements Parcelable {
         dest.writeByte((byte) (isAllowRemoteUnlock ? 1 : 0));
         dest.writeByte((byte) (isAllowSyncBattery ? 1 : 0));
         dest.writeByte((byte) (isAllowCalibrateTime ? 1 : 0));
+        dest.writeByte((byte) (hasGateway ? 1 : 0));
+        dest.writeInt(unlockType);
 		if (keyType == null) {
 			dest.writeByte((byte) 0);
 		} else {

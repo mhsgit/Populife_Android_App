@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -20,7 +22,8 @@
                 android:background="@color/white"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
 
                 <Space
                     android:layout_width="wrap_content"
@@ -88,6 +91,7 @@
                 android:id="@+id/fl_lock_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                tools:visibility="visible"
                 android:visibility="gone">
 
            <androidx.core.widget.NestedScrollView
@@ -100,6 +104,39 @@
                    android:background="@color/white"
                    android:gravity="center_horizontal"
                    android:orientation="vertical">
+
+                   <LinearLayout
+                       android:id="@+id/ll_remote_open"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginHorizontal="@dimen/common_page_left_right_space"
+                       android:layout_marginTop="14dp"
+                       android:visibility="gone"
+                       >
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/use_gateway_unlock_by_default"
+                           android:textColor="#FF282828"
+                           android:textSize="15sp" />
+
+                       <Space
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1" />
+
+                       <androidx.appcompat.widget.SwitchCompat
+                           android:id="@+id/sc_remote_open"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintTop_toTopOf="parent"
+                           app:thumbTint="@color/white"
+                           app:trackTint="@color/switch_track_color" />
+
+                   </LinearLayout>
 
                    <TextView
                        android:id="@+id/tv_lock_detail_name"

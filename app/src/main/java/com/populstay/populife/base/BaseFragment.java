@@ -131,17 +131,18 @@ public abstract class BaseFragment extends Fragment {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S;
 	}
 
-	public void kjxRequestBleConnectPermissionStartConnect(final String address) {
+	public void kjxRequestBleConnectPermissionStartConnect(PermissionListener listener) {
 		if (isAndroid12()) {
 			requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
 				@Override
 				public void onGranted() {
-//                    mTTLockAPI.connect(address);
+                    listener.onGranted();
 				}
 
 				@Override
 				public void onDenied(List<String> deniedPermissions) {
 					toast(isAndroid12() ? R.string.note_permission_ble_scan_connect : R.string.note_permission_lbs);
+                    listener.onDenied(deniedPermissions);
 				}
 			});
 		} else {

@@ -1092,4 +1092,5 @@
     <string name="setting_notification_unlock_desc">If the gateway is offline, passcode unlock alerts won\'t be real-time. Check the unlock history via Bluetooth when near the lock.</string>
     <string name="notification_background_title">Background Activity</string>
     <string name="notification_push_title">Message Alerts</string>
+    <string name="use_gateway_unlock_by_default">Use gateway unlock by default</string>
 </resources>

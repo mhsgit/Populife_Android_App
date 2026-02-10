@@ -44,6 +44,7 @@ import com.populstay.populife.app.MyApplication;
 import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.base.BaseFragment;
 import com.populstay.populife.common.Urls;
+import com.populstay.populife.databinding.FragmentLockDetailBinding;
 import com.populstay.populife.entity.Gateway;
 import com.populstay.populife.entity.Key;
 import com.populstay.populife.entity.LockAction;
@@ -66,6 +67,7 @@ import com.populstay.populife.net.RestClient;
 import com.populstay.populife.net.callback.IError;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
+import com.populstay.populife.permission.PermissionListener;
 import com.populstay.populife.push.EventPushService;
 import com.populstay.populife.ui.MyGridView;
 import com.populstay.populife.ui.loader.LoaderStyle;
@@ -271,10 +273,11 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		set.start();
 	}
 
+    private FragmentLockDetailBinding binding;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_lock_detail, null);
-
+        binding = FragmentLockDetailBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 		getIntentData();
 		initView(view);
 		initListener();
@@ -484,7 +487,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		}
 
 		// 同时支持远程开锁/闭锁
-		boolean isSupportRemoteLock = DigitUtil.isSupportManualLock(mCurKEY.getSpecialValue());
+		boolean isSupportRemoteLock = DigitUtil.isSupportManualLock(mCurKEY.getSpecialValue()) && mCurKEY.isHasGateway();
 
 		if (!isSupportRemoteLock) {
 			return false;
@@ -512,7 +515,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 	}
 
 	private boolean isSupportRemoteUnlock() {
-		boolean isSupportRemoteUnlock = DigitUtil.isSupportRemoteUnlock(mCurKEY.getSpecialValue());
+		boolean isSupportRemoteUnlock = DigitUtil.isSupportRemoteUnlock(mCurKEY.getSpecialValue())  && mCurKEY.isHasGateway();
 
 		// 不支持远程开锁
 		if (!isSupportRemoteUnlock) {
@@ -676,57 +679,71 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 				}
 
 			} else {
-                Log.d("TESTTEST", mCurKEY.toString());
-                TTLockClient.getDefault().controlLock(ControlAction.UNLOCK, mCurKEY.getLockData(), mCurKEY.getLockMac(),new ControlLockCallback() {
-                    @Override
-                    public void onControlLockSuccess(ControlLockResult controlLockResult) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                closeUnLockingOrLocking();
-                                mIsUnlockCalled = true;
-                                stopLockingAnimation(operateType);
-                                addLockOperateLog(1);//添加开锁记录
-                                if (mKeyType == 3) {//如果是一次性钥匙，开锁成功后手动删除
-                                    deleteOneTimeEkey();
-                                }
-                                boolean isRemind = PeachPreference.isShowLockingReminder(PeachPreference.readUserId());
-                                if (isRemind) {
-                                    // 开锁成功提示
-                                    toast(R.string.unlocked_successfully);
-                                    DeviceUtil.vibrate(getActivity(), 500);
-                                }
+                if (isSupportRemoteUnlock() && mCurKEY.getUnlockType() == 1) {
+                    exeRemoteUnlock();
+                } else {
+                    kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
+                        @Override
+                        public void onGranted() {
 
-                                // 展示最近开锁成功的时间
-                                long curTimeMillis = DateUtil.getCurTimeMillis();
-                                showLastUnLockTime(DateUtil.getDateToString(curTimeMillis, DateUtil.DATE_TIME_PATTERN_1), 1);
-                                PeachPreference.setLastUnlockTimeAndType(mCurKEY.getLockId(), curTimeMillis, 1);
-                                getLockBattery();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFail(LockError error) {
-                        Log.d("TESTTEST", "error: " + error.toString());
-
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(new Runnable() {
+                            TTLockClient.getDefault().controlLock(ControlAction.UNLOCK, mCurKEY.getLockData(), mCurKEY.getLockMac(),new ControlLockCallback() {
                                 @Override
-                                public void run() {
-                                    mIsUnlockCalled = true;
-                                    stopLockingAnimation(operateType);
-                                    if (isSupportRemoteUnlock()) {
-                                        exeRemoteUnlock();
-                                    } else {
-                                        closeUnLockingOrLocking();
-                                        toastFail();
+                                public void onControlLockSuccess(ControlLockResult controlLockResult) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            closeUnLockingOrLocking();
+                                            mIsUnlockCalled = true;
+                                            stopLockingAnimation(operateType);
+                                            addLockOperateLog(1);//添加开锁记录
+                                            if (mKeyType == 3) {//如果是一次性钥匙，开锁成功后手动删除
+                                                deleteOneTimeEkey();
+                                            }
+                                            boolean isRemind = PeachPreference.isShowLockingReminder(PeachPreference.readUserId());
+                                            if (isRemind) {
+                                                // 开锁成功提示
+                                                toast(R.string.unlocked_successfully);
+                                                DeviceUtil.vibrate(getActivity(), 500);
+                                            }
+
+                                            // 展示最近开锁成功的时间
+                                            long curTimeMillis = DateUtil.getCurTimeMillis();
+                                            showLastUnLockTime(DateUtil.getDateToString(curTimeMillis, DateUtil.DATE_TIME_PATTERN_1), 1);
+                                            PeachPreference.setLastUnlockTimeAndType(mCurKEY.getLockId(), curTimeMillis, 1);
+                                            getLockBattery();
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onFail(LockError error) {
+                                    Log.d("TESTTEST", "error: " + error.toString());
+
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                mIsUnlockCalled = true;
+                                                stopLockingAnimation(operateType);
+                                                if (isSupportRemoteUnlock()) {
+                                                    exeRemoteUnlock();
+                                                } else {
+                                                    closeUnLockingOrLocking();
+                                                    toastFail();
+                                                }
+                                            }
+                                        });
                                     }
                                 }
                             });
                         }
-                    }
-                });
+
+                        @Override
+                        public void onDenied(List<String> deniedPermissions) {
+
+                        }
+                    });
+                }
 
 			}
 		} else {
@@ -899,42 +916,52 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 				}
 
 			} else {
-                TTLockClient.getDefault().controlLock(ControlAction.LOCK, mCurKEY.getLockData(), mCurKEY.getLockMac(),new ControlLockCallback() {
+                kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
                     @Override
-                    public void onControlLockSuccess(ControlLockResult controlLockResult) {
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    closeUnLockingOrLocking();
-                                    mIsLockCalled = true;
-                                    stopLockingAnimation(3);
-                                    addLockOperateLog(2);//添加闭锁记录
-                                    boolean isRemind = PeachPreference.isShowLockingReminder(PeachPreference.readUserId());
-                                    if (isRemind) {
-                                        // 闭锁成功提示
-                                        toast(R.string.locked_successfully);
-                                        DeviceUtil.vibrate(getActivity(), 500);
-                                    }
-                                    getLockBattery();
+                    public void onGranted() {
+                        TTLockClient.getDefault().controlLock(ControlAction.LOCK, mCurKEY.getLockData(), mCurKEY.getLockMac(),new ControlLockCallback() {
+                            @Override
+                            public void onControlLockSuccess(ControlLockResult controlLockResult) {
+                                if (getActivity() != null) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            closeUnLockingOrLocking();
+                                            mIsLockCalled = true;
+                                            stopLockingAnimation(3);
+                                            addLockOperateLog(2);//添加闭锁记录
+                                            boolean isRemind = PeachPreference.isShowLockingReminder(PeachPreference.readUserId());
+                                            if (isRemind) {
+                                                // 闭锁成功提示
+                                                toast(R.string.locked_successfully);
+                                                DeviceUtil.vibrate(getActivity(), 500);
+                                            }
+                                            getLockBattery();
+                                        }
+                                    });
                                 }
-                            });
-                        }
+                            }
+
+                            @Override
+                            public void onFail(LockError error) {
+                                if (getActivity() != null) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            closeUnLockingOrLocking();
+                                            mIsLockCalled = true;
+                                            stopLockingAnimation(3);
+                                            toastFail();
+                                        }
+                                    });
+                                }
+                            }
+                        });
                     }
 
                     @Override
-                    public void onFail(LockError error) {
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    closeUnLockingOrLocking();
-                                    mIsLockCalled = true;
-                                    stopLockingAnimation(3);
-                                    toastFail();
-                                }
-                            });
-                        }
+                    public void onDenied(List<String> deniedPermissions) {
+
                     }
                 });
 			}
@@ -1091,22 +1118,32 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 				}
 
 			} else {
-                TTLockClient.getDefault().getBatteryLevel(mCurKEY.getLockData(), mCurKEY.getLockMac(), new GetBatteryLevelCallback() {
+                kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
                     @Override
-                    public void onGetBatteryLevelSuccess(int i) {
-                        getActivity().runOnUiThread(new Runnable() {
+                    public void onGranted() {
+                        TTLockClient.getDefault().getBatteryLevel(mCurKEY.getLockData(), mCurKEY.getLockMac(), new GetBatteryLevelCallback() {
                             @Override
-                            public void run() {
-                                requestUploadLockBattery(i);
+                            public void onGetBatteryLevelSuccess(int i) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        requestUploadLockBattery(i);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(LockError lockError) {
                             }
                         });
                     }
 
                     @Override
-                    public void onFail(LockError lockError) {
-                        kjxRequestBleConnectPermissionStartConnect(mCurKEY.getLockMac());
+                    public void onDenied(List<String> deniedPermissions) {
+
                     }
                 });
+
 			}
 
 		}
@@ -1310,6 +1347,56 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 				.get();
 	}
 
+    public void requestUnlockType() {
+        WeakHashMap<String, Object> params = new WeakHashMap<>();
+        params.put("userId", PeachPreference.readUserId());
+        if (!StringUtil.isBlank(mKeyId)) {
+            params.put("lockId", mKeyId);
+        }
+        params.put("unlockType", mCurKEY.getUnlockType() == 1 ? 2 : 1);
+        RestClient.builder()
+                .url(Urls.LOCK_UNLOCK_TYPE_POST)
+                .params(params)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        PeachLoader.stopLoading();
+                        if (mRefreshLayout != null) {
+                            mRefreshLayout.setRefreshing(false);
+                        }
+                        PeachLogger.d("LOCK_UNLOCK_TYPE_POST", response);
+                        JSONObject result = JSON.parseObject(response);
+                        int code = result.getInteger("code");
+                        if (code == 920) {//没有锁信息
+                            PeachPreference.setAccountLockNum(PeachPreference.readUserId(), 0);
+                            setLockInfoVisible(SHOW_DEVICE_ADD);
+                        } else if (code == 200) {
+                            doRefresh();
+                        }
+                    }
+                })
+                .failure(new IFailure() {
+                    @Override
+                    public void onFailure() {
+                        PeachLoader.stopLoading();
+                        if (mRefreshLayout != null) {
+                            mRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                })
+                .error(new IError() {
+                    @Override
+                    public void onError(int code, String msg) {
+                        PeachLoader.stopLoading();
+                        if (mRefreshLayout != null) {
+                            mRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                })
+                .build()
+                .post();
+    }
+
 	private void setLockInfoVisible(int showType) {
 		mLlLockAdd.setVisibility(View.GONE);
 		mFlLockInfo.setVisibility(View.GONE);
@@ -1393,7 +1480,8 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		int orgId = lockInfo.containsKey("orgId") ? lockInfo.getInteger("orgId") : 0;//应用商
 		int groupId = lockInfo.containsKey("groupId") ? lockInfo.getInteger("groupId") : 0;//公司
 		boolean isAdmin = lockInfo.containsKey("isAdmin") ? lockInfo.getBoolean("isAdmin") : false;//true为管理员，false否
-
+        boolean hasGateway = lockInfo.containsKey("hasGateway") ? lockInfo.getBoolean("hasGateway") : false;
+        int unlockType = lockInfo.containsKey("unlockType") ? lockInfo.getInteger("unlockType") : 2;//场景
 //        v3
         String lockData = lockInfo.getString("lockData");
         mCurKEY.setLockData(lockData);
@@ -1475,7 +1563,8 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
         mCurKEY.setAllowRemoteUnlock(isAllowRemoteUnlock);
         mCurKEY.setAllowSyncBattery(isAllowSyncBattery);
         mCurKEY.setAllowCalibrateTime(isAllowCalibrateTime);
-
+        mCurKEY.setHasGateway(hasGateway);
+        mCurKEY.setUnlockType(unlockType);
 		mCurKEY.isAdmin(isAdmin);
 		CURRENT_KEY = mCurKEY;
 		if (null != mActivity && !mActivity.isFinishing()) {
@@ -1580,15 +1669,25 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 	 */
 	private void readKJXLockTimeBackground() {
 		//showLoading();
-        TTLockClient.getDefault().getLockTime(CURRENT_KEY.getLockData(),CURRENT_KEY.getLockMac(), new GetLockTimeCallback() {
+        kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
             @Override
-            public void onGetLockTimeSuccess(long lockTimestamp) {
-                CURRENT_KEY.setLockCurrentTime(lockTimestamp);
+            public void onGranted() {
+                TTLockClient.getDefault().getLockTime(CURRENT_KEY.getLockData(),CURRENT_KEY.getLockMac(), new GetLockTimeCallback() {
+                    @Override
+                    public void onGetLockTimeSuccess(long lockTimestamp) {
+                        CURRENT_KEY.setLockCurrentTime(lockTimestamp);
+                    }
+
+                    @Override
+                    public void onFail(LockError error) {
+                        CURRENT_KEY.setLockCurrentTime(-1);
+                    }
+                });
             }
 
             @Override
-            public void onFail(LockError error) {
-                CURRENT_KEY.setLockCurrentTime(-1);
+            public void onDenied(List<String> deniedPermissions) {
+
             }
         });
 	}
@@ -1645,6 +1744,15 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		if (mActivity instanceof LockDetailActivity) {
 			((LockDetailActivity) mActivity).setTitleName(mCurKEY.getLockAlias());
 		}
+//        网关开关
+        binding.llRemoteOpen.setVisibility(mCurKEY.isHasGateway() ? View.VISIBLE : View.GONE);
+        binding.scRemoteOpen.setOnCheckedChangeListener(null);
+        binding.scRemoteOpen.setChecked(mCurKEY.getUnlockType() == 1);
+        binding.scRemoteOpen.setEnabled(true);
+        binding.scRemoteOpen.setOnCheckedChangeListener((view, v)-> {
+            binding.scRemoteOpen.setEnabled(false);
+            requestUnlockType();
+        });
 		mActions.clear();
 		if (mCurKEY.isAdmin()) { // 判断是否为管理员
 			// 管理员，显示全部按钮
