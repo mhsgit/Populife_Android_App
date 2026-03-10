@@ -3,6 +3,7 @@ package com.populstay.populife.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.populstay.populife.home.entity.Home;
 
@@ -279,67 +280,72 @@ public class Key implements Parcelable {
         this.unlockType = unlockType;
 	}
 
-	protected Key(Parcel in) {
-		if (in.readByte() == 0) {
-			id = null;
-		} else {
-			id = in.readLong();
-		}
-		userId = in.readString();
-		userType = in.readString();
-		keyStatus = in.readString();
-		status = in.readInt();
-		lockId = in.readInt();
-		keyId = in.readInt();
-		userKeyId = in.readInt();
-		lockVersion = in.readString();
-		lockName = in.readString();
-		lockAlias = in.readString();
-        lockMac = in.readString();
-        lockData = in.readString();
-		electricQuantity = in.readInt();
-		lockFlagPos = in.readInt();
-		adminPwd = in.readString();
-		lockKey = in.readString();
-		noKeyPwd = in.readString();
-		deletePwd = in.readString();
-		pwdInfo = in.readString();
-		timestamp = in.readLong();
-		aesKeyStr = in.readString();
-		startDate = in.readLong();
-		endDate = in.readLong();
-		specialValue = in.readInt();
-		timezoneRawOffset = in.readInt();
-		keyRight = in.readInt();
-		keyboardPwdVersion = in.readInt();
-		remoteEnable = in.readInt();
-		remarks = in.readString();
-		modelNum = in.readString();
-		hardwareRevision = in.readString();
-		firmwareRevision = in.readString();
-
-        isAllowAllPermissions = in.readByte() != 0;
-        isAllowRemoteUnlock = in.readByte() != 0;
-        isAllowSyncBattery = in.readByte() != 0;
-        isAllowCalibrateTime = in.readByte() != 0;
-		if (in.readByte() == 0) {
-			keyType = null;
-		} else {
-			keyType = in.readInt();
-		}
-		if (in.readByte() == 0) {
-			dayNum = null;
-		} else {
-			dayNum = in.readInt();
-		}
-		isAdmin = in.readByte() != 0;
-		home = in.readParcelable(Home.class.getClassLoader());//Home.class.getClassLoader()
-		lockCurrentTime = in.readLong();
-		k1 = in.readString();
-		k2 = in.readString();
-        hasGateway = in.readByte() != 0;
-        unlockType = in.readInt();
-	}
+    protected Key(Parcel in) {
+        try {
+            if (in.readByte() == 0) {
+                id = null;
+            } else {
+                id = in.readLong();
+            }
+            userId = in.readString();
+            userType = in.readString();
+            keyStatus = in.readString();
+            status = in.readInt();
+            lockId = in.readInt();
+            keyId = in.readInt();
+            userKeyId = in.readInt();
+            lockVersion = in.readString();
+            lockName = in.readString();
+            lockAlias = in.readString();
+            lockMac = in.readString();
+            lockData = in.readString();
+            electricQuantity = in.readInt();
+            lockFlagPos = in.readInt();
+            adminPwd = in.readString();
+            lockKey = in.readString();
+            noKeyPwd = in.readString();
+            deletePwd = in.readString();
+            pwdInfo = in.readString();
+            timestamp = in.readLong();
+            aesKeyStr = in.readString();
+            startDate = in.readLong();
+            endDate = in.readLong();
+            specialValue = in.readInt();
+            timezoneRawOffset = in.readInt();
+            keyRight = in.readInt();
+            keyboardPwdVersion = in.readInt();
+            remoteEnable = in.readInt();
+            remarks = in.readString();
+            modelNum = in.readString();
+            hardwareRevision = in.readString();
+            firmwareRevision = in.readString();
+            isAllowAllPermissions = in.readByte() != 0;
+            isAllowRemoteUnlock = in.readByte() != 0;
+            isAllowSyncBattery = in.readByte() != 0;
+            isAllowCalibrateTime = in.readByte() != 0;
+            if (in.readByte() == 0) {
+                keyType = null;
+            } else {
+                keyType = in.readInt();
+            }
+            if (in.readByte() == 0) {
+                dayNum = null;
+            } else {
+                dayNum = in.readInt();
+            }
+            isAdmin = in.readByte() != 0;
+            home = in.readParcelable(Home.class.getClassLoader());
+            lockCurrentTime = in.readLong();
+            k1 = in.readString();
+            k2 = in.readString();
+            hasGateway = in.readByte() != 0;
+            unlockType = in.readInt();
+        } catch (Exception e) {
+            Log.e("KeyParcel", "❌ Error at position: " + in.dataPosition() +
+                    ", data size: " + in.dataSize(), e);
+            throw e;
+        }
+    }
 
 	public static final Creator<Key> CREATOR = new Creator<Key>() {
 		@Override
@@ -774,68 +780,68 @@ public class Key implements Parcelable {
 		return 0;
 	}
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		if (id == null) {
-			dest.writeByte((byte) 0);
-		} else {
-			dest.writeByte((byte) 1);
-			dest.writeLong(id);
-		}
-		dest.writeString(userId);
-		dest.writeString(userType);
-		dest.writeString(keyStatus);
-		dest.writeInt(status);
-		dest.writeInt(lockId);
-		dest.writeInt(keyId);
-		dest.writeInt(userKeyId);
-		dest.writeString(lockVersion);
-		dest.writeString(lockName);
-		dest.writeString(lockAlias);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(userId);
+        dest.writeString(userType);
+        dest.writeString(keyStatus);
+        dest.writeInt(status);
+        dest.writeInt(lockId);
+        dest.writeInt(keyId);
+        dest.writeInt(userKeyId);
+        dest.writeString(lockVersion);
+        dest.writeString(lockName);
+        dest.writeString(lockAlias);
         dest.writeString(lockMac);
         dest.writeString(lockData);
-		dest.writeInt(electricQuantity);
-		dest.writeInt(lockFlagPos);
-		dest.writeString(adminPwd);
-		dest.writeString(lockKey);
-		dest.writeString(noKeyPwd);
-		dest.writeString(deletePwd);
-		dest.writeString(pwdInfo);
-		dest.writeLong(timestamp);
-		dest.writeString(aesKeyStr);
-		dest.writeLong(startDate);
-		dest.writeLong(endDate);
-		dest.writeInt(specialValue);
-		dest.writeInt(timezoneRawOffset);
-		dest.writeInt(keyRight);
-		dest.writeInt(keyboardPwdVersion);
-		dest.writeInt(remoteEnable);
-		dest.writeString(remarks);
-		dest.writeString(modelNum);
-		dest.writeString(hardwareRevision);
-		dest.writeString(firmwareRevision);
+        dest.writeInt(electricQuantity);
+        dest.writeInt(lockFlagPos);
+        dest.writeString(adminPwd);
+        dest.writeString(lockKey);
+        dest.writeString(noKeyPwd);
+        dest.writeString(deletePwd);
+        dest.writeString(pwdInfo);
+        dest.writeLong(timestamp);
+        dest.writeString(aesKeyStr);
+        dest.writeLong(startDate);
+        dest.writeLong(endDate);
+        dest.writeInt(specialValue);
+        dest.writeInt(timezoneRawOffset);
+        dest.writeInt(keyRight);
+        dest.writeInt(keyboardPwdVersion);
+        dest.writeInt(remoteEnable);
+        dest.writeString(remarks);
+        dest.writeString(modelNum);
+        dest.writeString(hardwareRevision);
+        dest.writeString(firmwareRevision);
         dest.writeByte((byte) (isAllowAllPermissions ? 1 : 0));
         dest.writeByte((byte) (isAllowRemoteUnlock ? 1 : 0));
         dest.writeByte((byte) (isAllowSyncBattery ? 1 : 0));
         dest.writeByte((byte) (isAllowCalibrateTime ? 1 : 0));
+        if (keyType == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(keyType);
+        }
+        if (dayNum == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(dayNum);
+        }
+        dest.writeByte((byte) (isAdmin ? 1 : 0));
+        dest.writeParcelable(home, flags);
+        dest.writeLong(lockCurrentTime);
+        dest.writeString(k1);
+        dest.writeString(k2);
         dest.writeByte((byte) (hasGateway ? 1 : 0));
         dest.writeInt(unlockType);
-		if (keyType == null) {
-			dest.writeByte((byte) 0);
-		} else {
-			dest.writeByte((byte) 1);
-			dest.writeInt(keyType);
-		}
-		if (dayNum == null) {
-			dest.writeByte((byte) 0);
-		} else {
-			dest.writeByte((byte) 1);
-			dest.writeInt(dayNum);
-		}
-		dest.writeByte((byte) (isAdmin ? 1 : 0));
-		dest.writeParcelable(home, flags);
-		dest.writeLong(lockCurrentTime);
-		dest.writeString(k1);
-		dest.writeString(k2);
-	}
+    }
 }

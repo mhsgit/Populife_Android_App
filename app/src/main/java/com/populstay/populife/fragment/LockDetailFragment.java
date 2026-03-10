@@ -1481,7 +1481,9 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		int groupId = lockInfo.containsKey("groupId") ? lockInfo.getInteger("groupId") : 0;//公司
 		boolean isAdmin = lockInfo.containsKey("isAdmin") ? lockInfo.getBoolean("isAdmin") : false;//true为管理员，false否
         boolean hasGateway = lockInfo.containsKey("hasGateway") ? lockInfo.getBoolean("hasGateway") : false;
-        int unlockType = lockInfo.containsKey("unlockType") ? lockInfo.getInteger("unlockType") : 2;//场景
+        int unlockType = lockInfo.getInteger("unlockType") != null
+                ? lockInfo.getInteger("unlockType")
+                : 2; //场景
 //        v3
         String lockData = lockInfo.getString("lockData");
         mCurKEY.setLockData(lockData);
@@ -1741,6 +1743,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 			mIvLockImg.setImageResource(R.drawable.product_door_lock);
 		}
 		mTvLockName.setText(HomeDeviceInfo.getTypeNameByName(mCurKEY.getLockName()));
+        Log.d("TESTTEST", mCurKEY.toString());
 		if (mActivity instanceof LockDetailActivity) {
 			((LockDetailActivity) mActivity).setTitleName(mCurKEY.getLockAlias());
 		}

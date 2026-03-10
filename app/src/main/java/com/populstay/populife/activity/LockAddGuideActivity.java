@@ -89,7 +89,7 @@ public class LockAddGuideActivity extends BluetoothBaseActivity implements View.
 		mFrom = data.getIntExtra(KEY_FROM, 0);
 		mFingerprintCardType = data.getIntExtra(KEY_FINGERPRINT_CARD_TYPE, KeyPwdConstant.IType.TYPE_FINGERPRINT);
 		if (data.hasExtra(KEY_KEY)) {
-			mKey = getIntent().getParcelableExtra(KEY_KEY);
+			mKey = data.getParcelableExtra(KEY_KEY);
 			MyApplication.CURRENT_KEY = mKey;
 		}
 	}
