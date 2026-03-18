@@ -163,7 +163,6 @@
                 android:id="@+id/tv_lock_send_passcode_generate"
                 style="@style/btn_style_main"
                 android:layout_margin="16dp"
-                android:enabled="false"
                 android:text="@string/create_password" />
 
             <TextView

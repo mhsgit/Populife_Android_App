@@ -438,12 +438,13 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 	}
 
 	private boolean isSendBtnEnable() {
-		if (StringUtil.isBlank(mEtName.getText().toString().trim())) {
-			return false;
-		}
+//		if (StringUtil.isBlank(mEtName.getText().toString().trim())) {
+//			return false;
+//		}
 
 		return true;
 	}
+
 
     @Override
     public void onClick(View view) {
@@ -691,8 +692,10 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
                 .params("keyboardPwdType", mPasscodeType)
 				.params("timeZone", DateUtil.getTimeZone())
 				.params("keyId", mKey.getUserKeyId())
-				.params("alias", mEtName.getText().toString().trim())
 				.params("mediumType", mediumType);
+        if (mEtName.getText() != null && !mEtName.getText().toString().trim().isEmpty()) {
+            builder.params("alias", mEtName.getText().toString().trim());
+        }
 
         if(!mTvStartTime.getText().isEmpty()) {
 				builder
@@ -1064,7 +1067,9 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 		params.put("keyboardPwdVersion", 4);//键盘密码版本, 三代锁的密码版本为4
 		params.put("keyboardPwdType", mPasscodeType);
 		params.put("keyId", mKey.getUserKeyId());
-		params.put("alias", mEtName.getText().toString().trim());
+        if (mEtName.getText() != null && !mEtName.getText().toString().trim().isEmpty()) {
+            params.put("alias", mEtName.getText().toString().trim());
+        }
 
 		if (VAL_TAB_TYPE_PERIOD.equals(mCurTabType) || VAL_TAB_TYPE_CUSTOMIZE.equals(mCurTabType)
 				|| VAL_TAB_TYPE_CYCLIC.equals(mCurTabType)) {//密码类型：限时、自定义、循环
