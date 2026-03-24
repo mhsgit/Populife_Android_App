@@ -199,9 +199,28 @@ public class EventPushService extends Service {
         if (!AccountManager.isSignIn()) return;
 
         try {
+            Log.d("TESTTEST", json);
             JSONObject obj = new JSONObject(json);
             int eventCode = obj.optInt("event");
             String msg = obj.optString("msg");
+
+            // 检查时间戳字段 如果没有该字段就不显示通知
+            if (!obj.has("time")) {
+                Log.d(TAG, "Missing timestamp field");
+                return;
+            }
+            long timestamp = obj.optLong("time", 0);  // 默认值改为 -1
+
+            if (timestamp > 0) {
+                long currentTime = System.currentTimeMillis();
+                long timeDiff = Math.abs(currentTime - timestamp);
+
+                // 如果时间差超过30秒（30000毫秒），则不显示通知
+                if (timeDiff > 5000) {
+                    Log.d(TAG, "Message timeout, ignore notification. Diff: " + timeDiff + "ms");
+                    return;
+                }
+            }
 
             NotificationUtil.showPushNotification(this, eventCode, msg);
             PeachPreference.setBoolean(

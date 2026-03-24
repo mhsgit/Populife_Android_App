@@ -46,6 +46,7 @@ import com.populstay.populife.net.callback.IError;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.ui.loader.PeachLoader;
+import com.populstay.populife.util.Utils;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.dialog.DialogUtil;
 import com.populstay.populife.util.log.PeachLogger;
@@ -209,23 +210,23 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 				 * Weekend Cyclic	5
 				 * Daily Cyclic		6
 				 * Workday Cyclic	7
-				 * Monday Cyclic	8
+				 * Monday Cyclic		8
 				 * Tuesday Cyclic	9
 				 * Wednesday Cyclic	10
 				 * Thursday Cyclic	11
-				 * Friday Cyclic	12
+				 * Friday Cyclic		12
 				 * Saturday Cyclic	13
-				 * Sunday Cyclic	14
+				 * Sunday Cyclic		14
 				 */
 				int passcodeType = mKeyPwd.getKeyboardPwdType();
 				switch (passcodeType) {
 					// 单次
 					case 1:
 						tv_pwd_type.setText(getResources().getString(R.string.key_pwd_one_time));
-						mLlPasscode.setEnabled(true);
+						mLlPasscode.setEnabled(false);
 						mLlName.setEnabled(true);
 						mLlValidPeriod.setEnabled(false);
-						mIvPasscodeMore.setVisibility(View.VISIBLE);
+						mIvPasscodeMore.setVisibility(View.GONE);
 						mIvValidPeriodMore.setVisibility(View.GONE);
 						mTvValidPeriod.setVisibility(View.GONE);
 						mTvStartTime.setVisibility(View.VISIBLE);
@@ -1456,194 +1457,8 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
 	}
 
 	private String getShareContent() {
-		String content = "";
-		String type = "";
-		switch (mKeyPwd.getKeyboardPwdType()) {
-			case 1:
-				type = getString(R.string.one_time);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) +
-						DateUtil.getDateToString(mKeyPwd.getCreateDate(), "yyyy-MM-dd HH:mm") + getString(R.string.use_it_within_6_hours) + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.one_time) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 2:
-				type = getString(R.string.permanent);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + DateUtil.getDateToString(mKeyPwd.getCreateDate(), "yyyy-MM-dd HH:mm") + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.permanent) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_use_passcode_once_before) + DateUtil.getDateToString(DateUtil.getStringToDate(DateUtil.getDateToString(mKeyPwd.getCreateDate(), "yyyy-MM-dd HH:mm"), "yyyy-MM-dd HH:mm") + 1000 * 3600 * 24, "yyyy-MM-dd HH:mm") + getString(R.string.no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 3:
-				type = getString(R.string.period);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.period) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_use_passcode_once_before) + DateUtil.getDateToString(DateUtil.getStringToDate(mTvStartTime.getText().toString(), "yyyy-MM-dd HH:mm") + 1000 * 3600 * 24, "yyyy-MM-dd HH:mm") + getString(R.string.no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 4:
-				type = getString(R.string.clear);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + DateUtil.getDateToString(mKeyPwd.getCreateDate(), "yyyy-MM-dd HH:mm") + getString(R.string.use_it_within_24_hours) + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.clear) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 5:
-				type = getString(R.string.weekend_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.weekend_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 6:
-				type = getString(R.string.daily_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.daily_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 7:
-				type = getString(R.string.workday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.workday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 8:
-				type = getString(R.string.monday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.monday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 9:
-				type = getString(R.string.tuesday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.tuesday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 10:
-				type = getString(R.string.wednesday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.wednesday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 11:
-				type = getString(R.string.thursday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.thursday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 12:
-				type = getString(R.string.friday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.friday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 13:
-				type = getString(R.string.saturday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.saturday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			case 14:
-				type = getString(R.string.sunday_cyclic);
-				content = getString(R.string.hello_here_is_your_passcode) + mTvPasscode.getText().toString() + "\n" +
-						getString(R.string.start_time) + getString(R.string.symbol_colon) + mTvStartTime.getText().toString() + "\n" +
-						getString(R.string.end_time) + getString(R.string.symbol_colon) + mTvEndTime.getText().toString() + "\n" +
-						getString(R.string.type) + getString(R.string.symbol_colon) + getString(R.string.sunday_cyclic) + "\n" +
-						getString(R.string.lock_name) + getString(R.string.symbol_colon) + mKey.getLockName() + "\n" +
-						"\n" +
-						getString(R.string.to_unlock_press_no_passcode_no) + "\n" +
-						"\n" +
-						getString(R.string.note_no_key_bottom_right_dont_share_passcode);
-				break;
-
-			default:
-				break;
-		}
-
-		return content;
+		return Utils.getShareContent(this, mKeyPwd.getKeyboardPwdType(), mTvPasscode.getText().toString(),
+				mKeyPwd.getCreateDate(), mKeyPwd.getStartDate(), mKeyPwd.getEndDate(), mKey.getLockName());
 	}
 
 	@Override

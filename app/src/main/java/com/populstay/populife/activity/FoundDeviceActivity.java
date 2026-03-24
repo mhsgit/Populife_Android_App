@@ -575,6 +575,9 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 								lockInfo.put("lockId", mLockId);
 								mKey.setLockVersion(lockInfo.toJSONString());
 							}
+                            if (data.containsKey("noKeyPwd")) {
+                                mKey.setNoKeyPwd(data.getString("noKeyPwd"));
+                            }
 
 							mKey.setLockId(mLockId);
 							mHomeDevice.setDeviceId(String.valueOf(mLockId));

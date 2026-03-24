@@ -54,7 +54,7 @@ public class LockNotificationActivity extends BaseActivity {
             }
         });
         ClickableTextHelper.setClickableText(binding.tvCombined,
-                getString(R.string.go_setting_notification_link_pre),
+                getString(R.string.go_setting_notification_link_pre) + " ",
                 getString(R.string.go_setting_notification_link),
                 getColor(R.color.text_main),
                 new View.OnClickListener() {

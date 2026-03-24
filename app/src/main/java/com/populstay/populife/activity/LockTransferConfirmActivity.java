@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.populstay.populife.common.Urls;
 import com.populstay.populife.constant.Constant;
 import com.populstay.populife.databinding.ActivityLockTransferConfirmBinding;
 import com.populstay.populife.entity.Key;
+import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.helper.ClickableTextHelper;
 import com.populstay.populife.net.RestClient;
 import com.populstay.populife.net.RestClientBuilder;
@@ -29,6 +31,8 @@ import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,9 @@ public class LockTransferConfirmActivity extends BaseActivity {
         } else {
             binding.etUserName.cCPicker.setDefaultCountryUsingNameCodeEx("US");
         }
+        binding.rlUserTerms.setOnClickListener(v -> {
+            binding.cbAgree.toggle();
+        });
         binding.etUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -87,8 +94,15 @@ public class LockTransferConfirmActivity extends BaseActivity {
         binding.tvContine.setOnClickListener(v -> {
             requestLockTransfer();
         });
-        binding.tvDesc.setText(String.format(getString(R.string.setting_transfer_confirm_desc), mKey.getLockAlias() + "("+mKey.getLockName()+")"));
-//        binding
+        String desc = String.format(getString(R.string.setting_transfer_confirm_desc),
+                "<b>" + mKey.getLockAlias() + "</b>",
+                mKey.getLockName());
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            binding.tvDesc.setText(Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            binding.tvDesc.setText(Html.fromHtml(desc));
+        }
     }
     private void setupTabLayout() {
         initTabs();
@@ -167,6 +181,7 @@ public class LockTransferConfirmActivity extends BaseActivity {
                         JSONObject result = JSON.parseObject(response);
                         int code = result.getInteger("code");
                         if (code == 200) {
+                            EventBus.getDefault().post(new Event(Event.EventType.REFRESH_HOME_DATA));
                             toast(R.string.setting_transfer_request_success);
                             Intent intent = new Intent(LockTransferConfirmActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -46,7 +46,7 @@
                         android:layout_marginStart="2dp"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/tv_lock_remote_unlock_config_mode_label"
-                        android:text="@string/on"
+                        android:text="@string/off"
                         android:textColor="@color/text_color_ffee2737"
                         android:textSize="15sp"/>
 

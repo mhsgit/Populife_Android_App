@@ -33,7 +33,7 @@ public class LockTransferActivity extends BaseActivity {
         binding.titleBar.pageTitle.setText(getString(R.string.setting_transfer_title));
         binding.titleBar.pageAction.setVisibility(View.GONE);
         ClickableTextHelper.setClickableText(binding.tvCombined,
-                getString(R.string.setting_transfer_link_pre),
+                getString(R.string.setting_transfer_link_pre) + " ",
                 getString(R.string.setting_transfer_link),
                 getColor(R.color.text_main),
                 new View.OnClickListener() {

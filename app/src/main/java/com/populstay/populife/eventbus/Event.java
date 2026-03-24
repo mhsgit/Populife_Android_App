@@ -77,5 +77,7 @@ public class Event {
         int ADD_FINGERPRINT_SUCCESS = 30;
         // 添指纹卡成功
         int PERMISSION_CHANGED = 31;
+        // 获取家庭组数据完成
+        int REFRESH_HOME_DATA = 32;
     }
 }

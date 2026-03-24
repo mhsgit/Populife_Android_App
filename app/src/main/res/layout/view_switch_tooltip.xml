@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sc_switch"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:titleText="远程解锁"
+        tools:titleText="@string/ekey_permission_1_hint"
         tools:tooltipText="允许远程解锁"/>
 
     <androidx.appcompat.widget.SwitchCompat

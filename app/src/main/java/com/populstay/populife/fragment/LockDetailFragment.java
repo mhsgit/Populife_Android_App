@@ -75,6 +75,7 @@ import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.ui.widget.extextview.ExTextView;
 import com.populstay.populife.util.CollectionUtil;
 import com.populstay.populife.util.GsonUtil;
+import com.populstay.populife.util.JSONSafe;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.device.DeviceUtil;
 import com.populstay.populife.util.dialog.DialogUtil;
@@ -95,6 +96,7 @@ import com.ttlock.bl.sdk.util.DigitUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 import androidx.annotation.NonNull;
@@ -660,100 +662,129 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 	/**
 	 * 开锁
 	 */
-	private void unlock(final int operateType) {
-		if (isBleEnableWithoutToast()) {
-			mIsUnlockCalled = false;
-			showUnLocking();
-			startLockingAnimation(operateType);
-			setUnlockCallback(operateType);
-			Logger.t(BaseApplication.TAG).e("操作unlock");
-			if (mCurKEY.getLockId() < 0) {
-				Logger.t(BaseApplication.TAG).e("操作unlock sPPLOCK");
-				if (sPPLOCK.isConnected(mCurKEY.getLockMac())) {
-					Logger.t(BaseApplication.TAG).e("操作unlock sPPLOCK adminUnlock");
-					sPPLOCK.adminUnlock(PeachPreference.readUserId(), String.valueOf(mCurKEY.getLockId()), String.valueOf(mCurKEY.getKeyId()), mCurKEY.getK1());
-				} else {
-					//sPPLOCK.connect(mCurKEY.getLockMac());
-					Logger.t(BaseApplication.TAG).e("操作unlock sPPLOCK startLockActionScan");
-					startLockActionScan();
-				}
+    private void unlock(final int operateType) {
+        if (isBleEnableWithoutToast()) {
+            mIsUnlockCalled = false;
+            showUnLocking();
+            startLockingAnimation(operateType);
+            setUnlockCallback(operateType);
+            Logger.t(BaseApplication.TAG).e("操作unlock");
 
-			} else {
+            if (mCurKEY.getLockId() < 0) {
+                Logger.t(BaseApplication.TAG).e("操作unlock sPPLOCK");
+                if (sPPLOCK.isConnected(mCurKEY.getLockMac())) {
+                    Logger.t(BaseApplication.TAG).e("操作unlock sPPLOCK adminUnlock");
+                    sPPLOCK.adminUnlock(PeachPreference.readUserId(), String.valueOf(mCurKEY.getLockId()),
+                            String.valueOf(mCurKEY.getKeyId()), mCurKEY.getK1());
+                } else {
+                    Logger.t(BaseApplication.TAG).e("操作unlock sPPLOCK startLockActionScan");
+                    startLockActionScan();
+                }
+            } else {
                 if (isSupportRemoteUnlock() && mCurKEY.getUnlockType() == 1) {
                     exeRemoteUnlock();
                 } else {
                     kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
                         @Override
                         public void onGranted() {
-
-                            TTLockClient.getDefault().controlLock(ControlAction.UNLOCK, mCurKEY.getLockData(), mCurKEY.getLockMac(),new ControlLockCallback() {
-                                @Override
-                                public void onControlLockSuccess(ControlLockResult controlLockResult) {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            closeUnLockingOrLocking();
-                                            mIsUnlockCalled = true;
-                                            stopLockingAnimation(operateType);
-                                            addLockOperateLog(1);//添加开锁记录
-                                            if (mKeyType == 3) {//如果是一次性钥匙，开锁成功后手动删除
-                                                deleteOneTimeEkey();
-                                            }
-                                            boolean isRemind = PeachPreference.isShowLockingReminder(PeachPreference.readUserId());
-                                            if (isRemind) {
-                                                // 开锁成功提示
-                                                toast(R.string.unlocked_successfully);
-                                                DeviceUtil.vibrate(getActivity(), 500);
-                                            }
-
-                                            // 展示最近开锁成功的时间
-                                            long curTimeMillis = DateUtil.getCurTimeMillis();
-                                            showLastUnLockTime(DateUtil.getDateToString(curTimeMillis, DateUtil.DATE_TIME_PATTERN_1), 1);
-                                            PeachPreference.setLastUnlockTimeAndType(mCurKEY.getLockId(), curTimeMillis, 1);
-                                            getLockBattery();
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onFail(LockError error) {
-                                    Log.d("TESTTEST", "error: " + error.toString());
-
-                                    if (getActivity() != null) {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                mIsUnlockCalled = true;
-                                                stopLockingAnimation(operateType);
-                                                if (isSupportRemoteUnlock()) {
-                                                    exeRemoteUnlock();
-                                                } else {
-                                                    closeUnLockingOrLocking();
-                                                    toastFail();
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
+                            // 开始带重试机制的开锁
+                            unlockWithRetry(operateType, 0);
                         }
 
                         @Override
                         public void onDenied(List<String> deniedPermissions) {
-
+                            // 权限被拒绝处理
                         }
                     });
                 }
+            }
+        } else {
+            if (!isSupportRemoteUnlock()) {
+                toast(R.string.enable_bluetooth);
+                return;
+            }
+            exeRemoteUnlock();
+        }
+    }
 
-			}
-		} else {
-			if (!isSupportRemoteUnlock()) {
-				toast(R.string.enable_bluetooth);
-				return;
-			}
-			exeRemoteUnlock();
-		}
-	}
+    /**
+     * 带重试机制的开锁
+     * @param operateType 操作类型
+     * @param retryCount 当前已重试次数
+     */
+    private void unlockWithRetry(final int operateType, final int retryCount) {
+        final int MAX_RETRY = 4;
+
+        TTLockClient.getDefault().controlLock(ControlAction.UNLOCK, mCurKEY.getLockData(),
+                mCurKEY.getLockMac(), new ControlLockCallback() {
+
+                    @Override
+                    public void onControlLockSuccess(ControlLockResult controlLockResult) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                closeUnLockingOrLocking();
+                                mIsUnlockCalled = true;
+                                stopLockingAnimation(operateType);
+                                addLockOperateLog(1);
+                                if (mKeyType == 3) {
+                                    deleteOneTimeEkey();
+                                }
+                                boolean isRemind = PeachPreference.isShowLockingReminder(PeachPreference.readUserId());
+                                if (isRemind) {
+                                    toast(R.string.unlocked_successfully);
+                                    DeviceUtil.vibrate(getActivity(), 500);
+                                }
+                                long curTimeMillis = DateUtil.getCurTimeMillis();
+                                showLastUnLockTime(DateUtil.getDateToString(curTimeMillis, DateUtil.DATE_TIME_PATTERN_1), 1);
+                                PeachPreference.setLastUnlockTimeAndType(mCurKEY.getLockId(), curTimeMillis, 1);
+                                getLockBattery();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFail(LockError error) {
+                        if (getActivity() == null) return;
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 如果是需要重试的错误码，且未超过最大重试次数
+                                if (Objects.equals(error.getErrorCode(), "0x401") && retryCount < MAX_RETRY) {
+                                    Logger.t(BaseApplication.TAG).e("开锁失败，错误码：" + error.getErrorCode() +
+                                            "，第" + (retryCount + 1) + "次重试，间隔1.5秒");
+                                    toast(getString(R.string.device_init_loading));
+
+                                    // 延迟1秒后重试
+                                    new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            unlockWithRetry(operateType, retryCount + 1);
+                                        }
+                                    }, 1500);
+                                } else {
+                                    // 重试次数用尽或其他错误，执行失败处理
+//                                    if (retryCount >= MAX_RETRY) {
+//                                        Logger.t(BaseApplication.TAG).e("开锁失败，已达最大重试次数：" + MAX_RETRY);
+//                                        toast("开锁失败，请稍后重试");
+//                                    }
+
+                                    mIsUnlockCalled = true;
+                                    stopLockingAnimation(operateType);
+
+                                    if (isSupportRemoteUnlock()) {
+                                        exeRemoteUnlock();
+                                    } else {
+                                        closeUnLockingOrLocking();
+                                        toastFail();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+    }
 
 	/**
 	 * @param operateType 操作类型
@@ -1418,164 +1449,164 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		}
 	}
 
-	private void parseKJXLockInfo(@NonNull JSONObject lockInfo) {
-		//mKeyType = lockInfo.getInteger("keyType");
-		//String userType = lockInfo.getString("userType");
-		//String keyStatus = lockInfo.getString("keyStatus");
-		int lockId = lockInfo.containsKey("lockId") ? lockInfo.getInteger("lockId") : 0;//科技侠的锁id
-		//int keyId = lockInfo.getInteger("keyId");
-		String lockVersion = lockInfo.containsKey("lockVersion") ? String.valueOf(lockInfo.getJSONObject("lockVersion")) : "";
-		String lockName = lockInfo.containsKey("name") ? lockInfo.getString("name") : "";//锁的蓝牙名称
-		String lockAlias = lockInfo.containsKey("alias") ? lockInfo.getString("alias") : "";//锁别名
-		String lockMac = lockInfo.containsKey("mac") ? lockInfo.getString("mac") : "";//锁mac地址
-		int electricQuantity = lockInfo.containsKey("electricQuantity") ? lockInfo.getInteger("electricQuantity") : 0;//锁电量
-		int lockFlagPos = lockInfo.containsKey("flagPos") ? lockInfo.getInteger("flagPos") : 0;//锁开门标志位
-		String adminPwd = "";
-		if (lockInfo.containsKey("adminPwd"))
-			adminPwd = lockInfo.getString("adminPwd");//管理员钥匙会有，锁的管理员密码，锁管理相关操作需要携带，校验管理员权限
-		String lockKey = lockInfo.containsKey("key") ? lockInfo.getString("key") : "";//锁开门的关键信息，开门用的
-		String noKeyPwd = "";
-		if (lockInfo.containsKey("noKeyPwd"))
-			noKeyPwd = lockInfo.getString("noKeyPwd");//管理员键盘密码
-//		String deletePwd = "";
-//		if (lockInfo.containsKey("deletePwd"))
-//			deletePwd = lockInfo.getString("deletePwd");
-		String pwdInfo = lockInfo.containsKey("pwdInfo") ? lockInfo.getString("pwdInfo") : "";//密码数据，用于生成密码，SDK提供
-		long timestamp = lockInfo.containsKey("timestamp") ? lockInfo.getLong("timestamp") : 0;//时间戳，用于初始化密码数据
-		String aesKeyStr = lockInfo.containsKey("aesKey") ? lockInfo.getString("aesKey") : "";//Aes加解密key
-		long startDate = lockInfo.containsKey("startDate") ? lockInfo.getLong("startDate") * 1000 : 1000;
-		long endDate = lockInfo.containsKey("endDate ") ? lockInfo.getLong("endDate") * 1000 : 1000;
-		int specialValue = lockInfo.containsKey("specialValue") ? lockInfo.getInteger("specialValue") : 0;//锁特征值，用于表示锁支持的功能
-		int timezoneRawOffset = lockInfo.containsKey("timezoneRawOffSet") ? lockInfo.getInteger("timezoneRawOffSet") : 0;//锁所在时区和UTC时区时间的差数，单位milliseconds
-		int keyRight = lockInfo.containsKey("keyRight") ? lockInfo.getInteger("keyRight") : 0;
-//		int remoteEnable = lockInfo.getInteger("remoteEnable");
-//		int keyboardPwdVersion=lockInfo.getInteger("keyboardPwdVersion");
-        boolean isAllowAllPermissions = false;
-        boolean isAllowRemoteUnlock = false;
-        boolean isAllowSyncBattery = false;
-        boolean isAllowCalibrateTime = false;
-        if (lockInfo.containsKey("allowAllPermissions"))
-            isAllowAllPermissions = lockInfo.getBoolean("allowAllPermissions");
-        if (lockInfo.containsKey("allowRemoteUnlock"))
-            isAllowRemoteUnlock = lockInfo.getBoolean("allowRemoteUnlock");
-        if (lockInfo.containsKey("allowSyncBattery"))
-            isAllowSyncBattery = lockInfo.getBoolean("allowSyncBattery");
-        if (lockInfo.containsKey("allowCalibrateTime"))
-            isAllowCalibrateTime = lockInfo.getBoolean("allowCalibrateTime");
-//		String remarks=lockInfo.getString();
-		String modelNum = lockInfo.containsKey("modelNum") ? lockInfo.getString("modelNum") : "";//产品型号（用于锁固件升级）
-		String hardwareRevision = lockInfo.containsKey("hardwareRevision") ? lockInfo.getString("hardwareRevision") : "";//硬件版本号（用于锁固件升级）
-		String firmwareRevision = lockInfo.containsKey("firmwareRevision") ? lockInfo.getString("firmwareRevision") : "";//固件版本号（用于锁固件升级）
-		//String group = lockInfo.getString("homeName");
+    private void parseKJXLockInfo(@NonNull JSONObject lockInfo) {
+        // 科技侠的锁id
+        int lockId = JSONSafe.getInt(lockInfo, "lockId", 0);
 
+        // lockVersion 特殊处理：可能是 JSONObject 或 String
+        String lockVersion = "";
+        Object versionObj = JSONSafe.get(lockInfo, "lockVersion");
+        if (versionObj instanceof JSONObject) {
+            lockVersion = String.valueOf(versionObj);
+        } else if (versionObj instanceof String) {
+            lockVersion = (String) versionObj;
+        }
 
-		long initDate = lockInfo.containsKey("initDate") ? lockInfo.getLong("initDate") : 0;//初始化时间
-		int keyId = lockInfo.containsKey("keyId") ? lockInfo.getInteger("keyId") : 0;//管理员钥匙id
-		int userKeyId = lockInfo.containsKey("userKeyId") ? lockInfo.getInteger("userKeyId") : 0;//用户钥匙id，普通用户用于删除钥匙
-		int status = lockInfo.containsKey("status") ? lockInfo.getInteger("status") : 0;//锁状态（0删除，1正常）
-		String keyStatus = lockInfo.containsKey("keyStatus") ? lockInfo.getString("keyStatus") : "";//钥匙的状态（110401：正常使用，110402：待接收，110405：已冻结，110408：已删除，110410：已重置,110500:已过期）
-		int protocolType = lockInfo.containsKey("protocolType") ? lockInfo.getInteger("protocolType") : 0;//协议类型
-		int protocolVersion = lockInfo.containsKey("protocolVersion") ? lockInfo.getInteger("protocolVersion") : 0;//锁版本信息
-		int scene = lockInfo.containsKey("scene") ? lockInfo.getInteger("scene") : 0;//场景
-		int orgId = lockInfo.containsKey("orgId") ? lockInfo.getInteger("orgId") : 0;//应用商
-		int groupId = lockInfo.containsKey("groupId") ? lockInfo.getInteger("groupId") : 0;//公司
-		boolean isAdmin = lockInfo.containsKey("isAdmin") ? lockInfo.getBoolean("isAdmin") : false;//true为管理员，false否
-        boolean hasGateway = lockInfo.containsKey("hasGateway") ? lockInfo.getBoolean("hasGateway") : false;
-        int unlockType = lockInfo.getInteger("unlockType") != null
-                ? lockInfo.getInteger("unlockType")
-                : 2; //场景
-//        v3
-        String lockData = lockInfo.getString("lockData");
+        // 锁的蓝牙名称
+        String lockName = JSONSafe.getString(lockInfo, "name", "");
+        // 锁别名
+        String lockAlias = JSONSafe.getString(lockInfo, "alias", "");
+        // 锁mac地址
+        String lockMac = JSONSafe.getString(lockInfo, "mac", "");
+        // 锁电量
+        int electricQuantity = JSONSafe.getInt(lockInfo, "electricQuantity", 0);
+        // 锁开门标志位
+        int lockFlagPos = JSONSafe.getInt(lockInfo, "flagPos", 0);
+
+        // 管理员钥匙会有，锁的管理员密码，锁管理相关操作需要携带，校验管理员权限
+        String adminPwd = JSONSafe.getString(lockInfo, "adminPwd", "");
+        // 锁开门的关键信息，开门用的
+        String lockKey = JSONSafe.getString(lockInfo, "key", "");
+        // 管理员键盘密码
+        String noKeyPwd = JSONSafe.getString(lockInfo, "noKeyPwd", "");
+        // 密码数据，用于生成密码，SDK提供
+        String pwdInfo = JSONSafe.getString(lockInfo, "pwdInfo", "");
+        // 时间戳，用于初始化密码数据
+        long timestamp = JSONSafe.getLong(lockInfo, "timestamp", 0);
+        // Aes加解密key
+        String aesKeyStr = JSONSafe.getString(lockInfo, "aesKey", "");
+
+        long startDate = JSONSafe.getLong(lockInfo, "startDate", 0) * 1000;
+        long endDate = JSONSafe.getLong(lockInfo, "endDate", 0) * 1000;
+
+        // 锁特征值，用于表示锁支持的功能
+        int specialValue = JSONSafe.getInt(lockInfo, "specialValue", 0);
+        // 锁所在时区和UTC时区时间的差数，单位milliseconds
+        int timezoneRawOffset = JSONSafe.getInt(lockInfo, "timezoneRawOffSet", 0);
+        int keyRight = JSONSafe.getInt(lockInfo, "keyRight", 0);
+
+        boolean isAllowAllPermissions = JSONSafe.getBoolean(lockInfo, "allowAllPermissions", false);
+        boolean isAllowRemoteUnlock = JSONSafe.getBoolean(lockInfo, "allowRemoteUnlock", false);
+        boolean isAllowSyncBattery = JSONSafe.getBoolean(lockInfo, "allowSyncBattery", false);
+        boolean isAllowCalibrateTime = JSONSafe.getBoolean(lockInfo, "allowCalibrateTime", false);
+
+        // 产品型号（用于锁固件升级）
+        String modelNum = JSONSafe.getString(lockInfo, "modelNum", "");
+        // 硬件版本号（用于锁固件升级）
+        String hardwareRevision = JSONSafe.getString(lockInfo, "hardwareRevision", "");
+        // 固件版本号（用于锁固件升级）
+        String firmwareRevision = JSONSafe.getString(lockInfo, "firmwareRevision", "");
+
+        // 初始化时间
+        long initDate = JSONSafe.getLong(lockInfo, "initDate", 0);
+        // 管理员钥匙id
+        int keyId = JSONSafe.getInt(lockInfo, "keyId", 0);
+        // 用户钥匙id，普通用户用于删除钥匙
+        int userKeyId = JSONSafe.getInt(lockInfo, "userKeyId", 0);
+        // 锁状态（0删除，1正常）
+        int status = JSONSafe.getInt(lockInfo, "status", 0);
+        // 钥匙的状态（110401：正常使用，110402：待接收，110405：已冻结，110408：已删除，110410：已重置,110500：已过期）
+        String keyStatus = JSONSafe.getString(lockInfo, "keyStatus", "");
+        // 协议类型
+        int protocolType = JSONSafe.getInt(lockInfo, "protocolType", 0);
+        // 锁版本信息
+        int protocolVersion = JSONSafe.getInt(lockInfo, "protocolVersion", 0);
+        // 场景
+        int scene = JSONSafe.getInt(lockInfo, "scene", 0);
+        // 应用商
+        int orgId = JSONSafe.getInt(lockInfo, "orgId", 0);
+        // 公司
+        int groupId = JSONSafe.getInt(lockInfo, "groupId", 0);
+        // true为管理员，false否
+        boolean isAdmin = JSONSafe.getBoolean(lockInfo, "isAdmin", false);
+        boolean hasGateway = JSONSafe.getBoolean(lockInfo, "hasGateway", false);
+        // 场景，默认2
+        int unlockType = JSONSafe.getInt(lockInfo, "unlockType", 2);
+
+        // v3
+        String lockData = JSONSafe.getString(lockInfo, "lockData", "");
         mCurKEY.setLockData(lockData);
-		mCurKEY.setUserId(PeachPreference.readUserId());
-		//mCurKEY.setUserType(userType);
-		//mCurKEY.setKeyStatus(keyStatus);
-		mCurKEY.setLockId(lockId);
-		mCurKEY.setKeyId(keyId);
-		mCurKEY.setUserKeyId(userKeyId);
+        mCurKEY.setUserId(PeachPreference.readUserId());
+        mCurKEY.setLockId(lockId);
+        mCurKEY.setKeyId(keyId);
+        mCurKEY.setUserKeyId(userKeyId);
 
+        // 封装lockVersion信息，蓝牙开锁/闭锁需要
+        // {"lockId":2118210,"protocolType":5,"protocolVersion":3,"scene":2,"groupId":10,"orgId":32,"logoUrl":null,"showAdminKbpwdFlag":null}
+        JSONObject lockVersionObj = new JSONObject();
+        lockVersionObj.put("lockId", lockId);
+        lockVersionObj.put("protocolType", protocolType);
+        lockVersionObj.put("protocolVersion", protocolVersion);
+        lockVersionObj.put("scene", scene);
+        lockVersionObj.put("groupId", groupId);
+        lockVersionObj.put("orgId", orgId);
+        lockVersionObj.put("logoUrl", null);
+        lockVersionObj.put("showAdminKbpwdFlag", null);
+        lockVersion = String.valueOf(lockVersionObj);
 
-		// 封装lockVersion信息，蓝牙开锁/闭锁需要
-		//{"lockId":2118210,"protocolType":5,"protocolVersion":3,"scene":2,"groupId":10,"orgId":32,"logoUrl":null,"showAdminKbpwdFlag":null}
-		JSONObject lockVersionObj = new JSONObject();
-		lockVersionObj.put("lockId", lockId);
-		lockVersionObj.put("protocolType", protocolType);
-		lockVersionObj.put("protocolVersion", protocolVersion);
-		lockVersionObj.put("scene", scene);
-		lockVersionObj.put("groupId", groupId);
-		lockVersionObj.put("orgId", orgId);
-		lockVersionObj.put("logoUrl", null);
-		lockVersionObj.put("showAdminKbpwdFlag", null);
-		lockVersion = String.valueOf(lockVersionObj);
+        JSONObject homeObj = JSONSafe.getJSONObject(lockInfo, "home");
+        if (null != homeObj) {
+            Home home = GsonUtil.fromJson(homeObj.toJSONString(), Home.class);
+            mCurKEY.setHome(home);
+        }
 
+        mCurKEY.setStatus(status);
+        mCurKEY.setKeyStatus(keyStatus);
+        mCurKEY.setLockVersion(lockVersion);
+        mCurKEY.setLockName(lockName);
+        mCurKEY.setLockAlias(lockAlias);
+        mCurKEY.setLockMac(lockMac);
+        mCurKEY.setElectricQuantity(electricQuantity);
+        mCurKEY.setLockFlagPos(lockFlagPos);
+        mCurKEY.setAdminPwd(adminPwd);
+        mCurKEY.setLockKey(lockKey);
+        mCurKEY.setNoKeyPwd(noKeyPwd);
+        mCurKEY.setPwdInfo(pwdInfo);
+        mCurKEY.setTimestamp(timestamp);
+        mCurKEY.setAesKeyStr(aesKeyStr);
+        mCurKEY.setStartDate(startDate);
+        mCurKEY.setEndDate(endDate);
 
-		JSONObject homeObj = lockInfo.containsKey("home") ? lockInfo.getJSONObject("home") : null;
-		if (null != homeObj) {
-			Home home = GsonUtil.fromJson(homeObj.toJSONString(), Home.class);
-			mCurKEY.setHome(home);
-		}
+        // startDate有效开始时间，0是永久有效 (时间戳)
+        // endDate 失效时间，0是永久有效，格式(时间戳)
+        // 钥匙类型（1限时，2永久，3单次，4循环）
+        // 目前只有1限时、2永久
+        int keyType = JSONSafe.getInt(lockInfo, "keyType", 1);
+        mCurKEY.setKeyType(keyType);
+        mKeyType = keyType;
 
-		mCurKEY.setStatus(status);
-		mCurKEY.setKeyStatus(keyStatus);
-		mCurKEY.setLockVersion(lockVersion);
-		mCurKEY.setLockName(lockName);
-		mCurKEY.setLockAlias(lockAlias);
-		mCurKEY.setLockMac(lockMac);
-		mCurKEY.setElectricQuantity(electricQuantity);
-		mCurKEY.setLockFlagPos(lockFlagPos);
-		mCurKEY.setAdminPwd(adminPwd);
-		mCurKEY.setLockKey(lockKey);
-		mCurKEY.setNoKeyPwd(noKeyPwd);
-//		mCurKEY.setDeletePwd(deletePwd);
-		mCurKEY.setPwdInfo(pwdInfo);
-		mCurKEY.setTimestamp(timestamp);
-		mCurKEY.setAesKeyStr(aesKeyStr);
-
-
-		mCurKEY.setStartDate(startDate);
-		mCurKEY.setEndDate(endDate);
-		/*// startDate有效开始时间，0是永久有效 (时间戳)
-		// endDate 失效时间，0是永久有效，格式(时间戳)
-		// 钥匙类型（1限时，2永久，3单次，4循环）
-		int keyType = 1;
-		if (startDate > 0 && endDate > 0){
-			keyType = 1;
-		}else {
-			keyType = 2;
-		}
-		// 目前只有1限时、2永久
-		mCurKEY.setKeyType(keyType);
-		mKeyType = keyType;*/
-
-
-		int keyType = lockInfo.getInteger("keyType");
-		mCurKEY.setKeyType(keyType);
-		mKeyType = keyType;
-
-
-		mCurKEY.setSpecialValue(specialValue);
-		mCurKEY.setTimezoneRawOffset(timezoneRawOffset);
-		mCurKEY.setKeyRight(keyRight);
-//		mCurKEY.setRemoteEnable(remoteEnable);
-		mCurKEY.setModelNum(modelNum);
-		mCurKEY.setHardwareRevision(hardwareRevision);
-		mCurKEY.setFirmwareRevision(firmwareRevision);
-//		mCurKEY.setRemarks(group);//锁分组
+        mCurKEY.setSpecialValue(specialValue);
+        mCurKEY.setTimezoneRawOffset(timezoneRawOffset);
+        mCurKEY.setKeyRight(keyRight);
+        mCurKEY.setModelNum(modelNum);
+        mCurKEY.setHardwareRevision(hardwareRevision);
+        mCurKEY.setFirmwareRevision(firmwareRevision);
         mCurKEY.setAllowAllPermissions(isAllowAllPermissions);
         mCurKEY.setAllowRemoteUnlock(isAllowRemoteUnlock);
         mCurKEY.setAllowSyncBattery(isAllowSyncBattery);
         mCurKEY.setAllowCalibrateTime(isAllowCalibrateTime);
         mCurKEY.setHasGateway(hasGateway);
         mCurKEY.setUnlockType(unlockType);
-		mCurKEY.isAdmin(isAdmin);
-		CURRENT_KEY = mCurKEY;
-		if (null != mActivity && !mActivity.isFinishing()) {
-			refreshLockActionUI();
-		}
+        mCurKEY.isAdmin(isAdmin);
+        CURRENT_KEY = mCurKEY;
 
-		// （后台静默读取，不提示用户）读一下锁时间，备用
-		readKJXLockTimeBackground();
-	}
+        if (null != mActivity && !mActivity.isFinishing()) {
+            refreshLockActionUI();
+        }
+
+        // （后台静默读取，不提示用户）读一下锁时间，备用
+        readKJXLockTimeBackground();
+    }
 
 	private void parseMHTLockInfo(@NonNull JSONObject lockInfo) {
 		int lockId = lockInfo.getInteger("lockId");//科技侠的锁id
@@ -1743,7 +1774,6 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 			mIvLockImg.setImageResource(R.drawable.product_door_lock);
 		}
 		mTvLockName.setText(HomeDeviceInfo.getTypeNameByName(mCurKEY.getLockName()));
-        Log.d("TESTTEST", mCurKEY.toString());
 		if (mActivity instanceof LockDetailActivity) {
 			((LockDetailActivity) mActivity).setTitleName(mCurKEY.getLockAlias());
 		}
@@ -1779,7 +1809,6 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 			} else { // 普通用户，只显示 2 个按钮（操作记录、设置）
 				initCommonUserUI(mCurKEY.getKeyStatus());
 			}
-            enableLockingColorFiltr(mCurKEY.isAllowRemoteUnlock(), false, 0);
 		}
 
 		// Deadbolt、keybox 用一排 2 个图标；其他门锁用一排 4 个图标（支持指纹、IC卡）

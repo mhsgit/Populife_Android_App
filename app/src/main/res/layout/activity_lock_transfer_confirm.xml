@@ -68,17 +68,13 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tv_contine"
-            style="@style/btn_style_main"
-            android:layout_marginBottom="20dp"
-            android:text="@string/next_step" />
-
         <RelativeLayout
             android:id="@+id/rl_user_terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/common_edit_text_margin_top">
+            android:layout_marginBottom="@dimen/common_edit_text_margin_top"
+            android:clickable="true"
+            android:focusable="true">
 
             <CheckBox
                 android:id="@+id/cb_agree"
@@ -90,14 +86,18 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
-                android:text="@null" />
+                android:text="@null"
+                android:clickable="false"
+                android:focusable="false" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/cb_agree"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:clickable="false"
+                android:focusable="false">
 
                 <TextView
                     android:id="@+id/tv_agree"
@@ -108,10 +108,16 @@
                     android:clickable="false"
                     android:textSize="14sp" />
 
-
             </LinearLayout>
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_contine"
+            style="@style/btn_style_main"
+            android:layout_marginBottom="20dp"
+            android:text="@string/next_step" />
+
 
     </LinearLayout>
 

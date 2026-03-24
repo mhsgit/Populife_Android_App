@@ -25,6 +25,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.populstay.populife.R;
+import com.populstay.populife.util.date.DateUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -370,5 +371,88 @@ public final class Utils {
             return context.getString(R.string.note_get_verification_code_limit3);
         }
         return context.getString(R.string.note_get_verification_code_fail);
+    }
+
+	/**
+	 * 获取分享密码的内容
+	 *
+	 * @param context      上下文
+	 * @param passcodeType 密码类型
+	 * @param keyboardPwd  键盘密码
+	 * @param createDate   创建时间
+	 * @param startDate    开始时间
+	 * @param endDate      结束时间
+	 * @param lockName     锁名称
+	 * @return 分享内容
+	 */
+    public static String getShareContent(Context context, int passcodeType, String keyboardPwd, long createDate, long startDate, long endDate, String lockName) {
+        String content = "";
+        String effectiveTime;
+        String expiryTime;
+
+        switch (passcodeType) {
+            case 1: // 单次 (One-time)
+                effectiveTime = DateUtil.getDateToString(createDate, "yyyy-MM-dd HH:mm");
+                content = context.getString(R.string.share_pwd_one_time, keyboardPwd, effectiveTime);
+                break;
+
+            case 2: // 随机永久 (Random Permanent)
+                effectiveTime = DateUtil.getDateToString(createDate, "yyyy-MM-dd HH:mm");
+                content = context.getString(R.string.share_pwd_permanent_random, keyboardPwd, effectiveTime);
+                break;
+
+            case 16: // 自定义永久 (Custom Permanent)
+                content = context.getString(R.string.share_pwd_permanent_custom, keyboardPwd);
+                break;
+
+            case 3: // 随机限时 (Random Time-limited)
+                effectiveTime = DateUtil.getDateToString(startDate, "yyyy-MM-dd HH:mm");
+                expiryTime = DateUtil.getDateToString(endDate, "yyyy-MM-dd HH:mm");
+                content = context.getString(R.string.share_pwd_period_random, keyboardPwd, effectiveTime, expiryTime);
+                break;
+
+            case 15: // 自定义限时 (Custom Time-limited)
+                effectiveTime = DateUtil.getDateToString(startDate, "yyyy-MM-dd HH:mm");
+                expiryTime = DateUtil.getDateToString(endDate, "yyyy-MM-dd HH:mm");
+                content = context.getString(R.string.share_pwd_period_custom, keyboardPwd, effectiveTime, expiryTime);
+                break;
+
+            case 4: // 清空 (Clear)
+                effectiveTime = DateUtil.getDateToString(createDate, "yyyy-MM-dd HH:mm");
+                content = context.getString(R.string.share_pwd_clear, keyboardPwd, effectiveTime);
+                break;
+
+            case 5:  // Weekend Cyclic
+            case 6:  // Daily Cyclic
+            case 7:  // Workday Cyclic
+            case 8:  // Monday Cyclic
+            case 9:  // Tuesday Cyclic
+            case 10: // Wednesday Cyclic
+            case 11: // Thursday Cyclic
+            case 12: // Friday Cyclic
+            case 13: // Saturday Cyclic
+            case 14: // Sunday Cyclic
+                String cyclicMode = "";
+                switch (passcodeType) {
+                    case 5: cyclicMode = context.getString(R.string.weekend_cyclic); break;
+                    case 6: cyclicMode = context.getString(R.string.daily_cyclic); break;
+                    case 7: cyclicMode = context.getString(R.string.workday_cyclic); break;
+                    case 8: cyclicMode = context.getString(R.string.monday_cyclic); break;
+                    case 9: cyclicMode = context.getString(R.string.tuesday_cyclic); break;
+                    case 10: cyclicMode = context.getString(R.string.wednesday_cyclic); break;
+                    case 11: cyclicMode = context.getString(R.string.thursday_cyclic); break;
+                    case 12: cyclicMode = context.getString(R.string.friday_cyclic); break;
+                    case 13: cyclicMode = context.getString(R.string.saturday_cyclic); break;
+                    case 14: cyclicMode = context.getString(R.string.sunday_cyclic); break;
+                }
+                content = context.getString(R.string.share_pwd_recurring,
+                        keyboardPwd,                                    // %1$s
+                        cyclicMode,                                     // %2$s
+                        DateUtil.getDateToString(startDate, "HH:mm"),   // %3$s
+                        DateUtil.getDateToString(endDate, "HH:mm")      // %4$s
+                );
+                break;
+        }
+        return content;
     }
 }

@@ -1,5 +1,6 @@
 package com.populstay.populife.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import com.populstay.populife.base.BaseApplication;
 import com.populstay.populife.fragment.MainGeneralFragment;
 import com.populstay.populife.fragment.MainLockFragment;
 import com.populstay.populife.fragment.MainMeFragment;
+import com.populstay.populife.permission.PermissionListener;
 import com.populstay.populife.push.EventPushService;
 import com.populstay.populife.ui.NoScrollViewPager;
 import com.populstay.populife.util.storage.PeachPreference;
@@ -62,10 +64,27 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//showAppUserManual();
-		initView();
-		initListener();
-		init();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestRuntimePermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, new PermissionListener() {
+                @Override
+                public void onGranted() {
+                    initView();
+                    initListener();
+                    init();
+                }
+
+                @Override
+                public void onDenied(List<String> deniedPermissions) {
+                    initView();
+                    initListener();
+                    init();
+                }
+            });
+        } else {
+            initView();
+            initListener();
+            init();
+        }
 	}
 
 	private void showAppUserManual() {

@@ -123,7 +123,7 @@
                         app:ccp_showFullName="false"
                         app:ccp_textSize="12sp" />
 
-                    <com.populstay.populife.ui.widget.exedittext.MultiLineHintEditText
+                    <EditText
                         android:id="@+id/et_lock_send_ekey_receiver"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -134,9 +134,9 @@
                         android:paddingBottom="8dp"
                         android:singleLine="true"
                         android:textColor="@color/text_gray_dark"
-                        app:hintText="@string/receiver_populife_edit_hint"
-                        app:hintColor="@color/text_gray_light"
-                        app:hintSize="12dp"
+
+                        android:hint="@string/receiver_populife_edit_hint"
+                        android:textColorHint="@color/text_gray_light"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -159,15 +159,14 @@
                     style="@style/list_item_title"
                     android:text="@string/key_title" />
 
-                <com.populstay.populife.ui.widget.exedittext.MultiLineHintEditText
+                <EditText
                     android:id="@+id/et_lock_send_ekey_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="left|center_vertical"
-                    app:hintText="@string/key_title_edit_hint"
-                    app:hintColor="@color/text_gray_light"
-                    app:hintSize="12dp"
+                    android:hint="@string/key_title_edit_hint"
+                    android:textColorHint="@color/text_gray_light"
                     android:imeOptions="actionDone"
                     android:maxLength="20"
                     android:maxLines="1"
@@ -324,6 +323,7 @@
                             android:layout_marginRight="@dimen/dimens_dp_20"
                             android:layout_width="0dp"
                             android:layout_weight="1"
+                            android:checked="true"
                             android:minHeight="30dp"
                             android:text="@string/authorized_user" />
 
@@ -332,7 +332,6 @@
                             style="@style/radio_btn_key_pwd"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:checked="true"
                             android:minHeight="30dp"
                             android:text="@string/general_user" />
 

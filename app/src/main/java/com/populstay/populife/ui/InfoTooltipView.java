@@ -2,6 +2,7 @@ package com.populstay.populife.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,12 @@ public class InfoTooltipView extends LinearLayout {
      */
     private void showTooltip(View anchor) {
         ViewTooltipBinding tipBinding = ViewTooltipBinding.inflate(LayoutInflater.from(getContext()));
-        tipBinding.tvTip.setText(tooltipText);
+        String desc = "<big><b>" + getTitleText() + "</b></big><br/>" + tooltipText;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            tipBinding.tvTip.setText(Html.fromHtml(desc, Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            tipBinding.tvTip.setText(Html.fromHtml(desc));
+        }
 
         PopupWindow popupWindow = new PopupWindow(
                 tipBinding.getRoot(),

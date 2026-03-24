@@ -2,6 +2,8 @@ package com.populstay.populife.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,9 +31,11 @@ import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.pkg.ThirdAppUtil;
 import com.populstay.populife.util.storage.PeachPreference;
 import com.ttlock.bl.sdk.callback.SetRemoteUnlockSwitchCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.Error;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import static com.populstay.populife.app.MyApplication.mTTLockAPI;
 
@@ -81,7 +85,7 @@ public class LockRemoteUnlockConfigActivity extends BaseActivity {
 	}
 
 	private void initRemoteStatus() {
-		if (DigitUtil.isSupportRemoteUnlock(mSpecialValue)) {
+		if (FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
 			mTvCurrentMode.setText(R.string.on);
 			//mTvSwitch.setText(R.string.turn_off);
 			mTvSwitch.setChecked(true);
@@ -136,17 +140,14 @@ public class LockRemoteUnlockConfigActivity extends BaseActivity {
 	 */
 	private void switchRemoteUnlock() {
 		showLoading();
-        boolean state = !DigitUtil.isSupportRemoteUnlock(mSpecialValue);
-        mTTLockAPI.setRemoteUnlockSwitchState(state, mKey.getLockData(), mKey.getLockMac(), new SetRemoteUnlockSwitchCallback() {
+        mTTLockAPI.setRemoteUnlockSwitchState(mTvSwitch.isChecked(), mKey.getLockData(), mKey.getLockMac(), new SetRemoteUnlockSwitchCallback() {
             @Override
             public void onSetRemoteUnlockSwitchSuccess(String s) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        stopLoading();
-                        toastSuccess();
-                        mKey.setLockData(s);
-//                        modifyLockSpcialValue(state ? 1 : 0, state ? 1 : 0);
+//                        toastSuccess();
+                        updateLockData(s);
                     }
                 });
             }
@@ -264,6 +265,52 @@ public class LockRemoteUnlockConfigActivity extends BaseActivity {
 				.build()
 				.post();
 	}
+
+    /**
+     * 修改锁的特征值
+     *
+     * @param lockData lockData
+     */
+    private void updateLockData(final String lockData) {
+        RestClient.builder()
+                .url(Urls.LOCK_DATA_UPDATE_POST)
+                .loader(this)
+                .params("lockData", lockData)
+                .params("lockId", mKey.getLockId())
+                .params("type", 1)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        PeachLogger.d("LOCK_SPECIAL_VALUE_MODIFY", response);
+
+                        JSONObject result = JSON.parseObject(response);
+                        int code = result.getInteger("code");
+                        if (code == 200) {
+                            mKey.setLockData(lockData);
+                            toast(R.string.operation_success);
+                            if (!mTvSwitch.isChecked()) {//远程开锁已关闭
+                                mTvCurrentMode.setText(R.string.off);
+                                //mTvSwitch.setText(R.string.turn_on);
+                                mTvSwitch.setChecked(false);
+                            } else {//远程开锁已打开
+                                mTvCurrentMode.setText(R.string.on);
+                                //mTvSwitch.setText(R.string.turn_off);
+                                mTvSwitch.setChecked(true);
+                            }
+                        } else {
+                            toast(R.string.operation_fail);
+                        }
+                    }
+                })
+                .failure(new IFailure() {
+                    @Override
+                    public void onFailure() {
+                        toast(R.string.operation_fail);
+                    }
+                })
+                .build()
+                .post();
+    }
 
 	private void setResult() {
 		Intent intent = new Intent();

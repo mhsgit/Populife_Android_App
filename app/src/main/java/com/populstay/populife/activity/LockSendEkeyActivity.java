@@ -14,6 +14,7 @@ import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -85,7 +86,7 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 	private TextView mTvStartTime, mTvEndTime, mTvOneTimeNote, mTvSend;
 	private CountryCodePicker mCountryCodePicker;
 	private ImageView mIvContact;
-	private MultiLineHintEditText mEtReceiver,mEtKeyName;
+	private EditText mEtReceiver,mEtKeyName;
 	//时间选择器
 	private TimePickerView mTimePicker;
 
@@ -170,12 +171,13 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
 		tv_show_current_date = findViewById(R.id.tv_device_current_time);
 		rg_share_the_key_through = findViewById(R.id.rg_share_the_key_through);
 
-        setPermissionTypes(R.id.rb_general_user);
 		if (mIsAdmin) {
+            setPermissionTypes(R.id.rb_authorized_user);
 		} else {
 			// 非管理员，不能选择授权用户类型
             rg_permission_types.getChildAt(0).setVisibility(View.INVISIBLE);
-
+//            rg_permission_types.getChildAt(0).setEnabled(false);
+            setPermissionTypes(R.id.rb_general_user);
 			if (mKey.getKeyRight() == 1 && mKey.getKeyType() == 1) { // 授权用户，限时钥匙：只允许发送限时钥匙（有效期必须在自己钥匙有效期内）
 				rg_valid_period.getChildAt(0).setVisibility(View.GONE);
 				selectValidPeriod(R.id.rb_valid_period_time_limited);
@@ -661,12 +663,14 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
     private void setPermissionTypes(int checkedId) {
 
         if (checkedId == R.id.rb_general_user) {
+            binding.rbGeneralUser.setChecked(true);
             binding.vppPermission.stv1.setVisibility(View.GONE);
             binding.vppPermission.isiv3.setChecked(false);
             binding.vppPermission.stv3.setVisibility(View.GONE);
             binding.vppPermission.stv4.setVisibility(View.GONE);
             isAuAdmin = false;
         } else if (checkedId == R.id.rb_authorized_user) {
+            binding.rbAuthorizedUser.setChecked(true);
             binding.vppPermission.stv1.setVisibility(View.VISIBLE);
             binding.vppPermission.isiv3.setChecked(true);
             binding.vppPermission.stv3.setVisibility(View.VISIBLE);

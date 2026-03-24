@@ -106,7 +106,7 @@
                 android:singleLine="true"
                 android:textColor="@color/text_gray_medium"
                 android:textColorHint="@color/text_gray_light"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_lock_send_ekey_receiver"

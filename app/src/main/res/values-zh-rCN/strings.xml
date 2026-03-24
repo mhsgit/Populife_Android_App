@@ -1053,7 +1053,14 @@
     <string name="edit_pwd_hint">在修改前，请确保您已在设备附近或已连接网关</string>
     <string name="edit_pwd_hint_permanent">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 密码必须在创建后的24小时内使用，否则将过期。状态未必更新。</string>
     <string name="edit_pwd_hint_one_time">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 此密码在创建后有效期为6小时，仅可使用一次。状态未必更新。</string>
-
+    <string name="edit_pwd_detail_hint">1. 编辑之前，请确保您在锁附近或已连接到网关。\n\n2. 此密码是远程生成的，并未通过蓝牙添加，因此只能在使用后编辑。\n\n3. 如果密码过期未使用，编辑可能会失败。</string>
+    <string name="share_pwd_recurring">您好，这是您的循环密码：%1$s\n重复规则：%2$s，%3$s–%4$s\n\n注意事项：\n请先触摸设备，在键盘上输入上述密码，然后按下右下角的 # 号键或解锁图标即可解锁设备。密码生效后24小时内必须至少使用一次，否则将失效。</string>
+    <string name="share_pwd_one_time">您好，这是您的一次性密码：%1$s\n生效时间：%2$s\n请在6小时内使用\n\n提示：请先触摸设备，在键盘上输入上述密码，然后按下右下角的#键或解锁图标即可解锁设备。</string>
+    <string name="share_pwd_period_custom">您好，这是您的限时密码：%1$s\n生效时间：%2$s\n过期时间：%3$s\n\n提示：请先触摸设备，在键盘上输入上述密码，然后按下右下角的#键或解锁图标即可解锁设备。</string>
+    <string name="share_pwd_period_random">您好，这是您的限时密码：%1$s\n生效时间：%2$s\n过期时间：%3$s\n\n提示：请先触摸设备，在键盘上输入上述密码，然后按下右下角的#键或解锁图标即可解锁设备。密码必须在生效后24小时内至少使用一次，否则将失效。</string>
+    <string name="share_pwd_permanent_random">您好，这是您的永久密码：%1$s\n生效时间：%2$s\n\n提示：请先触摸设备，在键盘上输入上述密码，然后按下右下角的#键或解锁图标即可解锁设备。密码必须在24小时内至少使用一次，否则将失效。</string>
+    <string name="share_pwd_permanent_custom">您好，这是您的永久密码：%1$s\n\n提示：请先触摸设备，在键盘上输入上述密码，然后按下右下角的#键或解锁图标即可解锁设备。</string>
+    <string name="share_pwd_clear">您好，这是您的清空密码：%1$s\n生效时间：%2$s\n请在24小时内使用\n\n提示：请先触摸设备，在键盘上输入上述密码，然后按下右下角的#键或解锁图标即可解锁设备。</string>
     <string name="setting_transfer">转移管理员权限</string>
     <string name="setting_transfer_title">转移锁</string>
     <string name="setting_transfer_subtitle">将锁转移给其他用户</string>
@@ -1061,7 +1068,7 @@
     <string name="setting_transfer_link_pre">您希望别人和你都可以在App同时管理锁？</string>
     <string name="setting_transfer_link">共享数字钥匙</string>
     <string name="setting_transfer_confirm_subtitle">输入新管理员</string>
-    <string name="setting_transfer_confirm_desc">%s将被转移到您在下方输入的Populife账号。您将失去锁的所有权限，并且它将从您的应用中移除。此操作无法撤销。</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) 将被转移到您在下方输入的Populife账号。您将失去锁的所有权限，并且它将从您的应用中移除。此操作无法撤销。</string>
     <string name="setting_transfer_confirm_desc1">请确认新管理员已经注册了Populife App。</string>
     <string name="setting_transfer_confirm_agree">我明白在转移锁之后，我不再是锁的管理员，也无法在应用中查看或管理它。</string>
     <string name="setting_transfer_request_success">转移成功</string>
@@ -1080,7 +1087,7 @@
     <string name="ekey_permission_3_hint">允许用户手动检查锁的电池电量，以便及时更换电池。</string>
     <string name="ekey_permission_4_hint">允许用户将锁时间与其手机的时钟同步。这在锁长时间断电后非常有用。注意：锁的时区不会更改。</string>
     <string name="notification_running">后台服务运行中</string>
-    <string name="go_setting_notification_link_pre">为了及时接收消息提醒，请开启 Populife 的通知权限。</string>
+    <string name="go_setting_notification_link_pre">为了及时接收消息提醒，请开启 Populife 的通知权限，</string>
     <string name="go_setting_notification_link">去开启</string>
     <string name="setting_notification_label">解锁通知：</string>
     <string name="setting_notification_desc">启用通知后，您将收到此锁的解锁状态更新</string>
@@ -1092,4 +1099,5 @@
     <string name="notification_background_title">后台服务</string>
     <string name="notification_push_title">消息推送</string>
     <string name="use_gateway_unlock_by_default">默认使用网关解锁</string>
+    <string name="device_init_loading">正在连接设备…</string>
 </resources>

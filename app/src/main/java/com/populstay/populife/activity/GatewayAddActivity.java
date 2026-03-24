@@ -504,12 +504,19 @@ public class GatewayAddActivity extends BaseActivity implements TextWatcher {
         mGatewayAPI.initGateway(configureGatewayInfo, new InitGatewayCallback() {
             @Override
             public void onInitGatewaySuccess(DeviceInfo deviceInfo) {
-
+                checkInitGatewaySuccess(mSelectedDevice.getAddress(), deviceInfo);
             }
 
             @Override
             public void onFail(GatewayError gatewayError) {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast(R.string.note_gateway_init_fail);
+                        refreshBtnState();
+                        initFail();
+                    }
+                });
             }
         });
 	}

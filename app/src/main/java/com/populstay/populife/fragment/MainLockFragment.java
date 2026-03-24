@@ -388,6 +388,9 @@ public class MainLockFragment extends BaseVisibilityFragment {
 	public void onEventSub(Event event) {
 		super.onEventSub(event);
 		switch (event.type){
+            case Event.EventType.REFRESH_HOME_DATA:
+                requestLockGroup();
+                break;
 			case Event.EventType.GET_HOME_DATA_COMPLETE:
 			case Event.EventType.CHANGE_HOME:
 				String userAccount = PeachPreference.getStr(PeachPreference.ACCOUNT);

@@ -1033,4 +1033,5 @@
     <string name="sync">Synchroniser</string>
     <string name="sync_successfully">Synchronisé avec succès</string>
     <string name="sync_fail">Échec de la synchronisation. Veuillez réessayer.</string>
+    <string name="device_init_loading">Connexion en cours…</string>
 </resources>

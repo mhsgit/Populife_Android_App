@@ -171,8 +171,8 @@
     <string name="receiver_account">Receiver\'s account</string>
     <string name="name_the_key">Name the key</string>
     <string name="name_the_passcode">Name the code</string>
-    <string name="start_time">Effective time</string>
-    <string name="end_time">Expiry time</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
     <string name="authorize_admin">Authorized user</string>
     <string name="note_make_sure_lock_nearby">Connect timeout. Please make sure the lock is nearby</string>
     <string name="note_lock_reset_still_delete">This lock may have been reset. Continue to delete?</string>
@@ -189,7 +189,7 @@
     <string name="note_cannot_send_ekey_to_yourself">You cannot send digital key to yourself</string>
     <string name="note_no_auth_send_ekey">You aren\'t authorized to send digital key</string>
     <string name="note_cannot_exceed_expiration_send_ekey">Can\'t share the keys exceed the expiry date of your authority</string>
-    <string name="cyclic_mode">Cyclic mode</string>
+    <string name="cyclic_mode">Repeat Options</string>
     <string name="weekend">Weekend</string>
     <string name="daily">Daily</string>
     <string name="workday">Workday</string>
@@ -698,8 +698,8 @@
     <string name="wifi_searching">Searching for available WiFi</string>
     <string name="wifi_no_found">No WiFi available</string>
     <string name="share_bt_key_text">Hello, here is your digital key: %s \n\nNote：Download and open the &quot;Populife&quot; APP through the above link. Select the device in the APP to use the key.</string>
-    <string name="share_one_pwd_text">Hello, here is your one-time code: %s \nEffective time: %s Pease use it within 6 hours \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
-    <string name="share_time_limited_pwd_text">Hello, here is your time-limited code: %s \nEff  ective time: %s \nExpiry time: %s \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device. The code must be used at least once within 24 hours after it takes effect, or it will be invalid.</string>
+    <string name="share_one_pwd_text">Hello, here is your one-time code: %s \nEffective time: %s \nPlease use it within 6 hours \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
+    <string name="share_time_limited_pwd_text">Hello, here is your time-limited code: %s \nEffective time: %s \nExpiry time: %s \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device. The code must be used at least once within 24 hours after it takes effect, or it will be invalid.</string>
     <string name="share_permanent_pwd_text">Hello, here is your permanent code: %s \nEffective time: %s \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device. The code must be used at least once in 24 hours, or it will be invalid.</string>
     <string name="share_custom_pwd_text">Hello, here is your custom code: %s  \nEffective time: %s  \nExpiry time: %s \n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
     <string name="add_lock_pre_check">Pre- check</string>
@@ -839,7 +839,7 @@
     <string name="create_custom_pwd_tips_2">Before create a code, make sure you are near the device or have already connected to the gateway</string>
     <string name="create_custom_pwd_tips_3">Please enter 6-9 digits</string>
     <string name="create_mh_custom_pwd_tips_3">Please enter 6-8 digits</string>
-    <string name="code_number">Code number</string>
+    <string name="code_number">Code Number</string>
     <string name="code_generated">Code generated</string>
     <string name="create_dialog_permanent_pwd_tips">Please use this code within 24 hrs of created time to activate it. Otherwise, it will be invalid</string>
     <string name="create_dialog_one_time_pwd_tips">Please use this code within 6 hrs of created time before it expires.</string>
@@ -1038,10 +1038,10 @@
     <string name="note_get_verification_code_limit2">You’ve made too many requests in the past hour. Please try again later.</string>
     <string name="note_get_verification_code_limit3">You’ve reached today’s SMS request limit. Please try again tomorrow.</string>
 
-    <string name="create_time_limited_pwd_hint">Share a password that is valid for a limited time</string>
-    <string name="create_permanent_pwd_hint">Password remains valid until it is deleted</string>
-    <string name="create_recurring_pwd_hint">Password that becomes active weekly at set times</string>
-    <string name="create_one_time_pwd_hint">Share a one-time-use password</string>
+    <string name="create_time_limited_pwd_hint">Share access with others for a specific period of time</string>
+    <string name="create_permanent_pwd_hint">Grant permanent access with others. This code stays active until you delete it</string>
+    <string name="create_recurring_pwd_hint">Set regular access for specific days and times each week</string>
+    <string name="create_one_time_pwd_hint">Allow one-time access only. The code will be invalid after one use</string>
     <string name="key_pwd_type_period">Time-limited</string>
     <string name="key_pwd_type_permanent">Permanent</string>
     <string name="key_pwd_type_recurring">Recurring</string>
@@ -1053,7 +1053,14 @@
     <string name="edit_pwd_hint">Make sure you’re near the lock or connected to a gateway before editing</string>
     <string name="edit_pwd_hint_permanent">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. The code must be used within 24 hours of creation, or it will expire. Status may not update correctly.</string>
     <string name="edit_pwd_hint_one_time">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. This code is valid for 6 hours after it\'s created and can only be used once. Status may not update correctly.</string>
-
+    <string name="edit_pwd_detail_hint">1. Make sure you’re near the lock or connected to a gateway before editing\n\n2. This code is generated remotely and isn’t added via Bluetooth, so it can only be edited after use\n\n3. If the code expires without being used, editing may fail.</string>
+    <string name="share_pwd_recurring">Hello, here is your cyclic code: %1$s\nRepeats: %2$s, %3$s–%4$s\n\nNotes:\nPlease touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device. The code must be used at least once within 24 hours after it takes effect, or it will be invalid.</string>
+    <string name="share_pwd_one_time">Hello, here is your one-time code: %1$s\nEffective time: %2$s\nPlease use it within 6 hours\n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
+    <string name="share_pwd_period_custom">Hello, here is your time-limited code: %1$s\nEffective time: %2$s\nExpiry time: %3$s\n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
+    <string name="share_pwd_period_random">Hello, here is your time-limited code: %1$s\nEffective time: %2$s\nExpiry time: %3$s\n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device. The code must be used at least once within 24 hours after it takes effect, or it will be invalid.</string>
+    <string name="share_pwd_permanent_random">Hello, here is your permanent code: %1$s\nEffective time: %2$s\n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device. The code must be used at least once in 24 hours, or it will be invalid.</string>
+    <string name="share_pwd_permanent_custom">Hello, here is your permanent code: %1$s\n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
+    <string name="share_pwd_clear">Hello, here is your clear code: %1$s\nEffective time: %2$s\nPlease use it within 24 hours\n\nNotes: Please touch the device first, enter the above code on the keypad, and press the # or unlock icon in the lower right corner to unlock the device.</string>
 
     <string name="setting_transfer">Transfer ownership</string>
     <string name="setting_transfer_title">Transfer lock</string>
@@ -1062,7 +1069,7 @@
     <string name="setting_transfer_link_pre">Want to share access instead of transferring the lock?</string>
     <string name="setting_transfer_link">Share a digital key</string>
     <string name="setting_transfer_confirm_subtitle">Enter the New Admin</string>
-    <string name="setting_transfer_confirm_desc">%s will be transferred to the Populife account you enter below. You will lose ownership of the lock, and it will be removed from your app. This action cannot be undone.</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) will be transferred to the Populife account you enter below. You will lose ownership of the lock, and it will be removed from your app. This action cannot be undone.</string>
     <string name="setting_transfer_confirm_desc1">Please confirm that the new admin has already registered with the Populife App.</string>
     <string name="setting_transfer_confirm_agree">I understand that after transferring the lock, I will no longer be the lock\'s admin or able to view or manage it in the app.</string>
     <string name="setting_transfer_request_success">Transfer successful</string>
@@ -1081,7 +1088,7 @@
     <string name="ekey_permission_3_hint">Allows the user to manually check the lock\'s battery level to help ensure timely battery replacement.</string>
     <string name="ekey_permission_4_hint">Lets the user sync the lockbox time with their phone\'s clock. This is useful if the lock has been without power for a while. Note: the lockbox\'s time zone remains unchanged.</string>
     <string name="notification_running">Background service is running</string>
-    <string name="go_setting_notification_link_pre">You haven’t enabled notifications for the Populife App.</string>
+    <string name="go_setting_notification_link_pre">You haven’t enabled notifications for the Populife App,</string>
     <string name="go_setting_notification_link">go to system settings</string>
     <string name="setting_notification_label">Unlock notification:</string>
     <string name="setting_notification_desc">When notifications are enabled, you will receive unlock updates for this lock</string>
@@ -1093,4 +1100,5 @@
     <string name="notification_background_title">Background Activity</string>
     <string name="notification_push_title">Message Alerts</string>
     <string name="use_gateway_unlock_by_default">Use gateway unlock by default</string>
+    <string name="device_init_loading">Connecting…</string>
 </resources>
