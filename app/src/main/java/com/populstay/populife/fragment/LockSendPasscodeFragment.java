@@ -52,8 +52,10 @@ import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
 import com.ttlock.bl.sdk.callback.CreateCustomPasscodeCallback;
 import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -444,7 +446,7 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
                             if (isBleEnableWithoutToast()) {
                                 checkPasswordExist(mInputPwd);
                             } else {
-                                if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestAddPasscode(mInputPwd, "2");
                                 } else {
                                     toast(R.string.enable_bluetooth);
@@ -578,7 +580,7 @@ public class LockSendPasscodeFragment extends BaseFragment implements View.OnCli
                             public void run() {
                                 PeachLoader.stopLoading();
                                 // 连接超时说明不在锁附近，用网关设置自定义密码
-                                if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestAddPasscode(mInputPwd, "2");
                                 } else {
                                     toastFail();

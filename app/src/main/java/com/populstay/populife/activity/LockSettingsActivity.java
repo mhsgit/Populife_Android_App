@@ -61,9 +61,11 @@ import com.ttlock.bl.sdk.callback.GetBatteryLevelCallback;
 import com.ttlock.bl.sdk.callback.GetLockSoundWithSoundVolumeCallback;
 import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
 import com.ttlock.bl.sdk.callback.ResetLockCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.entity.SoundVolume;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -153,19 +155,22 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 			// 和锁通信，读取锁时间（后台静默操作，不前台提示权限申请）
 			readLockTime(true);
 		} else {
-			tv_auto_locking.setText(R.string.unknown);
-			tv_lock_settings_keypad_volume.setText(R.string.unknown);
-
-			if (isNetEnableWithoutToast()) { // 网络开启
-				// 通过网关读取锁时间
-				if (mKey.getLockId() > 0) {
-					readLockTimeViaGateway();
-				}
-			} else {
-				tv_read_lock_time.setText(R.string.unknown);
-			}
+            getTimeByNet();
 		}
 	}
+    private void getTimeByNet() {
+        tv_auto_locking.setText(R.string.unknown);
+        tv_lock_settings_keypad_volume.setText(R.string.unknown);
+
+        if (isNetEnableWithoutToast()) { // 网络开启
+            // 通过网关读取锁时间
+            if (mKey.getLockId() > 0) {
+                readLockTimeViaGateway();
+            }
+        } else {
+            tv_read_lock_time.setText(R.string.unknown);
+        }
+    }
 
 	private void getIntentData() {
 		Intent data = getIntent();
@@ -284,7 +289,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 			if (isMHLock) {
 				mLlRemoteUnlock.setVisibility(View.GONE);
 			}
-			boolean isSupportRemoteUnlock = DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue());
+			boolean isSupportRemoteUnlock = FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK);
 			mTvRemoteUnlockState.setText(isSupportRemoteUnlock ? R.string.on : R.string.off);
 			if (isMHLock) {
 				mTvRemoteUnlockState.setVisibility(View.GONE);
@@ -527,12 +532,7 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
             startActivityForResult(intent, REQUEST_CODE_SPECIAL_VALUE);
 
         } else if (id == R.id.iv_lock_settings_battery_sync) {
-            DialogUtil.showCommonDialog(LockSettingsActivity.this, getString(R.string.sync_battery),
-                    getString(R.string.note_sync_battery), getString(R.string.ok), getString(R.string.cancel),
-                    (dialog, which) -> {
-                        if (isBleNetEnableWithToast()) getLockBattery();
-                    }, null);
-
+            getLockBattery();
         } else if (id == R.id.ll_lock_settings_keypad_volume) {
             if (isBleNetEnableWithToast()) {
                 isClickKeypadVolume = true;
@@ -1240,39 +1240,55 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 	private void getLockBattery() {
 		showLoading();
 		setGetBatteryCallback();
-		if (mKey.getLockId() < 0) {
-			if (sPPLOCK.isConnected(mKey.getLockMac())) {
-				sPPLOCK.getBatteryLevel(0);
-			} else {
-				//sPPLOCK.connect(mKey.getLockMac());
-				startLockActionScan();
-			}
-		} else {
-            mTTLockAPI.getBatteryLevel(mKey.getLockData(), mKey.getLockMac(), new GetBatteryLevelCallback() {
-                @Override
-                public void onGetBatteryLevelSuccess(int battery) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            stopLoading();
-                            requestUploadLockBattery(battery);
-                        }
-                    });
-                }
 
-                @Override
-                public void onFail(LockError lockError) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            stopLoading();
-                            toastFail();
-                        }
-                    });
-                }
-            });
+		if (mKey.getLockId() < 0) {
+            if (isBleNetEnableWithToast()) {
+                DialogUtil.showCommonDialog(LockSettingsActivity.this, getString(R.string.sync_battery),
+                        getString(R.string.note_sync_battery), getString(R.string.ok), getString(R.string.cancel),
+                        (dialog, which) -> {
+                            if (sPPLOCK.isConnected(mKey.getLockMac())) {
+                                sPPLOCK.getBatteryLevel(0);
+                            } else {
+                                startLockActionScan();
+                            }
+                        }, null);
+            }
+		} else {
+            requestGetLockBattery();
 		}
 	}
+
+    private void getLockBatteryBle() {
+        if (isBleNetEnableWithToast()) {
+            DialogUtil.showCommonDialog(LockSettingsActivity.this, getString(R.string.sync_battery),
+                    getString(R.string.note_sync_battery), getString(R.string.ok), getString(R.string.cancel),
+                    (dialog, which) -> {
+                        mTTLockAPI.getBatteryLevel(mKey.getLockData(), mKey.getLockMac(), new GetBatteryLevelCallback() {
+                            @Override
+                            public void onGetBatteryLevelSuccess(int battery) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        stopLoading();
+                                        requestUploadLockBattery(battery);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(LockError lockError) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        stopLoading();
+                                        toastFail();
+                                    }
+                                });
+                            }
+                        });
+                    }, null);
+        }
+    }
 
 	private void setGetBatteryCallback() {
 		if (mKey.getLockId() < 0) {
@@ -1337,6 +1353,55 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 				.post();
 	}
 
+    /**
+     * 请求服务器，查询锁电量
+     */
+    private void requestGetLockBattery() {
+        RestClient.builder()
+                .url(Urls.LOCK_GET_BATTERY)
+                .loader(this)
+                .params("lockId", mKey.getLockId())
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        PeachLogger.d("LOCK_GET_BATTERY", response);
+
+                        JSONObject result = JSON.parseObject(response);
+                        int code = result.getInteger("code");
+                        int battery = result.getInteger("data");
+                        Log.d("TESTTEST", "get battery " + battery);
+                        if (code == 200) {
+                            CURRENT_KEY.setElectricQuantity(battery);
+                            refreshBattery();
+                            if (battery <= 20) {
+                                DialogUtil.showCommonDialog(LockSettingsActivity.this, null,
+                                        getString(R.string.note_low_battery), getString(R.string.ok), null,
+                                        null, null);
+                                DeviceUtil.vibrate(LockSettingsActivity.this, 500);
+                            } else
+                                toastSuccess();
+                        } else {
+                            getLockBatteryBle();
+                        }
+                    }
+
+                })
+                .failure(new IFailure() {
+                    @Override
+                    public void onFailure() {
+                        getLockBatteryBle();
+                    }
+                })
+                .error(new IError() {
+                    @Override
+                    public void onError(int code, String msg) {
+                        getLockBatteryBle();
+                    }
+                })
+                .build()
+                .post();
+    }
+
 	@SuppressLint("MissingSuperCall")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -1353,9 +1418,9 @@ public class LockSettingsActivity extends BaseActivity implements View.OnClickLi
 					mTvAdminPasscode.setText(dataResult);
 					break;
 				case REQUEST_CODE_SPECIAL_VALUE:
-					int specialValue = data.getIntExtra(LockRemoteUnlockConfigActivity.KEY_LOCK_SPECIAL_VALUE, 0);
-					mKey.setSpecialValue(specialValue);
-					if (DigitUtil.isSupportRemoteUnlock(specialValue)) {
+//					int specialValue = data.getIntExtra(LockRemoteUnlockConfigActivity.KEY_LOCK_SPECIAL_VALUE, 0);
+//					mKey.setSpecialValue(specialValue);
+					if (FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
 						mTvRemoteUnlockState.setText(R.string.on);
 					} else {
 						mTvRemoteUnlockState.setText(R.string.off);

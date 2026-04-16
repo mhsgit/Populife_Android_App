@@ -88,11 +88,13 @@ import com.ttlock.bl.sdk.callback.GetAccessoryBatteryLevelCallback;
 import com.ttlock.bl.sdk.callback.GetBatteryLevelCallback;
 import com.ttlock.bl.sdk.callback.GetLockTimeCallback;
 import com.ttlock.bl.sdk.constant.ControlAction;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.AccessoryInfo;
 import com.ttlock.bl.sdk.entity.AccessoryType;
 import com.ttlock.bl.sdk.entity.ControlLockResult;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -481,8 +483,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
     }
 
     private boolean isSupportRemoteLock() {
-
-		boolean isSupportRemoteUnlock = DigitUtil.isSupportRemoteUnlock(mCurKEY.getSpecialValue());
+		boolean isSupportRemoteUnlock = FeatureValueUtil.isSupportFeature(mCurKEY.getLockData(), FeatureValue.GATEWAY_UNLOCK);
 		// 远程开锁关闭，闭锁也不允许操作了
 		if (!isSupportRemoteUnlock) {
 			return false;
@@ -507,17 +508,17 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		// 永久/限时授权用户、永久普通用户，如果远程开锁打开，默认开锁时先用蓝牙开锁，再用远程开锁。限时普通用户即时远程分开锁的功能开启，也不调用网关
 		if (("110401".equals(mCurKEY.getKeyStatus()) || "110402".equals(mCurKEY.getKeyStatus()))) {//钥匙正常使用或待接收
 			// 钥匙类型（1限时，2永久，3单次，4循环）
-			if (mKeyType == 2  //永久钥匙，普通、授权用户都可以远程操作
-					|| (mCurKEY.getKeyRight() == 1 && mKeyType == 1)) {//授权用户,限时钥匙也可以远程操作
+//			if (mKeyType == 2  //永久钥匙，普通、授权用户都可以远程操作
+//					|| (mCurKEY.getKeyRight() == 1 && mKeyType == 1)) {//授权用户,限时钥匙也可以远程操作
 				return true;
-			}
+//			}
 		}
 
 		return false;
 	}
 
 	private boolean isSupportRemoteUnlock() {
-		boolean isSupportRemoteUnlock = DigitUtil.isSupportRemoteUnlock(mCurKEY.getSpecialValue())  && mCurKEY.isHasGateway();
+		boolean isSupportRemoteUnlock = FeatureValueUtil.isSupportFeature(mCurKEY.getLockData(), FeatureValue.GATEWAY_UNLOCK)  && mCurKEY.isHasGateway();
 
 		// 不支持远程开锁
 		if (!isSupportRemoteUnlock) {
@@ -536,10 +537,10 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		// 永久/限时授权用户、永久普通用户，如果远程开锁打开，默认开锁时先用蓝牙开锁，再用远程开锁。限时普通用户即时远程分开锁的功能开启，也不调用网关
 		if (("110401".equals(mCurKEY.getKeyStatus()) || "110402".equals(mCurKEY.getKeyStatus()))) {//钥匙正常使用或待接收
 			// 钥匙类型（1限时，2永久，3单次，4循环）
-			if (mKeyType == 2  //永久钥匙，普通、授权用户都可以远程操作
-					|| (mCurKEY.getKeyRight() == 1 && mKeyType == 1)) {//授权用户,限时钥匙也可以远程操作
+//			if (mKeyType == 2  //永久钥匙，普通、授权用户都可以远程操作
+//					|| (mCurKEY.getKeyRight() == 1 && mKeyType == 1)) {//授权用户,限时钥匙也可以远程操作
 				return true;
-			}
+//			}
 		}
 
 		return false;
@@ -561,7 +562,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 		remoteLock();
 	}
 
-	private void exeRemoteUnlock() {
+	private void exeRemoteUnlock(boolean tryBle, final int operateType) {
 		closeUnLockingOrLocking();
 		// 网关远程开锁
 		Resources res = getResources();
@@ -572,7 +573,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 					@Override
 					public void onClick(DialogInterface dialogInterface, int i) {
 						if (isNetEnableWithToast())
-							remoteUnlock();
+							remoteUnlock(tryBle, operateType);
 					}
 				}, null);
 	}
@@ -620,7 +621,24 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 	/**
 	 * 远程开锁
 	 */
-	private void remoteUnlock() {
+	private void remoteUnlock(boolean tryBle, final int operateType) {
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
+                    @Override
+                    public void onGranted() {
+                        // 开始带重试机制的开锁
+                        unlockWithRetry(operateType, 0, false);
+                    }
+
+                    @Override
+                    public void onDenied(List<String> deniedPermissions) {
+                        // 权限被拒绝处理
+                    }
+                });
+            }
+        };
 		showUnLocking();
 		RestClient.builder()
 				.url(Urls.GATEWAY_REMOTE_UNLOCK)
@@ -635,24 +653,36 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
 						if (code == 200) {
 							// 展示最近开锁成功的时间
 							long curTimeMillis = DateUtil.getCurTimeMillis();
+                            stopLockingAnimation(operateType);
 							PeachPreference.setLastUnlockTimeAndType(mCurKEY.getLockId(), curTimeMillis, 2);
 							showLastUnLockTime(DateUtil.getDateToString(curTimeMillis, DateUtil.DATE_TIME_PATTERN_1), 2);
 							toast(R.string.operation_success);
-						} else if (code == 951) {
-							toast(R.string.note_gateway_donot_exists);
 						} else {
-							toast(R.string.operation_fail);
-						}
+                            if (code == 951) {
+                                toast(R.string.note_gateway_donot_exists);
+                            } else {
+                                toast(R.string.operation_fail);
+                            }
+                            if (tryBle) {
+                                task.run();
+                            }
+                        }
 					}
 				}).failure(new IFailure() {
 			@Override
 			public void onFailure() {
 				closeUnLockingOrLocking();
+                if (tryBle) {
+                    task.run();
+                }
 			}
 		}).error(new IError() {
 			@Override
 			public void onError(int code, String msg) {
 				closeUnLockingOrLocking();
+                if (tryBle) {
+                    task.run();
+                }
 			}
 		})
 				.build()
@@ -682,13 +712,13 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
                 }
             } else {
                 if (isSupportRemoteUnlock() && mCurKEY.getUnlockType() == 1) {
-                    exeRemoteUnlock();
+                    exeRemoteUnlock(true, operateType);
                 } else {
                     kjxRequestBleConnectPermissionStartConnect(new PermissionListener() {
                         @Override
                         public void onGranted() {
                             // 开始带重试机制的开锁
-                            unlockWithRetry(operateType, 0);
+                            unlockWithRetry(operateType, 0, true);
                         }
 
                         @Override
@@ -703,7 +733,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
                 toast(R.string.enable_bluetooth);
                 return;
             }
-            exeRemoteUnlock();
+            exeRemoteUnlock(false, operateType);
         }
     }
 
@@ -712,7 +742,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
      * @param operateType 操作类型
      * @param retryCount 当前已重试次数
      */
-    private void unlockWithRetry(final int operateType, final int retryCount) {
+    private void unlockWithRetry(final int operateType, final int retryCount, final boolean tryRemote) {
         final int MAX_RETRY = 4;
 
         TTLockClient.getDefault().controlLock(ControlAction.UNLOCK, mCurKEY.getLockData(),
@@ -760,7 +790,7 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
                                     new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            unlockWithRetry(operateType, retryCount + 1);
+                                            unlockWithRetry(operateType, retryCount + 1, tryRemote);
                                         }
                                     }, 1500);
                                 } else {
@@ -773,8 +803,8 @@ public class LockDetailFragment extends BaseFragment implements View.OnClickList
                                     mIsUnlockCalled = true;
                                     stopLockingAnimation(operateType);
 
-                                    if (isSupportRemoteUnlock()) {
-                                        exeRemoteUnlock();
+                                    if (isSupportRemoteUnlock() && tryRemote) {
+                                        exeRemoteUnlock(false, operateType);
                                     } else {
                                         closeUnLockingOrLocking();
                                         toastFail();

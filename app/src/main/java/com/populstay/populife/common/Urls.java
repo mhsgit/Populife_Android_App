@@ -100,7 +100,8 @@ public class Urls {
 	public static final String LOCK_PASSCODE_RECORD = "operation/log/get/4/password"; //（get）查询键盘密码所有的操作记录，按操作日期（天）分组，默认取最近20条，从操作时间由近至远排列
 	public static final String LOCK_PASSCODE_RESET = "keyboardPwd/resetKeyboardPwd"; //（post）重置键盘密码，用于密码用完后，调用该接口将会生成一批新密码，旧密码全部失效
 	public static final String LOCK_PASSCODE_ADD = "keyboardPwd/add"; //（post）添加键盘密码，是指自定义键盘密码
-	public static final String LOCK_UPLOAD_BATTERY = "lock/updateElectricQuantity"; //（post）上传锁电量
+    public static final String LOCK_UPLOAD_BATTERY = "lock/updateElectricQuantity"; //（post）上传锁电量
+    public static final String LOCK_GET_BATTERY = "lock/queryElectricQuantity"; //（post）上传锁电量
 	public static final String KEY_KEYBOARD_LIST = "key/keyboard/list"; //（get）钥匙 - 密钥列表（已废弃，已更换为 V2 版本）
 
 	public static final String GATEWAY_LIST = "gateway/list"; //（get）查询用户下网关列表信息

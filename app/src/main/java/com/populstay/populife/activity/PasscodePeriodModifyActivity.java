@@ -36,9 +36,11 @@ import com.populstay.populife.util.storage.PeachPreference;
 import com.ttlock.bl.sdk.callback.ModifyFingerprintPeriodCallback;
 import com.ttlock.bl.sdk.callback.ModifyICCardPeriodCallback;
 import com.ttlock.bl.sdk.callback.ModifyPasscodeCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.Error;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -174,7 +176,7 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
                             // 和锁通信，修改门卡期限
                             modifyIcCardPeriod(Long.parseLong(mKeyPwd.getCardNumber()));
                         } else {
-                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                            if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                 updateIcCardInfo(2);
                             } else {
                                 toast(R.string.enable_bluetooth);
@@ -191,7 +193,7 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
                                 modifyFingerprintPeriod(Long.parseLong(mKeyPwd.getFingerprintNumber()));
                             }
                         } else {
-                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                            if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                 updateFingerprintInfo(2);
                             } else {
                                 toast(R.string.enable_bluetooth);
@@ -349,7 +351,7 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
                             stopLoading();
                             mIsLockOperationSuccess = true;
 
-                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                            if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                 updateIcCardInfo(2);
                             } else {
                                 toast(R.string.operation_fail);
@@ -441,7 +443,7 @@ public class PasscodePeriodModifyActivity extends BaseActivity implements View.O
                     public void run() {
                         stopLoading();
                         mIsLockOperationSuccess = true;
-                        if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                        if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                             updateFingerprintInfo(2);
                         } else {
                             toast(R.string.operation_fail);

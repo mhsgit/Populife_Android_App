@@ -56,9 +56,11 @@ import com.ttlock.bl.sdk.callback.DeleteFingerprintCallback;
 import com.ttlock.bl.sdk.callback.DeleteICCardCallback;
 import com.ttlock.bl.sdk.callback.DeletePasscodeCallback;
 import com.ttlock.bl.sdk.callback.ModifyPasscodeCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.Error;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -561,7 +563,7 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
     }
 
     private void requestDeleteViaGatewayIfAdmin() {
-        if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+        if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
             requestDeletePwdFpCard(2);
         } else {
             toast(R.string.enable_bluetooth);
@@ -685,7 +687,7 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
                         public void run() {
                             stopLoading();
                             mIsLockOperationSuccess = true;
-                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                            if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                 requestDeletePwdFpCard(2);
                             } else {
                                 makeToast(false);
@@ -788,7 +790,7 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
                                 // 锁里不存在该指纹，直接删除服务器指纹数据
                                 requestDeletePwdFpCard(1);
                             } else {
-                                if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestDeletePwdFpCard(2);
                                 } else {
                                     toast(R.string.operation_fail);
@@ -873,7 +875,7 @@ public class PasscodeDetailActivity extends BaseActivity implements View.OnClick
                                 // 锁里不存在该指纹，直接删除服务器指纹数据
                                 requestDeletePwdFpCard(1);
                             } else {
-                                if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestDeletePwdFpCard(2);
                                 } else {
                                     toast(R.string.operation_fail);

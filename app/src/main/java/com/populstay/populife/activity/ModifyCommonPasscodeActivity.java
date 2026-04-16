@@ -35,9 +35,11 @@ import com.populstay.populife.util.storage.PeachPreference;
 import com.populstay.populife.util.string.StringUtil;
 import com.ttlock.bl.sdk.callback.ModifyAdminPasscodeCallback;
 import com.ttlock.bl.sdk.callback.ModifyPasscodeCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.Error;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -148,7 +150,7 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
 								//和锁通信
 								modifyPasscode(input);
 							} else {
-								if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+								if (FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
 									showLoading();
 									requestModifyPasscode(input, 2);
 								} else {
@@ -215,7 +217,7 @@ public class ModifyCommonPasscodeActivity extends BaseActivity {
                                 stopLoading();
                                 toast(R.string.note_unused_passcode_cannot_be_modified);
                             } else {
-                                if (DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestModifyPasscode(newPwd, 2);
                                 } else {
                                     stopLoading();

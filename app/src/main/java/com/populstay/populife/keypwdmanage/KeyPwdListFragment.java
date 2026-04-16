@@ -62,9 +62,11 @@ import com.populstay.populife.util.string.StringUtil;
 import com.ttlock.bl.sdk.callback.DeleteFingerprintCallback;
 import com.ttlock.bl.sdk.callback.DeleteICCardCallback;
 import com.ttlock.bl.sdk.callback.DeletePasscodeCallback;
+import com.ttlock.bl.sdk.constant.FeatureValue;
 import com.ttlock.bl.sdk.entity.Error;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.DigitUtil;
+import com.ttlock.bl.sdk.util.FeatureValueUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -211,7 +213,7 @@ public class KeyPwdListFragment extends BaseFragment {
 												// 和锁通信
 												lockDeleteIcCard(item.getCardNumber());
 											} else {
-												if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+												if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
 													requestDeletePwdFpCard(2);
 												} else {
 													toast(R.string.enable_bluetooth);
@@ -222,7 +224,7 @@ public class KeyPwdListFragment extends BaseFragment {
 												// 和锁通信
 												lockDeleteFingerprint(Long.parseLong(item.getFingerprintNumber()),item.getFingerprintId());
 											} else {
-												if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+												if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
 													requestDeletePwdFpCard(2);
 												} else {
 													toast(R.string.enable_bluetooth);
@@ -908,7 +910,7 @@ public class KeyPwdListFragment extends BaseFragment {
                             stopLoading();
                             mIsLockOperationSuccess = true;
 
-                            if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                            if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                 requestDeletePwdFpCard(2);
                             } else {
                                 makeToast(false);
@@ -1011,7 +1013,7 @@ public class KeyPwdListFragment extends BaseFragment {
                                 // 锁里不存在该卡片，直接删除服务器卡片数据
                                 requestDeletePwdFpCard(1);
                             } else {
-                                if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestDeletePwdFpCard(2);
                                 } else {
                                     toast(R.string.operation_fail);
@@ -1065,7 +1067,7 @@ public class KeyPwdListFragment extends BaseFragment {
                                 // 锁里不存在该指纹，直接删除服务器指纹数据
                                 requestDeletePwdFpCard(1);
                             } else {
-                                if (mKey.isAdmin() && DigitUtil.isSupportRemoteUnlock(mKey.getSpecialValue())) {
+                                if (mKey.isAdmin() && FeatureValueUtil.isSupportFeature(mKey.getLockData(), FeatureValue.GATEWAY_UNLOCK)) {
                                     requestDeletePwdFpCard(2);
                                 } else {
                                     toast(R.string.operation_fail);

@@ -175,7 +175,7 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
             setPermissionTypes(R.id.rb_authorized_user);
 		} else {
 			// 非管理员，不能选择授权用户类型
-            rg_permission_types.getChildAt(0).setVisibility(View.INVISIBLE);
+            rg_permission_types.getChildAt(0).setVisibility(View.GONE);
 //            rg_permission_types.getChildAt(0).setEnabled(false);
             setPermissionTypes(R.id.rb_general_user);
 			if (mKey.getKeyRight() == 1 && mKey.getKeyType() == 1) { // 授权用户，限时钥匙：只允许发送限时钥匙（有效期必须在自己钥匙有效期内）
@@ -652,9 +652,12 @@ public class LockSendEkeyActivity extends BaseActivity implements View.OnClickLi
         mTvOneTimeNote.setVisibility(View.GONE);
 
         if (checkedId == R.id.rb_valid_period_permanent) {
+            binding.rbValidPeriodPermanent.setChecked(true);
             mLlTime.setVisibility(View.GONE);
             mKeyType = KeyPwdConstant.IBTKeyType.PERMANENT;
+
         } else if (checkedId == R.id.rb_valid_period_time_limited) {
+            binding.rbValidPeriodTimeLimited.setChecked(true);
             mLlTime.setVisibility(View.VISIBLE);
             mKeyType = KeyPwdConstant.IBTKeyType.TIME_LIMITED;
         }
