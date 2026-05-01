@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">Por favor, use este código dentro de las 24 horas después de la creación para activarlo. De lo contrario, será inválido</string>
     <string name="create_dialog_one_time_pwd_tips">Por favor, use este código dentro de las 6 horas después de la creación antes de que expire.</string>
     <string name="pin_code_details">Detalles del código PIN</string>
-    <string name="edit_pwd_hint">Asegúrese de estar cerca del dispositivo o de haber conectado ya a la puerta de enlace antes de modificar cualquier información</string>
     <string name="note_pwd_delete_confirm_dialog_hint">¿Está seguro de que desea eliminar este código? Este código se invalidará y se borrarán todos los registros inmediatamente.</string>
     <string name="note_pwd_delete_confirm_ok_btn">Sí, eliminar</string>
     <string name="note_pwd_edit_effective_period_hint">Asegúrese de estar cerca del dispositivo o de haber conectado ya a la puerta de enlace antes de modificar la información</string>
@@ -1034,4 +1033,75 @@
     <string name="sync_successfully">Sincronizado correctamente</string>
     <string name="sync_fail">Fallo de sincronización. Inténtalo de nuevo.</string>
     <string name="device_init_loading">Conectando…</string>
+    <!--  新需求  -->
+    <string name="test_device_init_fail">Error al simular la inicialización del dispositivo (%s)</string>
+    <string name="note_get_verification_code_limit1">Demasiadas solicitudes. Inténtalo de nuevo más tarde.</string>
+    <string name="note_get_verification_code_limit2">Has hecho demasiadas solicitudes en la última hora. Inténtalo de nuevo más tarde.</string>
+    <string name="note_get_verification_code_limit3">Has alcanzado el límite de solicitudes de SMS de hoy. Inténtalo de nuevo mañana.</string>
+
+    <string name="create_time_limited_pwd_hint">Compartir el acceso con otros por un período de tiempo específico</string>
+    <string name="create_permanent_pwd_hint">Conceder acceso permanente a otros. Este código permanece activo hasta que lo elimines.</string>
+    <string name="create_recurring_pwd_hint">Establecer acceso regular para días y horas específicos cada semana</string>
+    <string name="create_one_time_pwd_hint">Permitir solo acceso de un solo uso. El código no será válido después de un solo uso.</string>
+    <string name="key_pwd_type_period">Temporal</string>
+    <string name="key_pwd_type_permanent">Permanente</string>
+    <string name="key_pwd_type_recurring">Recurrente</string>
+    <string name="key_pwd_type_one_time">De un solo uso</string>
+    <string name="key_pwd_type_random">Aleatoria</string>
+    <string name="key_pwd_type_custom">Personalizada</string>
+    <string name="create_custom_pwd_hint">Genera una contraseña aleatoria de forma remota y compártela con tus invitados. No se requiere WiFi ni proximidad al dispositivo.</string>
+    <string name="create_random_pwd_hint">Añade una contraseña personalizada mediante Bluetooth cuando estés cerca del dispositivo o conectado a la puerta de enlace.</string>
+
+    <string name="edit_pwd_hint">Asegúrate de estar cerca de la cerradura o conectado a una puerta de enlace antes de editar.</string>
+    <string name="edit_pwd_hint_permanent">1. Asegúrate de estar cerca de la cerradura o conectado a una puerta de enlace antes de editar\n\n2. El código debe usarse dentro de las 24 horas siguientes a su creación, o caducará. Es posible que el estado no se actualice correctamente.</string>
+    <string name="edit_pwd_hint_one_time">1. Asegúrate de estar cerca de la cerradura o conectado a una puerta de enlace antes de editar\n\n2. Este código es válido durante 6 horas después de su creación y solo se puede usar una vez. Es posible que el estado no se actualice correctamente.</string>
+    <string name="edit_pwd_detail_hint">1. Asegúrate de estar cerca de la cerradura o conectado a una puerta de enlace antes de editar\n\n2. Este código se genera de forma remota y no se añade por Bluetooth, por lo que solo se puede editar después de su uso\n\n3. Si el código caduca sin ser utilizado, la edición podría fallar.</string>
+    <string name="share_pwd_recurring">Hola, aquí está tu código recurrente: %1$s\nSe repite: %2$s, %3$s–%4$s\n\nNotas:\nToca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo. El código debe usarse al menos una vez dentro de las 24 horas posteriores a su entrada en vigor, o no será válido.</string>
+    <string name="share_pwd_one_time">Hola, aquí está tu código de un solo uso: %1$s\nHora de inicio: %2$s\nÚsalo dentro de las próximas 6 horas\n\nNotas: Toca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo.</string>
+    <string name="share_pwd_period_custom">Hola, aquí está tu código temporal: %1$s\nHora de inicio: %2$s\nHora de finalización: %3$s\n\nNotas: Toca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo.</string>
+    <string name="share_pwd_period_random">Hola, aquí está tu código temporal: %1$s\nHora de inicio: %2$s\nHora de finalización: %3$s\n\nNotas: Toca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo. El código debe usarse al menos una vez dentro de las 24 horas posteriores a su entrada en vigor, o no será válido.</string>
+    <string name="share_pwd_permanent_random">Hola, aquí está tu código permanente: %1$s\nHora de inicio: %2$s\n\nNotas: Toca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo. El código debe usarse al menos una vez dentro de las próximas 24 horas, o no será válido.</string>
+    <string name="share_pwd_permanent_custom">Hola, aquí está tu código permanente: %1$s\n\nNotas: Toca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo.</string>
+    <string name="share_pwd_clear">Hola, aquí está tu código de borrado: %1$s\nHora de inicio: %2$s\nÚsalo dentro de las 24 horas\n\nNotas: Toca primero el dispositivo, introduce el código en el teclado y pulsa # o el icono de desbloqueo en la esquina inferior derecha para desbloquearlo.</string>
+
+    <string name="setting_transfer">Transferir propiedad</string>
+    <string name="setting_transfer_title">Transferir cerradura</string>
+    <string name="setting_transfer_subtitle">Transferir la cerradura a otro usuario</string>
+    <string name="setting_transfer_desc">Transfiere la propiedad total de la cerradura a otro usuario de Populife App sin reiniciarla. Todos los códigos de acceso, llaves digitales y registros de desbloqueo existentes se transferirán a la aplicación del nuevo administrador.</string>
+    <string name="setting_transfer_link_pre">¿Prefieres compartir el acceso en lugar de transferir la cerradura?</string>
+    <string name="setting_transfer_link">Compartir una llave digital</string>
+    <string name="setting_transfer_confirm_subtitle">Introduce el nuevo administrador</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) se transferirá a la cuenta de Populife que introduzcas a continuación. Perderás la propiedad de la cerradura y se eliminará de tu aplicación. Esta acción no se puede deshacer.</string>
+    <string name="setting_transfer_confirm_desc1">Confirma que el nuevo administrador ya se ha registrado en Populife App.</string>
+    <string name="setting_transfer_confirm_agree">Entiendo que después de transferir la cerradura, dejaré de ser el administrador y no podré verla ni administrarla en la aplicación.</string>
+    <string name="setting_transfer_request_success">Transferencia exitosa</string>
+    <string name="setting_transfer_request_951">El usuario transferido no es un usuario de Populife</string>
+    <string name="setting_transfer_request_952">No se puede transferir la cerradura a uno mismo</string>
+    <string name="setting_transfer_request_920">Usuario no válido</string>
+
+    <string name="ekey_permission_hint_1">Desbloquear a través de la aplicación</string>
+    <string name="ekey_permission_hint_2">Ver historial de desbloqueo</string>
+    <string name="ekey_permission_hint_3">Añadir códigos de acceso o llaves digitales</string>
+    <string name="ekey_permission_1_title">Gestionar todos los códigos y llaves de usuario</string>
+    <string name="ekey_permission_2_title">Permitir desbloqueo remoto</string>
+    <string name="ekey_permission_3_title">Sincronizar nivel de batería de la cerradura</string>
+    <string name="ekey_permission_4_title">Calibrar la hora de la cerradura</string>
+    <string name="ekey_permission_1_hint">Si está habilitado, el usuario puede ver y gestionar todos los códigos y llaves de esta cerradura, similar a un administrador. Si está deshabilitado, solo puede ver las llaves y códigos que ha creado.</string>
+    <string name="ekey_permission_2_hint">Otorga permiso para desbloquear de forma remota, pero requiere una puerta de enlace conectada y una conexión WiFi estable. El acceso remoto real depende de la configuración del administrador.</string>
+    <string name="ekey_permission_3_hint">Permite al usuario comprobar manualmente el nivel de batería de la cerradura para ayudar a asegurar un reemplazo oportuno.</string>
+    <string name="ekey_permission_4_hint">Permite al usuario sincronizar la hora de la cerradura con el reloj de su teléfono. Esto es útil si la cerradura ha estado sin energía por un tiempo. Nota: la zona horaria de la cerradura permanece sin cambios.</string>
+
+    <string name="notification_running">El servicio en segundo plano se está ejecutando</string>
+    <string name="go_setting_notification_link_pre">No has habilitado las notificaciones para la aplicación Populife,</string>
+    <string name="go_setting_notification_link">ir a configuración del sistema</string>
+    <string name="setting_notification_label">Notificación de desbloqueo:</string>
+    <string name="setting_notification_desc">Cuando las notificaciones están habilitadas, recibirás actualizaciones de desbloqueo para esta cerradura</string>
+    <string name="setting_notification_app_unlock_title">Desbloqueos por App</string>
+    <string name="setting_notification_app_unlock_desc">Recibe una notificación cuando otros desbloquean la cerradura a través de la aplicación, sin necesidad de puerta de enlace.</string>
+    <string name="setting_notification_passcode_unlock_title">Desbloqueos por Código</string>
+    <string name="setting_notification_passcode_unlock_desc">Recibe notificaciones de desbloqueo por código cuando tu puerta de enlace esté en línea y conectada.</string>
+    <string name="setting_notification_unlock_desc">Si la puerta de enlace está fuera de línea, las alertas de desbloqueo por código no serán en tiempo real. Revisa el historial de desbloqueo por Bluetooth cuando estés cerca de la cerradura.</string>
+    <string name="notification_background_title">Actividad en Segundo Plano</string>
+    <string name="notification_push_title">Alertas de Mensajes</string>
+    <string name="use_gateway_unlock_by_default">Usar desbloqueo por puerta de enlace por defecto</string>
 </resources>

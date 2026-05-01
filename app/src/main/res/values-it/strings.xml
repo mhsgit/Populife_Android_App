@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">Utilizza questo codice entro 24 ore dalla creazione per attivarlo. Altrimenti, diventerà non valido</string>
     <string name="create_dialog_one_time_pwd_tips">Utilizza questo codice entro 6 ore dalla creazione prima che scada.</string>
     <string name="pin_code_details">Dettagli del codice PIN</string>
-    <string name="edit_pwd_hint">Assicurati di essere vicino al dispositivo o di essere già connesso al gateway prima di modificare qualsiasi informazione</string>
     <string name="note_pwd_delete_confirm_dialog_hint">Sei sicuro di voler eliminare questo codice? Questo codice diventerà non valido e verranno cancellati tutti i record immediatamente.</string>
     <string name="note_pwd_delete_confirm_ok_btn">Sì, elimina</string>
     <string name="note_pwd_edit_effective_period_hint">Assicurati di essere vicino al dispositivo o di essere già connesso al gateway prima di modificare le informazioni</string>
@@ -1034,4 +1033,75 @@
     <string name="sync_successfully">Sincronizzato con successo</string>
     <string name="sync_fail">Sincronizzazione fallita. Riprova, per favore.</string>
     <string name="device_init_loading">Connessione in corso…</string>
+    <!--  新需求  -->
+    <string name="test_device_init_fail">Simulazione inizializzazione dispositivo fallita (%s)</string>
+    <string name="note_get_verification_code_limit1">Troppe richieste. Riprova più tardi.</string>
+    <string name="note_get_verification_code_limit2">Hai fatto troppe richieste nell\'ultima ora. Riprova più tardi.</string>
+    <string name="note_get_verification_code_limit3">Hai raggiunto il limite di richieste SMS di oggi. Riprova domani.</string>
+
+    <string name="create_time_limited_pwd_hint">Condividi l\'accesso con altri per un periodo di tempo specifico</string>
+    <string name="create_permanent_pwd_hint">Concedi un accesso permanente ad altri. Questo codice rimane attivo finché non lo elimini.</string>
+    <string name="create_recurring_pwd_hint">Imposta un accesso regolare per giorni e orari specifici ogni settimana</string>
+    <string name="create_one_time_pwd_hint">Consenti solo un accesso monouso. Il codice non sarà valido dopo un utilizzo.</string>
+    <string name="key_pwd_type_period">Temporaneo</string>
+    <string name="key_pwd_type_permanent">Permanente</string>
+    <string name="key_pwd_type_recurring">Ricorrente</string>
+    <string name="key_pwd_type_one_time">Monouso</string>
+    <string name="key_pwd_type_random">Casuale</string>
+    <string name="key_pwd_type_custom">Personalizzato</string>
+    <string name="create_custom_pwd_hint">Genera una password casuale da remoto e condividila con i tuoi ospiti. Non sono necessari WiFi o vicinanza al dispositivo.</string>
+    <string name="create_random_pwd_hint">Aggiungi una password personalizzata tramite Bluetooth quando sei vicino al dispositivo o connesso al gateway.</string>
+
+    <string name="edit_pwd_hint">Assicurati di essere vicino alla serratura o connesso a un gateway prima di modificare.</string>
+    <string name="edit_pwd_hint_permanent">1. Assicurati di essere vicino alla serratura o connesso a un gateway prima di modificare.\n\n2. Il codice deve essere usato entro 24 ore dalla creazione, altrimenti scadrà. Lo stato potrebbe non aggiornarsi correttamente.</string>
+    <string name="edit_pwd_hint_one_time">1. Assicurati di essere vicino alla serratura o connesso a un gateway prima di modificare.\n\n2. Questo codice è valido per 6 ore dopo la creazione e può essere usato una sola volta. Lo stato potrebbe non aggiornarsi correttamente.</string>
+    <string name="edit_pwd_detail_hint">1. Assicurati di essere vicino alla serratura o connesso a un gateway prima di modificare.\n\n2. Questo codice è generato da remoto e non aggiunto via Bluetooth, quindi può essere modificato solo dopo l\'uso.\n\n3. Se il codice scade senza essere stato utilizzato, la modifica potrebbe fallire.</string>
+    <string name="share_pwd_recurring">Ciao, ecco il tuo codice ricorrente: %1$s\nSi ripete: %2$s, %3$s–%4$s\n\nNote:\nTocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo. Il codice deve essere utilizzato almeno una volta entro 24 ore dalla sua entrata in vigore, altrimenti non sarà valido.</string>
+    <string name="share_pwd_one_time">Ciao, ecco il tuo codice monouso: %1$s\nOra di inizio: %2$s\nSi prega di usarlo entro 6 ore\n\nNote: Tocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo.</string>
+    <string name="share_pwd_period_custom">Ciao, ecco il tuo codice temporaneo: %1$s\nOra di inizio: %2$s\nOra di fine: %3$s\n\nNote: Tocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo.</string>
+    <string name="share_pwd_period_random">Ciao, ecco il tuo codice temporaneo: %1$s\nOra di inizio: %2$s\nOra di fine: %3$s\n\nNote: Tocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo. Il codice deve essere utilizzato almeno una volta entro 24 ore dalla sua entrata in vigore, altrimenti non sarà valido.</string>
+    <string name="share_pwd_permanent_random">Ciao, ecco il tuo codice permanente: %1$s\nOra di inizio: %2$s\n\nNote: Tocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo. Il codice deve essere utilizzato almeno una volta entro 24 ore, altrimenti non sarà valido.</string>
+    <string name="share_pwd_permanent_custom">Ciao, ecco il tuo codice permanente: %1$s\n\nNote: Tocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo.</string>
+    <string name="share_pwd_clear">Ciao, ecco il tuo codice di cancellazione: %1$s\nOra di inizio: %2$s\nSi prega di usarlo entro 24 ore\n\nNote: Tocca prima il dispositivo, inserisci il codice sulla tastiera e premi il tasto # o l\'icona di sblocco in basso a destra per sbloccare il dispositivo.</string>
+
+    <string name="setting_transfer">Trasferisci proprietà</string>
+    <string name="setting_transfer_title">Trasferisci serratura</string>
+    <string name="setting_transfer_subtitle">Trasferisci la serratura a un altro utente</string>
+    <string name="setting_transfer_desc">Trasferisci la piena proprietà della serratura a un altro utente dell\'app Populife senza resettare la serratura. Tutti i codici di accesso, le chiavi digitali e i registri di sblocco esistenti saranno trasferiti all\'app del nuovo amministratore.</string>
+    <string name="setting_transfer_link_pre">Vuoi condividere l\'accesso invece di trasferire la serratura?</string>
+    <string name="setting_transfer_link">Condividi una chiave digitale</string>
+    <string name="setting_transfer_confirm_subtitle">Inserisci il nuovo amministratore</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) sarà trasferito all\'account Populife che inserisci di seguito. Perderai la proprietà della serratura e verrà rimossa dalla tua app. Questa azione non può essere annullata.</string>
+    <string name="setting_transfer_confirm_desc1">Conferma che il nuovo amministratore sia già registrato all\'app Populife.</string>
+    <string name="setting_transfer_confirm_agree">Comprendo che dopo il trasferimento della serratura, non sarò più l\'amministratore della serratura né potrò visualizzarla o gestirla nell\'app.</string>
+    <string name="setting_transfer_request_success">Trasferimento riuscito</string>
+    <string name="setting_transfer_request_951">L\'utente trasferito non è un utente Populife</string>
+    <string name="setting_transfer_request_952">Impossibile trasferire la serratura a se stessi</string>
+    <string name="setting_transfer_request_920">Utente non valido</string>
+
+    <string name="ekey_permission_hint_1">Sblocca tramite l\'app</string>
+    <string name="ekey_permission_hint_2">Visualizza cronologia sblocchi</string>
+    <string name="ekey_permission_hint_3">Aggiungi codici di accesso o chiavi digitali</string>
+    <string name="ekey_permission_1_title">Gestisci tutti i codici e le chiavi utente</string>
+    <string name="ekey_permission_2_title">Consenti sblocco remoto</string>
+    <string name="ekey_permission_3_title">Sincronizza livello batteria serratura</string>
+    <string name="ekey_permission_4_title">Calibra l\'ora della serratura</string>
+    <string name="ekey_permission_1_hint">Se abilitato, l\'utente può visualizzare e gestire tutti i codici e le chiavi per questa serratura, in modo simile a un amministratore. Se disabilitato, può vedere solo le chiavi e i codici che ha creato.</string>
+    <string name="ekey_permission_2_hint">Concede il permesso di sbloccare da remoto, ma richiede un gateway connesso e una connessione WiFi stabile. L\'accesso remoto effettivo dipende dalla configurazione dell\'amministratore.</string>
+    <string name="ekey_permission_3_hint">Consente all\'utente di controllare manualmente il livello della batteria della serratura per garantire una sostituzione tempestiva.</string>
+    <string name="ekey_permission_4_hint">Consente all\'utente di sincronizzare l\'ora della serratura con l\'orologio del telefono. Utile se la serratura è rimasta senza alimentazione per un po\'. Nota: il fuso orario della serratura rimane invariato.</string>
+
+    <string name="notification_running">Servizio in background in esecuzione</string>
+    <string name="go_setting_notification_link_pre">Non hai abilitato le notifiche per l\'app Populife,</string>
+    <string name="go_setting_notification_link">vai alle impostazioni di sistema</string>
+    <string name="setting_notification_label">Notifica di sblocco:</string>
+    <string name="setting_notification_desc">Quando le notifiche sono abilitate, riceverai aggiornamenti sullo sblocco di questa serratura</string>
+    <string name="setting_notification_app_unlock_title">Sblocchi via App</string>
+    <string name="setting_notification_app_unlock_desc">Ricevi una notifica quando altri sbloccano la serratura tramite l\'app, senza bisogno di gateway.</string>
+    <string name="setting_notification_passcode_unlock_title">Sblocchi via Codice</string>
+    <string name="setting_notification_passcode_unlock_desc">Ricevi una notifica per gli sblocchi con codice quando il tuo gateway è online e connesso.</string>
+    <string name="setting_notification_unlock_desc">Se il gateway è offline, gli avvisi di sblocco con codice non saranno in tempo reale. Controlla la cronologia degli sblocchi via Bluetooth quando sei vicino alla serratura.</string>
+    <string name="notification_background_title">Attività in Background</string>
+    <string name="notification_push_title">Avvisi Messaggi</string>
+    <string name="use_gateway_unlock_by_default">Usa sblocco gateway per impostazione predefinita</string>
 </resources>

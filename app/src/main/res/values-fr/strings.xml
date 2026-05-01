@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">Veuillez utiliser ce code dans les 24 heures suivant sa création pour l\'activer. Sinon, il deviendra invalide</string>
     <string name="create_dialog_one_time_pwd_tips">Veuillez utiliser ce code dans les 6 heures suivant sa création avant qu\'il n\'expire.</string>
     <string name="pin_code_details">Détails du code PIN</string>
-    <string name="edit_pwd_hint">Assurez-vous que vous êtes à proximité de l\'appareil ou que vous êtes déjà connecté à la passerelle avant de modifier toute information</string>
     <string name="note_pwd_delete_confirm_dialog_hint">Êtes-vous sûr de vouloir supprimer ce code ? Ce code deviendra invalide et tous les enregistrements seront effacés immédiatement.</string>
     <string name="note_pwd_delete_confirm_ok_btn">Oui, supprimer</string>
     <string name="note_pwd_edit_effective_period_hint">Assurez-vous que vous êtes à proximité de l\'appareil ou que vous êtes déjà connecté à la passerelle avant de modifier les informations</string>
@@ -1034,4 +1033,75 @@
     <string name="sync_successfully">Synchronisé avec succès</string>
     <string name="sync_fail">Échec de la synchronisation. Veuillez réessayer.</string>
     <string name="device_init_loading">Connexion en cours…</string>
+    <!--  新需求  -->
+    <string name="test_device_init_fail">Échec de la simulation d\'initialisation de l\'appareil (%s)</string>
+    <string name="note_get_verification_code_limit1">Trop de requêtes. Veuillez réessayer plus tard.</string>
+    <string name="note_get_verification_code_limit2">Vous avez fait trop de requêtes durant l\'heure écoulée. Veuillez réessayer plus tard.</string>
+    <string name="note_get_verification_code_limit3">Vous avez atteint la limite de requêtes SMS du jour. Veuillez réessayer demain.</string>
+
+    <string name="create_time_limited_pwd_hint">Partager l\'accès avec d\'autres pour une période spécifique</string>
+    <string name="create_permanent_pwd_hint">Accorder un accès permanent à d\'autres. Ce code reste actif jusqu\'à ce que vous le supprimiez.</string>
+    <string name="create_recurring_pwd_hint">Définir un accès régulier pour des jours et heures spécifiques chaque semaine</string>
+    <string name="create_one_time_pwd_hint">Autoriser un accès à usage unique uniquement. Le code sera invalide après une utilisation.</string>
+    <string name="key_pwd_type_period">Temporaire</string>
+    <string name="key_pwd_type_permanent">Permanent</string>
+    <string name="key_pwd_type_recurring">Récurrent</string>
+    <string name="key_pwd_type_one_time">Usage unique</string>
+    <string name="key_pwd_type_random">Aléatoire</string>
+    <string name="key_pwd_type_custom">Personnalisé</string>
+    <string name="create_custom_pwd_hint">Générez un mot de passe aléatoire à distance et partagez-le avec vos invités. Aucun WiFi ni proximité avec l\'appareil requis.</string>
+    <string name="create_random_pwd_hint">Ajoutez un mot de passe personnalisé via Bluetooth lorsque vous êtes près de l\'appareil ou connecté à la passerelle.</string>
+
+    <string name="edit_pwd_hint">Assurez-vous d\'être près de la serrure ou connecté à une passerelle avant de modifier.</string>
+    <string name="edit_pwd_hint_permanent">1. Assurez-vous d\'être près de la serrure ou connecté à une passerelle avant de modifier.\n\n2. Le code doit être utilisé dans les 24 heures suivant sa création, sinon il expirera. Le statut peut ne pas se mettre à jour correctement.</string>
+    <string name="edit_pwd_hint_one_time">1. Assurez-vous d\'être près de la serrure ou connecté à une passerelle avant de modifier.\n\n2. Ce code est valide pendant 6 heures après sa création et ne peut être utilisé qu\'une seule fois. Le statut peut ne pas se mettre à jour correctement.</string>
+    <string name="edit_pwd_detail_hint">1. Assurez-vous d\'être près de la serrure ou connecté à une passerelle avant de modifier.\n\n2. Ce code est généré à distance et n\'est pas ajouté via Bluetooth, il ne peut donc être modifié qu\'après utilisation.\n\n3. Si le code expire sans avoir été utilisé, la modification peut échouer.</string>
+    <string name="share_pwd_recurring">Bonjour, voici votre code récurrent : %1$s\nRépétition : %2$s, %3$s–%4$s\n\nNotes :\nVeuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil. Le code doit être utilisé au moins une fois dans les 24 heures suivant sa prise d\'effet, sinon il sera invalide.</string>
+    <string name="share_pwd_one_time">Bonjour, voici votre code à usage unique : %1$s\nValable à partir de : %2$s\nVeuillez l\'utiliser dans les 6 heures\n\nNotes : Veuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil.</string>
+    <string name="share_pwd_period_custom">Bonjour, voici votre code temporaire : %1$s\nValable à partir de : %2$s\nValable jusqu\'à : %3$s\n\nNotes : Veuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil.</string>
+    <string name="share_pwd_period_random">Bonjour, voici votre code temporaire : %1$s\nValable à partir de : %2$s\nValable jusqu\'à : %3$s\n\nNotes : Veuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil. Le code doit être utilisé au moins une fois dans les 24 heures suivant sa prise d\'effet, sinon il sera invalide.</string>
+    <string name="share_pwd_permanent_random">Bonjour, voici votre code permanent : %1$s\nValable à partir de : %2$s\n\nNotes : Veuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil. Le code doit être utilisé au moins une fois dans les 24 heures, sinon il sera invalide.</string>
+    <string name="share_pwd_permanent_custom">Bonjour, voici votre code permanent : %1$s\n\nNotes : Veuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil.</string>
+    <string name="share_pwd_clear">Bonjour, voici votre code d\'effacement : %1$s\nHeure d\'effet : %2$s\nVeuillez l\'utiliser dans les 24 heures\n\nNotes : Veuillez d\'abord toucher l\'appareil, saisir le code ci-dessus sur le clavier, puis appuyer sur la touche # ou l\'icône de déverrouillage en bas à droite pour déverrouiller l\'appareil.</string>
+
+    <string name="setting_transfer">Transférer la propriété</string>
+    <string name="setting_transfer_title">Transférer la serrure</string>
+    <string name="setting_transfer_subtitle">Transférer la serrure à un autre utilisateur</string>
+    <string name="setting_transfer_desc">Transférez la pleine propriété de la serrure à un autre utilisateur de l\'application Populife sans réinitialiser la serrure. Tous les mots de passe, clés numériques et historiques de déverrouillage existants seront transférés vers l\'application du nouvel administrateur.</string>
+    <string name="setting_transfer_link_pre">Vous souhaitez partager l\'accès au lieu de transférer la serrure ?</string>
+    <string name="setting_transfer_link">Partager une clé numérique</string>
+    <string name="setting_transfer_confirm_subtitle">Saisir le nouvel administrateur</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) sera transféré au compte Populife que vous saisissez ci-dessous. Vous perdrez la propriété de la serrure et elle sera retirée de votre application. Cette action est irréversible.</string>
+    <string name="setting_transfer_confirm_desc1">Veuillez confirmer que le nouvel administrateur est déjà inscrit sur l\'application Populife.</string>
+    <string name="setting_transfer_confirm_agree">Je comprends qu\'après le transfert de la serrure, je ne serai plus l\'administrateur de la serrure ni en mesure de la voir ou de la gérer dans l\'application.</string>
+    <string name="setting_transfer_request_success">Transfert réussi</string>
+    <string name="setting_transfer_request_951">L\'utilisateur transféré n\'est pas un utilisateur Populife</string>
+    <string name="setting_transfer_request_952">Impossible de transférer la serrure à soi-même</string>
+    <string name="setting_transfer_request_920">Utilisateur invalide</string>
+
+    <string name="ekey_permission_hint_1">Déverrouiller via l\'application</string>
+    <string name="ekey_permission_hint_2">Voir l\'historique de déverrouillage</string>
+    <string name="ekey_permission_hint_3">Ajouter des mots de passe ou des clés numériques</string>
+    <string name="ekey_permission_1_title">Gérer tous les mots de passe et clés utilisateur</string>
+    <string name="ekey_permission_2_title">Autoriser le déverrouillage à distance</string>
+    <string name="ekey_permission_3_title">Synchroniser le niveau de batterie de la serrure</string>
+    <string name="ekey_permission_4_title">Calibrer l\'heure de la serrure</string>
+    <string name="ekey_permission_1_hint">Lorsque cette option est activée, l\'utilisateur peut voir et gérer tous les mots de passe et clés de cette serrure, comme un administrateur. Si elle est désactivée, il ne voit que les clés et mots de passe qu\'il a créés.</string>
+    <string name="ekey_permission_2_hint">Accorde l\'autorisation de déverrouiller à distance, mais nécessite une passerelle connectée et une connexion WiFi stable. L\'accès à distance réel dépend de la configuration de l\'administrateur.</string>
+    <string name="ekey_permission_3_hint">Permet à l\'utilisateur de vérifier manuellement le niveau de batterie de la serrure pour assurer un remplacement en temps utile.</string>
+    <string name="ekey_permission_4_hint">Permet à l\'utilisateur de synchroniser l\'heure de la serrure avec l\'horloge de son téléphone. Utile si la serrure est restée longtemps sans alimentation. Note : le fuseau horaire de la serrure reste inchangé.</string>
+
+    <string name="notification_running">Le service d\'arrière-plan est en cours d\'exécution</string>
+    <string name="go_setting_notification_link_pre">Vous n\'avez pas activé les notifications pour l\'application Populife,</string>
+    <string name="go_setting_notification_link">aller aux paramètres système</string>
+    <string name="setting_notification_label">Notification de déverrouillage :</string>
+    <string name="setting_notification_desc">Lorsque les notifications sont activées, vous recevez des mises à jour de déverrouillage pour cette serrure</string>
+    <string name="setting_notification_app_unlock_title">Déverrouillages par App</string>
+    <string name="setting_notification_app_unlock_desc">Recevez une notification lorsque d\'autres personnes déverrouillent la serrure via l\'application, sans passerelle requise.</string>
+    <string name="setting_notification_passcode_unlock_title">Déverrouillages par Code</string>
+    <string name="setting_notification_passcode_unlock_desc">Soyez notifié des déverrouillages par code lorsque votre passerelle est en ligne et connectée.</string>
+    <string name="setting_notification_unlock_desc">Si la passerelle est hors ligne, les alertes de déverrouillage par code ne seront pas en temps réel. Consultez l\'historique de déverrouillage via Bluetooth lorsque vous êtes près de la serrure.</string>
+    <string name="notification_background_title">Activité en Arrière-plan</string>
+    <string name="notification_push_title">Alertes de Messages</string>
+    <string name="use_gateway_unlock_by_default">Utiliser le déverrouillage par passerelle par défaut</string>
 </resources>

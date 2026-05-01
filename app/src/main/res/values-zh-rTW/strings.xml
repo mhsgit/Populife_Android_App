@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">请在创建密码后的24小时内至少使用一次，以让密码激活。否则过后自动失效</string>
     <string name="create_dialog_one_time_pwd_tips">请在密码生成后6小时内使用，否则过后自动失效</string>
     <string name="pin_code_details">数字密码详情</string>
-    <string name="edit_pwd_hint">在修改前，请确保您已在设备附近或已连接网关</string>
     <string name="note_pwd_delete_confirm_dialog_hint">你是否确认要删除当前密码？删除后密码会失效以及清空所有记录</string>
     <string name="note_pwd_delete_confirm_ok_btn">是的,删除</string>
     <string name="note_pwd_edit_effective_period_hint">在修改前，请确保您已在设备附近或已连接网关</string>
@@ -1032,7 +1031,76 @@
     <string name="sync">同步</string>
     <string name="sync_successfully">同步成功</string>
     <string name="sync_fail">同步失败，请重试</string>
-    <string name="note_get_verification_code_limit1">请求过于频繁，请稍后再试</string>
-    <string name="note_get_verification_code_limit2">您在 1 小时内的请求次数过多，请稍后再试</string>
-    <string name="note_get_verification_code_limit3">您已达到今日短信请求上限，请明天再试</string>
+    <!--  新需求  -->
+    <string name="test_device_init_fail">模擬初始化設備失敗(%s)</string>
+    <string name="note_get_verification_code_limit1">請求過於頻繁，請稍後再試</string>
+    <string name="note_get_verification_code_limit2">您在 1 小時內的請求次數過多，請稍後再試</string>
+    <string name="note_get_verification_code_limit3">您已達到今日簡訊請求上限，請明天再試</string>
+
+    <string name="create_time_limited_pwd_hint">與他人共享一段時間內有效的密碼</string>
+    <string name="create_permanent_pwd_hint">永久有效的密碼,直到密碼被刪除</string>
+    <string name="create_recurring_pwd_hint">每週在固定時間會重複生效的密碼</string>
+    <string name="create_one_time_pwd_hint">與他人分享一次性有效密碼</string>
+    <string name="key_pwd_type_period">限時</string>
+    <string name="key_pwd_type_permanent">永久</string>
+    <string name="key_pwd_type_recurring">循環</string>
+    <string name="key_pwd_type_one_time">單次</string>
+    <string name="key_pwd_type_random">隨機</string>
+    <string name="key_pwd_type_custom">自訂</string>
+    <string name="create_custom_pwd_hint">遠端生成隨機密碼並與您的訪客分享。無需WiFi或靠近智慧裝置。</string>
+    <string name="create_random_pwd_hint">靠近裝置或連接到閘道器時，使用藍牙新增自訂密碼。</string>
+
+    <string name="edit_pwd_hint">在修改前，請確保您已在裝置附近或已連接閘道器</string>
+    <string name="edit_pwd_hint_permanent">1. 編輯之前，請確保您在鎖附近或已連接到閘道器。\n\n2. 密碼必須在建立後的24小時內使用，否則將過期。狀態未必更新。</string>
+    <string name="edit_pwd_hint_one_time">1. 編輯之前，請確保您在鎖附近或已連接到閘道器。\n\n2. 此密碼在建立後有效期為6小時，僅可使用一次。狀態未必更新。</string>
+    <string name="edit_pwd_detail_hint">1. 編輯之前，請確保您在鎖附近或已連接到閘道器。\n\n2. 此密碼是遠端生成的，並未通過藍牙新增，因此只能在使用後編輯。\n\n3. 如果密碼過期未使用，編輯可能會失敗。</string>
+    <string name="share_pwd_recurring">您好，這是您的循環密碼：%1$s\n重複規則：%2$s，%3$s–%4$s\n\n注意事項：\n請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的 # 鍵或解鎖圖示即可解鎖裝置。密碼生效後24小時內必須至少使用一次，否則將失效。</string>
+    <string name="share_pwd_one_time">您好，這是您的一次性密碼：%1$s\n生效時間：%2$s\n請在6小時內使用\n\n提示：請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的#鍵或解鎖圖示即可解鎖裝置。</string>
+    <string name="share_pwd_period_custom">您好，這是您的限時密碼：%1$s\n生效時間：%2$s\n過期時間：%3$s\n\n提示：請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的#鍵或解鎖圖示即可解鎖裝置。</string>
+    <string name="share_pwd_period_random">您好，這是您的限時密碼：%1$s\n生效時間：%2$s\n過期時間：%3$s\n\n提示：請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的#鍵或解鎖圖示即可解鎖裝置。密碼必須在生效後24小時內至少使用一次，否則將失效。</string>
+    <string name="share_pwd_permanent_random">您好，這是您的永久密碼：%1$s\n生效時間：%2$s\n\n提示：請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的#鍵或解鎖圖示即可解鎖裝置。密碼必須在24小時內至少使用一次，否則將失效。</string>
+    <string name="share_pwd_permanent_custom">您好，這是您的永久密碼：%1$s\n\n提示：請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的#鍵或解鎖圖示即可解鎖裝置。</string>
+    <string name="share_pwd_clear">您好，這是您的清空密碼：%1$s\n生效時間：%2$s\n請在24小時內使用\n\n提示：請先觸摸裝置，在鍵盤上輸入上述密碼，然後按下右下角的#鍵或解鎖圖示即可解鎖裝置。</string>
+
+    <string name="setting_transfer">轉移管理員權限</string>
+    <string name="setting_transfer_title">轉移鎖</string>
+    <string name="setting_transfer_subtitle">將鎖轉移給其他使用者</string>
+    <string name="setting_transfer_desc">將鎖的管理員權限轉移給另一個Populife App使用者，無需重置鎖。所有現有的密碼、數位鑰匙和解鎖記錄都將轉移到新管理員的應用程式中。</string>
+    <string name="setting_transfer_link_pre">您希望他人與您一起管理鎖，而非轉移所有權？</string>
+    <string name="setting_transfer_link">分享數位鑰匙</string>
+    <string name="setting_transfer_confirm_subtitle">輸入新管理員</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) 將轉移到您下方輸入的Populife帳號。您將失去鎖的所有權限，且它將從您的應用程式中移除。此操作無法撤銷。</string>
+    <string name="setting_transfer_confirm_desc1">請確認新管理員已註冊Populife App。</string>
+    <string name="setting_transfer_confirm_agree">我了解在轉移鎖之後，我不再是鎖的管理員，也無法在應用程式中檢視或管理它。</string>
+    <string name="setting_transfer_request_success">轉移成功</string>
+    <string name="setting_transfer_request_951">被轉移的使用者不是 Populife 使用者</string>
+    <string name="setting_transfer_request_952">無法將鎖轉移給自己</string>
+    <string name="setting_transfer_request_920">無效使用者</string>
+
+    <string name="ekey_permission_hint_1">透過應用程式開鎖</string>
+    <string name="ekey_permission_hint_2">檢視開鎖記錄</string>
+    <string name="ekey_permission_hint_3">新增密碼或數位鑰匙</string>
+    <string name="ekey_permission_1_title">管理所有使用者密碼和鑰匙</string>
+    <string name="ekey_permission_2_title">允許遠端開鎖</string>
+    <string name="ekey_permission_3_title">同步鎖的電池電量</string>
+    <string name="ekey_permission_4_title">校正鎖的時間</string>
+    <string name="ekey_permission_1_hint">啟用後，使用者可以檢視並管理此鎖的所有密碼和鑰匙，權限類似管理員。若停用，他們只能看到自己建立的鑰匙和密碼。</string>
+    <string name="ekey_permission_2_hint">授予遠端開鎖權限，但需要連接的閘道器和穩定的WiFi連線。實際遠端存取取決於管理員的設定。</string>
+    <string name="ekey_permission_3_hint">允許使用者手動檢查鎖的電池電量，以便及時更換電池。</string>
+    <string name="ekey_permission_4_hint">允許使用者將鎖的時間與其手機的時鐘同步。這在鎖長時間斷電後非常有用。注意：鎖的時區不會變更。</string>
+
+    <string name="notification_running">背景服務執行中</string>
+    <string name="go_setting_notification_link_pre">您尚未開啟 Populife 的通知權限，</string>
+    <string name="go_setting_notification_link">前往開啟</string>
+    <string name="setting_notification_label">解鎖通知：</string>
+    <string name="setting_notification_desc">啟用通知後，您將收到此鎖的解鎖狀態更新</string>
+    <string name="setting_notification_app_unlock_title">App解鎖</string>
+    <string name="setting_notification_app_unlock_desc">當其他人透過App解鎖時接收通知，無需閘道器。</string>
+    <string name="setting_notification_passcode_unlock_title">密碼解鎖</string>
+    <string name="setting_notification_passcode_unlock_desc">當您的閘道器在線並連接時，接收密碼解鎖通知。</string>
+    <string name="setting_notification_unlock_desc">如果閘道器離線，密碼解鎖提醒將不是即時的。靠近門鎖時可透過藍牙檢視解鎖歷史記錄。</string>
+    <string name="notification_background_title">背景服務</string>
+    <string name="notification_push_title">訊息推送</string>
+    <string name="use_gateway_unlock_by_default">預設使用閘道器解鎖</string>
+    <string name="device_init_loading">正在連線…</string>
 </resources>

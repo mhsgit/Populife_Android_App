@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">パスワード生成後24時間以内に1回使用しないと無効になります。</string>
     <string name="create_dialog_one_time_pwd_tips">パスワード生成後6時間以内に使用しないと無効になります。</string>
     <string name="pin_code_details">パスワード詳細</string>
-    <string name="edit_pwd_hint">変更する前にデバイスはスマホの近くにあることまたはスマートゲートウェイと接続していることを確認してください</string>
     <string name="note_pwd_delete_confirm_dialog_hint">このパスワードを削除してもよろしいですか？パスワードが無効になり、アクセスログも削除されます。</string>
     <string name="note_pwd_delete_confirm_ok_btn">はい、削除します</string>
     <string name="note_pwd_edit_effective_period_hint">変更する前にデバイスはスマホの近くにあることまたはスマートゲートウェイと接続していることを確認してください</string>
@@ -1032,4 +1031,75 @@
     <string name="sync_successfully">同期に成功しました</string>
     <string name="sync_fail">同期に失敗しました。再試行してください</string>
     <string name="device_init_loading">接続中です…</string>
+    <!--  新需求  -->
+    <string name="test_device_init_fail">デバイス初期化のシミュレーションに失敗しました (%s)</string>
+    <string name="note_get_verification_code_limit1">リクエストが多すぎます。しばらくしてからもう一度お試しください。</string>
+    <string name="note_get_verification_code_limit2">過去1時間のリクエスト数が多すぎます。しばらくしてからもう一度お試しください。</string>
+    <string name="note_get_verification_code_limit3">本日のSMSリクエストの上限に達しました。明日もう一度お試しください。</string>
+
+    <string name="create_time_limited_pwd_hint">特定の期間だけ他の人とアクセスを共有する</string>
+    <string name="create_permanent_pwd_hint">他の人に永続的なアクセスを付与します。このコードは、削除するまで有効です。</string>
+    <string name="create_recurring_pwd_hint">毎週特定の曜日と時間に定期的なアクセスを設定する</string>
+    <string name="create_one_time_pwd_hint">1回限りのアクセスのみを許可します。コードは1回の使用で無効になります。</string>
+    <string name="key_pwd_type_period">期間限定</string>
+    <string name="key_pwd_type_permanent">永続</string>
+    <string name="key_pwd_type_recurring">繰り返し</string>
+    <string name="key_pwd_type_one_time">ワンタイム</string>
+    <string name="key_pwd_type_random">ランダム</string>
+    <string name="key_pwd_type_custom">カスタム</string>
+    <string name="create_custom_pwd_hint">リモートでランダムなパスワードを生成し、ゲストと共有します。WiFiやデバイスへの近接は不要です。</string>
+    <string name="create_random_pwd_hint">デバイスの近くにいるか、ゲートウェイに接続しているときに、Bluetooth経由でカスタムパスワードを追加します。</string>
+
+    <string name="edit_pwd_hint">編集する前に、ロックの近くにいるか、ゲートウェイに接続していることを確認してください。</string>
+    <string name="edit_pwd_hint_permanent">1. 編集する前に、ロックの近くにいるか、ゲートウェイに接続していることを確認してください。\n\n2. コードは作成から24時間以内に使用する必要があり、そうでない場合は期限切れになります。ステータスが正しく更新されない場合があります。</string>
+    <string name="edit_pwd_hint_one_time">1. 編集する前に、ロックの近くにいるか、ゲートウェイに接続していることを確認してください。\n\n2. このコードの有効期限は作成から6時間で、1回のみ使用できます。ステータスが正しく更新されない場合があります。</string>
+    <string name="edit_pwd_detail_hint">1. 編集する前に、ロックの近くにいるか、ゲートウェイに接続していることを確認してください。\n\n2. このコードはリモートで生成され、Bluetooth経由で追加されていないため、使用後にのみ編集できます。\n\n3. 未使用のままコードの期限が切れた場合、編集が失敗することがあります。</string>
+    <string name="share_pwd_recurring">こんにちは、こちらが繰り返しパスワードです：%1$s\n繰り返しルール：%2$s、%3$s–%4$s\n\n注意：\n最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。コードは有効になってから24時間以内に少なくとも1回使用する必要があり、そうでない場合は無効になります。</string>
+    <string name="share_pwd_one_time">こんにちは、こちらがワンタイムパスワードです：%1$s\n開始時間：%2$s\n6時間以内にご使用ください\n\n注意: 最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。</string>
+    <string name="share_pwd_period_custom">こんにちは、こちらが期間限定パスワードです：%1$s\n開始時間：%2$s\n終了時間：%3$s\n\n注意: 最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。</string>
+    <string name="share_pwd_period_random">こんにちは、こちらが期間限定パスワードです：%1$s\n開始時間：%2$s\n終了時間：%3$s\n\n注意: 最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。コードは有効になってから24時間以内に少なくとも1回使用する必要があり、そうでない場合は無効になります。</string>
+    <string name="share_pwd_permanent_random">こんにちは、こちらが永久パスワードです：%1$s\n開始時間：%2$s\n\n注意: 最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。コードは24時間以内に少なくとも1回使用する必要があり、そうでない場合は無効になります。</string>
+    <string name="share_pwd_permanent_custom">こんにちは、こちらが永久パスワードです：%1$s\n\n注意: 最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。</string>
+    <string name="share_pwd_clear">こんにちは、あなたのクリアコードです: %1$s\n有効時間: %2$s\n24時間以内にご使用ください\n\n注意: 最初にデバイスにタッチし、上記のコードをキーパッドで入力し、右下の#キーまたはロック解除アイコンを押してデバイスをロック解除してください。</string>
+
+    <string name="setting_transfer">所有権を移転する</string>
+    <string name="setting_transfer_title">ロックを移転する</string>
+    <string name="setting_transfer_subtitle">ロックを別のユーザーに移転する</string>
+    <string name="setting_transfer_desc">ロックをリセットせずに、ロックの完全な所有権を別のPopulifeアプリユーザーに移転します。既存のすべてのパスコード、デジタルキー、解錠記録は、新しい管理者のアプリに移転されます。</string>
+    <string name="setting_transfer_link_pre">ロックを移転する代わりに、アクセスを共有しますか？</string>
+    <string name="setting_transfer_link">デジタルキーを共有</string>
+    <string name="setting_transfer_confirm_subtitle">新しい管理者を入力</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) が、以下に入力したPopulifeアカウントに移転されます。ロックの所有権を失い、アプリから削除されます。この操作は元に戻せません。</string>
+    <string name="setting_transfer_confirm_desc1">新しい管理者がPopulifeアプリに登録済みであることを確認してください。</string>
+    <string name="setting_transfer_confirm_agree">ロックの移転後、私はロックの管理者ではなくなり、アプリで表示または管理できなくなることを理解しています。</string>
+    <string name="setting_transfer_request_success">移転成功</string>
+    <string name="setting_transfer_request_951">移転先のユーザーはPopulifeユーザーではありません</string>
+    <string name="setting_transfer_request_952">ロックを自分自身に移転することはできません</string>
+    <string name="setting_transfer_request_920">無効なユーザー</string>
+
+    <string name="ekey_permission_hint_1">アプリで解錠</string>
+    <string name="ekey_permission_hint_2">解錠履歴を表示</string>
+    <string name="ekey_permission_hint_3">パスコードまたはデジタルキーを追加</string>
+    <string name="ekey_permission_1_title">すべてのユーザーパスコードとキーを管理</string>
+    <string name="ekey_permission_2_title">リモート解錠を許可</string>
+    <string name="ekey_permission_3_title">ロックのバッテリー残量を同期</string>
+    <string name="ekey_permission_4_title">ロックの時刻を調整</string>
+    <string name="ekey_permission_1_hint">有効にすると、ユーザーは管理者と同様に、このロックのすべてのパスコードとキーを表示および管理できます。無効にすると、自分で作成したキーとパスコードのみが表示されます。</string>
+    <string name="ekey_permission_2_hint">リモート解錠の許可を与えますが、接続されたゲートウェイと安定したWiFi接続が必要です。実際のリモートアクセスは管理者の設定によって異なります。</string>
+    <string name="ekey_permission_3_hint">ユーザーがロックのバッテリー残量を手動で確認し、タイムリーなバッテリー交換を可能にします。</string>
+    <string name="ekey_permission_4_hint">ユーザーがロックの時刻を自分のスマートフォンの時計と同期できるようにします。ロックが長時間電源切れだった場合に役立ちます。注：ロックのタイムゾーンは変更されません。</string>
+
+    <string name="notification_running">バックグラウンドサービス実行中</string>
+    <string name="go_setting_notification_link_pre">Populifeアプリの通知が有効になっていません、</string>
+    <string name="go_setting_notification_link">システム設定を開く</string>
+    <string name="setting_notification_label">解錠通知：</string>
+    <string name="setting_notification_desc">通知が有効な場合、このロックの解錠アップデートを受信します</string>
+    <string name="setting_notification_app_unlock_title">アプリ解錠</string>
+    <string name="setting_notification_app_unlock_desc">他のユーザーがアプリでロックを解錠したときに通知を受け取ります。ゲートウェイは不要です。</string>
+    <string name="setting_notification_passcode_unlock_title">パスコード解錠</string>
+    <string name="setting_notification_passcode_unlock_desc">ゲートウェイがオンラインで接続されている場合、パスコード解錠の通知を受け取ります。</string>
+    <string name="setting_notification_unlock_desc">ゲートウェイがオフラインの場合、パスコード解錠アラートはリアルタイムではありません。ロックの近くにいるときにBluetoothで解錠履歴を確認してください。</string>
+    <string name="notification_background_title">バックグラウンドアクティビティ</string>
+    <string name="notification_push_title">メッセージアラート</string>
+    <string name="use_gateway_unlock_by_default">デフォルトでゲートウェイ解錠を使用する</string>
 </resources>

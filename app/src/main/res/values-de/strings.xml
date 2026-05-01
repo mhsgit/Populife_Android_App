@@ -844,7 +844,6 @@
     <string name="create_dialog_permanent_pwd_tips">Bitte verwenden Sie diesen Code innerhalb von 24 Stunden nach der Erstellung, um ihn zu aktivieren. Andernfalls wird er ungültig.</string>
     <string name="create_dialog_one_time_pwd_tips">Bitte verwenden Sie diesen Code innerhalb von 6 Stunden nach der Erstellung, bevor er abläuft.</string>
     <string name="pin_code_details">PIN-Code-Details</string>
-    <string name="edit_pwd_hint">Stellen Sie sicher, dass Sie sich in der Nähe des Geräts befinden oder bereits mit dem Gateway verbunden sind, bevor Sie Informationen ändern.</string>
     <string name="note_pwd_delete_confirm_dialog_hint">Sind Sie sicher, dass Sie diesen Code löschen möchten? Dieser Code wird sofort ungültig und alle Aufzeichnungen werden gelöscht.</string>
     <string name="note_pwd_delete_confirm_ok_btn">Ja, löschen</string>
     <string name="note_pwd_edit_effective_period_hint">Stellen Sie sicher, dass Sie sich in der Nähe des Geräts befinden oder bereits mit dem Gateway verbunden sind, bevor Sie die Informationen ändern.</string>
@@ -1034,4 +1033,75 @@
     <string name="sync_successfully">Erfolgreich synchronisiert</string>
     <string name="sync_fail">Synchronisation fehlgeschlagen. Bitte versuchen Sie es erneut.</string>
     <string name="device_init_loading">"Verbindung wird hergestellt… "</string>
+    <!--  新需求  -->
+    <string name="test_device_init_fail">Simulation der Geräteinitialisierung fehlgeschlagen (%s)</string>
+    <string name="note_get_verification_code_limit1">Zu viele Anfragen. Bitte versuchen Sie es später erneut.</string>
+    <string name="note_get_verification_code_limit2">Sie haben in der letzten Stunde zu viele Anfragen gestellt. Bitte versuchen Sie es später erneut.</string>
+    <string name="note_get_verification_code_limit3">Sie haben das tägliche SMS-Anfragelimit erreicht. Bitte versuchen Sie es morgen erneut.</string>
+
+    <string name="create_time_limited_pwd_hint">Zugriff mit anderen für einen bestimmten Zeitraum teilen</string>
+    <string name="create_permanent_pwd_hint">Dauerhaften Zugriff mit anderen teilen. Dieser Code bleibt aktiv, bis Sie ihn löschen.</string>
+    <string name="create_recurring_pwd_hint">Regelmäßigen Zugriff für bestimmte Tage und Zeiten in der Woche festlegen</string>
+    <string name="create_one_time_pwd_hint">Nur einmaligen Zugriff erlauben. Der Code ist nach einer Verwendung ungültig.</string>
+    <string name="key_pwd_type_period">Zeitlich begrenzt</string>
+    <string name="key_pwd_type_permanent">Dauerhaft</string>
+    <string name="key_pwd_type_recurring">Wiederkehrend</string>
+    <string name="key_pwd_type_one_time">Einmalig</string>
+    <string name="key_pwd_type_random">Zufällig</string>
+    <string name="key_pwd_type_custom">Benutzerdefiniert</string>
+    <string name="create_custom_pwd_hint">Generieren Sie ein zufälliges Passwort aus der Ferne und teilen Sie es mit Ihren Gästen. Kein WLAN oder Nähe zum Gerät erforderlich.</string>
+    <string name="create_random_pwd_hint">Fügen Sie ein benutzerdefiniertes Passwort per Bluetooth hinzu, wenn Sie sich in der Nähe des Geräts oder mit dem Gateway verbunden befinden.</string>
+
+    <string name="edit_pwd_hint">Stellen Sie sicher, dass Sie sich vor der Bearbeitung in der Nähe des Schlosses befinden oder mit einem Gateway verbunden sind.</string>
+    <string name="edit_pwd_hint_permanent">1. Stellen Sie sicher, dass Sie sich vor der Bearbeitung in der Nähe des Schlosses befinden oder mit einem Gateway verbunden sind.\n\n2. Der Code muss innerhalb von 24 Stunden nach Erstellung verwendet werden, sonst verfällt er. Der Status wird möglicherweise nicht korrekt aktualisiert.</string>
+    <string name="edit_pwd_hint_one_time">1. Stellen Sie sicher, dass Sie sich vor der Bearbeitung in der Nähe des Schlosses befinden oder mit einem Gateway verbunden sind.\n\n2. Dieser Code ist nach Erstellung 6 Stunden gültig und kann nur einmal verwendet werden. Der Status wird möglicherweise nicht korrekt aktualisiert.</string>
+    <string name="edit_pwd_detail_hint">1. Stellen Sie sicher, dass Sie sich vor der Bearbeitung in der Nähe des Schlosses befinden oder mit einem Gateway verbunden sind.\n\n2. Dieser Code wird aus der Ferne generiert und nicht per Bluetooth hinzugefügt, daher kann er nur nach der Verwendung bearbeitet werden.\n\n3. Wenn der Code ungenutzt verfällt, kann die Bearbeitung fehlschlagen.</string>
+    <string name="share_pwd_recurring">Hallo, hier ist Ihr wiederkehrender Code: %1$s\nWiederholungsregel: %2$s, %3$s–%4$s\n\nHinweise:\nBitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren. Der Code muss innerhalb von 24 Stunden nach Inkrafttreten mindestens einmal verwendet werden, sonst wird er ungültig.</string>
+    <string name="share_pwd_one_time">Hallo, hier ist Ihr einmaliger Code: %1$s\nGültig ab: %2$s\nBitte innerhalb von 6 Stunden verwenden\n\nHinweise: Bitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren.</string>
+    <string name="share_pwd_period_custom">Hallo, hier ist Ihr zeitlich begrenzter Code: %1$s\nGültig ab: %2$s\nGültig bis: %3$s\n\nHinweise: Bitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren.</string>
+    <string name="share_pwd_period_random">Hallo, hier ist Ihr zeitlich begrenzter Code: %1$s\nGültig ab: %2$s\nGültig bis: %3$s\n\nHinweise: Bitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren. Der Code muss innerhalb von 24 Stunden nach Inkrafttreten mindestens einmal verwendet werden, sonst wird er ungültig.</string>
+    <string name="share_pwd_permanent_random">Hallo, hier ist Ihr permanenter Code: %1$s\nGültig ab: %2$s\n\nHinweise: Bitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren. Der Code muss innerhalb von 24 Stunden mindestens einmal verwendet werden, sonst wird er ungültig.</string>
+    <string name="share_pwd_permanent_custom">Hallo, hier ist Ihr permanenter Code: %1$s\n\nHinweise: Bitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren.</string>
+    <string name="share_pwd_clear">Hallo, hier ist Ihr Löschcode: %1$s\nGültig ab: %2$s\nBitte innerhalb von 24 Stunden verwenden\n\nHinweise: Bitte berühren Sie zuerst das Gerät, geben Sie den obigen Code auf der Tastatur ein und drücken Sie dann die #-Taste oder das Entsperren-Symbol in der unteren rechten Ecke, um das Gerät zu entsperren.</string>
+
+    <string name="setting_transfer">Besitzerrechte übertragen</string>
+    <string name="setting_transfer_title">Schloss übertragen</string>
+    <string name="setting_transfer_subtitle">Schloss an einen anderen Benutzer übertragen</string>
+    <string name="setting_transfer_desc">Übertragen Sie die vollständigen Besitzerrechte für das Schloss an einen anderen Populife App-Benutzer, ohne das Schloss zurückzusetzen. Alle vorhandenen Passcodes, digitalen Schlüssel und Entsperrungsaufzeichnungen werden auf die App des neuen Administrators übertragen.</string>
+    <string name="setting_transfer_link_pre">Möchten Sie den Zugriff teilen, anstatt das Schloss zu übertragen?</string>
+    <string name="setting_transfer_link">Einen digitalen Schlüssel teilen</string>
+    <string name="setting_transfer_confirm_subtitle">Geben Sie den neuen Administrator ein</string>
+    <string name="setting_transfer_confirm_desc">%s (%s) wird an das von Ihnen unten eingegebene Populife-Konto übertragen. Sie verlieren alle Rechte an dem Schloss und es wird aus Ihrer App entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
+    <string name="setting_transfer_confirm_desc1">Bitte bestätigen Sie, dass sich der neue Administrator bereits bei der Populife App registriert hat.</string>
+    <string name="setting_transfer_confirm_agree">Ich verstehe, dass ich nach der Übertragung des Schlosses nicht mehr der Administrator des Schlosses bin und es in der App weder ansehen noch verwalten kann.</string>
+    <string name="setting_transfer_request_success">Übertragung erfolgreich</string>
+    <string name="setting_transfer_request_951">Der übertragene Benutzer ist kein Populife-Benutzer</string>
+    <string name="setting_transfer_request_952">Das Schloss kann nicht an sich selbst übertragen werden</string>
+    <string name="setting_transfer_request_920">Ungültiger Benutzer</string>
+
+    <string name="ekey_permission_hint_1">Über die App entsperren</string>
+    <string name="ekey_permission_hint_2">Entsperrungsverlauf anzeigen</string>
+    <string name="ekey_permission_hint_3">Passcodes oder digitale Schlüssel hinzufügen</string>
+    <string name="ekey_permission_1_title">Alle Benutzerpasscodes und -schlüssel verwalten</string>
+    <string name="ekey_permission_2_title">Fernentsperrung erlauben</string>
+    <string name="ekey_permission_3_title">Batteriestand des Schlosses synchronisieren</string>
+    <string name="ekey_permission_4_title">Zeit des Schlosses kalibrieren</string>
+    <string name="ekey_permission_1_hint">Wenn aktiviert, kann der Benutzer alle Passcodes und Schlüssel für dieses Schloss anzeigen und verwalten, ähnlich wie ein Administrator. Wenn deaktiviert, kann er nur die von ihm selbst erstellten Schlüssel und Passcodes sehen.</string>
+    <string name="ekey_permission_2_hint">Erteilt die Berechtigung zur Fernentsperrung, erfordert jedoch ein verbundenes Gateway und eine stabile WLAN-Verbindung. Der tatsächliche Fernzugriff hängt von den Einstellungen des Administrators ab.</string>
+    <string name="ekey_permission_3_hint">Ermöglicht dem Benutzer, den Batteriestand des Schlosses manuell zu überprüfen, um rechtzeitigen Batteriewechsel sicherzustellen.</string>
+    <string name="ekey_permission_4_hint">Ermöglicht dem Benutzer, die Uhrzeit des Schlosses mit der Uhr seines Telefons zu synchronisieren. Dies ist nützlich, wenn das Schloss längere Zeit ohne Strom war. Hinweis: Die Zeitzone des Schlosses bleibt unverändert.</string>
+
+    <string name="notification_running">Hintergrunddienst wird ausgeführt</string>
+    <string name="go_setting_notification_link_pre">Sie haben keine Benachrichtigungen für die Populife App aktiviert,</string>
+    <string name="go_setting_notification_link">zu den Systemeinstellungen</string>
+    <string name="setting_notification_label">Entsperrungsbenachrichtigung:</string>
+    <string name="setting_notification_desc">Wenn Benachrichtigungen aktiviert sind, erhalten Sie Entsperrungs-Updates für dieses Schloss</string>
+    <string name="setting_notification_app_unlock_title">App-Entsperrungen</string>
+    <string name="setting_notification_app_unlock_desc">Erhalten Sie eine Benachrichtigung, wenn andere das Schloss per App entsperren. Kein Gateway erforderlich.</string>
+    <string name="setting_notification_passcode_unlock_title">Passcode-Entsperrungen</string>
+    <string name="setting_notification_passcode_unlock_desc">Erhalten Sie Benachrichtigungen für Passcode-Entsperrungen, wenn Ihr Gateway online und verbunden ist.</string>
+    <string name="setting_notification_unlock_desc">Wenn das Gateway offline ist, sind Passcode-Entsperrungswarnungen nicht in Echtzeit. Überprüfen Sie den Entsperrungsverlauf per Bluetooth, wenn Sie sich in der Nähe des Schlosses befinden.</string>
+    <string name="notification_background_title">Hintergrundaktivität</string>
+    <string name="notification_push_title">Nachrichtenwarnungen</string>
+    <string name="use_gateway_unlock_by_default">Gateway-Entsperrung als Standard verwenden</string>
 </resources>
