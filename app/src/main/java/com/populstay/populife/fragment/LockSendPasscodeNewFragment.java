@@ -230,12 +230,19 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 			tv_current_device_time.setText(timeStr);
 		}
 	}
-
+    public Date setMinuteToZero(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
 	private void initTimePicker() {
 		// 获取当前时间
 		long now = DateUtil.getCurTimeMillis();
-		mStartTime = new Date(now);
-		mEndTime = new Date(now + 3600 * 1000);
+		mStartTime = setMinuteToZero(new Date(now));
+		mEndTime = setMinuteToZero(new Date(now + 3600 * 1000));
 
 		Calendar selectedDate = Calendar.getInstance();
 		selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH),
@@ -747,81 +754,6 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 			}
 		}
 		return isPass;
-	}
-
-	/**
-	 * OnekeyShare 自带分享弹窗 UI
-	 */
-	public void showShare() {
-		try {
-			Intent vIt = new Intent(Intent.ACTION_SEND);
-//							vIt.setPackage("com.facebook.orca");
-			vIt.setType("text/plain");
-			vIt.putExtra(Intent.EXTRA_TEXT, getShareContent());
-			startActivity(vIt);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//		OnekeyShare oks = new OnekeyShare();
-//
-//		// 自定义分享平台
-//		oks.setCustomerLogo(BitmapFactory.decodeResource(getResources(), R.drawable.ic_share_zalo),
-//				"Zalo", new View.OnClickListener() {
-//					@Override
-//					public void onClick(View view) {
-//						try {
-//							Intent vIt = new Intent(Intent.ACTION_SEND);
-////							vIt.setPackage("com.facebook.orca");
-//							vIt.setType("text/plain");
-//							vIt.putExtra(Intent.EXTRA_TEXT, getShareContent());
-//							startActivity(vIt);
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					}
-//				});
-//
-//		//关闭sso授权
-//		oks.disableSSOWhenAuthorize();
-//		oks.setCallback(new PlatformActionListener() {
-//			@Override
-//			public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//
-//			}
-//
-//			@Override
-//			public void onError(Platform platform, int i, Throwable throwable) {
-//
-//			}
-//
-//			@Override
-//			public void onCancel(Platform platform, int i) {
-//
-//			}
-//		});
-//
-//		// title标题，微信、QQ和QQ空间等平台使用
-//		oks.setTitle(getString(R.string.app_name));
-//		// titleUrl QQ和QQ空间跳转链接
-////		oks.setTitleUrl("http://sharesdk.cn");
-////		oks.setAddress("13201812820");
-//		// text是分享文本，所有平台都需要这个字段
-//		oks.setText(getShareContent());
-//		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-////		oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-//		// url在微信、微博，Facebook等平台中使用
-////		oks.setUrl("http://sharesdk.cn");
-//		// comment是我对这条分享的评论，仅在人人网使用
-////		oks.setComment("我是测试评论文本");
-//		// 启动分享GUI
-//		oks.show(getActivity());
-	}
-
-	private String getShareContent() {
-		long createTime = mCreateTime != null ? mCreateTime.getTime() : 0;
-		long startTime = mStartTime != null ? mStartTime.getTime() : 0;
-		long endTime = mEndTime != null ? mEndTime.getTime() : 0;
-		return Utils.getShareContent(getActivity(), mPasscodeType, currentNewPwd, createTime, startTime, endTime, mLockName);
 	}
 
 	/**
