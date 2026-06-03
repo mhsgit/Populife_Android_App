@@ -94,9 +94,9 @@ public class DateUtil {
 	 * 获取当前时区
 	 */
 	public static int getTimeZone() {
-		TimeZone tz = TimeZone.getDefault();
-		int rawOffset = tz.getRawOffset();
-		return rawOffset / 60 / 60 / 1000;// 时区，东时区数字为正，西时区为负
+        TimeZone tz = TimeZone.getDefault();
+        int offsetMillis = tz.getOffset(System.currentTimeMillis());
+        return offsetMillis / 3600000;
 	}
 
 	/**
