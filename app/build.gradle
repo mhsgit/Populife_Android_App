@@ -9,7 +9,7 @@ android {
         applicationId "com.populstay.populife"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 350
+        versionCode 351
         versionName "3.5.1"
         ndkVersion = "22.1.7171670"
         ndk {

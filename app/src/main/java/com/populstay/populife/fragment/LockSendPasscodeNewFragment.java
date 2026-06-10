@@ -6,10 +6,12 @@ import static com.populstay.populife.app.MyApplication.sPPLOCK;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -693,25 +695,59 @@ public class LockSendPasscodeNewFragment extends BaseFragment implements View.On
 	 * @param mediumType  通讯介质（1：蓝牙，2：网关，默认是1）
 	 */
 	private void requestAddPasscode(final String keyboardPwd, final String mediumType) {
-		RestClientBuilder builder = RestClient.builder()
-				.url(Urls.LOCK_PASSCODE_ADD)
-				.loader(getActivity())
-				.params("userId", PeachPreference.readUserId())
-				.params("lockId", mKey.getLockId())
-				.params("keyboardPwd", keyboardPwd)
-                .params("keyboardPwdType", mPasscodeType)
-				.params("timeZone", DateUtil.getTimeZone())
-				.params("keyId", mKey.getUserKeyId())
-				.params("mediumType", mediumType);
-        if (mEtName.getText() != null && !mEtName.getText().toString().trim().isEmpty()) {
-            builder.params("alias", mEtName.getText().toString().trim());
+        final String userId = PeachPreference.readUserId();
+        final int lockId = mKey.getLockId();
+        final int keyboardPwdType = mPasscodeType;
+        final int timeZone = DateUtil.getTimeZone();
+        final int keyId = mKey.getUserKeyId();
+        final String alias = mEtName.getText() != null ? mEtName.getText().toString().trim() : null;
+        final String startDate;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            startDate = !mTvStartTime.getText().isEmpty() ? mTvStartTime.getText().toString() : null;
+        } else {
+            startDate = !TextUtils.isEmpty(mTvStartTime.getText()) ? mTvStartTime.getText().toString() : null;
+        }
+        final String endDate;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            endDate = !mTvEndTime.getText().isEmpty() ? mTvEndTime.getText().toString() : null;
+        } else {
+            endDate = !TextUtils.isEmpty(mTvEndTime.getText()) ? mTvEndTime.getText().toString() : null;
         }
 
-        if(!mTvStartTime.getText().isEmpty()) {
-				builder
-                    .params("startDate", mTvStartTime.getText().toString())
-                    .params("endDate", mTvEndTime.getText().toString());
+        RestClientBuilder builder = RestClient.builder()
+                .url(Urls.LOCK_PASSCODE_ADD)
+                .loader(getActivity())
+                .params("userId", userId)
+                .params("lockId", lockId)
+                .params("keyboardPwd", keyboardPwd)
+                .params("keyboardPwdType", keyboardPwdType)
+                .params("timeZone", timeZone)
+                .params("keyId", keyId)
+                .params("mediumType", mediumType);
+
+        if (alias != null && !alias.isEmpty()) {
+            builder.params("alias", alias);
         }
+        if (startDate != null) {
+            builder.params("startDate", startDate)
+                    .params("endDate", endDate);
+        }
+//        StringBuilder params = new StringBuilder();
+//        params.append("userId=").append(userId)
+//                .append(", lockId=").append(lockId)
+//                .append(", keyboardPwd=").append(keyboardPwd)
+//                .append(", keyboardPwdType=").append(keyboardPwdType)
+//                .append(", timeZone=").append(timeZone)
+//                .append(", keyId=").append(keyId)
+//                .append(", mediumType=").append(mediumType);
+//
+//        if (alias != null) {
+//            params.append(", alias=").append(alias);
+//        }
+//        if (startDate != null) {
+//            params.append(", startDate=").append(startDate)
+//                    .append(", endDate=").append(endDate);
+//        }
         builder.success(new ISuccess() {
             @Override
             public void onSuccess(String response) {

@@ -131,24 +131,35 @@ public abstract class BaseFragment extends Fragment {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S;
 	}
 
-	public void kjxRequestBleConnectPermissionStartConnect(PermissionListener listener) {
-		if (isAndroid12()) {
-			requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
-				@Override
-				public void onGranted() {
+    public void kjxRequestBleConnectPermissionStartConnect(PermissionListener listener) {
+        if (isAndroid12()) {
+            requestRuntimePermissions(PERMISSION_BLE_SCAN_CONNECT, new PermissionListener() {
+                @Override
+                public void onGranted() {
                     listener.onGranted();
-				}
+                }
 
-				@Override
-				public void onDenied(List<String> deniedPermissions) {
-					toast(isAndroid12() ? R.string.note_permission_ble_scan_connect : R.string.note_permission_lbs);
+                @Override
+                public void onDenied(List<String> deniedPermissions) {
+                    toast(R.string.note_permission_ble_scan_connect);
                     listener.onDenied(deniedPermissions);
-				}
-			});
-		} else {
-//			mTTLockAPI.connect(address);
-		}
-	}
+                }
+            });
+        } else {
+            requestRuntimePermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, new PermissionListener() {
+                @Override
+                public void onGranted() {
+                    listener.onGranted();
+                }
+
+                @Override
+                public void onDenied(List<String> deniedPermissions) {
+                    toast(R.string.note_permission_lbs);
+                    listener.onDenied(deniedPermissions);
+                }
+            });
+        }
+    }
 
 	/**
 	 * 后台操作，不前台提示权限申请
