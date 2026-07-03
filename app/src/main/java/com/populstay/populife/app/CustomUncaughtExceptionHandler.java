@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.populstay.populife.R;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.MyDiskLogStrategy;
 import com.populstay.populife.util.log.PeachLogger;
@@ -133,7 +134,7 @@ public class CustomUncaughtExceptionHandler implements Thread.UncaughtExceptionH
             e1.printStackTrace();
         }
 
-        Toast toast = Toast.makeText(context, "程序出错，即将退出", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(context, context.getString(R.string.crash_exit), Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 

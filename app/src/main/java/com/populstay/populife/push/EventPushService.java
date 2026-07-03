@@ -3,6 +3,7 @@ package com.populstay.populife.push;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
@@ -77,6 +78,15 @@ public class EventPushService extends Service {
     }
 
     @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        // 用户从最近任务列表划掉 App 时，系统会限时要求前台服务停止
+        // 若超时未停则抛 ForegroundServiceDidNotStopInTimeException
+        stopForeground(true);
+        stopSelf();
+        super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
     public void onDestroy() {
         stopAll();
         super.onDestroy();
@@ -106,7 +116,18 @@ public class EventPushService extends Service {
         Notification notification =
                 NotificationUtil.buildServiceNotification(this).build();
 
-        startForeground(FOREGROUND_ID, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                startForeground(FOREGROUND_ID, notification);
+            } catch (Exception e) {
+                // Android 12+ 后台不允许 startForeground，服务降级为后台运行
+                // 系统可能更快回收，但 START_STICKY 会重新拉起
+                Log.e(TAG, "startForeground not allowed (background start), " +
+                        "running as background service", e);
+            }
+        } else {
+            startForeground(FOREGROUND_ID, notification);
+        }
     }
 
 

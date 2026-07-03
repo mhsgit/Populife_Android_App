@@ -1101,4 +1101,5 @@
     <string name="notification_push_title">消息推送</string>
     <string name="use_gateway_unlock_by_default">默认使用网关解锁</string>
     <string name="device_init_loading">正在连接设备…</string>
+    <string name="crash_exit">程序出错，即将退出</string>
 </resources>

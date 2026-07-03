@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.populstay.populife.R;
 import com.populstay.populife.constant.Constant;
 import com.populstay.populife.util.log.LogToFile;
 
@@ -129,7 +130,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
                 if(DEBUG){
                     Log.d(TAG, "异常信息->"+msg);
-                    Toast toast = Toast.makeText(mContext, "程序出错，即将退出:\r\n" + msg,
+                    Toast toast = Toast.makeText(mContext, mContext.getString(R.string.crash_exit) + ":\r\n" + msg,
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();

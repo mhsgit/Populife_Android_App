@@ -1104,4 +1104,5 @@
     <string name="notification_background_title">Hintergrundaktivität</string>
     <string name="notification_push_title">Nachrichtenwarnungen</string>
     <string name="use_gateway_unlock_by_default">Gateway-Entsperrung als Standard verwenden</string>
+    <string name="crash_exit">Programmfehler, wird beendet</string>
 </resources>

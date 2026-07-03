@@ -1102,4 +1102,5 @@
     <string name="notification_background_title">バックグラウンドアクティビティ</string>
     <string name="notification_push_title">メッセージアラート</string>
     <string name="use_gateway_unlock_by_default">デフォルトでゲートウェイ解錠を使用する</string>
+    <string name="crash_exit">プログラムエラー、終了します</string>
 </resources>

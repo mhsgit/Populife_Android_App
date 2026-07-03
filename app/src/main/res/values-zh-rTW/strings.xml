@@ -1103,4 +1103,5 @@
     <string name="notification_push_title">訊息推送</string>
     <string name="use_gateway_unlock_by_default">預設使用閘道器解鎖</string>
     <string name="device_init_loading">正在連線…</string>
+    <string name="crash_exit">程式錯誤，即將退出</string>
 </resources>

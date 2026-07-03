@@ -1104,4 +1104,5 @@
     <string name="notification_background_title">Activité en Arrière-plan</string>
     <string name="notification_push_title">Alertes de Messages</string>
     <string name="use_gateway_unlock_by_default">Utiliser le déverrouillage par passerelle par défaut</string>
+    <string name="crash_exit">Erreur du programme, fermeture</string>
 </resources>

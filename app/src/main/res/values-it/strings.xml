@@ -1104,4 +1104,5 @@
     <string name="notification_background_title">Attività in Background</string>
     <string name="notification_push_title">Avvisi Messaggi</string>
     <string name="use_gateway_unlock_by_default">Usa sblocco gateway per impostazione predefinita</string>
+    <string name="crash_exit">Errore del programma, uscita</string>
 </resources>

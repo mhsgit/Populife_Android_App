@@ -1104,4 +1104,5 @@
     <string name="notification_background_title">Actividad en Segundo Plano</string>
     <string name="notification_push_title">Alertas de Mensajes</string>
     <string name="use_gateway_unlock_by_default">Usar desbloqueo por puerta de enlace por defecto</string>
+    <string name="crash_exit">Error del programa, saliendo</string>
 </resources>

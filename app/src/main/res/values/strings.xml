@@ -1101,4 +1101,5 @@
     <string name="notification_push_title">Message Alerts</string>
     <string name="use_gateway_unlock_by_default">Use gateway unlock by default</string>
     <string name="device_init_loading">Connecting…</string>
+    <string name="crash_exit">Program error, exiting</string>
 </resources>

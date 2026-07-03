@@ -9,8 +9,8 @@ android {
         applicationId "com.populstay.populife"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 353
-        versionName "3.5.3"
+        versionCode 354
+        versionName "3.5.4"
         ndkVersion = "22.1.7171670"
         ndk {
             // 设置支持的 SO 库构架
