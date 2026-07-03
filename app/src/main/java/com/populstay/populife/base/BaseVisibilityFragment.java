@@ -7,17 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.eventbus.Event;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.email.EmailUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.HashMap;
 
 /**
  * Created by Jerry
@@ -180,15 +175,5 @@ public class BaseVisibilityFragment extends BaseFragment implements OnAttachStat
 
 	public void startImServiceActivity(Context context){
 		EmailUtil.sendEmail(context);
-		/*HashMap<String, String> clientInfo = new HashMap<>();
-		clientInfo.put("userId", PeachPreference.readUserId());
-		clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-		clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-		MQImage.setImageLoader(new MQGlideImageLoader());
-		startActivity(new MQIntentBuilder(context).
-				setCustomizedId(PeachPreference.readUserId())
-				.setClientInfo(clientInfo)
-				.updateClientInfo(clientInfo)
-				.build());*/
 	}
 }

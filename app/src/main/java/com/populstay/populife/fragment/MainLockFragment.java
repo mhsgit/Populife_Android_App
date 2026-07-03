@@ -14,11 +14,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.activity.LockAddSelectTypeActivity;
 import com.populstay.populife.activity.PDFActivity;
@@ -32,7 +27,6 @@ import com.populstay.populife.net.callback.IError;
 import com.populstay.populife.net.callback.IFailure;
 import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.ui.NoScrollViewPager;
 import com.populstay.populife.ui.loader.LoaderStyle;
 import com.populstay.populife.ui.loader.PeachLoader;
@@ -232,31 +226,7 @@ public class MainLockFragment extends BaseVisibilityFragment {
 
 			// 刷新子 fragment 页面
 			refreshChildFragment();
-			getMeiQiaUnreadMsg();
-			MQManager.getInstance(getActivity()).closeMeiqiaService();
-		} else {
-			MQManager.getInstance(getActivity()).openMeiqiaService();
 		}
-	}
-
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(getActivity()).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
 	}
 
 	private void refreshChildFragment() {

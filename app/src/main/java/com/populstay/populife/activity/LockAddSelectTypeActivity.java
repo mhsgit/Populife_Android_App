@@ -6,9 +6,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
 import com.populstay.populife.R;
 import com.populstay.populife.adapter.DeviceListAdapter;
 import com.populstay.populife.base.BaseActivity;
@@ -122,30 +119,9 @@ public class LockAddSelectTypeActivity extends BaseActivity implements View.OnCl
 		});
 	}
 
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(this).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
-	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getMeiQiaUnreadMsg();
 	}
 
 	private void initListener() {

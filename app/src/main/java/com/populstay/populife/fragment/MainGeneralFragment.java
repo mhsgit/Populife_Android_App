@@ -69,37 +69,8 @@ public class MainGeneralFragment extends BaseVisibilityFragment implements View.
 		if (!visible) {
 			PlayerManager.getInstance().pause();
 		}
-		/*if (visible) {
-			boolean hasNewMessage = PeachPreference.getBoolean(PeachPreference.HAVE_NEW_MESSAGE);
-			if (hasNewMessage) {
-				mIvHasNewMessage.setVisibility(View.VISIBLE);
-			} else {
-				mIvHasNewMessage.setVisibility(View.INVISIBLE);
-			}
-
-			getMeiQiaUnreadMsg();
-		}*/
 	}
 
-	/**
-	 * 获取美洽未读消息
-	 *//*
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(getActivity()).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
-	}*/
 	private void initView(View view) {
 		view.findViewById(R.id.page_back).setVisibility(View.GONE);
 		((TextView) view.findViewById(R.id.page_title)).setText(R.string.nav_tab_general);

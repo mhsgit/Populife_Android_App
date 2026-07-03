@@ -8,15 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.locale.LanguageUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
@@ -29,32 +23,6 @@ public class CustomerServiceActivity extends BaseActivity implements View.OnClic
 	private LinearLayout mLlManualApp, mLlManualDeadbolt, mLlManualKeybox, mLlManualGateway, mLlQuestions,
 			mLlFeedback, mLlSendEmail, mLlOnlineCommunication;
 	private ImageView mIvNewMsg;
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		getMeiQiaUnreadMsg();
-	}
-
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(this).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

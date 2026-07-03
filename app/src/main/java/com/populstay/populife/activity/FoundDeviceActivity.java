@@ -23,9 +23,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
 import com.populock.manhattan.sdk.BleDevice;
 import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populstay.populife.R;
@@ -339,26 +336,6 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 		});
 	}
 
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(this).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
-	}
-
 	private void upDateSeekbarScanDevice() {
 		mCurrentScanProgress += 500;
 		mSeekbarScanDevice.setProgress(mCurrentScanProgress);
@@ -382,7 +359,6 @@ public class FoundDeviceActivity extends BaseActivity implements AdapterView.OnI
 	@RequiresPermission(Manifest.permission.BLUETOOTH)
 	public void onResume() {
 		super.onResume();
-		getMeiQiaUnreadMsg();
 	}
 
 	@Override

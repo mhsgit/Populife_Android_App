@@ -26,8 +26,6 @@ import androidx.core.content.ContextCompat;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.activity.LoginVerifyActivity;
 import com.populstay.populife.activity.SignActivity;
@@ -43,7 +41,6 @@ import com.populstay.populife.permission.PermissionListener;
 import com.populstay.populife.push.EventPushService;
 import com.populstay.populife.sign.ISignListener;
 import com.populstay.populife.sign.SignHandler;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.ui.SmartToast;
 import com.populstay.populife.ui.loader.PeachLoader;
 import com.populstay.populife.util.activity.ActivityCollector;
@@ -78,7 +75,14 @@ public class BaseActivity extends AppCompatActivity{
 	@RequiresApi(api = 31)
 	public static String[] PERMISSION_BLE_SCAN_CONNECT = new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};
 
-	public static String[] PERMISSION_IMAGES = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) ?  new String[]{Manifest.permission.READ_MEDIA_IMAGES} : new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+	/**
+	 * 图片选择权限数组
+	 * - Android 13+：不需要权限（使用 Photo Picker API）
+	 * - Android 12及以下：需要 READ_EXTERNAL_STORAGE 权限
+	 */
+	public static String[] PERMISSION_IMAGES = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) 
+			? new String[]{} 
+			: new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -740,39 +744,7 @@ public class BaseActivity extends AppCompatActivity{
 	}
 
 	public void startImServiceActivity(Context context){
-		/*HashMap<String, String> clientInfo = new HashMap<>();
-		clientInfo.put("userId", PeachPreference.readUserId());
-		clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-		clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-		MQImage.setImageLoader(new MQGlideImageLoader());
-		startActivity(new MQIntentBuilder(context).
-				setCustomizedId(PeachPreference.readUserId())
-				.setClientInfo(clientInfo)
-				.updateClientInfo(clientInfo)
-				.build());*/
 		EmailUtil.sendEmail(this);
-
-		/*requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-				new PermissionListener() {
-					@Override
-					public void onGranted() {
-						HashMap<String, String> clientInfo = new HashMap<>();
-						clientInfo.put("userId", PeachPreference.readUserId());
-						clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-						clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-						MQImage.setImageLoader(new MQGlideImageLoader());
-						startActivity(new MQIntentBuilder(GatewayAddGuideActivity.this).
-								setCustomizedId(PeachPreference.readUserId())
-								.setClientInfo(clientInfo)
-								.updateClientInfo(clientInfo)
-								.build());
-					}
-
-					@Override
-					public void onDenied(List<String> deniedPermissions) {
-						toast(R.string.note_permission_external_storage);
-					}
-				});*/
 	}
 
 	public boolean isChineseLanguage() {

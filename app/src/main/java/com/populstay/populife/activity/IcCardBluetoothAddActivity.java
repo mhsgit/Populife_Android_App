@@ -13,11 +13,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populock.manhattan.sdk.constant.LockOperation;
 import com.populstay.populife.R;
 import com.populstay.populife.app.MyApplication;
@@ -39,7 +34,6 @@ import com.populstay.populife.manhattanlock.MHILockAddFingerprint;
 import com.populstay.populife.net.RestClient;
 import com.populstay.populife.net.callback.ISuccess;
 import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.date.DateUtil;
 import com.populstay.populife.util.log.PeachLogger;
 import com.populstay.populife.util.storage.PeachPreference;
@@ -276,27 +270,6 @@ public class IcCardBluetoothAddActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getMeiQiaUnreadMsg();
-	}
-
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(this).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
 	}
 
 	private void addFpCard() {

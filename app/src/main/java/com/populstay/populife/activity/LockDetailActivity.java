@@ -1,6 +1,5 @@
 package com.populstay.populife.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,23 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.eventbus.Event;
 import com.populstay.populife.fragment.LockDetailFragment;
-import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.ui.NoScrollViewPager;
 import com.populstay.populife.util.log.PeachLogger;
-import com.populstay.populife.util.storage.PeachPreference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
@@ -64,27 +54,6 @@ public class LockDetailActivity extends BaseActivity {
 		super.onResume();
 		// 刷新子 fragment 页面
 		refreshChildFragment();
-		getMeiQiaUnreadMsg();
-	}
-
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(this).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
 	}
 
 	@Override
@@ -120,30 +89,6 @@ public class LockDetailActivity extends BaseActivity {
 			public void onClick(View v) {
 				isClickSupportRequestRuntimePermissions = true;
 				startImServiceActivity(LockDetailActivity.this);
-//				requestRuntimePermissions(PERMISSION_IMAGES,
-//						new PermissionListener() {
-//							@Override
-//							public void onGranted() {
-//								isClickSupportRequestRuntimePermissions = false;
-//								HashMap<String, String> clientInfo = new HashMap<>();
-//								clientInfo.put("userId", PeachPreference.readUserId());
-//								clientInfo.put("phoneNum", PeachPreference.getStr(PeachPreference.ACCOUNT_PHONE));
-//								clientInfo.put("email", PeachPreference.getStr(PeachPreference.ACCOUNT_EMAIL));
-//								MQImage.setImageLoader(new MQGlideImageLoader());
-//								startActivity(new MQIntentBuilder(LockDetailActivity.this).
-//										setCustomizedId(PeachPreference.readUserId())
-//										.setClientInfo(clientInfo)
-//										.updateClientInfo(clientInfo)
-//										.build());
-//							}
-//
-//							@Override
-//							public void onDenied(List<String> deniedPermissions) {
-//								isClickSupportRequestRuntimePermissions = false;
-//								toast(R.string.note_permission_external_storage);
-//							}
-//						});
-
 			}
 		});
 	}

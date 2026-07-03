@@ -207,17 +207,24 @@ public final class Utils {
 	}
 
 	public static void choosePhoto(Activity context, int reqCode) {
-		Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
-		// 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型" 所有类型则写 "image/*"
-		intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-		context.startActivityForResult(intentToPickPic, reqCode);
+		launchSystemPhotoPicker(context, reqCode);
 	}
 
 	public static void choosePhoto(Fragment context, int reqCode) {
-		Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
-		// 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型" 所有类型则写 "image/*"
-		intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-		context.startActivityForResult(intentToPickPic, reqCode);
+		launchSystemPhotoPicker(context.getActivity(), reqCode);
+	}
+
+	/**
+	 * 使用系统图片选择器（全版本兼容，无需权限）
+	 * 使用 ACTION_GET_CONTENT，所有 Android 版本通用且无需声明 READ_MEDIA_IMAGES 权限
+	 * @param context Activity上下文
+	 * @param reqCode 请求码
+	 */
+	public static void launchSystemPhotoPicker(Activity context, int reqCode) {
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.setType("image/*");
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		context.startActivityForResult(intent, reqCode);
 	}
 
 	public static String bitmapToBase64(Bitmap bitmap) {

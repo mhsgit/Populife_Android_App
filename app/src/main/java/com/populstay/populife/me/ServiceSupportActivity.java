@@ -7,14 +7,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.meiqia.meiqiasdk.imageloader.MQImage;
-import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 import com.populstay.populife.R;
 import com.populstay.populife.activity.CommonQuestionActivity;
 import com.populstay.populife.base.BaseActivity;
 import com.populstay.populife.maintservice.MaintServiceActivity;
 import com.populstay.populife.permission.PermissionListener;
-import com.populstay.populife.ui.MQGlideImageLoader;
 import com.populstay.populife.util.storage.PeachPreference;
 
 import java.util.HashMap;

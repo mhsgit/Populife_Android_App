@@ -322,18 +322,8 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
 					if (null != mDialogChoosePhoto) {
 						mDialogChoosePhoto.dismiss();
 					}
-					requestRuntimePermissions(PERMISSION_IMAGES, new PermissionListener() {
-						@Override
-						public void onGranted() {
-							// 调用相册
-							Utils.choosePhoto(PersonalCenterActivity.this, REQUEST_CODE_PICK);
-						}
-
-						@Override
-						public void onDenied(List<String> deniedPermissions) {
-							toast(R.string.note_permission_external_storage);
-						}
-					});
+					// 无需权限，直接调用系统图片选择器
+					Utils.launchSystemPhotoPicker(PersonalCenterActivity.this, REQUEST_CODE_PICK);
 
 				}
 			});

@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.meiqia.core.MQManager;
-import com.meiqia.core.bean.MQMessage;
-import com.meiqia.core.callback.OnGetMessageListCallback;
 import com.populstay.populife.R;
 import com.populstay.populife.activity.AboutActivity;
 import com.populstay.populife.activity.CustomerServiceActivity;
@@ -54,29 +51,7 @@ public class MainGeneralFragment_backup extends BaseVisibilityFragment implement
 			} else {
 				mIvHasNewMessage.setVisibility(View.INVISIBLE);
 			}
-
-			getMeiQiaUnreadMsg();
 		}
-	}
-
-	/**
-	 * 获取美洽未读消息
-	 */
-	private void getMeiQiaUnreadMsg() {
-		MQManager.getInstance(getActivity()).getUnreadMessages(new OnGetMessageListCallback() {
-			@Override
-			public void onSuccess(List<MQMessage> messageList) {
-				PeachLogger.d(messageList);
-				if (messageList != null && !messageList.isEmpty())
-					mIvNewMsg.setVisibility(View.VISIBLE);
-				else
-					mIvNewMsg.setVisibility(View.INVISIBLE);
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-			}
-		});
 	}
 
 	private void initView(View view) {

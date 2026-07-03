@@ -126,19 +126,8 @@ public class MainMeFragment_backup extends BaseVisibilityFragment implements Vie
 			});
 		} else
 		if (item.getItemId() == 1) {
-			requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-					Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionListener() {
-				@Override
-				public void onGranted() {
-					// 调用相册
-					Utils.choosePhoto(MainMeFragment_backup.this, REQUEST_CODE_PICK);
-				}
-
-				@Override
-				public void onDenied(List<String> deniedPermissions) {
-					toast(R.string.note_permission_external_storage);
-				}
-			});
+			// 无需权限，直接调用系统图片选择器
+			Utils.launchSystemPhotoPicker(getActivity(), REQUEST_CODE_PICK);
 		}
 		return super.onContextItemSelected(item);
 	}

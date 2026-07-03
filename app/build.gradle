@@ -9,8 +9,8 @@ android {
         applicationId "com.populstay.populife"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 351
-        versionName "3.5.1"
+        versionCode 353
+        versionName "3.5.3"
         ndkVersion = "22.1.7171670"
         ndk {
             // 设置支持的 SO 库构架
@@ -198,20 +198,12 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     // 时间选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
-    // 圆弧
-    implementation 'com.gcssloop.widget:arc-seekbar:1.7.0'
     // 图片剪裁
     implementation 'com.github.yalantis:ucrop:2.2.2-native'
     // 流式布局
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     // PDF 阅读器
     implementation 'io.github.oothp:android-pdf-viewer:3.2.0-beta06'
-    // 在线客服（美洽）
-    //implementation 'com.meiqia:meiqiasdk:3.5.9'
-    //implementation 'com.meiqia:meiqiasdk:+'
-    //implementation 'com.meiqia:androidx:4.0.3'
-    //implementation 'com.meiqia:androidx:4.0.15'
-    implementation 'com.meiqia:androidx:+'
     // 事件分发
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'

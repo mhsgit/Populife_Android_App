@@ -750,19 +750,8 @@ public class MaintenanceRequestActivity extends BaseActivity implements View.OnC
                     if (null != mDialogChoosePhoto){
                         mDialogChoosePhoto.dismiss();
                     }
-                    requestRuntimePermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionListener() {
-                        @Override
-                        public void onGranted() {
-                            // 调用相册
-                            Utils.choosePhoto(MaintenanceRequestActivity.this, REQUEST_CODE_PICK);
-                        }
-
-                        @Override
-                        public void onDenied(List<String> deniedPermissions) {
-                            toast(R.string.note_permission_external_storage);
-                        }
-                    });
+                    // 无需权限，直接调用系统图片选择器
+                    Utils.launchSystemPhotoPicker(MaintenanceRequestActivity.this, REQUEST_CODE_PICK);
 
                 }
             });
